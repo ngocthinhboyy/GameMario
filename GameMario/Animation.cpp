@@ -19,6 +19,7 @@ void Animation::Add(int spriteId, DWORD time)
 	frames.push_back(frame);
 }
 
+//bool Animation::isLastFrame = false;
 void Animation::Render(float x, float y, int alpha, D3DXVECTOR2 scale)
 {
 	DWORD now = GetTickCount();
@@ -34,7 +35,9 @@ void Animation::Render(float x, float y, int alpha, D3DXVECTOR2 scale)
 		{
 			currentFrame++;
 			lastFrameTime = now;
-			if (currentFrame == frames.size()) currentFrame = 0;
+			if (currentFrame == frames.size()) {
+				currentFrame = 0;
+			}
 		}
 	}
 

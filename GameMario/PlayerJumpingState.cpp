@@ -56,8 +56,12 @@ void PlayerJumpingState::SetAnimation(int levelPlayer) {
 
 void PlayerJumpingState::Update(int dt)
 {
+	//DebugOut(L"JUMPONGGGGGGGGGGG \n");
 	Mario* mario = Mario::GetInstance();
 	SetAnimation(mario->GetLevel());
+	//DebugOut(L"JUMPONGGGGGGGGGGG %d\n", animationID);
+	if (mario->vy > 0)
+		mario->ChangeState(PlayerFallingState::GetInstance());
 }
 void PlayerJumpingState::KeyState(BYTE* states) {
 	Mario* mario = Mario::GetInstance();
@@ -65,15 +69,17 @@ void PlayerJumpingState::KeyState(BYTE* states) {
 	if (game->IsKeyDown(DIK_X))
 	{
 		if (game->IsKeyDown(DIK_RIGHT))
-			{
-				mario->vx = 2*MARIO_WALKING_SPEED;
-				mario->nx = 1;
+		{
+			if (abs(mario->vx) == 0) {
+				mario->vx = MARIO_WALKING_SPEED;
 			}
-			else if (game->IsKeyDown(DIK_LEFT)) {
-				mario->vx = -MARIO_WALKING_SPEED*2;
-					mario->nx = -1;
+			mario->nx = 1;
+		}
+		else if (game->IsKeyDown(DIK_LEFT)) {
+			if (abs(mario->vx) == 0) {
+				mario->vx = -MARIO_WALKING_SPEED;
 			}
+			mario->nx = -1;
+		}
 	}
-	if(mario->vy > 0)
-		mario->ChangeState(PlayerFallingState::GetInstance());
 }

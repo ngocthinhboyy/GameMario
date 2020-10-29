@@ -6,6 +6,7 @@
 #include "PlayerJumpingState.h"
 #include "PlayerHighJumpingState.h"
 #include "PlayerRunningState.h"
+#include "PlayerSpinningState.h"
 
 
 PlayerState* PlayerWalkingState::__instance = NULL;
@@ -64,6 +65,10 @@ void PlayerWalkingState::OnKeyDown(int KeyCode) {
 			mario->vy = -MARIO_JUMP_SPEED_Y;
 			mario->ChangeState(PlayerHighJumpingState::GetInstance());
 			break;
+		/*case DIK_A:
+			if(mario->GetLevel() == MARIO_LEVEL_RACCOON)
+				mario->ChangeState(PlayerSpinningState::GetInstance());
+			break;*/
 		default:
 			mario->ChangeState(PlayerStandingState::GetInstance());
 			break;

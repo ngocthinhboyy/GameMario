@@ -8,6 +8,7 @@
 #include "PlayerHighJumpingState.h"
 #include "PlayerCrouchingState.h"
 #include "PlayerRunningState.h"
+#include "PlayerSpinningState.h"
 
 
 PlayerState* PlayerStandingState::__instance = NULL;
@@ -24,10 +25,7 @@ void PlayerStandingState::SetAnimation(int levelPlayer)
 	switch (levelPlayer) {
 	case MARIO_LEVEL_BIG:
 	{
-		if (mario->nx == 1)
-			animationID = MARIO_ANI_BIG_IDLE_RIGHT;
-		else
-			animationID = MARIO_ANI_BIG_IDLE_LEFT;
+		animationID = MARIO_ANI_BIG_IDLE_RIGHT;
 		break;
 	}
 	case MARIO_LEVEL_SMALL:
@@ -74,8 +72,12 @@ void PlayerStandingState::OnKeyDown(int KeyCode) {
 		}
 		break;
 	}
+	/*case DIK_A: {
+		if (mario->GetLevel())
+			mario->ChangeState(PlayerSpinningState::GetInstance());
+		break;
+	}*/
 	default:
-		mario->ChangeState(PlayerStandingState::GetInstance());
 		break;
 	}
 }

@@ -5,6 +5,7 @@
 #include "PlayerJumpingState.h"
 #include "debug.h"
 #include "PlayerCrouchingState.h"
+#include "PlayerRunningState.h"
 
 
 PlayerFallingState::PlayerFallingState()
@@ -54,19 +55,22 @@ void PlayerFallingState::SetAnimation(int levelPlayer)
 
 void PlayerFallingState::Update(int dt)
 {
+	DebugOut(L"MARIO FALLINGGGGGGGG \n");
 	Mario* mario = Mario::GetInstance();
 	SetAnimation(mario->GetLevel());
+	if (mario->vy == 0) {
+		if (mario->GetIsCrouChing() && mario->GetLevel() != MARIO_LEVEL_SMALL)
+			mario->ChangeState(PlayerCrouchingState::GetInstance());
+		else
+		{
+			mario->ChangeState(PlayerStandingState::GetInstance());
+		}
+	}
 }
 void PlayerFallingState::KeyState(BYTE* states)
 {
 	Mario* mario = Mario::GetInstance();
 	Game* game = Game::GetInstance();
-	if (mario->vy == 0) {
-		if (mario->GetIsCrouChing() && mario->GetLevel()!=MARIO_LEVEL_SMALL)
-			mario->ChangeState(PlayerCrouchingState::GetInstance());
-		else
-			mario->ChangeState(PlayerStandingState::GetInstance());
-	}
 	if (game->IsKeyDown(DIK_DOWN)) {
 		if (mario->vy == 0)
 			mario->ChangeState(PlayerCrouchingState::GetInstance());

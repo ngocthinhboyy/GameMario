@@ -168,6 +168,9 @@
     <ClCompile Include="CollisionMapObject.cpp">
       <Filter>Framework\Game_Object\StaticObject</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerSpinningState.cpp">
+      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -286,6 +289,9 @@
     </ClInclude>
     <ClInclude Include="CollisionMapObject.h">
       <Filter>Framework\Game_Object\StaticObject</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerSpinningState.h">
+      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -141,13 +141,11 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 			return;
 		}
 		Mario* mario = Mario::GetInstance();
-		obj = mario;
-		player = mario;
-		player->SetLevel(MARIO_LEVEL_RACCOON);
+		mario->SetLevel(MARIO_LEVEL_BIG);
 		mario->ChangeState(PlayerStandingState::GetInstance());
-		mario->GetPlayerState()->SetAnimation(mario->GetLevel());
 		LPANIMATION_SET ani_set = AnimationManager::GetInstance()->Get(ani_set_id);
-		player->SetAnimationSet(ani_set);
+		player = mario;
+		obj = mario;
 
 		DebugOut(L"[INFO] Player object created!\n");
 		break;

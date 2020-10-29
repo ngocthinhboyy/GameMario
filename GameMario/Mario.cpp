@@ -133,9 +133,10 @@ void Mario::Render()
 		scale = D3DXVECTOR2(RATIO_X_FLIP_SCALE, RATIO_Y_SCALE);
 	else
 		scale = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_SCALE);
-	ani->Render(x, y, alpha, scale);
+	if(ani != NULL)
+		ani->Render(x, y, alpha, scale);
 
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void Mario::SetState(int state)

@@ -41,6 +41,7 @@
     <ClCompile Include="PlayerJumpingState.cpp" />
     <ClCompile Include="PlayerRunningState.cpp" />
     <ClCompile Include="PlayerSkiddingState.cpp" />
+    <ClCompile Include="PlayerSpinningState.cpp" />
     <ClCompile Include="PlayerStandingState.cpp" />
     <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="PlayerWalkingState.cpp" />
@@ -81,6 +82,7 @@
     <ClInclude Include="PlayerJumpingState.h" />
     <ClInclude Include="PlayerRunningState.h" />
     <ClInclude Include="PlayerSkiddingState.h" />
+    <ClInclude Include="PlayerSpinningState.h" />
     <ClInclude Include="PlayerStandingState.h" />
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="PlayerWalkingState.h" />

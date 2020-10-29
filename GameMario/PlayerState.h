@@ -5,10 +5,9 @@
 class PlayerState
 {
 protected:
-	int animationID;
 public:
 	PlayerState();
-	
+	int animationID;
 	virtual void SetAnimation(int levelPlayer) = 0;
 	LPANIMATION GetAnimation();
 	virtual void Update(int dt) {};

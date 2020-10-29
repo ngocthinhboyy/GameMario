@@ -52,6 +52,7 @@ void PlayerHighJumpingState::SetAnimation(int levelPlayer)
 void PlayerHighJumpingState::Update(int dt)
 {
 	Mario* mario = Mario::GetInstance();
+	SetAnimation(mario->GetLevel());
 	if (abs(mario->vy) < MARIO_JUMP_MAX_SPEED_Y && !stopIncreasingSpeed) {
 		mario->vy += (dt * -MARIO_ACCELERATION_JUMP_Y);
 	}
@@ -59,13 +60,13 @@ void PlayerHighJumpingState::Update(int dt)
 		stopIncreasingSpeed = false;
 		mario->ChangeState(PlayerFallingState::GetInstance());
 	}
-	SetAnimation(mario->GetLevel());
 
 }
 void PlayerHighJumpingState::KeyState(BYTE* states)
 {
 	Mario* mario = Mario::GetInstance();
 	Game* game = Game::GetInstance();
+	//DebugOut(L"mario VX %f\n", mario->vx);
 	if (mario->vy >= 0) {
 		stopIncreasingSpeed = false;
 		mario->ChangeState(PlayerFallingState::GetInstance());
@@ -75,11 +76,16 @@ void PlayerHighJumpingState::KeyState(BYTE* states)
 			stopIncreasingSpeed = true;
 	}
 	if (game->IsKeyDown(DIK_RIGHT)) {
-		mario->vx = MARIO_WALKING_SPEED;
+		if (abs(mario->vx) == 0) {
+			mario->vx = MARIO_WALKING_SPEED;
+		}
 		mario->nx = 1;
 	}
 	else if (game->IsKeyDown(DIK_LEFT)) {
-		mario->vx = -MARIO_WALKING_SPEED;
+		
+		if (abs(mario->vx) == 0) {
+			mario->vx = -MARIO_WALKING_SPEED;
+		}
 		mario->nx = -1;
 	}
 }
