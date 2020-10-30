@@ -7,8 +7,6 @@ using namespace std;
 
 class TileManager
 {
-	int column;
-	int row;
 	int tile_height;
 	int tile_width;
 	LPDIRECT3DTEXTURE9 tileset;
@@ -18,7 +16,7 @@ public:
 	TileManager();
 
 	void AddTile(int left, int top, int height, int width);
-	void CutTileset(LPCWSTR filePath, D3DCOLOR transColor, int column, int row);
+	void CutTileset(LPCWSTR fileTexturePath, LPCWSTR fileTileSetPosition, D3DCOLOR transColor);
 	int GetWidth() { return tile_width; };
 	int GetHeight() { return tile_height; };
 

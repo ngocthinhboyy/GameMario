@@ -1,7 +1,7 @@
 #map
 #maptxt
 [MAP]
-1	Resources\map.txt	Resources\tileset.png	255	255	255	29	30
+1	Resources\map.txt	Resources\tileset.png	Resources\tilesetcoordinates.txt	255	255	255
 [OBJECTS]
 # type	x	y	w	h	ani_set_id	extra_settings per object type
 # type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas

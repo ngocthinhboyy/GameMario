@@ -182,22 +182,21 @@ void PlayScene::_ParseSection_MAP(string line)
 {
 	vector<string> tokens = split(line);
 
-	if (tokens.size() < 8) return; // skip invalid lines
+	if (tokens.size() < 7) return; // skip invalid lines
 
 	this->mapID = atoi(tokens[0].c_str());
 	wstring filePathMapTxt = ToWSTR(tokens[1]);
-	wstring filePathMapTileset = ToWSTR(tokens[2]);
-	int R = atoi(tokens[3].c_str());
-	int G = atoi(tokens[4].c_str());
-	int B = atoi(tokens[5].c_str());
-	int column = atoi(tokens[6].c_str());
-	int row = atoi(tokens[7].c_str());
+	wstring filePathMapTextureTileSet = ToWSTR(tokens[2]);
+	wstring filePathMapTileSetPosition = ToWSTR(tokens[3]);
+	int R = atoi(tokens[4].c_str());
+	int G = atoi(tokens[5].c_str());
+	int B = atoi(tokens[6].c_str());
 
 	MapManager* mapManager = MapManager::GetInstance();
 	mapManager->AddMap(mapID, filePathMapTxt.c_str());
 
 	LPTILEMANAGER tileManager = new TileManager();
-	tileManager->CutTileset(filePathMapTileset.c_str(), D3DCOLOR_XRGB(R, G, B), column, row);
+	tileManager->CutTileset(filePathMapTextureTileSet.c_str(), filePathMapTileSetPosition.c_str(), D3DCOLOR_XRGB(R, G, B));
 
 	mapManager->GetMap(mapID)->AddTileManager(tileManager);
 	mapManager->ReadMap(mapID);

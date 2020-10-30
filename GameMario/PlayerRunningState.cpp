@@ -77,7 +77,6 @@ void PlayerRunningState::Update(int dt)
 
 void PlayerRunningState::KeyState(BYTE* states)
 {
-	//DebugOut(L"NGOCTHINHHHHHHHHHHH \n");
 	Game* game = Game::GetInstance();
 	Mario* mario = Mario::GetInstance();
 	if (game->IsKeyDown(DIK_A)) {

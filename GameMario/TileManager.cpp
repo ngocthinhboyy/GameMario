@@ -3,6 +3,8 @@
 #include "Textures.h"
 #include "debug.h"
 #include "game.h"
+#include <iostream>
+#include <fstream>
 
 TileManager::TileManager() {
 	this->tile_height = TILE_HEIGHT;
@@ -14,12 +16,12 @@ void TileManager::AddTile(int left, int top, int height, int width) {
 	tiles.push_back(tile);
 }
 
-void TileManager::CutTileset(LPCWSTR filePath, D3DCOLOR transColor, int column, int row) {
+void TileManager::CutTileset(LPCWSTR fileTexturePath, LPCWSTR fileTileSetPosition, D3DCOLOR transColor) {
 	D3DXIMAGE_INFO info;
-	HRESULT result = D3DXGetImageInfoFromFile(filePath, &info);
+	HRESULT result = D3DXGetImageInfoFromFile(fileTexturePath, &info);
 	if (result != D3D_OK)
 	{
-		DebugOut(L"[ERROR] GetImageInfoFromFile failed: %s\n", filePath);
+		DebugOut(L"[ERROR] GetImageInfoFromFile failed: %s\n", fileTexturePath);
 		return;
 	}
 
@@ -28,7 +30,7 @@ void TileManager::CutTileset(LPCWSTR filePath, D3DCOLOR transColor, int column, 
 
 	result = D3DXCreateTextureFromFileEx(
 		d3ddv,								// Pointer to Direct3D device object
-		filePath,							// Path to the image to load
+		fileTexturePath,							// Path to the image to load
 		info.Width,							// Texture width
 		info.Height,						// Texture height
 		1,
@@ -48,12 +50,15 @@ void TileManager::CutTileset(LPCWSTR filePath, D3DCOLOR transColor, int column, 
 		return;
 	}
 	this->tileset = texture;
-	this->column = column;
-	this->row = row;
-	for (int i = 0; i < this->row; i++) {
-		for (int j = 0;j < this->column; j++) {
-			AddTile(j * tile_width, i * tile_height, this->tile_height, this->tile_width);
-		}
+
+	DebugOut(L"[INFO] Start loading  resources from : %s \n", fileTileSetPosition);
+
+	ifstream f;
+	int left, top;
+	f.open(fileTileSetPosition);
+	while (f >> left >> top)
+	{
+		AddTile(left, top, this->tile_height, this->tile_width);
 	}
 }
 
