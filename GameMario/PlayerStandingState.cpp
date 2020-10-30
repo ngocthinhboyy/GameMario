@@ -109,6 +109,9 @@ void PlayerStandingState::KeyState(BYTE* states) {
 			mario->ChangeState(PlayerCrouchingState::GetInstance());
 		}
 	}
+	else if (game->IsKeyDown(DIK_Z) && mario->GetLevel() == MARIO_LEVEL_RACCOON) {
+		mario->ChangeState(PlayerSpinningState::GetInstance());
+	}
 }
 PlayerStandingState::PlayerStandingState() {
 };

@@ -8,6 +8,7 @@
 #include "PlayerJumpingState.h"
 #include "PlayerHighJumpingState.h"
 #include "PlayerSpinningState.h"
+#include "PlayerFlyingState.h"
 
 PlayerState* PlayerRunningState::__instance = NULL;
 PlayerRunningState::PlayerRunningState()
@@ -168,7 +169,11 @@ void PlayerRunningState::OnKeyDown(int KeyCode)
 		prevKeyIsLeft = false;
 		prevKeyIsRight = false;
 		isSkidding = false;
-		mario->ChangeState(PlayerHighJumpingState::GetInstance());
+		//mario->ChangeState(PlayerHighJumpingState::GetInstance());
+		if (abs(mario->vx) >= MARIO_RUNNING_MAX_SPEED)
+			mario->ChangeState(PlayerFlyingState::GetInstance());
+		else
+			mario->ChangeState(PlayerHighJumpingState::GetInstance());
 		break;
 	}
 	case DIK_A: {

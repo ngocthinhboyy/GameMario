@@ -6,6 +6,7 @@
 #include "PlayerFallingState.h"
 #include "PlayerWalkingState.h"
 #include "PlayerCrouchingState.h"
+#include "PlayerSpinningState.h"
 
 PlayerJumpingState::PlayerJumpingState() {};
 PlayerJumpingState::~PlayerJumpingState() {};
@@ -87,5 +88,21 @@ void PlayerJumpingState::KeyState(BYTE* states) {
 			}
 			mario->nx = -1;
 		}
+	}
+}
+
+void PlayerJumpingState::OnKeyDown(int KeyCode)
+{
+	Mario* mario = Mario::GetInstance();
+	switch (KeyCode)
+	{
+
+	case DIK_A: {
+		if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
+			mario->ChangeState(PlayerSpinningState::GetInstance());
+		break;
+	}
+	default:
+		break;
 	}
 }

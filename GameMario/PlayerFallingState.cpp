@@ -6,6 +6,7 @@
 #include "debug.h"
 #include "PlayerCrouchingState.h"
 #include "PlayerRunningState.h"
+#include "PlayerSpinningState.h"
 
 
 PlayerFallingState::PlayerFallingState()
@@ -89,19 +90,18 @@ void PlayerFallingState::KeyState(BYTE* states)
 
 void PlayerFallingState::OnKeyDown(int KeyCode)
 {
-	/*Mario* mario = Mario::GetInstance();
-	PlayerState* newState;
-	if (mario->vy == 0) {
-		if (mario->GetIsCrouChing() && mario->GetLevel() != MARIO_LEVEL_SMALL)
-			mario->ChangeState(PlayerCrouchingState::GetInstance());
-		else if (abs(mario->vx) > MARIO_WALKING_SPEED)
-		{
-			mario->ChangeState(PlayerRunningState::GetInstance());
-		}
-		else {
-			mario->ChangeState(PlayerStandingState::GetInstance());
-		}
-	}*/
+	Mario* mario = Mario::GetInstance();
+	switch (KeyCode)
+	{
+
+	case DIK_A: {
+		if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
+			mario->ChangeState(PlayerSpinningState::GetInstance());
+		break;
+	}
+	default:
+		break;
+	}
 }
 
 PlayerState* PlayerFallingState::GetInstance()

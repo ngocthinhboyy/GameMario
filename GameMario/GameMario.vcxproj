@@ -37,6 +37,7 @@
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="PlayerCrouchingState.cpp" />
     <ClCompile Include="PlayerFallingState.cpp" />
+    <ClCompile Include="PlayerFlyingState.cpp" />
     <ClCompile Include="PlayerHighJumpingState.cpp" />
     <ClCompile Include="PlayerJumpingState.cpp" />
     <ClCompile Include="PlayerRunningState.cpp" />
@@ -78,6 +79,7 @@
     <ClInclude Include="MarioDefine.h" />
     <ClInclude Include="PlayerCrouchingState.h" />
     <ClInclude Include="PlayerFallingState.h" />
+    <ClInclude Include="PlayerFlyingState.h" />
     <ClInclude Include="PlayerHighJumpingState.h" />
     <ClInclude Include="PlayerJumpingState.h" />
     <ClInclude Include="PlayerRunningState.h" />

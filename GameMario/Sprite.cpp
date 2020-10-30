@@ -29,16 +29,16 @@ void Sprite::Draw(float x, float y, int alpha, D3DXVECTOR2 scale)
 	if(scale.x >= 0)
 		D3DXMatrixTransformation2D(&newMatrix, &D3DXVECTOR2(p.x, p.y), 0, &scale, NULL, NULL, NULL);
 	else
-		D3DXMatrixTransformation2D(&newMatrix, &D3DXVECTOR2(p.x + (this->right - this->left), p.y), 0, &scale, NULL, NULL, NULL);
+		D3DXMatrixTransformation2D(&newMatrix, &D3DXVECTOR2(p.x, p.y), 0, &scale, NULL, NULL, NULL);
 
-	
+	D3DXVECTOR3 center = D3DXVECTOR3((float)(right - left) / 2, (float)(bottom - top) / 2, 0);
 	D3DXMATRIX oldMatrix;
 
 	spriteHandler->GetTransform(&oldMatrix);
 	spriteHandler->SetTransform(&newMatrix);
 
-	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
-
+	spriteHandler->Draw(texture, &r, &center, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
+	
 	spriteHandler->SetTransform(&oldMatrix);
 }
 

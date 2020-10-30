@@ -4,6 +4,7 @@
 #include "game.h"
 #include "PlayerWalkingState.h"
 #include "debug.h"
+#include "PlayerSpinningState.h"
 
 PlayerHighJumpingState::PlayerHighJumpingState()
 {
@@ -80,7 +81,7 @@ void PlayerHighJumpingState::KeyState(BYTE* states)
 			mario->vx = MARIO_WALKING_SPEED;
 		}
 		if (mario->vx < 0) {
-			mario->vx = -mario->vx;
+			mario->vx = -0.3 * (mario->vx);
 		}
 		mario->nx = 1;
 	}
@@ -90,7 +91,7 @@ void PlayerHighJumpingState::KeyState(BYTE* states)
 			mario->vx = -MARIO_WALKING_SPEED;
 		}
 		if (mario->vx > 0) {
-			mario->vx = -mario->vx;
+			mario->vx = -0.3 * (mario->vx);
 		}
 		mario->nx = -1;
 	}
@@ -98,6 +99,18 @@ void PlayerHighJumpingState::KeyState(BYTE* states)
 
 void PlayerHighJumpingState::OnKeyDown(int KeyCode)
 {
+	Mario* mario = Mario::GetInstance();
+	switch (KeyCode)
+	{
+
+	case DIK_A: {
+		if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
+			mario->ChangeState(PlayerSpinningState::GetInstance());
+		break;
+	}
+	default:
+		break;
+	}
 }
 
 void PlayerHighJumpingState::OnKeyUp(int KeyCode)

@@ -72,7 +72,7 @@ public:
 
 	int GetState() { return this->state; }
 
-	void RenderBoundingBox();
+	virtual void RenderBoundingBox();
 
 	void SetAnimationSet(LPANIMATION_SET ani_set) { animation_set = ani_set; }
 

@@ -12,6 +12,7 @@
 #include "PlayerState.h"
 #include <memory>
 #include "CollisionMapObject.h"
+#include "Textures.h"
 
 Mario* Mario::Mario::__instance = NULL;
 Mario* Mario::GetInstance() {
@@ -21,6 +22,27 @@ Mario* Mario::GetInstance() {
 void Mario::ChangeState(PlayerState* newState)
 {
 	this->playerState = newState;
+}
+
+void Mario::RenderBoundingBox()
+{
+	D3DXVECTOR3 p(x, y, 0);
+	RECT rect;
+
+	LPDIRECT3DTEXTURE9 bbox = Textures::GetInstance()->GetTexture(ID_TEX_BBOX);
+
+	float l, t, r, b;
+
+	GetBoundingBox(l, t, r, b);
+	rect.left = 0;
+	rect.top = 0;
+	rect.right = (int)r - (int)l;
+	rect.bottom = (int)b - (int)t;
+
+	float draw_x = x - ((int)r - (int)l) / 2;
+	float draw_y = y - ((int)b - (int)t) / 2;
+
+	Game::GetInstance()->Draw(draw_x, draw_y, bbox, rect.left, rect.top, rect.right, rect.bottom, 32);
 }
 
 void Mario::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, CollisionMapObject* collisionMapObject)
@@ -153,39 +175,47 @@ void Mario::SetState(int state)
 
 void Mario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = x;
-	top = y;
 
 	if (level == MARIO_LEVEL_BIG)
 	{
 
 		if (isCrouching) {
-			right = x + MARIO_BIG_CROUCH_BBOX_WIDTH;
-			bottom = y + MARIO_BIG_CROUCH_BBOX_HEIGHT;
+			left = x - MARIO_BIG_CROUCH_BBOX_WIDTH/2;
+			top = y - MARIO_BIG_CROUCH_BBOX_HEIGHT/2;
+			right = left + MARIO_BIG_CROUCH_BBOX_WIDTH;
+			bottom = top + MARIO_BIG_CROUCH_BBOX_HEIGHT;
 		}
 		else
 		{
-			right = x + MARIO_BIG_BBOX_WIDTH;
-			bottom = y + MARIO_BIG_BBOX_HEIGHT;
+			left = x - MARIO_BIG_BBOX_WIDTH / 2;
+			top = y - MARIO_BIG_BBOX_HEIGHT / 2;
+			right = left + MARIO_BIG_BBOX_WIDTH;
+			bottom = top + MARIO_BIG_BBOX_HEIGHT;
 		}
 
 	}
 	else if (level == MARIO_LEVEL_RACCOON) {
 
 		if (isCrouching) {
-			right = x + MARIO_BIG_CROUCH_BBOX_WIDTH;
-			bottom = y + MARIO_BIG_CROUCH_BBOX_HEIGHT;
+			left = x - MARIO_BIG_BBOX_WIDTH / 2;
+			top = y - MARIO_BIG_BBOX_HEIGHT / 2;
+			right = left + MARIO_BIG_CROUCH_BBOX_WIDTH;
+			bottom = top + MARIO_BIG_CROUCH_BBOX_HEIGHT;
 		}
 		else
 		{
-			right = x + MARIO_RACCOON_BBOX_WIDTH;
-			bottom = y + MARIO_RACCOON_BBOX_HEIGHT;
+			left = x - MARIO_RACCOON_BBOX_WIDTH / 2;
+			top = y - MARIO_RACCOON_BBOX_HEIGHT / 2;
+			right = left + MARIO_RACCOON_BBOX_WIDTH;
+			bottom = top + MARIO_RACCOON_BBOX_HEIGHT;
 		}
 	}
 	else if(level == MARIO_LEVEL_SMALL)
 	{
-		right = x + MARIO_SMALL_BBOX_WIDTH;
-		bottom = y + MARIO_SMALL_BBOX_HEIGHT;
+		left = x - MARIO_SMALL_BBOX_WIDTH / 2;
+		top = y - MARIO_SMALL_BBOX_HEIGHT / 2;
+		right = left + MARIO_SMALL_BBOX_WIDTH;
+		bottom = top + MARIO_SMALL_BBOX_HEIGHT;
 	}
 }
 

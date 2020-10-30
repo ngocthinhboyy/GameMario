@@ -5,6 +5,7 @@
 #include "AnimationDatabase.h"
 #include "debug.h"
 #include "PlayerRunningState.h"
+#include "PlayerFallingState.h"
 
 PlayerState* PlayerSpinningState::__instance = NULL;
 PlayerSpinningState::PlayerSpinningState()
@@ -54,6 +55,9 @@ void PlayerSpinningState::KeyState(BYTE* states)
 		animation->ResetAnimation();
 		if(game->IsKeyDown(DIK_A))
 			mario->ChangeState(PlayerRunningState::GetInstance());
+		else if (mario->vy > 0) {
+			mario->ChangeState(PlayerFallingState::GetInstance());
+		}
 		else
 			mario->ChangeState(PlayerStandingState::GetInstance());
 	}

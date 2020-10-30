@@ -90,16 +90,19 @@ void PlayerWalkingState::KeyState(BYTE* states) {
 		return;
 	}
 	if (game->IsKeyDown(DIK_RIGHT) && game->IsKeyDown(DIK_LEFT)) {
-		DebugOut(L"HAI NUT \n");
 		mario->ChangeState(PlayerStandingState::GetInstance());
 		return;
 	} else if (game->IsKeyDown(DIK_RIGHT)) {
-		//DebugOut(L"PHAI NUT \n");
 		mario->vx = MARIO_WALKING_SPEED;
+		if (game->IsKeyDown(DIK_Z) && mario->GetLevel() == MARIO_LEVEL_RACCOON) {
+			mario->ChangeState(PlayerSpinningState::GetInstance());
+		}
 		mario->nx = 1;
 	} else if (game->IsKeyDown(DIK_LEFT)) {
-		//DebugOut(L"TRAI NUT \n");
 		mario->vx = -MARIO_WALKING_SPEED;
+		if (game->IsKeyDown(DIK_Z) && mario->GetLevel() == MARIO_LEVEL_RACCOON) {
+			mario->ChangeState(PlayerSpinningState::GetInstance());
+		}
 		mario->nx = -1;
 	}
 	else
