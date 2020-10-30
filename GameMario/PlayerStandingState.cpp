@@ -72,16 +72,17 @@ void PlayerStandingState::OnKeyDown(int KeyCode) {
 		}
 		break;
 	}
-	/*case DIK_A: {
-		if (mario->GetLevel())
+	case DIK_A: {
+		if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
 			mario->ChangeState(PlayerSpinningState::GetInstance());
 		break;
-	}*/
+	}
 	default:
 		break;
 	}
 }
 void PlayerStandingState::KeyState(BYTE* states) {
+	//DebugOut(L"STANDING \n");
 	Mario* mario = Mario::GetInstance();
 	Game* game = Game::GetInstance();
 	if (game->IsKeyDown(DIK_X)) {
@@ -89,10 +90,16 @@ void PlayerStandingState::KeyState(BYTE* states) {
 		mario->ChangeState(PlayerJumpingState::GetInstance());
 	}
 	else if ((game->IsKeyDown(DIK_RIGHT) && game->IsKeyDown(DIK_LEFT))) {
+		//DebugOut(L"HAI NUT \n");
 		return;
 	}
 	else if (game->IsKeyDown(DIK_A) && (game->IsKeyDown(DIK_RIGHT) || game->IsKeyDown(DIK_LEFT))) {
+		if (mario->GetLevel() == MARIO_LEVEL_RACCOON) {
+			mario->ChangeState(PlayerSpinningState::GetInstance());
+			return;
+		}
 		mario->ChangeState(PlayerRunningState::GetInstance());
+		return;
 	}
 	else if (game->IsKeyDown(DIK_RIGHT) || game->IsKeyDown(DIK_LEFT)) {
 		mario->ChangeState(PlayerWalkingState::GetInstance());

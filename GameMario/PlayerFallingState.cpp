@@ -55,14 +55,16 @@ void PlayerFallingState::SetAnimation(int levelPlayer)
 
 void PlayerFallingState::Update(int dt)
 {
-	DebugOut(L"MARIO FALLINGGGGGGGG \n");
 	Mario* mario = Mario::GetInstance();
 	SetAnimation(mario->GetLevel());
 	if (mario->vy == 0) {
 		if (mario->GetIsCrouChing() && mario->GetLevel() != MARIO_LEVEL_SMALL)
 			mario->ChangeState(PlayerCrouchingState::GetInstance());
-		else
+		else if (abs(mario->vx) > MARIO_WALKING_SPEED)
 		{
+			mario->ChangeState(PlayerRunningState::GetInstance());
+		}
+		else {
 			mario->ChangeState(PlayerStandingState::GetInstance());
 		}
 	}
@@ -72,21 +74,34 @@ void PlayerFallingState::KeyState(BYTE* states)
 	Mario* mario = Mario::GetInstance();
 	Game* game = Game::GetInstance();
 	if (game->IsKeyDown(DIK_DOWN)) {
-		if (mario->vy == 0)
+		if (mario->vy == 0) {
 			mario->ChangeState(PlayerCrouchingState::GetInstance());
+			return;
+		}
+	}
+	if (game->IsKeyDown(DIK_RIGHT)) {
+		mario->nx = 1;
+	}
+	else if (game->IsKeyDown(DIK_LEFT)) {
+		mario->nx = -1;
 	}
 }
 
 void PlayerFallingState::OnKeyDown(int KeyCode)
 {
-	Mario* mario = Mario::GetInstance();
+	/*Mario* mario = Mario::GetInstance();
 	PlayerState* newState;
 	if (mario->vy == 0) {
 		if (mario->GetIsCrouChing() && mario->GetLevel() != MARIO_LEVEL_SMALL)
 			mario->ChangeState(PlayerCrouchingState::GetInstance());
-		else
+		else if (abs(mario->vx) > MARIO_WALKING_SPEED)
+		{
+			mario->ChangeState(PlayerRunningState::GetInstance());
+		}
+		else {
 			mario->ChangeState(PlayerStandingState::GetInstance());
-	}
+		}
+	}*/
 }
 
 PlayerState* PlayerFallingState::GetInstance()

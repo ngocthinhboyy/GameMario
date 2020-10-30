@@ -2,6 +2,9 @@
 #include "Mario.h"
 #include "game.h"
 #include "PlayerStandingState.h"
+#include "AnimationDatabase.h"
+#include "debug.h"
+#include "PlayerRunningState.h"
 
 PlayerState* PlayerSpinningState::__instance = NULL;
 PlayerSpinningState::PlayerSpinningState()
@@ -27,16 +30,32 @@ void PlayerSpinningState::Update(int dt)
 	SetAnimation(mario->GetLevel());
 }
 
-void PlayerSpinningState::OnKeyUp(int KeyCode)
+void PlayerSpinningState::KeyState(BYTE* states)
 {
 	Mario* mario = Mario::GetInstance();
-	switch (KeyCode)
+	Game* game = Game::GetInstance();
+	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
+	LPANIMATION animation = animationDatabase->Get(animationID);
+	bool isLastFrame = animation->GetIsLastFrame();
+	/*if (game->IsKeyDown(DIK_RIGHT))
 	{
-	case DIK_A:
-		mario->ChangeState(PlayerStandingState::GetInstance());
-		break;
-	default:
-		break;
+		if (abs(mario->vx) == 0) {
+			mario->vx = MARIO_WALKING_SPEED;
+		}
+		mario->nx = 1;
+	}
+	else if (game->IsKeyDown(DIK_LEFT)) {
+		if (abs(mario->vx) == 0) {
+			mario->vx = -MARIO_WALKING_SPEED;
+		}
+		mario->nx = -1;
+	}*/
+	if (isLastFrame) {
+		animation->ResetAnimation();
+		if(game->IsKeyDown(DIK_A))
+			mario->ChangeState(PlayerRunningState::GetInstance());
+		else
+			mario->ChangeState(PlayerStandingState::GetInstance());
 	}
 }
 

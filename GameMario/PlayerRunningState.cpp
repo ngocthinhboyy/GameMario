@@ -7,6 +7,7 @@
 #include "PlayerSkiddingState.h"
 #include "PlayerJumpingState.h"
 #include "PlayerHighJumpingState.h"
+#include "PlayerSpinningState.h"
 
 PlayerState* PlayerRunningState::__instance = NULL;
 PlayerRunningState::PlayerRunningState()
@@ -75,6 +76,7 @@ void PlayerRunningState::Update(int dt)
 
 void PlayerRunningState::KeyState(BYTE* states)
 {
+	//DebugOut(L"NGOCTHINHHHHHHHHHHH \n");
 	Game* game = Game::GetInstance();
 	Mario* mario = Mario::GetInstance();
 	if (game->IsKeyDown(DIK_A)) {
@@ -85,18 +87,21 @@ void PlayerRunningState::KeyState(BYTE* states)
 			isMaxSpeed = false;
 		}
 		if (game->IsKeyDown(DIK_X)) {
+			mario->vy = -MARIO_JUMP_SPEED_Y;
 			isMaxSpeed = false;
 			increaseSpeed = true;
 			prevKeyIsLeft = false;
 			prevKeyIsRight = false;
 			isSkidding = false;
 			mario->ChangeState(PlayerJumpingState::GetInstance());
+			return;
 		}
 		if (game->IsKeyDown(DIK_RIGHT) && game->IsKeyDown(DIK_LEFT)) {
 			if (mario->vx != 0) {
 				increaseSpeed = false;
 			}
-		} else if (game->IsKeyDown(DIK_RIGHT)) {
+		}
+		else if (game->IsKeyDown(DIK_RIGHT)) {
 			if (!prevKeyIsLeft && !isSkidding) {
 				increaseSpeed = true;
 				mario->nx = 1;
@@ -108,7 +113,8 @@ void PlayerRunningState::KeyState(BYTE* states)
 				prevKeyIsLeft = false;
 				prevKeyIsRight = true;
 			}
-		} else if (game->IsKeyDown(DIK_LEFT)) {
+		}
+		else if (game->IsKeyDown(DIK_LEFT)) {
 			if (!prevKeyIsRight && !isSkidding) {
 				increaseSpeed = true;
 				mario->nx = -1;
@@ -120,7 +126,8 @@ void PlayerRunningState::KeyState(BYTE* states)
 				prevKeyIsRight = false;
 				prevKeyIsLeft = true;
 			}
-		} else {
+		}
+		else {
 			if (mario->vx != 0) {
 				increaseSpeed = false;
 			}
@@ -146,12 +153,33 @@ void PlayerRunningState::OnKeyDown(int KeyCode)
 	{
 	case DIK_X: {
 		mario->vy = -MARIO_JUMP_SPEED_Y;
+		isMaxSpeed = false;
+		increaseSpeed = true;
+		prevKeyIsLeft = false;
+		prevKeyIsRight = false;
+		isSkidding = false;
 		mario->ChangeState(PlayerJumpingState::GetInstance());
 		break;
 	}
 	case DIK_S: {
 		mario->vy = -MARIO_JUMP_SPEED_Y;
+		isMaxSpeed = false;
+		increaseSpeed = true;
+		prevKeyIsLeft = false;
+		prevKeyIsRight = false;
+		isSkidding = false;
 		mario->ChangeState(PlayerHighJumpingState::GetInstance());
+		break;
+	}
+	case DIK_A: {
+		if (mario->GetLevel() == MARIO_LEVEL_RACCOON) {
+			isMaxSpeed = false;
+			increaseSpeed = true;
+			prevKeyIsLeft = false;
+			prevKeyIsRight = false;
+			isSkidding = false;
+			mario->ChangeState(PlayerSpinningState::GetInstance());
+		}
 		break;
 	}
 	default:

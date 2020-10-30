@@ -36,11 +36,21 @@ void Animation::Render(float x, float y, int alpha, D3DXVECTOR2 scale)
 			currentFrame++;
 			lastFrameTime = now;
 			if (currentFrame == frames.size()) {
+				isLastFrame = true;
 				currentFrame = 0;
 			}
+			else
+				isLastFrame = false;
 		}
 	}
 
 	frames[currentFrame]->GetSprite()->Draw(x, y, alpha, scale);
+}
+
+void Animation::ResetAnimation()
+{
+	isLastFrame = false;
+	currentFrame = -1;
+
 }
 

@@ -8,7 +8,7 @@ public:
 	PlayerSpinningState();
 	void SetAnimation(int levelPlayer);
 	void Update(int dt);
-	void OnKeyUp(int KeyCode);
+	void KeyState(BYTE* states);
 	static PlayerState* GetInstance();
 	~PlayerSpinningState();
 };

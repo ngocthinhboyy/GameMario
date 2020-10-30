@@ -79,12 +79,18 @@ void PlayerHighJumpingState::KeyState(BYTE* states)
 		if (abs(mario->vx) == 0) {
 			mario->vx = MARIO_WALKING_SPEED;
 		}
+		if (mario->vx < 0) {
+			mario->vx = -mario->vx;
+		}
 		mario->nx = 1;
 	}
 	else if (game->IsKeyDown(DIK_LEFT)) {
 		
 		if (abs(mario->vx) == 0) {
 			mario->vx = -MARIO_WALKING_SPEED;
+		}
+		if (mario->vx > 0) {
+			mario->vx = -mario->vx;
 		}
 		mario->nx = -1;
 	}

@@ -70,7 +70,6 @@ void PlayerWalkingState::OnKeyDown(int KeyCode) {
 				mario->ChangeState(PlayerSpinningState::GetInstance());
 			break;*/
 		default:
-			mario->ChangeState(PlayerStandingState::GetInstance());
 			break;
 	}
 }
@@ -80,12 +79,26 @@ void PlayerWalkingState::KeyState(BYTE* states) {
 	if (game->IsKeyDown(DIK_X)) {
 		mario->vy = -MARIO_JUMP_SPEED_Y;
 		mario->ChangeState(PlayerJumpingState::GetInstance());
+		return;
 	}
-	if (game->IsKeyDown(DIK_RIGHT)) {
+	if (game->IsKeyDown(DIK_A)) {
+		if (mario->GetLevel() == MARIO_LEVEL_RACCOON) {
+			mario->ChangeState(PlayerSpinningState::GetInstance());
+			return;
+		}
+		mario->ChangeState(PlayerRunningState::GetInstance());
+		return;
+	}
+	if (game->IsKeyDown(DIK_RIGHT) && game->IsKeyDown(DIK_LEFT)) {
+		DebugOut(L"HAI NUT \n");
+		mario->ChangeState(PlayerStandingState::GetInstance());
+		return;
+	} else if (game->IsKeyDown(DIK_RIGHT)) {
+		//DebugOut(L"PHAI NUT \n");
 		mario->vx = MARIO_WALKING_SPEED;
 		mario->nx = 1;
-	}
-	else if (game->IsKeyDown(DIK_LEFT)) {
+	} else if (game->IsKeyDown(DIK_LEFT)) {
+		//DebugOut(L"TRAI NUT \n");
 		mario->vx = -MARIO_WALKING_SPEED;
 		mario->nx = -1;
 	}
