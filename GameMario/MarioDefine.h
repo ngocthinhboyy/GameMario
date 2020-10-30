@@ -68,7 +68,7 @@
 #define MARIO_GRAVITY						0.002f
 #define MARIO_DIE_DEFLECT_SPEED				0.5f
 
-#define DO_LECH_O_CROUCHING					27.0f
+#define DO_LECH_O_CROUCHING					14.0f
 
 #define MARIO_ANI_DIE						8
 #define MARIO_STATE_DIE						8

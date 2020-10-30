@@ -106,6 +106,7 @@ void PlayerStandingState::KeyState(BYTE* states) {
 	}
 	else if (game->IsKeyDown(DIK_DOWN)) {
 		if (mario->GetLevel() != MARIO_LEVEL_SMALL) {
+			mario->y += 14.0f;
 			mario->ChangeState(PlayerCrouchingState::GetInstance());
 		}
 	}
