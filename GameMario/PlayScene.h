@@ -15,7 +15,6 @@ protected:
 	Mario* player;					// A play scene has to have player, right? 
 	int mapID;
 
-	vector<LPGAMEOBJECT> objects;
 
 	void _ParseSection_TEXTURES(string line);
 	void _ParseSection_SPRITES(string line);
@@ -26,6 +25,7 @@ protected:
 
 
 public:
+	vector<LPGAMEOBJECT> objects;
 	PlayScene(int id, LPCWSTR filePath);
 
 	virtual void Load();

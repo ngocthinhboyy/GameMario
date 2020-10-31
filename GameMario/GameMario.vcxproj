@@ -27,6 +27,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CollisionMapObject.cpp" />
     <ClCompile Include="debug.cpp" />
+    <ClCompile Include="Fireball.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Goomba.cpp" />
@@ -45,6 +46,7 @@
     <ClCompile Include="PlayerSpinningState.cpp" />
     <ClCompile Include="PlayerStandingState.cpp" />
     <ClCompile Include="PlayerState.cpp" />
+    <ClCompile Include="PlayerThrowingFireballState.cpp" />
     <ClCompile Include="PlayerWalkingState.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="PlaySceneKeyHandler.cpp" />
@@ -66,6 +68,8 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CollisionMapObject.h" />
     <ClInclude Include="debug.h" />
+    <ClInclude Include="DynamicObjectDefine.h" />
+    <ClInclude Include="Fireball.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Goomba.h" />
@@ -87,6 +91,7 @@
     <ClInclude Include="PlayerSpinningState.h" />
     <ClInclude Include="PlayerStandingState.h" />
     <ClInclude Include="PlayerState.h" />
+    <ClInclude Include="PlayerThrowingFireballState.h" />
     <ClInclude Include="PlayerWalkingState.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="PlaySceneKeyHandler.h" />

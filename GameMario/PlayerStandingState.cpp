@@ -9,6 +9,7 @@
 #include "PlayerCrouchingState.h"
 #include "PlayerRunningState.h"
 #include "PlayerSpinningState.h"
+#include "PlayerThrowingFireballState.h"
 
 
 PlayerState* PlayerStandingState::__instance = NULL;
@@ -80,6 +81,8 @@ void PlayerStandingState::OnKeyDown(int KeyCode) {
 	case DIK_A: {
 		if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
 			mario->ChangeState(PlayerSpinningState::GetInstance());
+		else if (mario->GetLevel() == MARIO_LEVEL_FIRE)
+			mario->ChangeState(PlayerThrowingFireballState::GetInstance());
 		break;
 	}
 	default:
