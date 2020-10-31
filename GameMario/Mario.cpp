@@ -176,7 +176,7 @@ void Mario::SetState(int state)
 void Mario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 
-	if (level == MARIO_LEVEL_BIG)
+	if (level == MARIO_LEVEL_BIG || level == MARIO_LEVEL_FIRE)
 	{
 
 		if (isCrouching) {

@@ -40,6 +40,13 @@ void PlayerRunningState::SetAnimation(int levelPlayer)
 			animationID = MARIO_ANI_RACCOON_WALKING_RIGHT;
 		break;
 	}
+	case MARIO_LEVEL_FIRE: {
+		if (isMaxSpeed)
+			animationID = MARIO_ANI_FIRE_RUN;
+		else
+			animationID = MARIO_ANI_FIRE_WALKING_RIGHT;
+		break;
+	}
 	default:
 		break;
 	}

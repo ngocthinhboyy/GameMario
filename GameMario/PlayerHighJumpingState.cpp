@@ -44,6 +44,16 @@ void PlayerHighJumpingState::SetAnimation(int levelPlayer)
 				animationID = MARIO_ANI_RACCOON_HIGH_JUMP_LEFT;
 		}
 		break;
+	case MARIO_LEVEL_FIRE:
+		if (mario->GetIsCrouChing()) {
+			animationID = MARIO_ANI_FIRE_CROUCH;
+		}
+		else {
+			if (mario->nx == 1)
+				animationID = MARIO_ANI_FIRE_HIGH_JUMP_RIGHT;
+			else
+				animationID = MARIO_ANI_FIRE_HIGH_JUMP_LEFT;
+		}
 		break;
 	default:
 		break;

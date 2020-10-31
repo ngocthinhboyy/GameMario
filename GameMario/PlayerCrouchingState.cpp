@@ -26,6 +26,11 @@ void PlayerCrouchingState::SetAnimation(int levelPlayer)
 		animationID = MARIO_ANI_RACCOON_CROUCH;
 		break;
 	}
+	case MARIO_LEVEL_FIRE:
+	{
+		animationID = MARIO_ANI_FIRE_CROUCH;
+		break;
+	}
 	default:
 		break;
 	}

@@ -49,6 +49,18 @@ void PlayerFallingState::SetAnimation(int levelPlayer)
 				animationID = MARIO_ANI_RACCOON_FALL;
 		}
 		break;
+		// thieu animation fall
+	case MARIO_LEVEL_FIRE:
+		if (mario->GetIsCrouChing()) {
+			animationID = MARIO_ANI_FIRE_CROUCH;
+		}
+		else {
+			if (mario->nx == 1)
+				animationID = MARIO_ANI_FIRE_IDLE_RIGHT;
+			else
+				animationID = MARIO_ANI_FIRE_IDLE_LEFT;
+		}
+		break;
 	default:
 		break;
 	}

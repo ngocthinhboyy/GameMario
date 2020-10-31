@@ -44,6 +44,11 @@ void PlayerStandingState::SetAnimation(int levelPlayer)
 			animationID = MARIO_ANI_RACCOON_IDLE_LEFT;
 		break;
 	}
+	case MARIO_LEVEL_FIRE:
+	{
+		animationID = MARIO_ANI_FIRE_IDLE_RIGHT;
+		break;
+	}
 	default:
 		break;
 	}

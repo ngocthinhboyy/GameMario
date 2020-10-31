@@ -43,6 +43,14 @@ void PlayerWalkingState::SetAnimation(int levelPlayer)
 				animationID = MARIO_ANI_RACCOON_WALKING_LEFT;
 			break;
 		}
+		case MARIO_LEVEL_FIRE:
+		{
+			if (mario->nx == 1)
+				animationID = MARIO_ANI_FIRE_WALKING_RIGHT;
+			else
+				animationID = MARIO_ANI_FIRE_WALKING_LEFT;
+			break;
+		}
 		default:
 			break;
 		}

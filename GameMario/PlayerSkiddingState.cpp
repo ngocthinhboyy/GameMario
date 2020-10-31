@@ -25,6 +25,10 @@ void PlayerSkiddingState::SetAnimation(int levelPlayer)
 		animationID = MARIO_ANI_RACCOON_SKID;
 		break;
 	}
+	case MARIO_LEVEL_FIRE: {
+		animationID = MARIO_ANI_FIRE_SKID;
+		break;
+	}
 	default:
 		break;
 	}
