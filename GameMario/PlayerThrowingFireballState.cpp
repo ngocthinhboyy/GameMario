@@ -36,12 +36,12 @@ void PlayerThrowingFireballState::KeyState(BYTE* states)
 	Game* game = Game::GetInstance();
 	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
 	LPANIMATION animation = animationDatabase->Get(animationID);
-	PlayScene* scene = dynamic_cast<PlayScene*> (game->GetCurrentScene());
-	Fireball* fireball = new Fireball(mario->x + 2, mario->y, 15, 15);
-	scene->objects.push_back(fireball);
 	bool isLastFrame = animation->GetIsLastFrame();
-	fireball->Render();
 	if (isLastFrame) {
+		PlayScene* scene = dynamic_cast<PlayScene*> (game->GetCurrentScene());
+		Fireball* fireball = new Fireball(mario->x + MARIO_BIG_BBOX_WIDTH / 2, mario->y, 9, 9);
+		scene->objects.push_back(fireball);
+		fireball->Render();
 		animation->ResetAnimation();
 		mario->ChangeState(PlayerStandingState::GetInstance());
 	}
