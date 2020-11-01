@@ -62,6 +62,8 @@ public:
 
 	DWORD dt;
 
+	bool stillAlive = true;
+
 	LPANIMATION_SET animation_set;
 
 public:

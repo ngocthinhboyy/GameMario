@@ -1,10 +1,9 @@
 #pragma once
 #include "GameObject.h"
+#include "CollisionMapObject.h"
 class Fireball : public GameObject
 {
 	LPANIMATION animation;
-	DWORD untouchable_start;
-	int untouchable;
 public:
 
 	Fireball();
@@ -12,7 +11,7 @@ public:
 	void Render();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
-	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
+	void CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, CollisionMapObject* collisionMapObject);
 	void RenderBoundingBox();
 };
 

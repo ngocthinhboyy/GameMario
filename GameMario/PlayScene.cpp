@@ -274,6 +274,10 @@ void PlayScene::Update(DWORD dt)
 	for (size_t i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Update(dt, &coObjects);
+		//DebugOut(L"STILL ALIVEEEEE %d\n", objects[i]->stillAlive);
+		if (!(objects[i]->stillAlive)) {
+			objects.erase(objects.begin() + i);
+		}
 	}
 
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)

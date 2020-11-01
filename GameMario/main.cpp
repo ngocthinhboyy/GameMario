@@ -12,14 +12,11 @@
 #include "Goomba.h"
 
 #include "PlayScene.h"
+#include "GraphicsDefine.h"
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"SAMPLE 05 - SCENCE MANAGER"
 
-#define BACKGROUND_COLOR D3DCOLOR_XRGB(156,252,240)
-#define SCREEN_WIDTH 760
-#define SCREEN_HEIGHT 730
-#define MAX_FRAME_RATE 120
 
 Game * game;
 
