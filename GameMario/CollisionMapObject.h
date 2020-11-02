@@ -11,5 +11,6 @@ public:
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	int GetCollisionDirectionX() { return this->collisionDirectionX; };
 	int GetCollisionDirectionY() { return this->collisionDirectionY; };
+	void RenderBoundingBox();
 };
 

@@ -27,6 +27,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CollisionMapObject.cpp" />
     <ClCompile Include="debug.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Fireball.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -69,6 +70,8 @@
     <ClInclude Include="CollisionMapObject.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="DynamicObjectDefine.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyDefine.h" />
     <ClInclude Include="Fireball.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="GameObject.h" />

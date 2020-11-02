@@ -40,7 +40,6 @@ public:
 	int GetLevel() { return level; };
 	void ChangeState(PlayerState* newState);
 	PlayerState* GetPlayerState() { return this->playerState; };
-	void RenderBoundingBox();
 
 	void CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, CollisionMapObject* collisionMapObject);
 	//void CollisionWithVisibleObjectInMap();

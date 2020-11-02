@@ -150,12 +150,12 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		DebugOut(L"[INFO] Player object created!\n");
 		break;
 	}
-	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(); break;
+	case OBJECT_TYPE_GOOMBA:break;
 	case OBJECT_TYPE_BRICK: {
 		obj = new Brick(w,h); 
 		break;
 	}
-	case OBJECT_TYPE_KOOPAS: obj = new Koopas(); break;
+	case OBJECT_TYPE_KOOPAS:  break;
 	case OBJECT_TYPE_PORTAL:
 		break;
 	case OBJECT_TYPE_COLLISION_MAP: {

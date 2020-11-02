@@ -1,0 +1,10 @@
+#pragma once
+
+#define GOOMBA_BBOX_WIDTH	48
+#define GOOMBA_BBOX_HEIGHT	48
+
+#define KOOPA_BBOX_WIDTH	48
+#define KOOBA_BBOX_HEIGHT	78
+#define KOOBA_DIE_BBOX_HEIGHT	48
+
+#define ENEMY_GRAVITY		0.002f

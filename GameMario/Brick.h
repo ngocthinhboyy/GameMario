@@ -11,4 +11,5 @@ public:
 	Brick(float w, float h);
 	void Render();
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
+	void RenderBoundingBox();
 };

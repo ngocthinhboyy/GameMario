@@ -117,6 +117,7 @@ void GameObject::FilterCollision(
 
 void GameObject::RenderBoundingBox()
 {
+
 	D3DXVECTOR3 p(x, y, 0);
 	RECT rect;
 
@@ -129,8 +130,10 @@ void GameObject::RenderBoundingBox()
 	rect.top = 0;
 	rect.right = (int)r - (int)l;
 	rect.bottom = (int)b - (int)t;
+	float draw_x = x - ((int)r - (int)l) / 2;
+	float draw_y = y - ((int)b - (int)t) / 2;
 
-	Game::GetInstance()->Draw(x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, 32);
+	Game::GetInstance()->Draw(draw_x, draw_y, bbox, rect.left, rect.top, rect.right, rect.bottom, 32);
 }
 
 

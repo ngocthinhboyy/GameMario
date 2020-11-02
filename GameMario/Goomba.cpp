@@ -1,64 +1,104 @@
 #include "Goomba.h"
-CGoomba::CGoomba()
+#include "EnemyDefine.h"
+#include "MarioDefine.h"
+
+Goomba::Goomba()
 {
-	SetState(GOOMBA_STATE_WALKING);
 }
 
-void CGoomba::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+Goomba::Goomba(float x, float y, float w, float h)
 {
-	left = x;
-	top = y;
-	right = x + GOOMBA_BBOX_WIDTH;
-
-	if (state == GOOMBA_STATE_DIE)
-		bottom = y + GOOMBA_BBOX_HEIGHT_DIE;
-	else
-		bottom = y + GOOMBA_BBOX_HEIGHT;
+	this->x = x;
+	this->y = y;
+	this->w = w;
+	this->h = h;
+	
 }
 
-void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+void Goomba::Render()
 {
-	GameObject::Update(dt, coObjects);
-
-	//
-	// TO-DO: make sure Goomba can interact with the world and to each of them too!
-	// 
-
-	x += dx;
-	y += dy;
-
-	if (vx < 0 && x < 0) {
-		x = 0; vx = -vx;
-	}
-
-	if (vx > 0 && x > 290) {
-		x = 290; vx = -vx;
-	}
 }
 
-void CGoomba::Render()
+void Goomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	int ani = GOOMBA_ANI_WALKING;
-	if (state == GOOMBA_STATE_DIE) {
-		ani = GOOMBA_ANI_DIE;
-	}
+	GameObject::Update(dt);
 
-	animation_set->at(ani)->Render(x, y);
+	vy += ENEMY_GRAVITY * dt;
 
-	//RenderBoundingBox();
-}
 
-void CGoomba::SetState(int state)
-{
-	GameObject::SetState(state);
-	switch (state)
+	vector<LPCOLLISIONEVENT> coEvents;
+	vector<LPCOLLISIONEVENT> coEventsResult;
+
+	coEvents.clear();
+	CalcPotentialCollisions(coObjects, coEvents);
+
+	if (coEvents.size() == 0)
 	{
-	case GOOMBA_STATE_DIE:
-		y += GOOMBA_BBOX_HEIGHT - GOOMBA_BBOX_HEIGHT_DIE + 1;
-		vx = 0;
-		vy = 0;
-		break;
-	case GOOMBA_STATE_WALKING:
-		vx = -GOOMBA_WALKING_SPEED;
+		x += dx;
+		y += dy;
+	}
+	else
+	{
+		float min_tx, min_ty, nx = 0, ny;
+		float rdx = 0;
+		float rdy = 0;
+
+
+		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
+
+		x += min_tx * dx + nx * 0.4f;
+		y += min_ty * dy + ny * 0.4f;
+
+		int coEventsSize = coEventsResult.size();
+
+		for (UINT i = 0; i < coEventsSize; i++)
+		{
+			LPCOLLISIONEVENT e = coEventsResult[i];
+			if (CollisionMapObject* collMapObj = dynamic_cast<CollisionMapObject*> (e->obj)) {
+				CollisionWithCollisionMapObject(e, collMapObj);
+			}
+			else {
+				if (e->nx != 0) vx = 0;
+				if (e->ny != 0) vy = 0;
+			}
+		}
+	}
+
+	// clean up collision events
+	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+}
+
+void Goomba::GetBoundingBox(float& l, float& t, float& r, float& b)
+{
+	l = x - GOOMBA_BBOX_WIDTH / 2;
+	t = y - GOOMBA_BBOX_HEIGHT / 2;
+	r = l + GOOMBA_BBOX_WIDTH;
+	b = t + GOOMBA_BBOX_HEIGHT;
+}
+
+void Goomba::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, CollisionMapObject* collisionMapObject)
+{
+	int collisionMapObjectDirectionX = collisionMapObject->GetCollisionDirectionX();
+	int collisionMapObjectDirectionY = collisionMapObject->GetCollisionDirectionY();
+	if (collisionEvent->nx != 0) {
+		if (collisionMapObjectDirectionX == 0)
+			x += dx;
+		else if (collisionEvent->nx < 0 && collisionMapObjectDirectionX == 1)
+			x += dx;
+		else if (collisionEvent->nx > 0 && collisionMapObjectDirectionX == -1)
+			x += dx;
+		else {
+			vx = 0;
+		}
+	}
+	if (collisionEvent->ny != 0) {
+		if (collisionMapObjectDirectionY == 0)
+			y += dy;
+		else if (collisionEvent->ny < 0 && collisionMapObjectDirectionY == 1)
+			y += dy;
+		else if (collisionEvent->ny > 0 && collisionMapObjectDirectionY == -1)
+			y += dy;
+		else
+			vy = 0;
 	}
 }

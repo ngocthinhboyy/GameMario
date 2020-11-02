@@ -4,6 +4,7 @@
 2	textures\misc.png	176	224	248
 3	textures\transparent_brick.png	255	0	255
 4	textures\fireball.png	0	0	0
+5	textures\enemy.png	255	255	255
 # id	left	top	width	height	texture_id
 [SPRITES]
 # SMALL MARIO
@@ -127,6 +128,58 @@
 70004	33	0	9	9	4
 #BRICK COLLSION
 60001	0	0	16	16	3
+#ENEMY
+#TAN GOOMBA
+# walking
+80001	9	11	16	16	5	
+80002	32	11	16	16	5
+
+#die
+80003	54	18	16	9	5
+
+# RED GOOMBA
+# walking
+80004	104	70	 16	16	5
+80005	125	70	 16	16	5
+
+# die
+80006	145	77	 16	9	5
+
+# walking swings
+80007	66	35	 20	24	5
+80008	90	35	 20	24	5
+80009	116	40	 20	19	5
+80010	140	40	 20	19	5
+
+# RED KOOPA
+# walking
+90001	28	67	 16	26	5
+90002	47	66	 16	27	5
+
+# die
+90003	29	97	 16	16	5
+90004	50	96	 16	16	5
+90005	71	96	 16	16	5
+
+#walking swings
+90006	105	93	 16	27	5
+90007	126	94	 16	26	5
+90008	147	93	 16	27	5
+
+# GREEN KOOPA
+# walking
+90009	31	119	 16	26	5
+90010	50	118	 16	27	5
+
+# die
+90011	32	149	 16	16	5
+90012	53	148	 16	16	5
+90013	74	148	 16	16	5
+
+# walking swings
+90014	105	129	 16	27	5
+90015	126	130	 16	26	5
+90016	147	129	 16	27	5
 
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
@@ -250,8 +303,42 @@
 701	70001	50	70002	50	70003	50	70004	50
 # ==== QUESTION BRICK =========
 501	50001	100	50001	100	50002	100	50003	100	50004	100
-# BRICK COLLISION
+# ==== BRICK COLLISION ===========
 601	60001	100
+# ==== ENEMY COLLISION ===========
+# ==== GOOMBA ========
+# walking
+801	80001	100	80002	100
+# die
+802	80003	100
+# ==== RED GOOMBA =====
+# walking
+803	80004	100	80005	100
+# die
+804	80006	100
+# walking with swings
+805	80007	100	80008	100	80009	100	80010	100
+
+# ==== RED KOOPA ========
+#walking
+901	90001	100	90002	100
+# die
+902	90003	100
+# spin die kick
+903	90003	100	90004	100	90005	100
+# walking with swings
+904	90006	100	90007	100	90008	100
+
+# ==== GREEN KOOPA =====
+# walking
+905	90009	100	90010	100
+# die
+906	90011	100
+# spin
+907	90011	100	90012	100	90013	100
+# walking with swings
+908	90014	100	90015	100	90016	100
+
 
 # id	ani1	ani2	ani3
 [ANIMATION_SETS]
@@ -261,6 +348,10 @@
 2	501
 # BRICK COLLISION
 3	601
-#FIREBALL ROLLING
+# FIREBALL ROLLING
 4	701
+# GOOMBA
+5	801	802	803	804	805
+# KOOPA
+6	901	902	903	904	905	906	907	908
 

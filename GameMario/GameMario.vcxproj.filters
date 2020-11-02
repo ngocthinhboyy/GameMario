@@ -99,12 +99,6 @@
     <ClCompile Include="Mario.cpp">
       <Filter>Framework\Game_Object\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Goomba.cpp">
-      <Filter>Framework\Game_Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Koopas.cpp">
-      <Filter>Framework\Game_Object\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="Portal.cpp">
       <Filter>Framework\Game_Scene</Filter>
     </ClCompile>
@@ -183,6 +177,15 @@
     <ClCompile Include="Fireball.cpp">
       <Filter>Framework\Game_Object\DynamicObject</Filter>
     </ClCompile>
+    <ClCompile Include="Goomba.cpp">
+      <Filter>Framework\Game_Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Koopas.cpp">
+      <Filter>Framework\Game_Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Framework\Game_Object\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -217,12 +220,6 @@
     </ClInclude>
     <ClInclude Include="Mario.h">
       <Filter>Framework\Game_Object\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Goomba.h">
-      <Filter>Framework\Game_Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Koopas.h">
-      <Filter>Framework\Game_Object\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Portal.h">
       <Filter>Framework\Game_Scene</Filter>
@@ -316,6 +313,18 @@
     </ClInclude>
     <ClInclude Include="DynamicObjectDefine.h">
       <Filter>Framework\Define</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyDefine.h">
+      <Filter>Framework\Define</Filter>
+    </ClInclude>
+    <ClInclude Include="Goomba.h">
+      <Filter>Framework\Game_Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Koopas.h">
+      <Filter>Framework\Game_Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Framework\Game_Object\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
