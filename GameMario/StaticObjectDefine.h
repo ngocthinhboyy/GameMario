@@ -1,0 +1,6 @@
+#pragma once
+
+#define QUESTION_BRICK_ANI		501
+
+#define QUESTION_BRICK_BBOX_WIDTH 48
+#define QUESTION_BRICK_BBOX_HEIGHT 48

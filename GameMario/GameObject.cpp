@@ -15,7 +15,7 @@ GameObject::GameObject()
 	nx = 1;
 }
 
-void GameObject::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+void GameObject::Update(DWORD dt)
 {
 	this->dt = dt;
 	dx = vx * dt;

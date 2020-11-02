@@ -8,9 +8,11 @@ public:
 	CollisionMapObject();
 	CollisionMapObject(float w, float h, int colDirectX, int colDirectY);
 	void Render();
-	void GetBoundingBox(float& l, float& t, float& r, float& b);
+	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	int GetCollisionDirectionX() { return this->collisionDirectionX; };
 	int GetCollisionDirectionY() { return this->collisionDirectionY; };
 	void RenderBoundingBox();
 };
+
+typedef CollisionMapObject* LPCOLLISIONMAPOBJECT;
 

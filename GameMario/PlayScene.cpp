@@ -15,6 +15,7 @@
 #include "PlayerStandingState.h"
 #include "CollisionMapObject.h"
 #include "LoadDefine.h"
+#include "QuestionBrick.h"
 
 using namespace std;
 
@@ -131,6 +132,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 	AnimationManager* animation_sets = AnimationManager::GetInstance();
 
 	GameObject* obj = NULL;
+	LPANIMATION_SET ani_set = NULL;
 
 	switch (object_type)
 	{
@@ -143,25 +145,60 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		Mario* mario = Mario::GetInstance();
 		mario->SetLevel(MARIO_LEVEL_FIRE);
 		mario->ChangeState(PlayerStandingState::GetInstance());
-		LPANIMATION_SET ani_set = AnimationManager::GetInstance()->Get(ani_set_id);
+		ani_set = AnimationManager::GetInstance()->Get(ani_set_id);
 		player = mario;
 		obj = mario;
+		obj->SetPosition(x, y);
 
+		obj->SetAnimationSet(ani_set);
+		objects.push_back(obj);
 		DebugOut(L"[INFO] Player object created!\n");
 		break;
 	}
-	case OBJECT_TYPE_GOOMBA:break;
-	case OBJECT_TYPE_BRICK: {
-		obj = new Brick(w,h); 
+	case OBJECT_TYPE_GOOMBA: {
+		obj = new Goomba(x, y, w, h);
+		obj->SetPosition(x, y);
+
+		ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
+		enemies.push_back(obj);
 		break;
 	}
-	case OBJECT_TYPE_KOOPAS:  break;
+	case OBJECT_TYPE_BRICK: {
+
+		obj = new QuestionBrick(x, y, w, h);
+		obj->SetPosition(x, y);
+
+		ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
+		objects.push_back(obj);
+		break;
+	}
+	case OBJECT_TYPE_KOOPA: {
+		int typeKoopa = atoi(tokens[6].c_str());
+		obj = new Koopa(x, y, w, h,typeKoopa);
+		obj->SetPosition(x, y);
+
+		ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
+		enemies.push_back(obj);
+		break;
+	}
 	case OBJECT_TYPE_PORTAL:
 		break;
 	case OBJECT_TYPE_COLLISION_MAP: {
 		int collisionDirectionX = atoi(tokens[6].c_str());
 		int collisionDirectionY = atoi(tokens[7].c_str());
 		obj = new CollisionMapObject(w,h, collisionDirectionX, collisionDirectionY);
+		obj->SetPosition(x, y);
+
+		ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
+		collisionMapObjects.push_back(obj);
 		break;
 	}
 	default:
@@ -170,12 +207,6 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 	}
 
 	// General object setup
-	obj->SetPosition(x, y);
-
-	LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
-
-	obj->SetAnimationSet(ani_set);
-	objects.push_back(obj);
 }
 
 void PlayScene::_ParseSection_MAP(string line)
@@ -271,15 +302,21 @@ void PlayScene::Update(DWORD dt)
 		coObjects.push_back(objects[i]);
 	}
 
+	for (size_t i = 0; i < enemies.size(); i++)
+	{
+		enemies[i]->Update(dt);
+		if (!(enemies[i]->stillAlive)) {
+			enemies.erase(enemies.begin() + i);
+		}
+	}
+
 	for (size_t i = 0; i < objects.size(); i++)
 	{
-		objects[i]->Update(dt, &coObjects);
-		//DebugOut(L"STILL ALIVEEEEE %d\n", objects[i]->stillAlive);
+		objects[i]->Update(dt);
 		if (!(objects[i]->stillAlive)) {
 			objects.erase(objects.begin() + i);
 		}
 	}
-
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return;
 
@@ -306,6 +343,10 @@ void PlayScene::Render()
 
 	for (int i = 0; i < objects.size(); i++) {
 		objects[i]->Render();
+	}
+	//DebugOut(L"ENEMI %d\n", enemies.size());
+	for (int i = 0; i < enemies.size(); i++) {
+		enemies[i]->Render();
 	}
 }
 

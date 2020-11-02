@@ -102,9 +102,6 @@
     <ClCompile Include="Portal.cpp">
       <Filter>Framework\Game_Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Brick.cpp">
-      <Filter>Framework\Game_Object\StaticObject</Filter>
-    </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Framework\Game_Scene\Scene</Filter>
     </ClCompile>
@@ -180,11 +177,14 @@
     <ClCompile Include="Goomba.cpp">
       <Filter>Framework\Game_Object\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Koopas.cpp">
-      <Filter>Framework\Game_Object\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Framework\Game_Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Koopa.cpp">
+      <Filter>Framework\Game_Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="QuestionBrick.cpp">
+      <Filter>Framework\Game_Object\StaticObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -223,9 +223,6 @@
     </ClInclude>
     <ClInclude Include="Portal.h">
       <Filter>Framework\Game_Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Brick.h">
-      <Filter>Framework\Game_Object\StaticObject</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Framework\Game_Scene\Scene</Filter>
@@ -320,11 +317,17 @@
     <ClInclude Include="Goomba.h">
       <Filter>Framework\Game_Object\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Koopas.h">
-      <Filter>Framework\Game_Object\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Framework\Game_Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Koopa.h">
+      <Filter>Framework\Game_Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="QuestionBrick.h">
+      <Filter>Framework\Game_Object\StaticObject</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticObjectDefine.h">
+      <Filter>Framework\Define</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

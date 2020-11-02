@@ -10,6 +10,7 @@
 #include "PlayScene.h"
 #include "Camera.h"
 #include "GraphicsDefine.h"
+#include <algorithm>
 
 Fireball::Fireball()
 {
@@ -43,19 +44,22 @@ void Fireball::Render()
 	//RenderBoundingBox();
 }
 
-void Fireball::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+void Fireball::Update(DWORD dt)
 {
 	GameObject::Update(dt);
 
 	vy += FIREBALL_GRAVITY * dt * 2;
+	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 
+	vector<LPGAMEOBJECT> coObjects = scene->objects;
+	vector<LPGAMEOBJECT> coEnemies = scene->enemies;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
 	coEvents.clear();
-
-	CalcPotentialCollisions(coObjects, coEvents);
+	CalcPotentialCollisions(&coObjects, coEvents);
+	CalcPotentialCollisions(&coEnemies, coEvents);
 
 	if (coEvents.size() == 0)
 	{
@@ -85,7 +89,7 @@ void Fireball::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			if (CollisionMapObject * collMapObj = dynamic_cast<CollisionMapObject*> (e->obj)) {
-				CollisionWithCollisionMapObject(e, collMapObj);
+				CollisionWithOneCollisionMapObject(e, collMapObj);
 			}
 			else {
 				if (e->nx != 0) {
@@ -115,7 +119,22 @@ void Fireball::GetBoundingBox(float& l, float& t, float& r, float& b)
 	b = t + FIREBALL_BBOX_HEIGHT;
 }
 
-void Fireball::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, CollisionMapObject* collisionMapObject)
+//void Fireball::CalcPotentialCollisionsWithEnemy(vector<LPENEMY>* coEnemies, vector<LPCOLLISIONEVENT>& coEvents)
+//{
+//	for (UINT i = 0; i < coEnemies->size(); i++)
+//	{
+//		LPCOLLISIONEVENT e = SweptAABBEx(coEnemies->at(i));
+//
+//		if (e->t > 0 && e->t <= 1.0f)
+//			coEvents.push_back(e);
+//		else
+//			delete e;
+//	}
+//
+//	std::sort(coEvents.begin(), coEvents.end(), CollisionEvent::compare);
+//}
+
+void Fireball::CollisionWithOneCollisionMapObject(LPCOLLISIONEVENT collisionEvent, CollisionMapObject* collisionMapObject)
 {
 	int collisionMapObjectDirectionX = collisionMapObject->GetCollisionDirectionX();
 	int collisionMapObjectDirectionY = collisionMapObject->GetCollisionDirectionY();

@@ -4,8 +4,7 @@
 #include "CollisionMapObject.h"
 #include "GraphicsDefine.h"
 #include "MarioDefine.h"
-//0.1f
-
+#include "Enemy.h"
 
 
 class Mario : public GameObject
@@ -22,7 +21,7 @@ class Mario : public GameObject
 	bool isCrouching = false;
 public:
 	Mario(float x = 0.0f, float y = 0.0f);
-	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects = NULL);
+	virtual void Update(DWORD dt);
 	virtual void Render();
 
 	void SetState(int state);
@@ -41,6 +40,8 @@ public:
 	void ChangeState(PlayerState* newState);
 	PlayerState* GetPlayerState() { return this->playerState; };
 
-	void CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, CollisionMapObject* collisionMapObject);
-	//void CollisionWithVisibleObjectInMap();
+	void CollisionWithEnemy(LPCOLLISIONEVENT collisionEvent, LPENEMY collisionMapObject);
+	//void CalcPotentialCollisionsWithEnemy(vector<LPENEMY>* coEnemies, vector<LPCOLLISIONEVENT>& coEvents);
+
+	void CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPCOLLISIONMAPOBJECT collisionMapObject);
 };

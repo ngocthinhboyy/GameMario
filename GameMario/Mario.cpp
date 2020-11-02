@@ -13,6 +13,7 @@
 #include <memory>
 #include "CollisionMapObject.h"
 #include "Textures.h"
+#include "PlayScene.h"
 
 Mario* Mario::Mario::__instance = NULL;
 Mario* Mario::GetInstance() {
@@ -24,8 +25,28 @@ void Mario::ChangeState(PlayerState* newState)
 	this->playerState = newState;
 }
 
+void Mario::CollisionWithEnemy(LPCOLLISIONEVENT collisionEvent, LPENEMY collisionMapObject)
+{
+	
+}
 
-void Mario::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, CollisionMapObject* collisionMapObject)
+
+//void Mario::CalcPotentialCollisionsWithEnemy(vector<LPENEMY>* coEnemies, vector<LPCOLLISIONEVENT>& coEvents)
+//{
+//	for (UINT i = 0; i < coEnemies->size(); i++)
+//	{
+//		LPCOLLISIONEVENT e = SweptAABBEx(coEnemies->at(i));
+//
+//		if (e->t > 0 && e->t <= 1.0f)
+//			coEvents.push_back(e);
+//		else
+//			delete e;
+//	}
+//
+//	std::sort(coEvents.begin(), coEvents.end(), CollisionEvent::compare);
+//}
+
+void Mario::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPCOLLISIONMAPOBJECT collisionMapObject)
 {
 	int collisionMapObjectDirectionX = collisionMapObject->GetCollisionDirectionX();
 	int collisionMapObjectDirectionY = collisionMapObject->GetCollisionDirectionY();
@@ -53,10 +74,7 @@ void Mario::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, Col
 
 Mario::Mario(float x, float y) : GameObject()
 {
-	//level = MARIO_LEVEL_SMALL;
 	untouchable = 0;
-	//SetState(MARIO_STATE_IDLE);
-
 	start_x = x;
 	start_y = y;
 	this->x = x;
@@ -64,19 +82,25 @@ Mario::Mario(float x, float y) : GameObject()
 	this->isCrouching = false;
 }
 
-void Mario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+void Mario::Update(DWORD dt)
 {
 	GameObject::Update(dt);
 	playerState->Update(dt);
 
 	vy += MARIO_GRAVITY * dt;
+	PlayScene * scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 
+	vector<LPGAMEOBJECT> coEnemies = scene->enemies;
+	vector<LPGAMEOBJECT> coCollisionMapObjects = scene->collisionMapObjects;
+	vector<LPGAMEOBJECT> coObjects = scene->objects;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
 	coEvents.clear();
-	CalcPotentialCollisions(coObjects, coEvents);
+	CalcPotentialCollisions(&coEnemies, coEvents);
+	CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
+	CalcPotentialCollisions(&coObjects, coEvents);
 
 	if (GetTickCount() - untouchable_start > MARIO_UNTOUCHABLE_TIME)
 	{
@@ -108,8 +132,13 @@ void Mario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		for (UINT i = 0; i < coEventsSize; i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-			if (CollisionMapObject* collMapObj = dynamic_cast<CollisionMapObject*> (e->obj)) {
+			if (LPCOLLISIONMAPOBJECT collMapObj = dynamic_cast<LPCOLLISIONMAPOBJECT> (e->obj)) {
 				CollisionWithCollisionMapObject(e, collMapObj);
+			}
+			else if(LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
+				if (e->nx != 0) vx = 0;
+				if (e->ny != 0) vy = 0;
+				//CollisionWithEnemy(e, enemy);
 			}
 			else {
 				if (e->nx != 0) vx = 0;
@@ -141,14 +170,14 @@ void Mario::Render()
 
 void Mario::SetState(int state)
 {
-	GameObject::SetState(state);
+	/*GameObject::SetState(state);
 
 	switch (state)
 	{
 	case MARIO_STATE_DIE:
 		vy = -MARIO_DIE_DEFLECT_SPEED;
 		break;
-	}
+	}*/
 }
 
 void Mario::GetBoundingBox(float& left, float& top, float& right, float& bottom)

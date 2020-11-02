@@ -58,8 +58,6 @@ public:
 
 	int nx;
 
-	int state;
-
 	DWORD dt;
 
 	bool stillAlive = true;
@@ -71,8 +69,6 @@ public:
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 	void GetPosition(float& x, float& y) { x = this->x; y = this->y; }
 	void GetSpeed(float& vx, float& vy) { vx = this->vx; vy = this->vy; }
-
-	int GetState() { return this->state; }
 
 	virtual void RenderBoundingBox();
 
@@ -93,9 +89,8 @@ public:
 	GameObject();
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) = 0;
-	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL);
+	virtual void Update(DWORD dt);
 	virtual void Render() = 0;
-	virtual void SetState(int state) { this->state = state; }
 
 
 	~GameObject();

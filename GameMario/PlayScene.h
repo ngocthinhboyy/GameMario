@@ -3,10 +3,10 @@
 #include "Textures.h"
 #include "Scene.h"
 #include "GameObject.h"
-#include "Brick.h"
 #include "Mario.h"
 #include "Goomba.h"
-#include "Koopas.h"
+#include "Koopa.h"
+#include "Enemy.h"
 
 
 class PlayScene : public Scene
@@ -26,6 +26,8 @@ protected:
 
 public:
 	vector<LPGAMEOBJECT> objects;
+	vector<LPGAMEOBJECT> enemies;
+	vector<LPGAMEOBJECT> collisionMapObjects;
 	PlayScene(int id, LPCWSTR filePath);
 
 	virtual void Load();
