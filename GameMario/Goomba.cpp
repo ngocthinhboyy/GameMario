@@ -3,6 +3,7 @@
 #include "MarioDefine.h"
 #include "PlayScene.h"
 #include "AnimationDatabase.h"
+#include "debug.h"
 
 Goomba::Goomba()
 {
@@ -71,9 +72,9 @@ void Goomba::Render()
 
 void Goomba::Update(DWORD dt)
 {
+	vy += ENEMY_GRAVITY * dt;
 	GameObject::Update(dt);
 
-	vy += ENEMY_GRAVITY * dt;
 	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 
 	//vector<LPGAMEOBJECT> coEnemies = scene->enemies;

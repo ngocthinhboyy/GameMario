@@ -84,10 +84,10 @@ Mario::Mario(float x, float y) : GameObject()
 
 void Mario::Update(DWORD dt)
 {
-	GameObject::Update(dt);
 	playerState->Update(dt);
-
 	vy += MARIO_GRAVITY * dt;
+	GameObject::Update(dt);
+
 	PlayScene * scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 
 	vector<LPGAMEOBJECT> coEnemies = scene->enemies;

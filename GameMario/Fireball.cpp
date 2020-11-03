@@ -46,13 +46,14 @@ void Fireball::Render()
 
 void Fireball::Update(DWORD dt)
 {
+	vy += FIREBALL_GRAVITY * dt * 2;
 	GameObject::Update(dt);
 
-	vy += FIREBALL_GRAVITY * dt * 2;
 	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 
 	vector<LPGAMEOBJECT> coObjects = scene->objects;
 	vector<LPGAMEOBJECT> coEnemies = scene->enemies;
+	vector<LPGAMEOBJECT> coCollisionMapObjects = scene->collisionMapObjects;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -60,6 +61,7 @@ void Fireball::Update(DWORD dt)
 	coEvents.clear();
 	CalcPotentialCollisions(&coObjects, coEvents);
 	CalcPotentialCollisions(&coEnemies, coEvents);
+	CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
 
 	if (coEvents.size() == 0)
 	{

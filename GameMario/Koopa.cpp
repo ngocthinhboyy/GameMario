@@ -88,9 +88,9 @@ void Koopa::SetAnimation()
 
 void Koopa::Update(DWORD dt)
 {
+	vy += ENEMY_GRAVITY * dt;
 	GameObject::Update(dt);
 
-	vy += ENEMY_GRAVITY * dt;
 	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 
 	vector<LPGAMEOBJECT> coCollisionMapObjects = scene->collisionMapObjects;
