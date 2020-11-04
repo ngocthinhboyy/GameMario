@@ -2,6 +2,7 @@
 #include "Enemy.h"
 class Koopa : public Enemy
 {
+	int type;
 public:
 
 	Koopa();

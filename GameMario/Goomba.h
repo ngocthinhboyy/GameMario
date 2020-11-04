@@ -3,10 +3,11 @@
 #include "CollisionMapObject.h"
 class Goomba : public Enemy
 {
+	int type;
 public:
 
 	Goomba();
-	Goomba(float x, float y, float w, float h);
+	Goomba(float x, float y, float w, float h, int type);
 	void SetAnimation();
 	void Render();
 	void Update(DWORD dt);

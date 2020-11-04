@@ -10,6 +10,7 @@
 #include "PlayScene.h"
 #include "Camera.h"
 #include "GraphicsDefine.h"
+#include "EnemyDefine.h"
 #include <algorithm>
 
 Fireball::Fireball()
@@ -93,8 +94,14 @@ void Fireball::Update(DWORD dt)
 			if (CollisionMapObject * collMapObj = dynamic_cast<CollisionMapObject*> (e->obj)) {
 				CollisionWithOneCollisionMapObject(e, collMapObj);
 			}
+			else if(LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
+				stillAlive = false;
+				enemy->SetState(GOOMBA_STATE_DIE);
+				enemy->vx = 0.2f;
+				enemy->vy = -0.5f;
+			}
 			else {
-				if (e->nx != 0) {
+				/*if (e->nx != 0) {
 					vx = 0;
 					stillAlive = false;
 				}
@@ -103,7 +110,7 @@ void Fireball::Update(DWORD dt)
 				}
 				else if (e->ny != 0 && e->nx != 0) {
 					vy = 0;
-				}
+				}*/
 			}
 			
 		}

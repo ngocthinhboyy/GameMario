@@ -156,7 +156,8 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	}
 	case OBJECT_TYPE_GOOMBA: {
-		obj = new Goomba(x, y, w, h);
+		int typeGoomba = atoi(tokens[6].c_str());
+		obj = new Goomba(x, y, w, h, typeGoomba);
 		obj->SetPosition(x, y);
 
 		ani_set = animation_sets->Get(ani_set_id);
@@ -305,9 +306,9 @@ void PlayScene::Update(DWORD dt)
 	for (size_t i = 0; i < enemies.size(); i++)
 	{
 		enemies[i]->Update(dt);
-		if (!(enemies[i]->stillAlive)) {
+		/*if (!(enemies[i]->stillAlive)) {
 			enemies.erase(enemies.begin() + i);
-		}
+		}*/
 	}
 
 	for (size_t i = 0; i < objects.size(); i++)

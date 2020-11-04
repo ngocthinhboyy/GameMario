@@ -9,49 +9,62 @@ Goomba::Goomba()
 {
 }
 
-Goomba::Goomba(float x, float y, float w, float h)
+Goomba::Goomba(float x, float y, float w, float h, int type)
 {
 	this->x = x;
 	this->y = y;
 	this->w = w;
 	this->h = h;
+	this->type = type;
 	//this->vx = -GOOMBA_WALKING_SPEED;
-	SetState(GOOMBA_TAN_STATE_WALKING);
+	this->type = type;
+	SetState(GOOMBA_STATE_WALKING);
 	
 }
 
 void Goomba::SetAnimation()
 {
 	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
-	switch (state)
-	{
-	case GOOMBA_TAN_STATE_WALKING:
-	{
-		animation = animationDatabase->Get(GOOMBA_TAN_ANI_WALKING);
-		break;
+	if (type == 1) {
+		switch (state)
+		{
+		case GOOMBA_STATE_WALKING:
+		{
+			animation = animationDatabase->Get(GOOMBA_TAN_ANI_WALKING);
+			break;
+		}
+		case GOOMBA_STATE_DIE:
+		{
+			animation = animationDatabase->Get(GOOMBA_TAN_ANI_DIE);
+			stillAlive = false;
+			break;
+		}
+		default:
+			break;
+		}
 	}
-	case GOOMBA_TAN_STATE_DIE:
-	{
-		animation = animationDatabase->Get(GOOMBA_TAN_ANI_DIE);
-		break;
-	}
-	case GOOMBA_RED_STATE_WALKING:
-	{
-		animation = animationDatabase->Get(GOOMBA_TAN_ANI_DIE);
-		break;
-	}
-	case GOOMBA_RED_STATE_DIE:
-	{
-		animation = animationDatabase->Get(GOOMBA_TAN_ANI_DIE);
-		break;
-	}
-	case GOOMBA_RED_STATE_WALKING_WITH_SWINGS:
-	{
-		animation = animationDatabase->Get(GOOMBA_TAN_ANI_DIE);
-		break;
-	}
-	default:
-		break;
+	else if (type == 2) {
+		switch (state)
+		{
+			case GOOMBA_STATE_WALKING:
+			{
+				animation = animationDatabase->Get(GOOMBA_RED_ANI_WALKING);
+				break;
+			}
+			case GOOMBA_STATE_DIE:
+			{
+				animation = animationDatabase->Get(GOOMBA_RED_ANI_DIE);
+				stillAlive = false;
+				break;
+			}
+			case GOOMBA_STATE_WALKING_WITH_SWINGS:
+			{
+				animation = animationDatabase->Get(GOOMBA_RED_ANI_WALKING_WITH_SWINGS);
+				break;
+			}
+			default:
+				break;
+		}
 	}
 }
 
@@ -64,6 +77,8 @@ void Goomba::Render()
 		scale = D3DXVECTOR2(RATIO_X_FLIP_SCALE, RATIO_Y_SCALE);
 	else
 		scale = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_SCALE);
+	if(!stillAlive)
+		scale = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_FLIP_SCALE);
 	if (animation != NULL) {
 		animation->Render(x, y, alpha, scale);
 	}
@@ -85,9 +100,10 @@ void Goomba::Update(DWORD dt)
 
 	coEvents.clear();
 	//CalcPotentialCollisions(&coEnemies, coEvents);
-	CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
+	if(stillAlive)
+		CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
 
-	if (coEvents.size() == 0)
+	if (coEvents.size() == 0 || !stillAlive)
 	{
 		x += dx;
 		y += dy;

@@ -15,10 +15,8 @@ Koopa::Koopa(float x, float y, float w, float h, int type)
 	this->w = w;
 	this->h = h;
 	//SetState(KOOPA_RED_STATE_WALKING);
-	if (type == 100)
-		SetState(KOOPA_RED_STATE_WALKING);
-	else if(type == 102)
-		SetState(KOOPA_GREEN_STATE_WALKING);
+	this->type = type;
+	SetState(KOOPA_STATE_WALKING);
 }
 
 void Koopa::Render()
@@ -30,6 +28,8 @@ void Koopa::Render()
 		scale = D3DXVECTOR2(RATIO_X_FLIP_SCALE, RATIO_Y_SCALE);
 	else
 		scale = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_SCALE);
+	if(!stillAlive)
+		scale = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_FLIP_SCALE);
 	if (animation != NULL) {
 		animation->Render(x, y, alpha, scale);
 	}
@@ -39,50 +39,61 @@ void Koopa::Render()
 void Koopa::SetAnimation()
 {
 	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
-	switch (state)
-	{
-	case KOOPA_RED_STATE_WALKING:
-	{
-		animation = animationDatabase->Get(KOOPA_RED_ANI_WALKING);
-		break;
+	if (type == 1) {
+		switch (state)
+		{
+		case KOOPA_STATE_WALKING:
+		{
+			animation = animationDatabase->Get(KOOPA_RED_ANI_WALKING);
+			break;
+		}
+		case KOOPA_STATE_DIE:
+		{
+			animation = animationDatabase->Get(KOOPA_RED_ANI_DIE);
+			stillAlive = false;
+			break;
+		}
+		case KOOPA_STATE_SPIN_DIE_KICK:
+		{
+			animation = animationDatabase->Get(KOOPA_RED_ANI_SPIN_DIE_KICK);
+			break;
+		}
+		case KOOPA_STATE_WALKING_WITH_SWINGS:
+		{
+			animation = animationDatabase->Get(KOOPA_RED_ANI_WALKING_WITH_SWINGS);
+			break;
+		}
+		default:
+			break;
+		}
 	}
-	case KOOPA_RED_STATE_DIE:
-	{
-		animation = animationDatabase->Get(KOOPA_RED_ANI_DIE);
-		break;
-	}
-	case KOOPA_RED_STATE_SPIN_DIE_KICK:
-	{
-		animation = animationDatabase->Get(KOOPA_RED_ANI_SPIN_DIE_KICK);
-		break;
-	}
-	case KOOPA_RED_STATE_WALKING_WITH_SWINGS:
-	{
-		animation = animationDatabase->Get(KOOPA_RED_ANI_WALKING_WITH_SWINGS);
-		break;
-	}
-	case KOOPA_GREEN_STATE_WALKING:
-	{
-		animation = animationDatabase->Get(KOOPA_GREEN_ANI_WALKING);
-		break;
-	}
-	case KOOPA_GREEN_STATE_DIE:
-	{
-		animation = animationDatabase->Get(KOOPA_GREEN_ANI_DIE);
-		break;
-	}
-	case KOOPA_GREEN_STATE_SPIN_DIE_KICK:
-	{
-		animation = animationDatabase->Get(KOOPA_GREEN_ANI_SPIN_DIE_KICK);
-		break;
-	}
-	case KOOPA_GREEN_STATE_WALKING_WITH_SWINGS:
-	{
-		animation = animationDatabase->Get(KOOPA_GREEN_ANI_WALKING_WITH_SWINGS);
-		break;
-	}
-	default:
-		break;
+	else if (type == 2) {
+		switch (state)
+		{
+		case KOOPA_STATE_WALKING:
+		{
+			animation = animationDatabase->Get(KOOPA_GREEN_ANI_WALKING);
+			break;
+		}
+		case KOOPA_STATE_DIE:
+		{
+			animation = animationDatabase->Get(KOOPA_GREEN_ANI_DIE);
+			stillAlive = false;
+			break;
+		}
+		case KOOPA_STATE_SPIN_DIE_KICK:
+		{
+			animation = animationDatabase->Get(KOOPA_GREEN_ANI_SPIN_DIE_KICK);
+			break;
+		}
+		case KOOPA_STATE_WALKING_WITH_SWINGS:
+		{
+			animation = animationDatabase->Get(KOOPA_GREEN_ANI_WALKING_WITH_SWINGS);
+			break;
+		}
+		default:
+			break;
+		}
 	}
 }
 
@@ -99,9 +110,10 @@ void Koopa::Update(DWORD dt)
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
 	coEvents.clear();
-	CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
+	if(stillAlive)
+		CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
 
-	if (coEvents.size() == 0)
+	if (coEvents.size() == 0 || !stillAlive)
 	{
 		x += dx;
 		y += dy;
