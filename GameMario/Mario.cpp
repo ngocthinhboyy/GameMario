@@ -136,9 +136,10 @@ void Mario::Update(DWORD dt)
 				CollisionWithCollisionMapObject(e, collMapObj);
 			}
 			else if(LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
-				if (e->nx != 0) vx = 0;
-				if (e->ny != 0) vy = 0;
+				//if (e->nx != 0) vx = 0;
+				//if (e->ny != 0) vy = 0;
 				//CollisionWithEnemy(e, enemy);
+				enemy->CollisionWithPlayer(e);
 			}
 			else {
 				if (e->nx != 0) vx = 0;

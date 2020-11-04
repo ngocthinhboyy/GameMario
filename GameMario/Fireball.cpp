@@ -88,20 +88,23 @@ void Fireball::Update(DWORD dt)
 
 		int coEventsSize = coEventsResult.size();
 
+		DebugOut(L"SIZEEEE %d\n", coEventsSize);
+
 		for (UINT i = 0; i < coEventsSize; i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-			if (CollisionMapObject * collMapObj = dynamic_cast<CollisionMapObject*> (e->obj)) {
+			if (CollisionMapObject* collMapObj = dynamic_cast<CollisionMapObject*> (e->obj)) {
 				CollisionWithOneCollisionMapObject(e, collMapObj);
 			}
-			else if(LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
+			else if (LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
 				stillAlive = false;
-				enemy->SetState(GOOMBA_STATE_DIE);
+				enemy->SetState(ENEMY_STATE_DIE);
 				enemy->vx = 0.2f;
 				enemy->vy = -0.5f;
+				enemy->stillAlive = false;
 			}
 			else {
-				/*if (e->nx != 0) {
+				if (e->nx != 0) {
 					vx = 0;
 					stillAlive = false;
 				}
@@ -110,7 +113,7 @@ void Fireball::Update(DWORD dt)
 				}
 				else if (e->ny != 0 && e->nx != 0) {
 					vy = 0;
-				}*/
+				}
 			}
 			
 		}

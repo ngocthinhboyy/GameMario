@@ -16,7 +16,7 @@ Koopa::Koopa(float x, float y, float w, float h, int type)
 	this->h = h;
 	//SetState(KOOPA_RED_STATE_WALKING);
 	this->type = type;
-	SetState(KOOPA_STATE_WALKING);
+	SetState(ENEMY_STATE_WALKING_WITH_SWINGS);
 }
 
 void Koopa::Render()
@@ -42,23 +42,22 @@ void Koopa::SetAnimation()
 	if (type == 1) {
 		switch (state)
 		{
-		case KOOPA_STATE_WALKING:
+		case ENEMY_STATE_WALKING:
 		{
 			animation = animationDatabase->Get(KOOPA_RED_ANI_WALKING);
 			break;
 		}
-		case KOOPA_STATE_DIE:
+		case ENEMY_STATE_DIE:
 		{
 			animation = animationDatabase->Get(KOOPA_RED_ANI_DIE);
-			stillAlive = false;
 			break;
 		}
-		case KOOPA_STATE_SPIN_DIE_KICK:
+		case ENEMY_STATE_SPIN_DIE_KICK:
 		{
 			animation = animationDatabase->Get(KOOPA_RED_ANI_SPIN_DIE_KICK);
 			break;
 		}
-		case KOOPA_STATE_WALKING_WITH_SWINGS:
+		case ENEMY_STATE_WALKING_WITH_SWINGS:
 		{
 			animation = animationDatabase->Get(KOOPA_RED_ANI_WALKING_WITH_SWINGS);
 			break;
@@ -70,23 +69,22 @@ void Koopa::SetAnimation()
 	else if (type == 2) {
 		switch (state)
 		{
-		case KOOPA_STATE_WALKING:
+		case ENEMY_STATE_WALKING:
 		{
 			animation = animationDatabase->Get(KOOPA_GREEN_ANI_WALKING);
 			break;
 		}
-		case KOOPA_STATE_DIE:
+		case ENEMY_STATE_DIE:
 		{
 			animation = animationDatabase->Get(KOOPA_GREEN_ANI_DIE);
-			stillAlive = false;
 			break;
 		}
-		case KOOPA_STATE_SPIN_DIE_KICK:
+		case ENEMY_STATE_SPIN_DIE_KICK:
 		{
 			animation = animationDatabase->Get(KOOPA_GREEN_ANI_SPIN_DIE_KICK);
 			break;
 		}
-		case KOOPA_STATE_WALKING_WITH_SWINGS:
+		case ENEMY_STATE_WALKING_WITH_SWINGS:
 		{
 			animation = animationDatabase->Get(KOOPA_GREEN_ANI_WALKING_WITH_SWINGS);
 			break;
@@ -184,6 +182,12 @@ void Koopa::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPC
 	}
 }
 
-void Koopa::CollisionWithPlayer()
+void Koopa::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 {
+	if (collisionEvent->nx != 0) {
+
+	}
+	if (collisionEvent->ny == -1) {
+		state = ENEMY_STATE_DIE;
+	}
 }

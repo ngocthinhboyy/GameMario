@@ -18,7 +18,7 @@ Goomba::Goomba(float x, float y, float w, float h, int type)
 	this->type = type;
 	//this->vx = -GOOMBA_WALKING_SPEED;
 	this->type = type;
-	SetState(GOOMBA_STATE_WALKING);
+	SetState(ENEMY_STATE_WALKING);
 	
 }
 
@@ -28,15 +28,14 @@ void Goomba::SetAnimation()
 	if (type == 1) {
 		switch (state)
 		{
-		case GOOMBA_STATE_WALKING:
+		case ENEMY_STATE_WALKING:
 		{
 			animation = animationDatabase->Get(GOOMBA_TAN_ANI_WALKING);
 			break;
 		}
-		case GOOMBA_STATE_DIE:
+		case ENEMY_STATE_DIE:
 		{
 			animation = animationDatabase->Get(GOOMBA_TAN_ANI_DIE);
-			stillAlive = false;
 			break;
 		}
 		default:
@@ -46,18 +45,17 @@ void Goomba::SetAnimation()
 	else if (type == 2) {
 		switch (state)
 		{
-			case GOOMBA_STATE_WALKING:
+			case ENEMY_STATE_WALKING:
 			{
 				animation = animationDatabase->Get(GOOMBA_RED_ANI_WALKING);
 				break;
 			}
-			case GOOMBA_STATE_DIE:
+			case ENEMY_STATE_DIE:
 			{
 				animation = animationDatabase->Get(GOOMBA_RED_ANI_DIE);
-				stillAlive = false;
 				break;
 			}
-			case GOOMBA_STATE_WALKING_WITH_SWINGS:
+			case ENEMY_STATE_WALKING_WITH_SWINGS:
 			{
 				animation = animationDatabase->Get(GOOMBA_RED_ANI_WALKING_WITH_SWINGS);
 				break;
@@ -171,5 +169,17 @@ void Goomba::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LP
 			y += dy;
 		else
 			vy = 0;
+	}
+}
+
+void Goomba::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
+{
+	Mario* mario = Mario::GetInstance();
+	if (collisionEvent->nx != 0) {
+
+	}
+	if (collisionEvent->ny == -1) {
+		state = ENEMY_STATE_DIE;
+		//mario->vx = 0;
 	}
 }
