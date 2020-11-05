@@ -3,6 +3,7 @@
 #include "PlayScene.h"
 #include "EnemyDefine.h"
 #include "AnimationDatabase.h"
+#include "debug.h"
 
 Koopa::Koopa()
 {
@@ -103,13 +104,16 @@ void Koopa::Update(DWORD dt)
 	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 
 	vector<LPGAMEOBJECT> coCollisionMapObjects = scene->collisionMapObjects;
+	vector<LPGAMEOBJECT> coObjs = scene->objects;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
 	coEvents.clear();
-	if(stillAlive)
+	if (stillAlive) {
 		CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
+		CalcPotentialCollisions(&coObjs, coEvents);
+	}
 
 	if (coEvents.size() == 0 || !stillAlive)
 	{
@@ -137,7 +141,8 @@ void Koopa::Update(DWORD dt)
 				CollisionWithCollisionMapObject(e, collMapObj);
 			}
 			else {
-				if (e->nx != 0) vx = 0;
+				DebugOut(L"aaaa \n");
+				if (e->nx != 0) vx = -vx;
 				if (e->ny != 0) vy = 0;
 			}
 		}
@@ -149,10 +154,18 @@ void Koopa::Update(DWORD dt)
 
 void Koopa::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
-	l = x - KOOPA_BBOX_WIDTH / 2;
-	t = y - KOOPA_BBOX_HEIGHT / 2;
-	r = l + KOOPA_BBOX_WIDTH;
-	b = t + KOOPA_BBOX_HEIGHT;
+	if (state == ENEMY_STATE_DIE || state == ENEMY_STATE_SPIN_DIE_KICK) {
+		l = x - KOOPA_BBOX_WIDTH / 2;
+		t = y - KOOPA_DIE_BBOX_HEIGHT / 2;
+		r = l + KOOPA_BBOX_WIDTH;
+		b = t + KOOPA_DIE_BBOX_HEIGHT;
+	}
+	else {
+		l = x - KOOPA_BBOX_WIDTH / 2;
+		t = y - KOOPA_BBOX_HEIGHT / 2;
+		r = l + KOOPA_BBOX_WIDTH;
+		b = t + KOOPA_BBOX_HEIGHT;
+	}
 }
 
 void Koopa::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPCOLLISIONMAPOBJECT collisionMapObject)
@@ -167,7 +180,7 @@ void Koopa::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPC
 		else if (collisionEvent->nx > 0 && collisionMapObjectDirectionX == -1)
 			x += dx;
 		else {
-			vx = 0;
+			vx = -vx;
 		}
 	}
 	if (collisionEvent->ny != 0) {
@@ -184,10 +197,27 @@ void Koopa::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPC
 
 void Koopa::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 {
+	Mario* mario = Mario::GetInstance();
 	if (collisionEvent->nx != 0) {
-
+		//mario->stillAlive = false;
 	}
+	DebugOut(L"STATE %d\n", state);
 	if (collisionEvent->ny == -1) {
-		state = ENEMY_STATE_DIE;
+		if (state != ENEMY_STATE_DIE) {
+			state = ENEMY_STATE_DIE;
+			mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
+			/*if (mario->x > x)
+				mario->vx = 0.2f;
+			else if (mario->x < x)
+				mario->vx = -0.2f;
+			else*/
+				mario->vx = 0;
+			vx = 0;
+		}
+		else if(state == ENEMY_STATE_DIE) {
+			mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
+			vx = mario->nx * 0.7f;
+			state = ENEMY_STATE_SPIN_DIE_KICK;
+		}
 	}
 }

@@ -146,12 +146,12 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		mario->SetLevel(MARIO_LEVEL_FIRE);
 		mario->ChangeState(PlayerStandingState::GetInstance());
 		ani_set = AnimationManager::GetInstance()->Get(ani_set_id);
-		player = mario;
-		obj = mario;
-		obj->SetPosition(x, y);
+		//obj = mario;
+		mario->SetPosition(x, y);
 
-		obj->SetAnimationSet(ani_set);
-		objects.push_back(obj);
+		mario->SetAnimationSet(ani_set);
+		player = mario;
+		//objects.push_back(obj);
 		DebugOut(L"[INFO] Player object created!\n");
 		break;
 	}
@@ -298,7 +298,7 @@ void PlayScene::Update(DWORD dt)
 	// TO-DO: This is a "dirty" way, need a more organized way 
 
 	vector<LPGAMEOBJECT> coObjects;
-	for (size_t i = 1; i < objects.size(); i++)
+	for (size_t i = 0; i < objects.size(); i++)
 	{
 		coObjects.push_back(objects[i]);
 	}
@@ -318,6 +318,7 @@ void PlayScene::Update(DWORD dt)
 			objects.erase(objects.begin() + i);
 		}
 	}
+	player->Update(dt);
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return;
 
@@ -349,6 +350,7 @@ void PlayScene::Render()
 	for (int i = 0; i < enemies.size(); i++) {
 		enemies[i]->Render();
 	}
+	player->Render();
 }
 
 /*

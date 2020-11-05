@@ -32,4 +32,7 @@
 #define ENEMY_STATE_DIE							3
 #define ENEMY_STATE_SPIN_DIE_KICK				4
 
+
+#define KOOPA_STATE_TORTOISESHELL				5
+
 #define GOOMBA_WALKING_SPEED			0.08f
