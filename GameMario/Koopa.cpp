@@ -4,6 +4,7 @@
 #include "EnemyDefine.h"
 #include "AnimationDatabase.h"
 #include "debug.h"
+#include "PlayerJumpingState.h"
 
 Koopa::Koopa()
 {
@@ -105,12 +106,15 @@ void Koopa::Update(DWORD dt)
 
 	vector<LPGAMEOBJECT> coCollisionMapObjects = scene->collisionMapObjects;
 	vector<LPGAMEOBJECT> coObjs = scene->objects;
+	vector<LPGAMEOBJECT> coEnemies = scene->enemies;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
 	coEvents.clear();
 	if (stillAlive) {
+		if (state == ENEMY_STATE_SPIN_DIE_KICK)
+			CalcPotentialCollisions(&coEnemies, coEvents);
 		CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
 		CalcPotentialCollisions(&coObjs, coEvents);
 	}
@@ -140,8 +144,14 @@ void Koopa::Update(DWORD dt)
 			if (LPCOLLISIONMAPOBJECT collMapObj = dynamic_cast<LPCOLLISIONMAPOBJECT> (e->obj)) {
 				CollisionWithCollisionMapObject(e, collMapObj);
 			}
+			else if(LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
+				//if (dynamic_cast<Koopa*> (enemy))
+					enemy->SetState(ENEMY_STATE_DIE);
+				enemy->vx = 0.2f;
+				enemy->vy = -0.5f;
+				enemy->stillAlive = false;
+			}
 			else {
-				DebugOut(L"aaaa \n");
 				if (e->nx != 0) vx = -vx;
 				if (e->ny != 0) vy = 0;
 			}
@@ -200,8 +210,17 @@ void Koopa::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 	Mario* mario = Mario::GetInstance();
 	if (collisionEvent->nx != 0) {
 		//mario->stillAlive = false;
+		if (state == ENEMY_STATE_DIE) {
+			if (collisionEvent->nx > 0) {
+				vx = -KOOPA_SPEED_TORTOISESHELL;
+				state = ENEMY_STATE_SPIN_DIE_KICK;
+			}
+			else {
+				vx = KOOPA_SPEED_TORTOISESHELL;
+				state = ENEMY_STATE_SPIN_DIE_KICK;
+			}
+		}
 	}
-	DebugOut(L"STATE %d\n", state);
 	if (collisionEvent->ny == -1) {
 		if (state != ENEMY_STATE_DIE) {
 			state = ENEMY_STATE_DIE;
@@ -211,12 +230,15 @@ void Koopa::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 			else if (mario->x < x)
 				mario->vx = -0.2f;
 			else*/
-				mario->vx = 0;
+				//mario->vx = 0;
 			vx = 0;
 		}
 		else if(state == ENEMY_STATE_DIE) {
 			mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
-			vx = mario->nx * 0.7f;
+			if (mario->x > x)
+				vx = -KOOPA_SPEED_TORTOISESHELL;
+			else if (mario->x <= x)
+				vx = KOOPA_SPEED_TORTOISESHELL;
 			state = ENEMY_STATE_SPIN_DIE_KICK;
 		}
 	}

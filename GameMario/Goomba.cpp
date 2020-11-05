@@ -181,7 +181,7 @@ void Goomba::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 	if (collisionEvent->ny == -1) {
 		state = ENEMY_STATE_DIE;
 		mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
-		mario->vx = 0;
+		//mario->vx = 0;
 		stillAlive = false;
 	}
 }

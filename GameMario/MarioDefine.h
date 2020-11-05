@@ -71,7 +71,7 @@
 #define MARIO_SPEED_ACCELERATION			0.0005f
 #define MARIO_RUNNING_MAX_SPEED				0.9f
 
-#define MARIO_WALKING_SPEED					0.23f 
+#define MARIO_WALKING_SPEED					0.2f 
 
 #define MARIO_JUMP_SPEED_Y					0.5f
 

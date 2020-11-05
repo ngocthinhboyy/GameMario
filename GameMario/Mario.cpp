@@ -84,8 +84,6 @@ Mario::Mario(float x, float y) : GameObject()
 
 void Mario::Update(DWORD dt)
 {
-	DebugOut(L"XXXX %f\n", x);
-	DebugOut(L"YYYY %f\n", y);
 	playerState->Update(dt);
 	vy += MARIO_GRAVITY * dt;
 	GameObject::Update(dt);

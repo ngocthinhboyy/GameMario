@@ -88,8 +88,6 @@ void Fireball::Update(DWORD dt)
 
 		int coEventsSize = coEventsResult.size();
 
-		DebugOut(L"SIZEEEE %d\n", coEventsSize);
-
 		for (UINT i = 0; i < coEventsSize; i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
@@ -98,6 +96,7 @@ void Fireball::Update(DWORD dt)
 			}
 			else if (LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
 				stillAlive = false;
+				//if(dynamic_cast<Koopa*> (enemy))
 				enemy->SetState(ENEMY_STATE_DIE);
 				enemy->vx = 0.2f;
 				enemy->vy = -0.5f;
