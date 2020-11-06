@@ -52,7 +52,6 @@ void PlayerKickingState::KeyState(BYTE* states)
 	Game* game = Game::GetInstance();
 	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
 	LPANIMATION animation = animationDatabase->Get(animationID);
-	DebugOut(L"CURRRENTTt %d\n", animation->GetCurrentFrame());
 	bool isLastFrame = animation->GetIsLastFrame();
 	if (isLastFrame) {
 		animation->ResetAnimation();

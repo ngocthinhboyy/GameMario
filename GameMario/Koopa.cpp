@@ -6,6 +6,7 @@
 #include "debug.h"
 #include "PlayerJumpingState.h"
 #include "PlayerKickingState.h"
+#include "PlayerHoldingState.h"
 
 Koopa::Koopa()
 {
@@ -100,7 +101,13 @@ void Koopa::SetAnimation()
 
 void Koopa::Update(DWORD dt)
 {
-	vy += ENEMY_GRAVITY * dt;
+	if (isHold) {
+		x = Mario::GetInstance()->x + 34.985596 * (Mario::GetInstance()->nx);
+		y = Mario::GetInstance()->y - 1;
+	}
+	else {
+		vy += ENEMY_GRAVITY * dt;
+	}
 	GameObject::Update(dt);
 
 	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
@@ -114,7 +121,7 @@ void Koopa::Update(DWORD dt)
 
 	coEvents.clear();
 	if (stillAlive) {
-		if (state == ENEMY_STATE_SPIN_DIE_KICK)
+		if (state == ENEMY_STATE_SPIN_DIE_KICK || isHold)
 			CalcPotentialCollisions(&coEnemies, coEvents);
 		CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
 		CalcPotentialCollisions(&coObjs, coEvents);
@@ -211,15 +218,22 @@ void Koopa::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 	Mario* mario = Mario::GetInstance();
 	if (collisionEvent->nx != 0) {
 		//mario->stillAlive = false;
+		mario->vx = 0;
 		if (state == ENEMY_STATE_DIE) {
-			mario->ChangeState(PlayerKickingState::GetInstance());
-			if (collisionEvent->nx > 0) {
-				vx = -KOOPA_SPEED_TORTOISESHELL;
-				state = ENEMY_STATE_SPIN_DIE_KICK;
+			if (mario->GetIsRunning()) {
+				isHold = true;
+				mario->ChangeState(PlayerHoldingState::GetInstance());
 			}
 			else {
-				vx = KOOPA_SPEED_TORTOISESHELL;
-				state = ENEMY_STATE_SPIN_DIE_KICK;
+				mario->ChangeState(PlayerKickingState::GetInstance());
+				if (collisionEvent->nx > 0) {
+					vx = -KOOPA_SPEED_TORTOISESHELL;
+					state = ENEMY_STATE_SPIN_DIE_KICK;
+				}
+				else {
+					vx = KOOPA_SPEED_TORTOISESHELL;
+					state = ENEMY_STATE_SPIN_DIE_KICK;
+				}
 			}
 		}
 	}
@@ -227,12 +241,6 @@ void Koopa::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 		if (state != ENEMY_STATE_DIE) {
 			state = ENEMY_STATE_DIE;
 			mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
-			/*if (mario->x > x)
-				mario->vx = 0.2f;
-			else if (mario->x < x)
-				mario->vx = -0.2f;
-			else*/
-				//mario->vx = 0;
 			vx = 0;
 		}
 		else if(state == ENEMY_STATE_DIE) {

@@ -78,6 +78,7 @@ void PlayerRunningState::Update(int dt)
 		prevKeyIsLeft = false;
 		prevKeyIsRight = false;
 		isSkidding = false;
+		mario->SetIsRunning(false);
 		mario->ChangeState(PlayerStandingState::GetInstance());
 	}
 }
@@ -100,6 +101,7 @@ void PlayerRunningState::KeyState(BYTE* states)
 			prevKeyIsLeft = false;
 			prevKeyIsRight = false;
 			isSkidding = false;
+			mario->SetIsRunning(false);
 			mario->ChangeState(PlayerJumpingState::GetInstance());
 			return;
 		}
@@ -148,6 +150,7 @@ void PlayerRunningState::KeyState(BYTE* states)
 			prevKeyIsLeft = false;
 			prevKeyIsRight = false;
 			isSkidding = false;
+			mario->SetIsRunning(false);
 			mario->ChangeState(PlayerWalkingState::GetInstance());
 		}
 	}
@@ -165,6 +168,7 @@ void PlayerRunningState::OnKeyDown(int KeyCode)
 		prevKeyIsLeft = false;
 		prevKeyIsRight = false;
 		isSkidding = false;
+		mario->SetIsRunning(false);
 		mario->ChangeState(PlayerJumpingState::GetInstance());
 		break;
 	}
@@ -176,10 +180,14 @@ void PlayerRunningState::OnKeyDown(int KeyCode)
 		prevKeyIsRight = false;
 		isSkidding = false;
 		//mario->ChangeState(PlayerHighJumpingState::GetInstance());
-		if (abs(mario->vx) >= MARIO_RUNNING_MAX_SPEED)
+		if (abs(mario->vx) >= MARIO_RUNNING_MAX_SPEED) {
+			mario->SetIsRunning(false);
 			mario->ChangeState(PlayerFlyingState::GetInstance());
-		else
+		}
+		else {
+			mario->SetIsRunning(false);
 			mario->ChangeState(PlayerHighJumpingState::GetInstance());
+		}
 		break;
 	}
 	case DIK_A: {
@@ -189,6 +197,7 @@ void PlayerRunningState::OnKeyDown(int KeyCode)
 			prevKeyIsLeft = false;
 			prevKeyIsRight = false;
 			isSkidding = false;
+			mario->SetIsRunning(false);
 			mario->ChangeState(PlayerSpinningState::GetInstance());
 		}
 		break;
@@ -201,6 +210,8 @@ void PlayerRunningState::OnKeyDown(int KeyCode)
 PlayerState* PlayerRunningState::GetInstance()
 {
 	if (__instance == NULL) __instance = new PlayerRunningState();
+	Mario* mario = Mario::GetInstance();
+	mario->SetIsRunning(true);
 	return __instance;
 }
 

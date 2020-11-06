@@ -90,16 +90,17 @@ void Goomba::Update(DWORD dt)
 
 	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 
-	//vector<LPGAMEOBJECT> coEnemies = scene->enemies;
+	vector<LPGAMEOBJECT> coEnemies = scene->enemies;
 	vector<LPGAMEOBJECT> coCollisionMapObjects = scene->collisionMapObjects;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
 	coEvents.clear();
-	//CalcPotentialCollisions(&coEnemies, coEvents);
-	if(stillAlive)
+	if (stillAlive) {
 		CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
+		CalcPotentialCollisions(&coEnemies, coEvents);
+	}
 
 	if (coEvents.size() == 0 || !stillAlive)
 	{
@@ -125,6 +126,13 @@ void Goomba::Update(DWORD dt)
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			if (LPCOLLISIONMAPOBJECT collMapObj = dynamic_cast<LPCOLLISIONMAPOBJECT> (e->obj)) {
 				CollisionWithCollisionMapObject(e, collMapObj);
+			}
+			else if (LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
+				if (dynamic_cast<Koopa*> (enemy))
+					enemy->SetState(ENEMY_STATE_DIE);
+				vx = 0.2f;
+				vy = -0.5f;
+				stillAlive = false;
 			}
 			else{
 				if (e->nx != 0) vx = 0;
@@ -176,6 +184,7 @@ void Goomba::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 {
 	Mario* mario = Mario::GetInstance();
 	if (collisionEvent->nx != 0) {
+		mario->vx = 0;
 		//mario->stillAlive = false;
 	}
 	if (collisionEvent->ny == -1) {

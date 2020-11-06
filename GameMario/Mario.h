@@ -19,6 +19,7 @@ class Mario : public GameObject
 	static Mario* __instance;
 	PlayerState* playerState;
 	bool isCrouching = false;
+	bool isRunning = false;
 public:
 	Mario(float x = 0.0f, float y = 0.0f);
 	virtual void Update(DWORD dt);
@@ -32,6 +33,8 @@ public:
 	void Reset();
 	void SetIsCrouching(bool isCrouching) { this->isCrouching = isCrouching; };
 	bool GetIsCrouChing() { return this->isCrouching; };
+	void SetIsRunning(bool isRunning) { this->isRunning = isRunning; };
+	bool GetIsRunning() { return this->isRunning; };
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	static Mario* GetInstance();

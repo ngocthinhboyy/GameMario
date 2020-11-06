@@ -86,6 +86,7 @@ void Mario::Update(DWORD dt)
 {
 	playerState->Update(dt);
 	vy += MARIO_GRAVITY * dt;
+	//DebugOut(L"VXXXX %f\n", vx);
 	GameObject::Update(dt);
 
 	PlayScene * scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
