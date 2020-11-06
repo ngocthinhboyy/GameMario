@@ -5,6 +5,7 @@
 #include "AnimationDatabase.h"
 #include "debug.h"
 #include "PlayerJumpingState.h"
+#include "PlayerKickingState.h"
 
 Koopa::Koopa()
 {
@@ -145,7 +146,7 @@ void Koopa::Update(DWORD dt)
 				CollisionWithCollisionMapObject(e, collMapObj);
 			}
 			else if(LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
-				//if (dynamic_cast<Koopa*> (enemy))
+				if (dynamic_cast<Koopa*> (enemy))
 					enemy->SetState(ENEMY_STATE_DIE);
 				enemy->vx = 0.2f;
 				enemy->vy = -0.5f;
@@ -211,6 +212,7 @@ void Koopa::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 	if (collisionEvent->nx != 0) {
 		//mario->stillAlive = false;
 		if (state == ENEMY_STATE_DIE) {
+			mario->ChangeState(PlayerKickingState::GetInstance());
 			if (collisionEvent->nx > 0) {
 				vx = -KOOPA_SPEED_TORTOISESHELL;
 				state = ENEMY_STATE_SPIN_DIE_KICK;

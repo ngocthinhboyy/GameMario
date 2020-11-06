@@ -96,8 +96,8 @@ void Fireball::Update(DWORD dt)
 			}
 			else if (LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
 				stillAlive = false;
-				//if(dynamic_cast<Koopa*> (enemy))
-				enemy->SetState(ENEMY_STATE_DIE);
+				if(dynamic_cast<Koopa*> (enemy))
+					enemy->SetState(ENEMY_STATE_DIE);
 				enemy->vx = 0.2f;
 				enemy->vy = -0.5f;
 				enemy->stillAlive = false;

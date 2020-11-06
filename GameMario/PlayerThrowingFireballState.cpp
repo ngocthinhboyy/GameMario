@@ -41,7 +41,7 @@ void PlayerThrowingFireballState::KeyState(BYTE* states)
 		PlayScene* scene = dynamic_cast<PlayScene*> (game->GetCurrentScene());
 		Fireball* fireball = new Fireball(mario->x + MARIO_BIG_BBOX_WIDTH / 2, mario->y, 9, 9);
 		scene->objects.push_back(fireball);
-		fireball->Render();
+		//fireball->Render();
 		animation->ResetAnimation();
 		mario->ChangeState(PlayerStandingState::GetInstance());
 	}

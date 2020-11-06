@@ -186,6 +186,12 @@
     <ClCompile Include="QuestionBrick.cpp">
       <Filter>Framework\Game_Object\StaticObject</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerKickingState.cpp">
+      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerHoldingState.cpp">
+      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -328,6 +334,12 @@
     </ClInclude>
     <ClInclude Include="StaticObjectDefine.h">
       <Filter>Framework\Define</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerKickingState.h">
+      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerHoldingState.h">
+      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
