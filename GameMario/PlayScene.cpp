@@ -143,7 +143,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 			return;
 		}
 		Mario* mario = Mario::GetInstance();
-		mario->SetLevel(MARIO_LEVEL_SMALL);
+		mario->SetLevel(MARIO_LEVEL_BIG);
 		mario->ChangeState(PlayerStandingState::GetInstance());
 		ani_set = AnimationManager::GetInstance()->Get(ani_set_id);
 		//obj = mario;

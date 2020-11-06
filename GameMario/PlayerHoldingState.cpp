@@ -116,8 +116,8 @@ void PlayerHoldingState::KeyState(BYTE* states)
 	}
 	else {
 		if (koopa != NULL) {
-			koopa->y += 13;
-			koopa->x += 13 * (mario->nx);
+			koopa->y += 7;
+			koopa->x += 10 * (mario->nx);
 			koopa->SetIsHold(false);
 			isMaxSpeed = false;
 			increaseSpeed = true;

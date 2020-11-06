@@ -102,8 +102,14 @@ void Koopa::SetAnimation()
 void Koopa::Update(DWORD dt)
 {
 	if (isHold) {
-		x = Mario::GetInstance()->x + 34.985596 * (Mario::GetInstance()->nx);
-		y = Mario::GetInstance()->y - 1;
+		if (Mario::GetInstance()->GetLevel() == MARIO_LEVEL_SMALL) {
+			x = Mario::GetInstance()->x + 35 * (Mario::GetInstance()->nx);
+			y = Mario::GetInstance()->y - 10;
+		}
+		else {
+			x = Mario::GetInstance()->x + 35 * (Mario::GetInstance()->nx);
+			y = Mario::GetInstance()->y - 1;
+		}
 	}
 	else {
 		vy += ENEMY_GRAVITY * dt;
@@ -222,6 +228,10 @@ void Koopa::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 		if (state == ENEMY_STATE_DIE) {
 			if (mario->GetIsRunning()) {
 				isHold = true;
+				/*y -= 10;
+				x += 10 * (collisionEvent->nx);
+				DebugOut(L"XXXXX %f\n", mario->x - x);
+				DebugOut(L"YYYYYY %f\n", mario->y - y);*/
 				mario->ChangeState(PlayerHoldingState::GetInstance());
 			}
 			else {
