@@ -18,7 +18,6 @@ Koopa::Koopa(float x, float y, float w, float h, int type)
 	this->y = y;
 	this->w = w;
 	this->h = h;
-	//SetState(KOOPA_RED_STATE_WALKING);
 	this->type = type;
 	SetState(ENEMY_STATE_WALKING_WITH_SWINGS);
 }
@@ -102,14 +101,13 @@ void Koopa::SetAnimation()
 void Koopa::Update(DWORD dt)
 {
 	if (isHold) {
-		if (Mario::GetInstance()->GetLevel() == MARIO_LEVEL_SMALL) {
-			x = Mario::GetInstance()->x + 35 * (Mario::GetInstance()->nx);
-			y = Mario::GetInstance()->y - 10;
+		Mario* mario = Mario::GetInstance();
+		if (Mario::GetInstance()->nx * vx <= 0) {
+			x = mario->x + KOOPA_HOLDING_DISTANCE_TURN_BACK_X * (mario->nx);
+			y = mario->y - KOOPA_HOLDING_DISTANCE_TURN_BACK_Y;
 		}
-		else {
-			x = Mario::GetInstance()->x + 35 * (Mario::GetInstance()->nx);
-			y = Mario::GetInstance()->y - 1;
-		}
+		vx = mario->vx;
+		vy = mario->vy;
 	}
 	else {
 		vy += ENEMY_GRAVITY * dt;
@@ -128,15 +126,17 @@ void Koopa::Update(DWORD dt)
 	coEvents.clear();
 	if (stillAlive) {
 		if (state == ENEMY_STATE_SPIN_DIE_KICK || isHold)
+		{
 			CalcPotentialCollisions(&coEnemies, coEvents);
+		}
 		CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
 		CalcPotentialCollisions(&coObjs, coEvents);
 	}
 
 	if (coEvents.size() == 0 || !stillAlive)
 	{
-		x += dx;
-		y += dy;
+			x += dx;
+			y += dy;
 	}
 	else
 	{
@@ -161,8 +161,8 @@ void Koopa::Update(DWORD dt)
 			else if(LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
 				if (dynamic_cast<Koopa*> (enemy))
 					enemy->SetState(ENEMY_STATE_DIE);
-				enemy->vx = 0.2f;
-				enemy->vy = -0.5f;
+				enemy->vx = ENEMY_DIE_SPEED_X;
+				enemy->vy = -ENEMY_DIE_SPEED_Y;
 				enemy->stillAlive = false;
 			}
 			else {
@@ -223,26 +223,23 @@ void Koopa::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 {
 	Mario* mario = Mario::GetInstance();
 	if (collisionEvent->nx != 0) {
-		//mario->stillAlive = false;
-		mario->vx = 0;
-		if (state == ENEMY_STATE_DIE) {
-			if (mario->GetIsRunning()) {
-				isHold = true;
-				/*y -= 10;
-				x += 10 * (collisionEvent->nx);
-				DebugOut(L"XXXXX %f\n", mario->x - x);
-				DebugOut(L"YYYYYY %f\n", mario->y - y);*/
-				mario->ChangeState(PlayerHoldingState::GetInstance());
-			}
-			else {
-				mario->ChangeState(PlayerKickingState::GetInstance());
-				if (collisionEvent->nx > 0) {
-					vx = -KOOPA_SPEED_TORTOISESHELL;
-					state = ENEMY_STATE_SPIN_DIE_KICK;
+		if (!isHold) {
+			mario->vx = 0;
+			if (state == ENEMY_STATE_DIE) {
+				if (mario->GetIsRunning()) {
+					isHold = true;
+					mario->ChangeState(PlayerHoldingState::GetInstance());
 				}
 				else {
-					vx = KOOPA_SPEED_TORTOISESHELL;
-					state = ENEMY_STATE_SPIN_DIE_KICK;
+						mario->ChangeState(PlayerKickingState::GetInstance());
+						if (collisionEvent->nx > 0) {
+							vx = -KOOPA_SPEED_TORTOISESHELL;
+							state = ENEMY_STATE_SPIN_DIE_KICK;
+						}
+						else {
+							vx = KOOPA_SPEED_TORTOISESHELL;
+							state = ENEMY_STATE_SPIN_DIE_KICK;
+						}
 				}
 			}
 		}

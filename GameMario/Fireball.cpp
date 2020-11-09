@@ -98,8 +98,8 @@ void Fireball::Update(DWORD dt)
 				stillAlive = false;
 				if(dynamic_cast<Koopa*> (enemy))
 					enemy->SetState(ENEMY_STATE_DIE);
-				enemy->vx = 0.2f;
-				enemy->vy = -0.5f;
+				enemy->vx = ENEMY_DIE_SPEED_X;
+				enemy->vy = -ENEMY_DIE_SPEED_Y;
 				enemy->stillAlive = false;
 			}
 			else {

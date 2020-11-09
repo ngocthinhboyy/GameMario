@@ -54,24 +54,18 @@ void PlayerHoldingState::Update(int dt)
 	if (mario->vx * mario->nx <= 0) {
 		mario->vx = 0;
 	}
-	/*if (isTurnBack) {
-		mario->vx += (dt * MARIO_SPEED_ACCELERATION * 2.5 * -(mario->nx));
-		if ((mario->vx * mario->nx) <= 0) {
-			mario->nx = -mario->nx;
-			if (koopa != NULL) {
-				koopa->x = mario->x + 34.985596 * (mario->nx);
+	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+	vector<LPGAMEOBJECT> enemies = scene->enemies;
+	Koopa* koopaRRR = NULL;
+	for (LPGAMEOBJECT object : enemies) {
+		if (koopaRRR = dynamic_cast<Koopa*>(object)) {
+			if (koopaRRR->GetIsHold() && increaseSpeed)
+			{
+				koopaRRR->x += (mario->vx - koopaRRR->vx) * dt;
+				break;
 			}
-			prevKeyIsLeft = false;
-			prevKeyIsRight = false;
-			isTurnBack = false;
 		}
-		return;
-	}*/
-	/*if ((mario->vx * mario->nx) <= 0) {
-		mario->vx = 0;
-		koopa->vx = mario->vx;
-		koopa->vy = mario->vy;
-	}*/
+	}
 }
 
 void PlayerHoldingState::KeyState(BYTE* states)
@@ -116,8 +110,8 @@ void PlayerHoldingState::KeyState(BYTE* states)
 	}
 	else {
 		if (koopa != NULL) {
-			koopa->y += 7;
-			koopa->x += 10 * (mario->nx);
+			koopa->x += KOOPA_KICKING_AFTER_HOLDING_DISTANCE_X * (mario->nx);
+			koopa->y += KOOPA_KICKING_AFTER_HOLDING_DISTANCE_Y;
 			koopa->SetIsHold(false);
 			isMaxSpeed = false;
 			increaseSpeed = true;
