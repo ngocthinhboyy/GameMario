@@ -98,7 +98,6 @@ void PlayerStandingState::KeyState(BYTE* states) {
 		mario->ChangeState(PlayerJumpingState::GetInstance());
 	}
 	else if ((game->IsKeyDown(DIK_RIGHT) && game->IsKeyDown(DIK_LEFT))) {
-		//DebugOut(L"HAI NUT \n");
 		return;
 	}
 	else if (game->IsKeyDown(DIK_A) && (game->IsKeyDown(DIK_RIGHT) || game->IsKeyDown(DIK_LEFT))) {

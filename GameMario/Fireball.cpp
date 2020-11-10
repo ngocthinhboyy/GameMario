@@ -12,6 +12,7 @@
 #include "GraphicsDefine.h"
 #include "EnemyDefine.h"
 #include <algorithm>
+#include "PlayerThrowingFireballState.h"
 
 Fireball::Fireball()
 {
@@ -42,7 +43,7 @@ void Fireball::Render()
 		animation->Render(x, y, alpha, scale);
 	}
 
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void Fireball::Update(DWORD dt)
@@ -71,8 +72,10 @@ void Fireball::Update(DWORD dt)
 		Camera* camera = Camera::GetInstance();
 		float cam_x, cam_y;
 		camera->GetCamPos(cam_x, cam_y);
-		if (x < cam_x || x > cam_x + SCREEN_WIDTH || y < cam_y || y > cam_y + SCREEN_HEIGHT)
+		if (x < cam_x || x > cam_x + SCREEN_WIDTH || y < cam_y || y > cam_y + SCREEN_HEIGHT) {
+			PlayerThrowingFireballState::decreaseQuantityOneValue();
 			stillAlive = false;
+		}
 	}
 	else
 	{
@@ -96,6 +99,7 @@ void Fireball::Update(DWORD dt)
 			}
 			else if (LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
 				stillAlive = false;
+				PlayerThrowingFireballState::decreaseQuantityOneValue();
 				if(dynamic_cast<Koopa*> (enemy))
 					enemy->SetState(ENEMY_STATE_DIE);
 				enemy->vx = ENEMY_DIE_SPEED_X;
@@ -106,6 +110,7 @@ void Fireball::Update(DWORD dt)
 				if (e->nx != 0) {
 					vx = 0;
 					stillAlive = false;
+					PlayerThrowingFireballState::decreaseQuantityOneValue();
 				}
 				if (e->ny != 0 && e->nx == 0) {
 					vy = -FIREBALL_ROLLING_SPEED_Y;
@@ -158,6 +163,7 @@ void Fireball::CollisionWithOneCollisionMapObject(LPCOLLISIONEVENT collisionEven
 			x += dx;
 		else {
 			stillAlive = false;
+			PlayerThrowingFireballState::decreaseQuantityOneValue();
 			vx = 0;
 		}
 	}

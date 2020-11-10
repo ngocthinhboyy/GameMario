@@ -5,8 +5,10 @@
 #include "PlayerStandingState.h"
 #include "Fireball.h"
 #include "PlayScene.h"
+#include "DynamicObjectDefine.h"
 
 PlayerState* PlayerThrowingFireballState::__instance = NULL;
+int PlayerThrowingFireballState::quantityFireball = 0;
 PlayerThrowingFireballState::PlayerThrowingFireballState()
 {
 }
@@ -27,6 +29,13 @@ void PlayerThrowingFireballState::SetAnimation(int levelPlayer)
 void PlayerThrowingFireballState::Update(int dt)
 {
 	Mario* mario = Mario::GetInstance();
+	DWORD now = GetTickCount();
+	if (now - lastThrowingTime < FIREBALL_TIME_LIMIT_TO_THROWING && quantityFireball == FIREBALL_MAX_QUANTITY) {
+		lastThrowingTime = now;
+		mario->ChangeState(PlayerStandingState::GetInstance());
+		return;
+	};
+	lastThrowingTime = now;
 	SetAnimation(mario->GetLevel());
 }
 
@@ -36,12 +45,22 @@ void PlayerThrowingFireballState::KeyState(BYTE* states)
 	Game* game = Game::GetInstance();
 	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
 	LPANIMATION animation = animationDatabase->Get(animationID);
+	DWORD now = GetTickCount();
+	if (now - lastThrowingTime < FIREBALL_TIME_LIMIT_TO_THROWING && quantityFireball == FIREBALL_MAX_QUANTITY) {
+		lastThrowingTime = now;
+		animation->ResetAnimation();
+		mario->ChangeState(PlayerStandingState::GetInstance());
+		return;
+	};
+	lastThrowingTime = now;
 	bool isLastFrame = animation->GetIsLastFrame();
 	if (isLastFrame) {
-		PlayScene* scene = dynamic_cast<PlayScene*> (game->GetCurrentScene());
-		Fireball* fireball = new Fireball(mario->x + MARIO_BIG_BBOX_WIDTH / 2, mario->y, 9, 9);
-		scene->objects.push_back(fireball);
-		//fireball->Render();
+		if (quantityFireball < FIREBALL_MAX_QUANTITY) {
+			PlayScene* scene = dynamic_cast<PlayScene*> (game->GetCurrentScene());
+			Fireball* fireball = new Fireball(mario->x + MARIO_BIG_BBOX_WIDTH / 2, mario->y, FIREBALL_WIDTH, FIREBALL_HEIGHT);
+			scene->objects.push_back(fireball);
+			quantityFireball++;
+		}
 		animation->ResetAnimation();
 		mario->ChangeState(PlayerStandingState::GetInstance());
 	}
