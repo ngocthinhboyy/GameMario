@@ -192,6 +192,9 @@
     <ClCompile Include="PlayerHoldingState.cpp">
       <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerFallingSlowlyState.cpp">
+      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -339,6 +342,9 @@
       <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
     </ClInclude>
     <ClInclude Include="PlayerHoldingState.h">
+      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerFallingSlowlyState.h">
       <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
     </ClInclude>
   </ItemGroup>

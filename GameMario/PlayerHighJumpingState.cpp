@@ -5,6 +5,7 @@
 #include "PlayerWalkingState.h"
 #include "debug.h"
 #include "PlayerSpinningState.h"
+#include "PlayerFallingSlowlyState.h"
 
 PlayerHighJumpingState::PlayerHighJumpingState()
 {
@@ -69,7 +70,10 @@ void PlayerHighJumpingState::Update(int dt)
 	}
 	if (mario->vy >= 0) {
 		stopIncreasingSpeed = false;
-		mario->ChangeState(PlayerFallingState::GetInstance());
+		if(mario->GetLevel() == MARIO_LEVEL_RACCOON)
+			mario->ChangeState(PlayerFallingSlowlyState::GetInstance());
+		else
+			mario->ChangeState(PlayerFallingState::GetInstance());
 	}
 
 }
@@ -80,7 +84,10 @@ void PlayerHighJumpingState::KeyState(BYTE* states)
 	//DebugOut(L"mario VX %f\n", mario->vx);
 	if (mario->vy >= 0) {
 		stopIncreasingSpeed = false;
-		mario->ChangeState(PlayerFallingState::GetInstance());
+		if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
+			mario->ChangeState(PlayerFallingSlowlyState::GetInstance());
+		else
+			mario->ChangeState(PlayerFallingState::GetInstance());
 	}
 	if (game->IsKeyDown(DIK_S)) {
 		if (abs(mario->vy) >= MARIO_JUMP_MAX_SPEED_Y)
@@ -132,7 +139,10 @@ void PlayerHighJumpingState::OnKeyUp(int KeyCode)
 		stopIncreasingSpeed = true;
 		if (mario->vy > 0) {
 			stopIncreasingSpeed = false;
-			mario->ChangeState(PlayerFallingState::GetInstance());
+			if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
+				mario->ChangeState(PlayerFallingSlowlyState::GetInstance());
+			else
+				mario->ChangeState(PlayerFallingState::GetInstance());
 		}
 		break;
 	}

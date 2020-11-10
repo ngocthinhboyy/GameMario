@@ -2,8 +2,10 @@
 #include "PlayerRunningState.h"
 #include "Mario.h"
 #include "game.h"
+#include "debug.h"
 
 PlayerState* PlayerFlyingState::__instance = NULL;
+DWORD PlayerFlyingState::timeStartFlying = 0;
 PlayerFlyingState::PlayerFlyingState()
 {
 }
@@ -79,7 +81,13 @@ void PlayerFlyingState::OnKeyDown(int KeyCode)
 	{
 	case DIK_S:
 		if (mario->GetLevel() == MARIO_LEVEL_RACCOON) {
-			mario->vy += -1.0f;
+			DWORD now = GetTickCount();
+			if (now - timeStartFlying < 1000) {
+				mario->vy += -0.7f;
+			}
+			else {
+
+			}
 		}
 		break;
 	default:
@@ -94,7 +102,7 @@ void PlayerFlyingState::OnKeyUp(int KeyCode)
 	case DIK_S: {
 		Mario* mario = Mario::GetInstance();
 		stopIncreasingSpeed = true;
-		if (mario->vy > 0) {
+		if (mario->vy == 0) {
 			stopIncreasingSpeed = false;
 			mario->ChangeState(PlayerRunningState::GetInstance());
 		}
@@ -108,6 +116,7 @@ void PlayerFlyingState::OnKeyUp(int KeyCode)
 PlayerState* PlayerFlyingState::GetInstance()
 {
 	if (__instance == NULL) __instance = new PlayerFlyingState();
+	timeStartFlying = GetTickCount();
 	return __instance;
 }
 
