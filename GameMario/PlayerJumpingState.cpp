@@ -70,13 +70,13 @@ void PlayerJumpingState::Update(int dt)
 {
 	//DebugOut(L"JUMPONGGGGGGGGGGG \n");
 	Mario* mario = Mario::GetInstance();
-	SetAnimation(mario->GetLevel());
 	//DebugOut(L"JUMPONGGGGGGGGGGG %d\n", animationID);
 	if (mario->vy > 0)
 		mario->ChangeState(PlayerFallingState::GetInstance());
 }
 void PlayerJumpingState::KeyState(BYTE* states) {
 	Mario* mario = Mario::GetInstance();
+	SetAnimation(mario->GetLevel());
 	Game* game = Game::GetInstance();
 	if (game->IsKeyDown(DIK_X))
 	{

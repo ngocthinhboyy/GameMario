@@ -42,7 +42,6 @@ void PlayerFlyingState::SetAnimation(int levelPlayer)
 void PlayerFlyingState::Update(int dt)
 {
 	Mario* mario = Mario::GetInstance();
-	SetAnimation(mario->GetLevel());
 	if (abs(mario->vy) < MARIO_JUMP_MAX_SPEED_Y && !stopIncreasingSpeed) {
 		mario->vy += (dt * -MARIO_ACCELERATION_JUMP_Y);
 	}
@@ -55,6 +54,7 @@ void PlayerFlyingState::Update(int dt)
 void PlayerFlyingState::KeyState(BYTE* states)
 {
 	Mario* mario = Mario::GetInstance();
+	SetAnimation(mario->GetLevel());
 	Game* game = Game::GetInstance();
 	if (game->IsKeyDown(DIK_S)) {
 		if (abs(mario->vy) >= MARIO_JUMP_MAX_SPEED_Y)

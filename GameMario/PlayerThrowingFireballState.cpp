@@ -36,12 +36,12 @@ void PlayerThrowingFireballState::Update(int dt)
 		return;
 	};
 	lastThrowingTime = now;
-	SetAnimation(mario->GetLevel());
 }
 
 void PlayerThrowingFireballState::KeyState(BYTE* states)
 {
 	Mario* mario = Mario::GetInstance();
+	SetAnimation(mario->GetLevel());
 	Game* game = Game::GetInstance();
 	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
 	LPANIMATION animation = animationDatabase->Get(animationID);

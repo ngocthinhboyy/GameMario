@@ -57,7 +57,6 @@ void PlayerStandingState::SetAnimation(int levelPlayer)
 void PlayerStandingState::Update(int dt)
 {
 	Mario* mario = Mario::GetInstance();
-	SetAnimation(mario->GetLevel());
 }
 void PlayerStandingState::OnKeyDown(int KeyCode) {
 	Mario* mario = Mario::GetInstance();
@@ -92,6 +91,7 @@ void PlayerStandingState::OnKeyDown(int KeyCode) {
 void PlayerStandingState::KeyState(BYTE* states) {
 	//DebugOut(L"STANDING \n");
 	Mario* mario = Mario::GetInstance();
+	SetAnimation(mario->GetLevel());
 	Game* game = Game::GetInstance();
 	if (game->IsKeyDown(DIK_X)) {
 		mario->vy = -MARIO_JUMP_SPEED_Y;

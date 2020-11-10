@@ -42,7 +42,6 @@ void PlayerKickingState::SetAnimation(int levelPlayer)
 void PlayerKickingState::Update(int dt)
 {
 	Mario* mario = Mario::GetInstance();
-	SetAnimation(mario->GetLevel());
 }
 
 void PlayerKickingState::KeyState(BYTE* states)

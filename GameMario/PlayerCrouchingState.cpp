@@ -39,13 +39,13 @@ void PlayerCrouchingState::SetAnimation(int levelPlayer)
 void PlayerCrouchingState::Update(int dt)
 {
 	Mario* mario = Mario::GetInstance();
-	SetAnimation(mario->GetLevel());
 }
 
 void PlayerCrouchingState::KeyState(BYTE* states)
 {
 	Game* game = Game::GetInstance();
 	Mario* mario = Mario::GetInstance();
+	SetAnimation(mario->GetLevel());
 	if (game->IsKeyDown(DIK_DOWN)) {
 		if (game->IsKeyDown(DIK_RIGHT)) {
 			mario->SetIsCrouching(false);

@@ -7,6 +7,7 @@
 #include "PlayerHighJumpingState.h"
 #include "PlayerRunningState.h"
 #include "PlayerSpinningState.h"
+#include "PlayerThrowingFireballState.h"
 
 
 PlayerState* PlayerWalkingState::__instance = NULL;
@@ -58,7 +59,6 @@ void PlayerWalkingState::SetAnimation(int levelPlayer)
 void PlayerWalkingState::Update(int dt)
 {
 	Mario* mario = Mario::GetInstance();
-	SetAnimation(mario->GetLevel());
 }
 void PlayerWalkingState::OnKeyDown(int KeyCode) {
 
@@ -83,6 +83,7 @@ void PlayerWalkingState::OnKeyDown(int KeyCode) {
 }
 void PlayerWalkingState::KeyState(BYTE* states) {
 	Mario* mario = Mario::GetInstance();
+	SetAnimation(mario->GetLevel());
 	Game* game = Game::GetInstance();
 	if (game->IsKeyDown(DIK_X)) {
 		mario->vy = -MARIO_JUMP_SPEED_Y;
@@ -92,6 +93,10 @@ void PlayerWalkingState::KeyState(BYTE* states) {
 	if (game->IsKeyDown(DIK_A)) {
 		if (mario->GetLevel() == MARIO_LEVEL_RACCOON) {
 			mario->ChangeState(PlayerSpinningState::GetInstance());
+			return;
+		}
+		else if (mario->GetLevel() == MARIO_LEVEL_FIRE) {
+			mario->ChangeState(PlayerThrowingFireballState::GetInstance());
 			return;
 		}
 		mario->ChangeState(PlayerRunningState::GetInstance());

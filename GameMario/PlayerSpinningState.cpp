@@ -28,12 +28,12 @@ void PlayerSpinningState::SetAnimation(int levelPlayer)
 void PlayerSpinningState::Update(int dt)
 {
 	Mario* mario = Mario::GetInstance();
-	SetAnimation(mario->GetLevel());
 }
 
 void PlayerSpinningState::KeyState(BYTE* states)
 {
 	Mario* mario = Mario::GetInstance();
+	SetAnimation(mario->GetLevel());
 	Game* game = Game::GetInstance();
 	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
 	LPANIMATION animation = animationDatabase->Get(animationID);

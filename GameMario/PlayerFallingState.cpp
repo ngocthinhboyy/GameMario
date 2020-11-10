@@ -69,7 +69,6 @@ void PlayerFallingState::SetAnimation(int levelPlayer)
 void PlayerFallingState::Update(int dt)
 {
 	Mario* mario = Mario::GetInstance();
-	SetAnimation(mario->GetLevel());
 	if (mario->vy == 0) {
 		if (mario->GetIsCrouChing() && mario->GetLevel() != MARIO_LEVEL_SMALL)
 			mario->ChangeState(PlayerCrouchingState::GetInstance());
@@ -85,6 +84,7 @@ void PlayerFallingState::Update(int dt)
 void PlayerFallingState::KeyState(BYTE* states)
 {
 	Mario* mario = Mario::GetInstance();
+	SetAnimation(mario->GetLevel());
 	Game* game = Game::GetInstance();
 	if (game->IsKeyDown(DIK_DOWN)) {
 		if (mario->vy == 0) {

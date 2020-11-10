@@ -37,11 +37,16 @@ void PlayerSkiddingState::SetAnimation(int levelPlayer)
 void PlayerSkiddingState::Update(int dt)
 {
 	Mario* mario = Mario::GetInstance();
-	SetAnimation(mario->GetLevel());
 	mario->vx += (dt * MARIO_SPEED_ACCELERATION * 2.5 * -(mario->nx));
 	if ((mario->vx * mario->nx) <= 0) {
 		mario->ChangeState(PlayerRunningState::GetInstance());
 	}
+}
+
+void PlayerSkiddingState::KeyState(BYTE* states)
+{
+	Mario* mario = Mario::GetInstance();
+	SetAnimation(mario->GetLevel());
 }
 
 PlayerState* PlayerSkiddingState::GetInstance()

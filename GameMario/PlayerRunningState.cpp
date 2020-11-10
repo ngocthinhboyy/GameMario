@@ -55,7 +55,6 @@ void PlayerRunningState::SetAnimation(int levelPlayer)
 void PlayerRunningState::Update(int dt)
 {
 	Mario* mario = Mario::GetInstance();
-	SetAnimation(mario->GetLevel());
 	if ((abs(mario->vx) < MARIO_RUNNING_MAX_SPEED) && !isMaxSpeed && increaseSpeed && !isSkidding) {
 		mario->vx += (dt * MARIO_SPEED_ACCELERATION * (mario->nx));
 	}
@@ -87,6 +86,7 @@ void PlayerRunningState::KeyState(BYTE* states)
 {
 	Game* game = Game::GetInstance();
 	Mario* mario = Mario::GetInstance();
+	SetAnimation(mario->GetLevel());
 	if (game->IsKeyDown(DIK_A)) {
 		if (abs(mario->vx) >= MARIO_RUNNING_MAX_SPEED) {
 			isMaxSpeed = true;

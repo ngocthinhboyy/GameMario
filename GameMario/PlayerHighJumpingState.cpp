@@ -64,7 +64,6 @@ void PlayerHighJumpingState::SetAnimation(int levelPlayer)
 void PlayerHighJumpingState::Update(int dt)
 {
 	Mario* mario = Mario::GetInstance();
-	SetAnimation(mario->GetLevel());
 	if (abs(mario->vy) < MARIO_JUMP_MAX_SPEED_Y && !stopIncreasingSpeed) {
 		mario->vy += (dt * -MARIO_ACCELERATION_JUMP_Y);
 	}
@@ -80,6 +79,7 @@ void PlayerHighJumpingState::Update(int dt)
 void PlayerHighJumpingState::KeyState(BYTE* states)
 {
 	Mario* mario = Mario::GetInstance();
+	SetAnimation(mario->GetLevel());
 	Game* game = Game::GetInstance();
 	//DebugOut(L"mario VX %f\n", mario->vx);
 	if (mario->vy >= 0) {
