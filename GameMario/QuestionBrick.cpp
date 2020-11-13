@@ -1,6 +1,7 @@
 #include "QuestionBrick.h"
 #include "AnimationDatabase.h"
 #include "StaticObjectDefine.h"
+#include "debug.h"
 
 QuestionBrick::QuestionBrick()
 {
@@ -9,6 +10,7 @@ QuestionBrick::QuestionBrick()
 QuestionBrick::QuestionBrick(float x, float y, float w, float h)
 {
 	this->x = x;
+	this->start_Y_position = y;
 	this->y = y;
 	this->w = w;
 	this->h = h;
@@ -28,6 +30,27 @@ void QuestionBrick::Render()
 		animation->Render(x, y, alpha, scale);
 	}
 	RenderBoundingBox();
+}
+
+void QuestionBrick::Update(DWORD dt)
+{
+
+	if (isEmptyBrick && !alreadyMoving) {
+		if (vy == 0) {
+			vy = -0.02 * dt;
+		}
+		else {
+			if (y >= start_Y_position) {
+				vy = 0;
+				alreadyMoving = true;
+				y = start_Y_position;
+			}
+			else
+				vy += 0.005 *dt;
+		}
+		GameObject::Update(dt);
+		y += dy;
+	}
 }
 
 void QuestionBrick::GetBoundingBox(float& left, float& top, float& right, float& bottom)
