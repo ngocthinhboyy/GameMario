@@ -19,6 +19,8 @@ void Sprite::Draw(float x, float y, int alpha, D3DXVECTOR2 scale)
 
 	float cam_x, cam_y;
 	camera->GetCamPos(cam_x, cam_y);
+	x = x + (right*3 - left*3) / 2;
+	y = y + (bottom*3 - top*3) / 2;
 	D3DXVECTOR3 p(x - cam_x, y - cam_y, 0);
 
 	RECT r;

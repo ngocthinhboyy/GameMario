@@ -64,6 +64,9 @@
     <Filter Include="Framework\Game_Object\DynamicObject">
       <UniqueIdentifier>{e37ceeed-f49e-4c4d-a28c-17f91f31236f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Grid">
+      <UniqueIdentifier>{731d9b9c-9e89-4b15-a14b-970b90e27d9f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -194,6 +197,9 @@
     </ClCompile>
     <ClCompile Include="PlayerFallingSlowlyState.cpp">
       <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Framework\Grid</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -346,6 +352,9 @@
     </ClInclude>
     <ClInclude Include="PlayerFallingSlowlyState.h">
       <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>Framework\Grid</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

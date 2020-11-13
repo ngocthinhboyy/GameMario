@@ -14,6 +14,7 @@
 #include "CollisionMapObject.h"
 #include "Textures.h"
 #include "PlayScene.h"
+#include "QuestionBrick.h"
 
 Mario* Mario::Mario::__instance = NULL;
 Mario* Mario::GetInstance() {
@@ -142,6 +143,16 @@ void Mario::Update(DWORD dt)
 				//CollisionWithEnemy(e, enemy);
 				enemy->CollisionWithPlayer(e);
 			}
+			else if (QuestionBrick* questionBrick = dynamic_cast<QuestionBrick*> (e->obj)) {
+				if (e->ny != 0) {
+					if (e->ny > 0)
+					{
+						questionBrick->isEmptyBrick = true;
+					}
+					vy = 0;
+				}
+				if (e->nx != 0) vx = 0;
+			}
 			else {
 				if (e->nx != 0) vx = 0;
 				if (e->ny != 0) vy = 0;
@@ -189,15 +200,19 @@ void Mario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 	{
 
 		if (isCrouching) {
-			left = x - MARIO_BIG_CROUCH_BBOX_WIDTH/2;
-			top = y - MARIO_BIG_CROUCH_BBOX_HEIGHT/2;
+			/*left = x - MARIO_BIG_CROUCH_BBOX_WIDTH/2;
+			top = y - MARIO_BIG_CROUCH_BBOX_HEIGHT/2;*/
+			left = x;
+			top = y;
 			right = left + MARIO_BIG_CROUCH_BBOX_WIDTH;
 			bottom = top + MARIO_BIG_CROUCH_BBOX_HEIGHT;
 		}
 		else
 		{
-			left = x - MARIO_BIG_BBOX_WIDTH / 2;
-			top = y - MARIO_BIG_BBOX_HEIGHT / 2;
+			/*left = x - MARIO_BIG_BBOX_WIDTH / 2;
+			top = y - MARIO_BIG_BBOX_HEIGHT / 2;*/
+			left = x;
+			top = y;
 			right = left + MARIO_BIG_BBOX_WIDTH;
 			bottom = top + MARIO_BIG_BBOX_HEIGHT;
 		}
@@ -206,23 +221,27 @@ void Mario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 	else if (level == MARIO_LEVEL_RACCOON) {
 
 		if (isCrouching) {
-			left = x - MARIO_BIG_CROUCH_BBOX_WIDTH / 2;
-			top = y - MARIO_BIG_CROUCH_BBOX_HEIGHT / 2;
+			/*left = x - MARIO_BIG_CROUCH_BBOX_WIDTH / 2;
+			top = y - MARIO_BIG_CROUCH_BBOX_HEIGHT / 2;*/
+			left = x;
+			top = y;
 			right = left + MARIO_BIG_CROUCH_BBOX_WIDTH;
 			bottom = top + MARIO_BIG_CROUCH_BBOX_HEIGHT;
 		}
 		else
 		{
-			left = x - MARIO_RACCOON_BBOX_WIDTH / 2;
-			top = y - MARIO_RACCOON_BBOX_HEIGHT / 2;
+			/*left = x - MARIO_RACCOON_BBOX_WIDTH / 2;
+			top = y - MARIO_RACCOON_BBOX_HEIGHT / 2;*/
 			right = left + MARIO_RACCOON_BBOX_WIDTH;
 			bottom = top + MARIO_RACCOON_BBOX_HEIGHT;
 		}
 	}
 	else if(level == MARIO_LEVEL_SMALL)
 	{
-		left = x - MARIO_SMALL_BBOX_WIDTH / 2;
-		top = y - MARIO_SMALL_BBOX_HEIGHT / 2;
+		/*left = x - MARIO_SMALL_BBOX_WIDTH / 2;
+		top = y - MARIO_SMALL_BBOX_HEIGHT / 2;*/
+		left = x;
+		top = y;
 		right = left + MARIO_SMALL_BBOX_WIDTH;
 		bottom = top + MARIO_SMALL_BBOX_HEIGHT;
 	}

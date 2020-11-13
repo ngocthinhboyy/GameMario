@@ -179,14 +179,18 @@ void Koopa::Update(DWORD dt)
 void Koopa::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 	if (state == ENEMY_STATE_DIE || state == ENEMY_STATE_SPIN_DIE_KICK) {
-		l = x - KOOPA_BBOX_WIDTH / 2;
-		t = y - KOOPA_DIE_BBOX_HEIGHT / 2;
+		/*l = x - KOOPA_BBOX_WIDTH / 2;
+		t = y - KOOPA_DIE_BBOX_HEIGHT / 2;*/
+		l = x;
+		t = y;
 		r = l + KOOPA_BBOX_WIDTH;
 		b = t + KOOPA_DIE_BBOX_HEIGHT;
 	}
 	else {
-		l = x - KOOPA_BBOX_WIDTH / 2;
-		t = y - KOOPA_BBOX_HEIGHT / 2;
+		/*l = x - KOOPA_BBOX_WIDTH / 2;
+		t = y - KOOPA_BBOX_HEIGHT / 2;*/
+		l = x;
+		t = y;
 		r = l + KOOPA_BBOX_WIDTH;
 		b = t + KOOPA_BBOX_HEIGHT;
 	}

@@ -15,11 +15,15 @@ QuestionBrick::QuestionBrick(float x, float y, float w, float h)
 	animation = AnimationDatabase::GetInstance()->Get(QUESTION_BRICK_ANI);
 }
 
+
+
 void QuestionBrick::Render()
 {
 	int alpha = 255;
 	D3DXVECTOR2 scale;
 	scale = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_SCALE);
+	if(isEmptyBrick)
+		animation = AnimationDatabase::GetInstance()->Get(QUESTION_BRICK_DIE_ANI);
 	if (animation != NULL) {
 		animation->Render(x, y, alpha, scale);
 	}
@@ -28,8 +32,10 @@ void QuestionBrick::Render()
 
 void QuestionBrick::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = x - QUESTION_BRICK_BBOX_WIDTH / 2;
-	top = y - QUESTION_BRICK_BBOX_HEIGHT / 2;
+	/*left = x - QUESTION_BRICK_BBOX_WIDTH / 2;
+	top = y - QUESTION_BRICK_BBOX_HEIGHT / 2;*/
+	left = x;
+	top = y;
 	right = left + QUESTION_BRICK_BBOX_WIDTH;
 	bottom = top + QUESTION_BRICK_BBOX_HEIGHT;
 }

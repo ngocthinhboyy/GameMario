@@ -85,6 +85,7 @@ void Goomba::Render()
 
 void Goomba::Update(DWORD dt)
 {
+	//DebugOut(L"Tui la goomba \n");
 	vy += ENEMY_GRAVITY * dt;
 	GameObject::Update(dt);
 
@@ -147,8 +148,10 @@ void Goomba::Update(DWORD dt)
 
 void Goomba::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
-	l = x - GOOMBA_BBOX_WIDTH / 2;
-	t = y - GOOMBA_BBOX_HEIGHT / 2;
+	/*l = x - GOOMBA_BBOX_WIDTH / 2;
+	t = y - GOOMBA_BBOX_HEIGHT / 2;*/
+	l = x;
+	t = y;
 	r = l + GOOMBA_BBOX_WIDTH;
 	b = t + GOOMBA_BBOX_HEIGHT;
 }

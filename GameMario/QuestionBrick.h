@@ -4,6 +4,7 @@ class QuestionBrick : public GameObject
 {
 	LPANIMATION animation;
 public:
+	bool isEmptyBrick = false;
 	QuestionBrick();
 	QuestionBrick(float x, float y, float w, float h);
 	void Render();

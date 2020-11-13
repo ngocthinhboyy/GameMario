@@ -129,8 +129,10 @@ void Fireball::Update(DWORD dt)
 
 void Fireball::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
-	l = x - FIREBALL_BBOX_WIDTH / 2;
-	t = y - FIREBALL_BBOX_HEIGHT / 2;
+	/*l = x - FIREBALL_BBOX_WIDTH / 2;
+	t = y - FIREBALL_BBOX_HEIGHT / 2;*/
+	l = x;
+	t = y;
 	r = l + FIREBALL_BBOX_WIDTH;
 	b = t + FIREBALL_BBOX_HEIGHT;
 }

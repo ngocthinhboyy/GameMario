@@ -16,6 +16,7 @@
 #include "CollisionMapObject.h"
 #include "LoadDefine.h"
 #include "QuestionBrick.h"
+#include "Grid.h"
 
 using namespace std;
 
@@ -134,6 +135,8 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 	GameObject* obj = NULL;
 	LPANIMATION_SET ani_set = NULL;
 
+	//Grid* grid = Grid::GetInstance();
+
 	switch (object_type)
 	{
 	case OBJECT_TYPE_MARIO:
@@ -164,6 +167,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 
 		obj->SetAnimationSet(ani_set);
 		enemies.push_back(obj);
+		//grid->DeterminedGridToObtainObject(obj);
 		break;
 	}
 	case OBJECT_TYPE_BRICK: {
@@ -175,6 +179,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 
 		obj->SetAnimationSet(ani_set);
 		objects.push_back(obj);
+		//grid->DeterminedGridToObtainObject(obj);
 		break;
 	}
 	case OBJECT_TYPE_KOOPA: {
@@ -186,6 +191,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 
 		obj->SetAnimationSet(ani_set);
 		enemies.push_back(obj);
+		//grid->DeterminedGridToObtainObject(obj);
 		break;
 	}
 	case OBJECT_TYPE_PORTAL:
@@ -297,11 +303,14 @@ void PlayScene::Update(DWORD dt)
 	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
 
-	vector<LPGAMEOBJECT> coObjects;
-	for (size_t i = 0; i < objects.size(); i++)
-	{
-		coObjects.push_back(objects[i]);
-	}
+	//Grid* grid = Grid::GetInstance();
+	//grid->GetListObjectInCamera();
+
+	//vector<LPGAMEOBJECT> coObjects;
+	//for (size_t i = 0; i < objects.size(); i++)
+	//{
+	//	coObjects.push_back(objects[i]);
+	//}
 
 	for (size_t i = 0; i < enemies.size(); i++)
 	{
