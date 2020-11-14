@@ -1,0 +1,6 @@
+#map
+#maptxt
+[MAP]
+1	Resources\map.txt	Resources\tileset.png	Resources\tilesetcoordinates.txt	255	255	255
+[OBJECTS]
+1	Scene\scene1\objects.txt

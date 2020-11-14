@@ -15,10 +15,9 @@ class Grid
 
 	static Grid* __instance;
 public:
+	void LoadObjectInSceneAddToGrid(string line);
 	void GetListObjectInCamera();
 	void DeterminedGridToObtainObject(LPGAMEOBJECT object);
-	void AddEnemy(LPGAMEOBJECT enemy);
-	void AddObject(LPGAMEOBJECT object);
 	static Grid* GetInstance();
 
 

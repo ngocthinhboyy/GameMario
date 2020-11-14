@@ -100,6 +100,7 @@ void Koopa::SetAnimation()
 
 void Koopa::Update(DWORD dt)
 {
+	DebugOut(L"Con rua day ne \n");
 	if (isHold) {
 		Mario* mario = Mario::GetInstance();
 		if (Mario::GetInstance()->nx * vx <= 0) {

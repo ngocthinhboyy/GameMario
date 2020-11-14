@@ -16,7 +16,7 @@ void TileManager::AddTile(int left, int top, int height, int width) {
 	tiles.push_back(tile);
 }
 
-void TileManager::CutTileset(LPCWSTR fileTexturePath, LPCWSTR fileTileSetPosition, D3DCOLOR transColor) {
+void TileManager::ReadTileset(LPCWSTR fileTexturePath, LPCWSTR fileTileSetPosition, D3DCOLOR transColor) {
 	D3DXIMAGE_INFO info;
 	HRESULT result = D3DXGetImageInfoFromFile(fileTexturePath, &info);
 	if (result != D3D_OK)

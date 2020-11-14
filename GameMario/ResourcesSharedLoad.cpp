@@ -105,7 +105,6 @@ void ResourcesSharedLoad::LoadSharedResource(LPCWSTR filePath)
 	int section = SHARED_RESOURCE_SECTION_UNKNOWN;
 
 	char str[MAX_SHARED_RESOURCE_LINE];
-	DebugOut(L"[INFO] TTTTTTTTTTTTTTTTTTTTTTT loading shared resources from : %s \n", filePath);
 	while (f.getline(str, MAX_SHARED_RESOURCE_LINE))
 	{
 		string line(str);

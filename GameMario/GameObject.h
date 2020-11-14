@@ -61,6 +61,7 @@ public:
 	DWORD dt;
 
 	bool stillAlive = true;
+	bool inGrid = false;
 
 	LPANIMATION_SET animation_set;
 
@@ -91,6 +92,8 @@ public:
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) = 0;
 	virtual void Update(DWORD dt);
 	virtual void Render() = 0;
+	void SetInGrid(bool inGrid) { this->inGrid = inGrid; };
+	bool GetInGrid() { return this->inGrid; };
 
 
 	~GameObject();

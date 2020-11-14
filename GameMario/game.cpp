@@ -338,8 +338,8 @@ void Game::_ParseSection_SCENES(string line)
 
 	if (tokens.size() < 2) return;
 	int id = atoi(tokens[0].c_str());
+	//wstring path = ToWSTR(tokens[1]);
 	LPCWSTR path = ToLPCWSTR(tokens[1]);
-
 	LPSCENE scene = new PlayScene(id, path);
 	scenes[id] = scene;
 }

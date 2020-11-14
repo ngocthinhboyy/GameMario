@@ -14,7 +14,7 @@ LPTILEMANAGER Map::GetTileManager() {
 }
 void Map::ReadMap() {
 
-	DebugOut(L"[INFO] Start loading scene resources from : %s \n", this->filePath);
+	DebugOut(L"[INFO] Start loading MAAPPPPPPPP resources from : %s \n", this->filePath);
 
 	ifstream f;
 	f.open(this->filePath);

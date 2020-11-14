@@ -4,4 +4,4 @@ resource-shared.txt
 start	1
 #scene list
 [SCENES]
-1	scene1.txt
+1	Scene\scene1\scene1.txt

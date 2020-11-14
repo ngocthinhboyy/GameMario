@@ -16,7 +16,7 @@ public:
 	TileManager();
 
 	void AddTile(int left, int top, int height, int width);
-	void CutTileset(LPCWSTR fileTexturePath, LPCWSTR fileTileSetPosition, D3DCOLOR transColor);
+	void ReadTileset(LPCWSTR fileTexturePath, LPCWSTR fileTileSetPosition, D3DCOLOR transColor);
 	int GetWidth() { return tile_width; };
 	int GetHeight() { return tile_height; };
 
