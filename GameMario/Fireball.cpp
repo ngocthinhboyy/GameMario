@@ -104,7 +104,7 @@ void Fireball::Update(DWORD dt)
 					enemy->SetState(ENEMY_STATE_DIE);
 				enemy->vx = ENEMY_DIE_SPEED_X;
 				enemy->vy = -ENEMY_DIE_SPEED_Y;
-				enemy->stillAlive = false;
+				enemy->SetIsUpsideDown(true);
 			}
 			else {
 				if (e->nx != 0) {

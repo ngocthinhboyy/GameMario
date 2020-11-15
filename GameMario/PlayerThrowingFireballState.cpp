@@ -6,6 +6,7 @@
 #include "Fireball.h"
 #include "PlayScene.h"
 #include "DynamicObjectDefine.h"
+#include "Grid.h"
 
 PlayerState* PlayerThrowingFireballState::__instance = NULL;
 int PlayerThrowingFireballState::quantityFireball = 0;
@@ -58,7 +59,9 @@ void PlayerThrowingFireballState::KeyState(BYTE* states)
 		if (quantityFireball < FIREBALL_MAX_QUANTITY) {
 			PlayScene* scene = dynamic_cast<PlayScene*> (game->GetCurrentScene());
 			Fireball* fireball = new Fireball(mario->x + MARIO_BIG_BBOX_WIDTH / 2, mario->y, FIREBALL_WIDTH, FIREBALL_HEIGHT);
-			scene->objects.push_back(fireball);
+			Grid* grid = Grid::GetInstance();
+			//scene->objects.push_back(fireball);
+			grid->DeterminedGridToObtainObject(fireball);
 			quantityFireball++;
 		}
 		animation->ResetAnimation();

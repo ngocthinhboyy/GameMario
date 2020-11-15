@@ -37,8 +37,6 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 	LPCWSTR filePathObject = ToLPCWSTR(tokens[1]);
 	ifstream f;
 
-	DebugOut(L"AAAAAAAAAA %s\n", filePathObject);
-
 	f.open(filePathObject);
 
 	int section = SCENE_SECTION_UNKNOWN;
@@ -221,9 +219,9 @@ void PlayScene::Update(DWORD dt)
 	for (size_t i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Update(dt);
-		if (!(objects[i]->stillAlive)) {
-			objects.erase(objects.begin() + i);
-		}
+		//if (!(objects[i]->stillAlive)) {
+			//objects.erase(objects.begin() + i);
+		//}
 	}
 	player->Update(dt);
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)

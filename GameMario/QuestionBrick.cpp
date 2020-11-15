@@ -37,7 +37,7 @@ void QuestionBrick::Update(DWORD dt)
 
 	if (isEmptyBrick && !alreadyMoving) {
 		if (vy == 0) {
-			vy = -0.02 * dt;
+			vy = -0.03 * dt;
 		}
 		else {
 			if (y >= start_Y_position) {
@@ -55,8 +55,6 @@ void QuestionBrick::Update(DWORD dt)
 
 void QuestionBrick::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	/*left = x - QUESTION_BRICK_BBOX_WIDTH / 2;
-	top = y - QUESTION_BRICK_BBOX_HEIGHT / 2;*/
 	left = x;
 	top = y;
 	right = left + QUESTION_BRICK_BBOX_WIDTH;

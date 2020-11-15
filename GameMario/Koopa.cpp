@@ -7,6 +7,8 @@
 #include "PlayerJumpingState.h"
 #include "PlayerKickingState.h"
 #include "PlayerHoldingState.h"
+#include "Camera.h"
+#include "QuestionBrick.h"
 
 Koopa::Koopa()
 {
@@ -31,7 +33,7 @@ void Koopa::Render()
 		scale = D3DXVECTOR2(RATIO_X_FLIP_SCALE, RATIO_Y_SCALE);
 	else
 		scale = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_SCALE);
-	if(!stillAlive)
+	if(isUpsideDown)
 		scale = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_FLIP_SCALE);
 	if (animation != NULL) {
 		animation->Render(x, y, alpha, scale);
@@ -100,12 +102,14 @@ void Koopa::SetAnimation()
 
 void Koopa::Update(DWORD dt)
 {
-	DebugOut(L"Con rua day ne \n");
 	if (isHold) {
 		Mario* mario = Mario::GetInstance();
 		if (Mario::GetInstance()->nx * vx <= 0) {
 			x = mario->x + KOOPA_HOLDING_DISTANCE_TURN_BACK_X * (mario->nx);
-			y = mario->y - KOOPA_HOLDING_DISTANCE_TURN_BACK_Y;
+			if (mario->GetLevel() == MARIO_LEVEL_SMALL)
+				y = mario->y - KOOPA_HOLDING_DISTANCE_TURN_BACK_Y_MARIO_SMALL;
+			else
+				y = mario->y - KOOPA_HOLDING_DISTANCE_TURN_BACK_Y;
 		}
 		vx = mario->vx;
 		vy = mario->vy;
@@ -125,7 +129,7 @@ void Koopa::Update(DWORD dt)
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
 	coEvents.clear();
-	if (stillAlive) {
+	if (stillAlive && !isUpsideDown) {
 		if (state == ENEMY_STATE_SPIN_DIE_KICK || isHold)
 		{
 			CalcPotentialCollisions(&coEnemies, coEvents);
@@ -134,10 +138,15 @@ void Koopa::Update(DWORD dt)
 		CalcPotentialCollisions(&coObjs, coEvents);
 	}
 
-	if (coEvents.size() == 0 || !stillAlive)
+	if (coEvents.size() == 0 || !stillAlive || isUpsideDown)
 	{
 			x += dx;
 			y += dy;
+			float cam_x, cam_y;
+			Camera* camera = Camera::GetInstance();
+			camera->GetCamPos(cam_x, cam_y);
+			if (y > (cam_y + SCREEN_HEIGHT))
+				stillAlive = false;
 	}
 	else
 	{
@@ -165,6 +174,15 @@ void Koopa::Update(DWORD dt)
 				enemy->vx = ENEMY_DIE_SPEED_X;
 				enemy->vy = -ENEMY_DIE_SPEED_Y;
 				enemy->stillAlive = false;
+			}
+			else if (QuestionBrick* questionBrick = dynamic_cast<QuestionBrick*> (e->obj)) {
+				if (e->ny != 0) vy = 0;
+				if (e->nx != 0) {
+					if (state == ENEMY_STATE_SPIN_DIE_KICK) {
+						questionBrick->isEmptyBrick = true;
+						vx = -vx;
+					}
+				}
 			}
 			else {
 				if (e->nx != 0) vx = -vx;

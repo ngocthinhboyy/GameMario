@@ -4,6 +4,7 @@
 #include "PlayScene.h"
 #include "AnimationDatabase.h"
 #include "debug.h"
+#include "Camera.h"
 
 Goomba::Goomba()
 {
@@ -75,7 +76,7 @@ void Goomba::Render()
 		scale = D3DXVECTOR2(RATIO_X_FLIP_SCALE, RATIO_Y_SCALE);
 	else
 		scale = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_SCALE);
-	if(!stillAlive)
+	if(isUpsideDown)
 		scale = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_FLIP_SCALE);
 	if (animation != NULL) {
 		animation->Render(x, y, alpha, scale);
@@ -98,15 +99,20 @@ void Goomba::Update(DWORD dt)
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
 	coEvents.clear();
-	if (stillAlive) {
+	if (!isUpsideDown) {
 		CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
 		//CalcPotentialCollisions(&coEnemies, coEvents);
 	}
 
-	if (coEvents.size() == 0 || !stillAlive)
+	if (coEvents.size() == 0 || isUpsideDown)
 	{
 		x += dx;
 		y += dy;
+		float cam_x,cam_y;
+		Camera* camera = Camera::GetInstance();
+		camera->GetCamPos(cam_x, cam_y);
+		if (y > (cam_y + SCREEN_HEIGHT))
+			stillAlive = false;
 	}
 	else
 	{
@@ -194,6 +200,6 @@ void Goomba::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 		state = ENEMY_STATE_DIE;
 		mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
 		//mario->vx = 0;
-		stillAlive = false;
+		isUpsideDown = true;
 	}
 }

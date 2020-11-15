@@ -46,7 +46,7 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 		DeterminedGridToObtainObject(obj);
 		break;
 	}
-	case OBJECT_TYPE_BRICK: {
+	case OBJECT_TYPE_QUESTION_BRICK: {
 
 		obj = new QuestionBrick(x, y, w, h);
 		obj->SetPosition(x, y);
@@ -113,7 +113,6 @@ void Grid::GetListObjectInCamera()
 			}
 		}
 	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
-	DebugOut(L"SIZEEE %d\n", enemies.size());
 	scene->enemies = enemies;
 	scene->objects = objects;
 	
