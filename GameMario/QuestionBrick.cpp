@@ -11,9 +11,12 @@ QuestionBrick::QuestionBrick(float x, float y, float w, float h)
 {
 	this->x = x;
 	this->start_Y_position = y;
+	this->startPositionX = x;
+	this->startPositionY = y;
 	this->y = y;
 	this->w = w;
 	this->h = h;
+	//this->vx = 0.01f;
 	animation = AnimationDatabase::GetInstance()->Get(QUESTION_BRICK_ANI);
 }
 

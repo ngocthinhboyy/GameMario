@@ -18,15 +18,15 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 	vector<string> tokens = split(line);
 
 	if (tokens.size() < 5) return;
+	int id = atoi(tokens[0].c_str());
+	int object_type = atoi(tokens[1].c_str());
+	float x = atof(tokens[2].c_str());
+	float y = atof(tokens[3].c_str());
 
-	int object_type = atoi(tokens[0].c_str());
-	float x = atof(tokens[1].c_str());
-	float y = atof(tokens[2].c_str());
+	float w = atof(tokens[4].c_str());
+	float h = atof(tokens[5].c_str());
 
-	float w = atof(tokens[3].c_str());
-	float h = atof(tokens[4].c_str());
-
-	int ani_set_id = atoi(tokens[5].c_str());
+	int ani_set_id = atoi(tokens[6].c_str());
 
 	AnimationManager* animation_sets = AnimationManager::GetInstance();
 
@@ -36,8 +36,9 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 	switch (object_type)
 	{
 	case OBJECT_TYPE_GOOMBA: {
-		int typeGoomba = atoi(tokens[6].c_str());
+		int typeGoomba = atoi(tokens[7].c_str());
 		obj = new Goomba(x, y, w, h, typeGoomba);
+		obj->gameObjectID = id;
 		obj->SetPosition(x, y);
 
 		ani_set = animation_sets->Get(ani_set_id);
@@ -49,8 +50,8 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 	case OBJECT_TYPE_QUESTION_BRICK: {
 
 		obj = new QuestionBrick(x, y, w, h);
+		obj->gameObjectID = id;
 		obj->SetPosition(x, y);
-
 		ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
@@ -58,8 +59,9 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 		break;
 	}
 	case OBJECT_TYPE_KOOPA: {
-		int typeKoopa = atoi(tokens[6].c_str());
+		int typeKoopa = atoi(tokens[7].c_str());
 		obj = new Koopa(x, y, w, h, typeKoopa);
+		obj->gameObjectID = id;
 		obj->SetPosition(x, y);
 
 		ani_set = animation_sets->Get(ani_set_id);
@@ -94,15 +96,20 @@ void Grid::GetListObjectInCamera()
 
 	int left = (int)((cam_x) / CELL_WIDTH);
 	int right = (int)((cam_x + SCREEN_WIDTH) / CELL_WIDTH);
-
+	/*DebugOut(L"TOPPPP %d\n", top);
+	DebugOut(L"BOTTOMMM %d\n", bottom);
+	DebugOut(L"LEFFFTTT %d\n", left -1);
+	DebugOut(L"RIGHTTTT %d\n", right );*/
 	for (int i = top; i <= bottom; i++)
-		for (int j = left; j <= right; j++) {
+		for (int j = left - 1; j <= right; j++) {
 			for (int k = 0; k < cells[i][j].size(); k++) {
 				if (cells[i][j].at(k)->stillAlive) {
 					if (LPENEMY enemy = dynamic_cast<LPENEMY> (cells[i][j].at(k))) {
 						if (!enemy->GetInGrid()) {
 							enemy->SetInGrid(true);
 							enemies.push_back(enemy);
+							//DebugOut(L"IIII %d\n", i);
+							//DebugOut(L"JJJJJ %d\n", j);
 						}
 					}
 					else if(!cells[i][j].at(k)->GetInGrid()){
@@ -114,7 +121,10 @@ void Grid::GetListObjectInCamera()
 		}
 	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 	scene->enemies = enemies;
+	/*if(enemies.size()>0)
+		DebugOut(L"SIZEEEEEEEE %d\n", enemies[0]->gameObjectID);*/
 	scene->objects = objects;
+	//DebugOut(L"OBJECT %d\n", objects.size());
 	
 }
 
@@ -130,6 +140,43 @@ void Grid::DeterminedGridToObtainObject(LPGAMEOBJECT object)
 		for (int j = left; j <= right; j++) {
 			cells[i][j].push_back(object);
 		}
+}
+void Grid::UpdateGrid(LPGAMEOBJECT object)
+{
+	float cam_x, cam_y;
+	Camera* camera = Camera::GetInstance();
+	camera->GetCamPos(cam_x, cam_y);
+	int topFocusCam = (int)((cam_y) / CELL_HEIGHT);
+	int bottomFocusCam = (int)((cam_y + SCREEN_HEIGHT) / CELL_HEIGHT);
+
+	int leftFocusCam = (int)((cam_x) / CELL_WIDTH);
+	int rightFocusCam = (int)((cam_x + SCREEN_WIDTH) / CELL_WIDTH);
+
+	for (int i = topFocusCam; i <= bottomFocusCam; i++)
+		for (int j = leftFocusCam - 2; j <= rightFocusCam +1; j++) {
+			for (int k = 0; k < cells[i][j].size(); k++) {
+				cells[i][j].at(k)->SetInGrid(false);
+				if (cells[i][j].at(k)->gameObjectID == object->gameObjectID) {
+					cells[i][j].erase(cells[i][j].begin() + k);
+				}
+			}
+		}
+	int top = (int)(object->y / CELL_HEIGHT);
+	int bottom = (int)((object->y + object->h) / CELL_HEIGHT);
+	int left = (int)(object->x / CELL_WIDTH);
+	int right = (int)((object->x + object->w) / CELL_WIDTH);
+
+	for (int i = top; i <= bottom; i++)
+		for (int j = left; j <= right; j++) {
+			cells[i][j].push_back(object);
+		}
+
+	/*for (int i = topFocusCam; i <= bottomFocusCam; i++) {
+		for (int j = 0; j < cells[i][leftFocusCam - 2].size(); j++)
+			cells[i][leftFocusCam - 2].at(j)->SetStartPosition();
+		for (int j = 0; j < cells[i][rightFocusCam + 1].size(); j++)
+			cells[i][rightFocusCam + 1].at(j)->SetStartPosition();
+	}*/
 }
 Grid* Grid::GetInstance()
 {

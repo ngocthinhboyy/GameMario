@@ -21,6 +21,10 @@ Koopa::Koopa(float x, float y, float w, float h, int type)
 	this->w = w;
 	this->h = h;
 	this->type = type;
+	this->vx = -0.08f;
+	this->startPositionX = x;
+	this->startPositionY = y;
+
 	SetState(ENEMY_STATE_WALKING_WITH_SWINGS);
 }
 

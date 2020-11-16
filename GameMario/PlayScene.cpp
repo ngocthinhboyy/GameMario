@@ -97,7 +97,7 @@ void PlayScene::_ParseSection_OBJECTS_NOT_IN_GRID(string line)
 			return;
 		}
 		Mario* mario = Mario::GetInstance();
-		mario->SetLevel(MARIO_LEVEL_FIRE);
+		mario->SetLevel(MARIO_LEVEL_BIG);
 		mario->ChangeState(PlayerStandingState::GetInstance());
 		ani_set = AnimationManager::GetInstance()->Get(ani_set_id);
 
@@ -215,7 +215,6 @@ void PlayScene::Update(DWORD dt)
 			enemies.erase(enemies.begin() + i);
 		}*/
 	}
-
 	for (size_t i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Update(dt);
@@ -224,8 +223,17 @@ void PlayScene::Update(DWORD dt)
 		//}
 	}
 	player->Update(dt);
-	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
+	for (size_t i = 0; i < enemies.size(); i++)
+	{
+		Grid::GetInstance()->UpdateGrid(enemies[i]);
+	}
+
+	for (size_t i = 0; i < objects.size(); i++)
+	{
+		Grid::GetInstance()->UpdateGrid(objects[i]);
+	}
 	if (player == NULL) return;
+
 
 	// Update camera to follow mario
 	float cx, cy;
@@ -247,6 +255,11 @@ void PlayScene::Render()
 {
 	MapManager* mapManager = MapManager::GetInstance();
 	mapManager->RenderMap(mapID);
+
+	for (size_t i = 0; i < collisionMapObjects.size(); i++)
+	{
+		collisionMapObjects[i]->Render();
+	}
 
 	for (int i = 0; i < objects.size(); i++) {
 		objects[i]->Render();

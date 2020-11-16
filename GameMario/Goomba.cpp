@@ -5,6 +5,7 @@
 #include "AnimationDatabase.h"
 #include "debug.h"
 #include "Camera.h"
+#include "QuestionBrick.h"
 
 Goomba::Goomba()
 {
@@ -17,7 +18,10 @@ Goomba::Goomba(float x, float y, float w, float h, int type)
 	this->w = w;
 	this->h = h;
 	this->type = type;
-	//this->vx = -GOOMBA_WALKING_SPEED;
+
+	this->startPositionX = x;
+	this->startPositionY = y;
+	this->vx = -GOOMBA_WALKING_SPEED;
 	this->type = type;
 	SetState(ENEMY_STATE_WALKING);
 	
@@ -94,6 +98,7 @@ void Goomba::Update(DWORD dt)
 
 	//vector<LPGAMEOBJECT> coEnemies = scene->enemies;
 	vector<LPGAMEOBJECT> coCollisionMapObjects = scene->collisionMapObjects;
+	vector<LPGAMEOBJECT> coObjects = scene->objects;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -101,6 +106,7 @@ void Goomba::Update(DWORD dt)
 	coEvents.clear();
 	if (!isUpsideDown) {
 		CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
+		CalcPotentialCollisions(&coObjects, coEvents);
 		//CalcPotentialCollisions(&coEnemies, coEvents);
 	}
 
@@ -119,7 +125,6 @@ void Goomba::Update(DWORD dt)
 		float min_tx, min_ty, nx = 0, ny;
 		float rdx = 0;
 		float rdy = 0;
-
 
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
@@ -141,9 +146,18 @@ void Goomba::Update(DWORD dt)
 				vy = -0.5f;
 				stillAlive = false;*/
 			}
-			else{
-				if (e->nx != 0) vx = 0;
+			else if (QuestionBrick* brick = dynamic_cast<QuestionBrick*> (e->obj)) {
+				//DebugOut(L"AAAA %f\n", e->nx);
 				if (e->ny != 0) vy = 0;
+				if (e->nx != 0) {
+					vx = -vx;
+				}
+			}
+			else {
+				if (e->ny != 0) vy = 0;
+				if (e->nx != 0) {
+					vx = -vx;
+				}
 			}
 		}
 	}
@@ -174,7 +188,7 @@ void Goomba::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LP
 		else if (collisionEvent->nx > 0 && collisionMapObjectDirectionX == -1)
 			x += dx;
 		else {
-			vx = 0;
+			vx = -vx;
 		}
 	}
 	if (collisionEvent->ny != 0) {

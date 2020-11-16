@@ -22,6 +22,12 @@ void GameObject::Update(DWORD dt)
 	dy = vy * dt;
 }
 
+void GameObject::SetStartPosition()
+{
+	this->x = this->startPositionX;
+	this->y = this->startPositionY;
+}
+
 /*
 	Extension of original SweptAABB to deal with two moving objects
 */

@@ -44,7 +44,7 @@ struct CollisionEvent
 class GameObject
 {
 public:
-
+	int gameObjectID;
 	float x;
 	float y;
 	float w;
@@ -65,6 +65,9 @@ public:
 
 	LPANIMATION_SET animation_set;
 
+	float startPositionX;
+	float startPositionY;
+
 public:
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
@@ -74,6 +77,7 @@ public:
 	virtual void RenderBoundingBox();
 
 	void SetAnimationSet(LPANIMATION_SET ani_set) { animation_set = ani_set; }
+	void SetStartPosition();
 
 	LPCOLLISIONEVENT SweptAABBEx(LPGAMEOBJECT coO);
 	void CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LPCOLLISIONEVENT>& coEvents);
@@ -94,7 +98,6 @@ public:
 	virtual void Render() = 0;
 	void SetInGrid(bool inGrid) { this->inGrid = inGrid; };
 	bool GetInGrid() { return this->inGrid; };
-
 
 	~GameObject();
 };
