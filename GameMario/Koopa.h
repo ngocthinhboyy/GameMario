@@ -7,7 +7,7 @@ class Koopa : public Enemy
 public:
 
 	Koopa();
-	Koopa(float x, float y, float w, float h, int type);
+	Koopa(float x, float y, float w, float h, int typeKoopa, int typeMove);
 	void Render();
 	void SetAnimation();
 	void Update(DWORD dt);

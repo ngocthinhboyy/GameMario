@@ -14,18 +14,20 @@ Koopa::Koopa()
 {
 }
 
-Koopa::Koopa(float x, float y, float w, float h, int type)
+Koopa::Koopa(float x, float y, float w, float h, int typeKoopa, int typeMove)
 {
 	this->x = x;
 	this->y = y;
 	this->w = w;
 	this->h = h;
-	this->type = type;
+	this->type = typeKoopa;
 	this->vx = -0.08f;
 	this->startPositionX = x;
 	this->startPositionY = y;
-
-	SetState(ENEMY_STATE_WALKING_WITH_SWINGS);
+	if(typeMove == 1)
+		SetState(ENEMY_STATE_WALKING);
+	else if(typeMove == 2)
+		SetState(ENEMY_STATE_WALKING_WITH_SWINGS);
 }
 
 void Koopa::Render()
@@ -33,7 +35,7 @@ void Koopa::Render()
 	int alpha = 255;
 	D3DXVECTOR2 scale;
 	SetAnimation();
-	if (nx < 1)
+	if (vx > 0)
 		scale = D3DXVECTOR2(RATIO_X_FLIP_SCALE, RATIO_Y_SCALE);
 	else
 		scale = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_SCALE);
@@ -177,7 +179,7 @@ void Koopa::Update(DWORD dt)
 					enemy->SetState(ENEMY_STATE_DIE);
 				enemy->vx = ENEMY_DIE_SPEED_X;
 				enemy->vy = -ENEMY_DIE_SPEED_Y;
-				enemy->stillAlive = false;
+				enemy->SetIsUpsideDown(true);
 			}
 			else if (QuestionBrick* questionBrick = dynamic_cast<QuestionBrick*> (e->obj)) {
 				if (e->ny != 0) vy = 0;

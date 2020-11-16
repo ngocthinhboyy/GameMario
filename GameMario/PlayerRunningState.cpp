@@ -180,12 +180,10 @@ void PlayerRunningState::OnKeyDown(int KeyCode)
 		prevKeyIsRight = false;
 		isSkidding = false;
 		//mario->ChangeState(PlayerHighJumpingState::GetInstance());
-		if (abs(mario->vx) >= MARIO_RUNNING_MAX_SPEED) {
-			mario->SetIsRunning(false);
+		if (abs(mario->vx) >= MARIO_RUNNING_MAX_SPEED) {;
 			mario->ChangeState(PlayerFlyingState::GetInstance());
 		}
 		else {
-			mario->SetIsRunning(false);
 			mario->ChangeState(PlayerHighJumpingState::GetInstance());
 		}
 		break;

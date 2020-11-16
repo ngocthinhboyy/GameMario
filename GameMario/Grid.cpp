@@ -60,7 +60,8 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 	}
 	case OBJECT_TYPE_KOOPA: {
 		int typeKoopa = atoi(tokens[7].c_str());
-		obj = new Koopa(x, y, w, h, typeKoopa);
+		int typeMove = atoi(tokens[8].c_str());
+		obj = new Koopa(x, y, w, h, typeKoopa,typeMove);
 		obj->gameObjectID = id;
 		obj->SetPosition(x, y);
 
@@ -121,8 +122,7 @@ void Grid::GetListObjectInCamera()
 		}
 	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 	scene->enemies = enemies;
-	/*if(enemies.size()>0)
-		DebugOut(L"SIZEEEEEEEE %d\n", enemies[0]->gameObjectID);*/
+	//DebugOut(L"SIZEEEEEEEE %d\n", enemies.size());
 	scene->objects = objects;
 	//DebugOut(L"OBJECT %d\n", objects.size());
 	

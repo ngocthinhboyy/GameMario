@@ -63,12 +63,12 @@ void PlayerStandingState::OnKeyDown(int KeyCode) {
 	switch (KeyCode)
 	{
 	case DIK_X:
-		mario->vy = -MARIO_JUMP_SPEED_Y;
-		mario->ChangeState(PlayerJumpingState::GetInstance());
+			mario->vy = -MARIO_JUMP_SPEED_Y;
+			mario->ChangeState(PlayerJumpingState::GetInstance());
 		break;
 	case DIK_S:
-		mario->vy = -MARIO_JUMP_SPEED_Y;
-		mario->ChangeState(PlayerHighJumpingState::GetInstance());
+			mario->vy = -MARIO_JUMP_SPEED_Y;
+			mario->ChangeState(PlayerHighJumpingState::GetInstance());
 		break;
 	case DIK_DOWN:
 	{
@@ -89,7 +89,6 @@ void PlayerStandingState::OnKeyDown(int KeyCode) {
 	}
 }
 void PlayerStandingState::KeyState(BYTE* states) {
-	//DebugOut(L"STANDING \n");
 	Mario* mario = Mario::GetInstance();
 	SetAnimation(mario->GetLevel());
 	Game* game = Game::GetInstance();

@@ -69,7 +69,7 @@ void PlayerFallingState::SetAnimation(int levelPlayer)
 void PlayerFallingState::Update(int dt)
 {
 	Mario* mario = Mario::GetInstance();
-	if (mario->vy == 0) {
+	if (mario->vy == 0 && mario->GetIsOnGround()) {
 		if (mario->GetIsCrouChing() && mario->GetLevel() != MARIO_LEVEL_SMALL)
 			mario->ChangeState(PlayerCrouchingState::GetInstance());
 		else if (abs(mario->vx) > MARIO_WALKING_SPEED)
@@ -107,8 +107,9 @@ void PlayerFallingState::OnKeyDown(int KeyCode)
 	{
 
 	case DIK_A: {
-		if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
+		if (mario->GetLevel() == MARIO_LEVEL_RACCOON) {
 			mario->ChangeState(PlayerSpinningState::GetInstance());
+		}
 		break;
 	}
 	default:

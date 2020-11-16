@@ -24,8 +24,6 @@ void PlayerFallingSlowlyState::SetAnimation(int levelPlayer)
 void PlayerFallingSlowlyState::Update(int dt)
 {
 	Mario* mario = Mario::GetInstance();
-	if(false)
-		mario->vy += -mario->vy*0.7;
 	if (mario->vy == 0) {
 		timePress = 0;
 		mario->ChangeState(PlayerStandingState::GetInstance());

@@ -68,8 +68,10 @@ void Mario::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPC
 			y += dy;
 		else if (collisionEvent->ny > 0 && collisionMapObjectDirectionY == -1)
 			y += dy;
-		else 
+		else {
+			isOnGround = true;
 			vy = 0;
+		}
 	}
 }
 
@@ -148,14 +150,23 @@ void Mario::Update(DWORD dt)
 					if (e->ny > 0)
 					{
 						questionBrick->isEmptyBrick = true;
+						isOnGround = false;
+					}
+					else if (e->ny < 0) {
+						isOnGround = true;
 					}
 					vy = 0;
 				}
-				if (e->nx != 0) vx = 0;
+				if (e->nx != 0) { 
+					vx = 0;
+				}
 			}
 			else {
 				if (e->nx != 0) vx = 0;
-				if (e->ny != 0) vy = 0;
+				if (e->ny != 0) {
+					vy = 0;
+					isOnGround = true;
+				}
 			}
 		}
 	}

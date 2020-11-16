@@ -58,7 +58,7 @@ void PlayerWalkingState::SetAnimation(int levelPlayer)
 }
 void PlayerWalkingState::Update(int dt)
 {
-	Mario* mario = Mario::GetInstance();
+
 }
 void PlayerWalkingState::OnKeyDown(int KeyCode) {
 
@@ -66,12 +66,12 @@ void PlayerWalkingState::OnKeyDown(int KeyCode) {
 	switch (KeyCode)
 	{
 		case DIK_X:
-			mario->vy = -MARIO_JUMP_SPEED_Y;
-			mario->ChangeState(PlayerJumpingState::GetInstance());
+				mario->vy = -MARIO_JUMP_SPEED_Y;
+				mario->ChangeState(PlayerJumpingState::GetInstance());
 			break;
 		case DIK_S:
-			mario->vy = -MARIO_JUMP_SPEED_Y;
-			mario->ChangeState(PlayerHighJumpingState::GetInstance());
+				mario->vy = -MARIO_JUMP_SPEED_Y;
+				mario->ChangeState(PlayerHighJumpingState::GetInstance());
 			break;
 		/*case DIK_A:
 			if(mario->GetLevel() == MARIO_LEVEL_RACCOON)
@@ -86,8 +86,8 @@ void PlayerWalkingState::KeyState(BYTE* states) {
 	SetAnimation(mario->GetLevel());
 	Game* game = Game::GetInstance();
 	if (game->IsKeyDown(DIK_X)) {
-		mario->vy = -MARIO_JUMP_SPEED_Y;
-		mario->ChangeState(PlayerJumpingState::GetInstance());
+			mario->vy = -MARIO_JUMP_SPEED_Y;
+			mario->ChangeState(PlayerJumpingState::GetInstance());
 		return;
 	}
 	if (game->IsKeyDown(DIK_A)) {
