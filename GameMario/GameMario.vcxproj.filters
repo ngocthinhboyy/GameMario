@@ -67,6 +67,9 @@
     <Filter Include="Framework\Grid">
       <UniqueIdentifier>{731d9b9c-9e89-4b15-a14b-970b90e27d9f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Game_Object\Item">
+      <UniqueIdentifier>{46b33b99-8ca7-4de8-9662-a4e277fc8fd5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -200,6 +203,12 @@
     </ClCompile>
     <ClCompile Include="Grid.cpp">
       <Filter>Framework\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Framework\Game_Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Coin.cpp">
+      <Filter>Framework\Game_Object\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -355,6 +364,15 @@
     </ClInclude>
     <ClInclude Include="Grid.h">
       <Filter>Framework\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Framework\Game_Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.h">
+      <Filter>Framework\Game_Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemDefine.h">
+      <Filter>Framework\Define</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

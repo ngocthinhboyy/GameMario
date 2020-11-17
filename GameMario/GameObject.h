@@ -43,6 +43,8 @@ struct CollisionEvent
 
 class GameObject
 {
+protected:
+	static int idGenerate;
 public:
 	int gameObjectID;
 	float x;

@@ -264,6 +264,7 @@ void PlayScene::Render()
 	for (int i = 0; i < objects.size(); i++) {
 		objects[i]->Render();
 	}
+	//DebugOut(L"SIZEEEE %d\n", objects.size());
 	//DebugOut(L"ENEMI %d\n", enemies.size());
 	for (int i = 0; i < enemies.size(); i++) {
 		enemies[i]->Render();

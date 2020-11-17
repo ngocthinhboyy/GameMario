@@ -48,3 +48,6 @@
 
 #define ENEMY_DIE_SPEED_X	0.2f;
 #define ENEMY_DIE_SPEED_Y	0.5f;
+
+#define KOOPA_WALKING_SPEED_X			0.08f
+#define KOOPA_WALKING_WITH_SWINGS_Y		0.7f

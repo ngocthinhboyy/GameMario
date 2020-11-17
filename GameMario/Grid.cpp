@@ -18,15 +18,15 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 	vector<string> tokens = split(line);
 
 	if (tokens.size() < 5) return;
-	int id = atoi(tokens[0].c_str());
-	int object_type = atoi(tokens[1].c_str());
-	float x = atof(tokens[2].c_str());
-	float y = atof(tokens[3].c_str());
+	//int id = atoi(tokens[0].c_str());
+	int object_type = atoi(tokens[0].c_str());
+	float x = atof(tokens[1].c_str());
+	float y = atof(tokens[2].c_str());
 
-	float w = atof(tokens[4].c_str());
-	float h = atof(tokens[5].c_str());
+	float w = atof(tokens[3].c_str());
+	float h = atof(tokens[4].c_str());
 
-	int ani_set_id = atoi(tokens[6].c_str());
+	int ani_set_id = atoi(tokens[5].c_str());
 
 	AnimationManager* animation_sets = AnimationManager::GetInstance();
 
@@ -36,9 +36,9 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 	switch (object_type)
 	{
 	case OBJECT_TYPE_GOOMBA: {
-		int typeGoomba = atoi(tokens[7].c_str());
+		int typeGoomba = atoi(tokens[6].c_str());
 		obj = new Goomba(x, y, w, h, typeGoomba);
-		obj->gameObjectID = id;
+		//obj->gameObjectID = id;
 		obj->SetPosition(x, y);
 
 		ani_set = animation_sets->Get(ani_set_id);
@@ -48,9 +48,9 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 		break;
 	}
 	case OBJECT_TYPE_QUESTION_BRICK: {
-
-		obj = new QuestionBrick(x, y, w, h);
-		obj->gameObjectID = id;
+		int type = atoi(tokens[6].c_str());
+		obj = new QuestionBrick(x, y, w, h, type);
+		//obj->gameObjectID = id;
 		obj->SetPosition(x, y);
 		ani_set = animation_sets->Get(ani_set_id);
 
@@ -59,10 +59,10 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 		break;
 	}
 	case OBJECT_TYPE_KOOPA: {
-		int typeKoopa = atoi(tokens[7].c_str());
-		int typeMove = atoi(tokens[8].c_str());
+		int typeKoopa = atoi(tokens[6].c_str());
+		int typeMove = atoi(tokens[7].c_str());
 		obj = new Koopa(x, y, w, h, typeKoopa,typeMove);
-		obj->gameObjectID = id;
+		//obj->gameObjectID = id;
 		obj->SetPosition(x, y);
 
 		ani_set = animation_sets->Get(ani_set_id);
@@ -122,8 +122,8 @@ void Grid::GetListObjectInCamera()
 		}
 	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 	scene->enemies = enemies;
-	//DebugOut(L"SIZEEEEEEEE %d\n", enemies.size());
 	scene->objects = objects;
+	//DebugOut(L"SIZEEEEEEEE %d\n", objects.size());
 	//DebugOut(L"OBJECT %d\n", objects.size());
 	
 }
@@ -134,8 +134,6 @@ void Grid::DeterminedGridToObtainObject(LPGAMEOBJECT object)
 	int bottom = (int)((object->y + object->h) / CELL_HEIGHT);
 	int left = (int)(object->x / CELL_WIDTH);
 	int right = (int)((object->x + object->w) / CELL_WIDTH);
-
-
 	for (int i = top; i <= bottom; i++)
 		for (int j = left; j <= right; j++) {
 			cells[i][j].push_back(object);
@@ -153,7 +151,7 @@ void Grid::UpdateGrid(LPGAMEOBJECT object)
 	int rightFocusCam = (int)((cam_x + SCREEN_WIDTH) / CELL_WIDTH);
 
 	for (int i = topFocusCam; i <= bottomFocusCam; i++)
-		for (int j = leftFocusCam - 2; j <= rightFocusCam +1; j++) {
+		for (int j = leftFocusCam - 1; j <= rightFocusCam; j++) {
 			for (int k = 0; k < cells[i][j].size(); k++) {
 				cells[i][j].at(k)->SetInGrid(false);
 				if (cells[i][j].at(k)->gameObjectID == object->gameObjectID) {

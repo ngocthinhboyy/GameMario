@@ -8,6 +8,7 @@
 #include "GameObject.h"
 #include "Sprite.h"
 
+int GameObject::idGenerate = 1;
 GameObject::GameObject()
 {
 	x = y = 0;

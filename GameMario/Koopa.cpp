@@ -21,13 +21,16 @@ Koopa::Koopa(float x, float y, float w, float h, int typeKoopa, int typeMove)
 	this->w = w;
 	this->h = h;
 	this->type = typeKoopa;
-	this->vx = -0.08f;
+	this->gameObjectID = idGenerate++;
 	this->startPositionX = x;
 	this->startPositionY = y;
+	this->vx = -KOOPA_WALKING_SPEED_X;
 	if(typeMove == 1)
 		SetState(ENEMY_STATE_WALKING);
-	else if(typeMove == 2)
+	else if (typeMove == 2) {
+
 		SetState(ENEMY_STATE_WALKING_WITH_SWINGS);
+	}
 }
 
 void Koopa::Render()
@@ -182,7 +185,12 @@ void Koopa::Update(DWORD dt)
 				enemy->SetIsUpsideDown(true);
 			}
 			else if (QuestionBrick* questionBrick = dynamic_cast<QuestionBrick*> (e->obj)) {
-				if (e->ny != 0) vy = 0;
+				if (e->ny != 0) {
+					vy = 0;
+					if (this->state == ENEMY_STATE_WALKING_WITH_SWINGS) {
+						vy -= KOOPA_WALKING_WITH_SWINGS_Y;
+					}
+				}
 				if (e->nx != 0) {
 					if (state == ENEMY_STATE_SPIN_DIE_KICK) {
 						questionBrick->isEmptyBrick = true;
@@ -244,7 +252,12 @@ void Koopa::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPC
 		else if (collisionEvent->ny > 0 && collisionMapObjectDirectionY == -1)
 			y += dy;
 		else
+		{
 			vy = 0;
+			if (this->state == ENEMY_STATE_WALKING_WITH_SWINGS) {
+				vy -= KOOPA_WALKING_WITH_SWINGS_Y;
+			}
+		}
 	}
 }
 

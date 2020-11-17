@@ -18,7 +18,7 @@ Goomba::Goomba(float x, float y, float w, float h, int type)
 	this->w = w;
 	this->h = h;
 	this->type = type;
-
+	this->gameObjectID = idGenerate++;
 	this->startPositionX = x;
 	this->startPositionY = y;
 	this->vx = -GOOMBA_WALKING_SPEED;

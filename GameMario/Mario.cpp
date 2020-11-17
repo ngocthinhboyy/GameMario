@@ -15,6 +15,11 @@
 #include "Textures.h"
 #include "PlayScene.h"
 #include "QuestionBrick.h"
+#include "Item.h"
+#include "Coin.h"
+#include "StaticObjectDefine.h"
+#include "ItemDefine.h"
+#include "Grid.h"
 
 Mario* Mario::Mario::__instance = NULL;
 Mario* Mario::GetInstance() {
@@ -140,26 +145,13 @@ void Mario::Update(DWORD dt)
 				CollisionWithCollisionMapObject(e, collMapObj);
 			}
 			else if(LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
-				//if (e->nx != 0) vx = 0;
-				//if (e->ny != 0) vy = 0;
-				//CollisionWithEnemy(e, enemy);
 				enemy->CollisionWithPlayer(e);
 			}
+			else if (LPITEM item = dynamic_cast<LPITEM> (e->obj)) {
+				item->CollisionWithPlayer(e);
+			}
 			else if (QuestionBrick* questionBrick = dynamic_cast<QuestionBrick*> (e->obj)) {
-				if (e->ny != 0) {
-					if (e->ny > 0)
-					{
-						questionBrick->isEmptyBrick = true;
-						isOnGround = false;
-					}
-					else if (e->ny < 0) {
-						isOnGround = true;
-					}
-					vy = 0;
-				}
-				if (e->nx != 0) { 
-					vx = 0;
-				}
+				questionBrick->CollisionWithPlayer(e);
 			}
 			else {
 				if (e->nx != 0) vx = 0;
