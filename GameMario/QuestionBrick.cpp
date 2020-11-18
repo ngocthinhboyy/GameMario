@@ -7,6 +7,7 @@
 #include "ItemDefine.h"
 #include "Grid.h"
 #include "Leaf.h"
+#include "Mushroom.h"
 
 QuestionBrick::QuestionBrick()
 {
@@ -45,13 +46,10 @@ void QuestionBrick::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 					Grid::GetInstance()->DeterminedGridToObtainObject(coin);
 				}
 				else if (type == QUESTION_BRICK_TYPE_HAS_ESPECIAL_ITEM) {
-					if (mario->GetLevel() == MARIO_LEVEL_SMALL) {
-						// mushroom
-					}
-					else {
-						Leaf* leaf = new Leaf(x + QUESTION_BRICK_BBOX_WIDTH / 2 - COIN_BBOX_WIDTH / 2, y - 3, COIN_BBOX_WIDTH, COIN_BBOX_HEIGHT);
-						leaf->vy = -0.7f;
-						leaf->vx = 0.004f;
+					if (mario->GetLevel() != MARIO_LEVEL_SMALL) {
+						Leaf* leaf = new Leaf(x + QUESTION_BRICK_BBOX_WIDTH / 2 - LEAF_BBOX_WIDTH / 2, y - 3, LEAF_BBOX_WIDTH, LEAF_BBOX_HEIGHT);
+						leaf->vy = -LEAF_SPEED_Y_APPEAR;
+						leaf->vx = LEAF_SPEED;
 						Grid::GetInstance()->DeterminedGridToObtainObject(leaf);
 					}
 				}
@@ -95,6 +93,12 @@ void QuestionBrick::Update(DWORD dt)
 				vy = 0;
 				alreadyMoving = true;
 				y = start_Y_position;
+				if (Mario::GetInstance()->GetLevel() == MARIO_LEVEL_SMALL && type == 2)
+				{
+					Mushroom* mushroom = new Mushroom(x + QUESTION_BRICK_BBOX_WIDTH / 2 - MUSHROOM_BBOX_WIDTH / 2, y, MUSHROOM_BBOX_WIDTH, MUSHROOM_BBOX_HEIGHT);
+					mushroom->vy = -MUSHROOM_SPEED_Y_APPEAR;
+					Grid::GetInstance()->DeterminedGridToObtainObject(mushroom);
+				}
 			}
 			else
 				vy += 0.005 *dt;

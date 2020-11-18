@@ -198,10 +198,10 @@ void Koopa::Update(DWORD dt)
 					}
 				}
 			}
-			else {
+			/*else {
 				if (e->nx != 0) vx = -vx;
 				if (e->ny != 0) vy = 0;
-			}
+			}*/
 		}
 	}
 

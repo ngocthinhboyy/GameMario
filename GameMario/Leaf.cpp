@@ -2,7 +2,6 @@
 #include "ItemDefine.h"
 #include "AnimationDatabase.h"
 #include "debug.h"
-# define PI   3.14159265358979323846 /* pi */ 
 
 Leaf::Leaf(float x, float y, float w, float h)
 {
@@ -46,7 +45,7 @@ void Leaf::Update(DWORD dt)
 			//DebugOut(L"AAAA \n");
 		}
 		float time = GetTickCount64() - startTime;
-		x = startPositionX - 60 * cos(0.004 * time);
+		x = startPositionX - LEAF_AMPLITUDE * cos(LEAF_SPEED * time);
 	}
 	GameObject::Update(dt);
 	y += dy;

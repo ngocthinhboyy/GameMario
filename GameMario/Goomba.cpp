@@ -153,12 +153,12 @@ void Goomba::Update(DWORD dt)
 					vx = -vx;
 				}
 			}
-			else {
+			/*else {
 				if (e->ny != 0) vy = 0;
 				if (e->nx != 0) {
 					vx = -vx;
 				}
-			}
+			}*/
 		}
 	}
 

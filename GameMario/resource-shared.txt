@@ -1,7 +1,7 @@
 # id	file_path	transparent_color_r	g	b
 [TEXTURES]
 1	textures\mario.png	255	255	255
-2	textures\misc.png	255	255	255
+2	textures\misc.png	63	72	204
 3	textures\transparent_brick.png	255	0	255
 4	textures\fireball.png	0	0	0
 5	textures\enemy.png	190	65	171

@@ -153,13 +153,13 @@ void Mario::Update(DWORD dt)
 			else if (QuestionBrick* questionBrick = dynamic_cast<QuestionBrick*> (e->obj)) {
 				questionBrick->CollisionWithPlayer(e);
 			}
-			else {
+			/*else {
 				if (e->nx != 0) vx = 0;
 				if (e->ny != 0) {
 					vy = 0;
 					isOnGround = true;
 				}
-			}
+			}*/
 		}
 	}
 
