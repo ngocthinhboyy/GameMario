@@ -6,6 +6,7 @@
 #include "Coin.h"
 #include "ItemDefine.h"
 #include "Grid.h"
+#include "Leaf.h"
 
 QuestionBrick::QuestionBrick()
 {
@@ -21,7 +22,11 @@ QuestionBrick::QuestionBrick(float x, float y, float w, float h, int type)
 	this->y = y;
 	this->w = w;
 	this->h = h;
-	this->type = type;
+	if (type == 1)
+		this->type = QUESTION_BRICK_TYPE_HAS_COIN;
+	else if (type == 2)
+		this->type = QUESTION_BRICK_TYPE_HAS_ESPECIAL_ITEM;
+
 	animation = AnimationDatabase::GetInstance()->Get(QUESTION_BRICK_ANI);
 }
 
@@ -33,9 +38,23 @@ void QuestionBrick::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 		{
 			mario->SetIsOnGround(false);
 			if (!isEmptyBrick) {
-				Coin* coin = new Coin(x + QUESTION_BRICK_BBOX_WIDTH / 2 - COIN_BBOX_WIDTH / 2, y - 3, COIN_BBOX_WIDTH, COIN_BBOX_HEIGHT);
-				coin->vy = -0.8f;
-				Grid::GetInstance()->DeterminedGridToObtainObject(coin);
+				if (type == QUESTION_BRICK_TYPE_HAS_COIN)
+				{
+					Coin* coin = new Coin(x + QUESTION_BRICK_BBOX_WIDTH / 2 - COIN_BBOX_WIDTH / 2, y - 3, COIN_BBOX_WIDTH, COIN_BBOX_HEIGHT);
+					coin->vy = -0.8f;
+					Grid::GetInstance()->DeterminedGridToObtainObject(coin);
+				}
+				else if (type == QUESTION_BRICK_TYPE_HAS_ESPECIAL_ITEM) {
+					if (mario->GetLevel() == MARIO_LEVEL_SMALL) {
+						// mushroom
+					}
+					else {
+						Leaf* leaf = new Leaf(x + QUESTION_BRICK_BBOX_WIDTH / 2 - COIN_BBOX_WIDTH / 2, y - 3, COIN_BBOX_WIDTH, COIN_BBOX_HEIGHT);
+						leaf->vy = -0.7f;
+						leaf->vx = 0.004f;
+						Grid::GetInstance()->DeterminedGridToObtainObject(leaf);
+					}
+				}
 				isEmptyBrick = true;
 			}
 		}

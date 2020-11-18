@@ -35,10 +35,12 @@
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Koopa.cpp" />
+    <ClCompile Include="Leaf.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapManager.cpp" />
     <ClCompile Include="Mario.cpp" />
+    <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="PlayerCrouchingState.cpp" />
     <ClCompile Include="PlayerFallingSlowlyState.cpp" />
     <ClCompile Include="PlayerFallingState.cpp" />
@@ -88,11 +90,13 @@
     <ClInclude Include="ItemDefine.h" />
     <ClInclude Include="KeyEventHandler.h" />
     <ClInclude Include="Koopa.h" />
+    <ClInclude Include="Leaf.h" />
     <ClInclude Include="LoadDefine.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapManager.h" />
     <ClInclude Include="Mario.h" />
     <ClInclude Include="MarioDefine.h" />
+    <ClInclude Include="Mushroom.h" />
     <ClInclude Include="PlayerCrouchingState.h" />
     <ClInclude Include="PlayerFallingSlowlyState.h" />
     <ClInclude Include="PlayerFallingState.h" />

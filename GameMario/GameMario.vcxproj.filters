@@ -210,6 +210,12 @@
     <ClCompile Include="Coin.cpp">
       <Filter>Framework\Game_Object\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Leaf.cpp">
+      <Filter>Framework\Game_Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Mushroom.cpp">
+      <Filter>Framework\Game_Object\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -373,6 +379,12 @@
     </ClInclude>
     <ClInclude Include="ItemDefine.h">
       <Filter>Framework\Define</Filter>
+    </ClInclude>
+    <ClInclude Include="Leaf.h">
+      <Filter>Framework\Game_Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Mushroom.h">
+      <Filter>Framework\Game_Object\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
