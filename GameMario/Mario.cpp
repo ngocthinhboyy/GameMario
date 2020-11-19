@@ -94,7 +94,6 @@ void Mario::Update(DWORD dt)
 {
 	playerState->Update(dt);
 	vy += MARIO_GRAVITY * dt;
-	//DebugOut(L"VXXXX %f\n", vx);
 	GameObject::Update(dt);
 
 	PlayScene * scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
@@ -186,14 +185,6 @@ void Mario::Render()
 
 void Mario::SetState(int state)
 {
-	/*GameObject::SetState(state);
-
-	switch (state)
-	{
-	case MARIO_STATE_DIE:
-		vy = -MARIO_DIE_DEFLECT_SPEED;
-		break;
-	}*/
 }
 
 void Mario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -203,8 +194,6 @@ void Mario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 	{
 
 		if (isCrouching) {
-			/*left = x - MARIO_BIG_CROUCH_BBOX_WIDTH/2;
-			top = y - MARIO_BIG_CROUCH_BBOX_HEIGHT/2;*/
 			left = x;
 			top = y;
 			right = left + MARIO_BIG_CROUCH_BBOX_WIDTH;
@@ -212,8 +201,6 @@ void Mario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 		}
 		else
 		{
-			/*left = x - MARIO_BIG_BBOX_WIDTH / 2;
-			top = y - MARIO_BIG_BBOX_HEIGHT / 2;*/
 			left = x;
 			top = y;
 			right = left + MARIO_BIG_BBOX_WIDTH;
@@ -224,8 +211,6 @@ void Mario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 	else if (level == MARIO_LEVEL_RACCOON) {
 
 		if (isCrouching) {
-			/*left = x - MARIO_BIG_CROUCH_BBOX_WIDTH / 2;
-			top = y - MARIO_BIG_CROUCH_BBOX_HEIGHT / 2;*/
 			left = x;
 			top = y;
 			right = left + MARIO_BIG_CROUCH_BBOX_WIDTH;
@@ -233,16 +218,12 @@ void Mario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 		}
 		else
 		{
-			/*left = x - MARIO_RACCOON_BBOX_WIDTH / 2;
-			top = y - MARIO_RACCOON_BBOX_HEIGHT / 2;*/
 			right = left + MARIO_RACCOON_BBOX_WIDTH;
 			bottom = top + MARIO_RACCOON_BBOX_HEIGHT;
 		}
 	}
 	else if(level == MARIO_LEVEL_SMALL)
 	{
-		/*left = x - MARIO_SMALL_BBOX_WIDTH / 2;
-		top = y - MARIO_SMALL_BBOX_HEIGHT / 2;*/
 		left = x;
 		top = y;
 		right = left + MARIO_SMALL_BBOX_WIDTH;

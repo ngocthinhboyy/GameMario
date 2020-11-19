@@ -8,6 +8,7 @@
 #include "AnimationManager.h"
 #include "PlayerStandingState.h"
 #include "QuestionBrick.h"
+#include "Flower.h"
 
 Grid* Grid::__instance = NULL;
 void Grid::LoadObjectInSceneAddToGrid(string line)
@@ -65,6 +66,17 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 		//obj->gameObjectID = id;
 		obj->SetPosition(x, y);
 
+		ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
+		DeterminedGridToObtainObject(obj);
+		break;
+	}
+	case OBJECT_TYPE_FLOWER: {
+		int type = atoi(tokens[6].c_str());
+		obj = new Flower(x, y, w, h, type);
+		//obj->gameObjectID = id;
+		obj->SetPosition(x, y);
 		ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);

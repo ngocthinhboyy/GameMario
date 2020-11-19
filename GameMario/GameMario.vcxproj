@@ -29,6 +29,7 @@
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Fireball.cpp" />
+    <ClCompile Include="Flower.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Goomba.cpp" />
@@ -81,6 +82,7 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyDefine.h" />
     <ClInclude Include="Fireball.h" />
+    <ClInclude Include="Flower.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Goomba.h" />

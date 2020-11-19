@@ -42,7 +42,7 @@ void QuestionBrick::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 				if (type == QUESTION_BRICK_TYPE_HAS_COIN)
 				{
 					Coin* coin = new Coin(x + QUESTION_BRICK_BBOX_WIDTH / 2 - COIN_BBOX_WIDTH / 2, y - 3, COIN_BBOX_WIDTH, COIN_BBOX_HEIGHT);
-					coin->vy = -0.8f;
+					coin->vy = -COIN_SPEED_Y;
 					Grid::GetInstance()->DeterminedGridToObtainObject(coin);
 				}
 				else if (type == QUESTION_BRICK_TYPE_HAS_ESPECIAL_ITEM) {
@@ -93,7 +93,7 @@ void QuestionBrick::Update(DWORD dt)
 				vy = 0;
 				alreadyMoving = true;
 				y = start_Y_position;
-				if (Mario::GetInstance()->GetLevel() == MARIO_LEVEL_SMALL && type == 2)
+				if (Mario::GetInstance()->GetLevel() == MARIO_LEVEL_SMALL && type == QUESTION_BRICK_TYPE_HAS_ESPECIAL_ITEM)
 				{
 					Mushroom* mushroom = new Mushroom(x + QUESTION_BRICK_BBOX_WIDTH / 2 - MUSHROOM_BBOX_WIDTH / 2, y, MUSHROOM_BBOX_WIDTH, MUSHROOM_BBOX_HEIGHT);
 					mushroom->vy = -MUSHROOM_SPEED_Y_APPEAR;

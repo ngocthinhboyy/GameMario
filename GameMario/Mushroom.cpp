@@ -109,6 +109,12 @@ void Mushroom::GetBoundingBox(float& l, float& t, float& r, float& b)
 
 void Mushroom::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 {
+	Mario* mario = Mario::GetInstance();
+	mario->SetLevel(mario->GetLevel() + 1);
+	this->stillAlive = false;
+	mario->vx = 0;
+	mario->vy = 0;
+	mario->y -= 50;
 }
 
 void Mushroom::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPCOLLISIONMAPOBJECT collisionMapObject)

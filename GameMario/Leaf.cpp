@@ -2,6 +2,8 @@
 #include "ItemDefine.h"
 #include "AnimationDatabase.h"
 #include "debug.h"
+#include "Mario.h"
+#include "Camera.h"
 
 Leaf::Leaf(float x, float y, float w, float h)
 {
@@ -30,6 +32,7 @@ void Leaf::Render()
 	if (animation != NULL) {
 		animation->Render(x, y, alpha, scale);
 	}
+	RenderBoundingBox();
 }
 
 void Leaf::Update(DWORD dt)
@@ -49,6 +52,12 @@ void Leaf::Update(DWORD dt)
 	}
 	GameObject::Update(dt);
 	y += dy;
+	Camera* cam = Camera::GetInstance();
+	float cam_x, cam_y;
+	cam->GetCamPos(cam_x, cam_y);
+	if (y > cam_y + SCREEN_HEIGHT) {
+		this->stillAlive = false;
+	}
 }
 
 void Leaf::GetBoundingBox(float& l, float& t, float& r, float& b)
@@ -61,6 +70,12 @@ void Leaf::GetBoundingBox(float& l, float& t, float& r, float& b)
 
 void Leaf::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 {
+	/*Mario* mario = Mario::GetInstance();
+	mario->SetLevel(mario->GetLevel() + 1);
+	this->stillAlive = false;
+	mario->vx = 0;
+	mario->vy = 0;
+	mario->y -= 80;*/
 }
 
 Leaf::~Leaf()

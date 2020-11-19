@@ -13,6 +13,7 @@ public:
 	void CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent);
 	void Render();
 	void Update(DWORD dt);
+	int GetType() { return this->type; };
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };
 

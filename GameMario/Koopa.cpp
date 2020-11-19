@@ -9,6 +9,11 @@
 #include "PlayerHoldingState.h"
 #include "Camera.h"
 #include "QuestionBrick.h"
+#include "StaticObjectDefine.h"
+#include "Leaf.h"
+#include "ItemDefine.h"
+#include "Grid.h"
+#include "Coin.h"
 
 Koopa::Koopa()
 {
@@ -193,7 +198,25 @@ void Koopa::Update(DWORD dt)
 				}
 				if (e->nx != 0) {
 					if (state == ENEMY_STATE_SPIN_DIE_KICK) {
+						vx = -vx;
+						if (!questionBrick->isEmptyBrick) {
+							if (questionBrick->GetType() == QUESTION_BRICK_TYPE_HAS_ESPECIAL_ITEM) {
+								if (Mario::GetInstance()->GetLevel() != MARIO_LEVEL_SMALL) {
+									Leaf* leaf = new Leaf(questionBrick->x + QUESTION_BRICK_BBOX_WIDTH / 2 - LEAF_BBOX_WIDTH / 2, questionBrick->y - 3, LEAF_BBOX_WIDTH, LEAF_BBOX_HEIGHT);
+									leaf->vy = -LEAF_SPEED_Y_APPEAR;
+									leaf->vx = LEAF_SPEED;
+									Grid::GetInstance()->DeterminedGridToObtainObject(leaf);
+								}
+							}
+							else if (questionBrick->GetType() == QUESTION_BRICK_TYPE_HAS_COIN) {
+								Coin* coin = new Coin(questionBrick->x + QUESTION_BRICK_BBOX_WIDTH / 2 - COIN_BBOX_WIDTH / 2, questionBrick->y - 3, COIN_BBOX_WIDTH, COIN_BBOX_HEIGHT);
+								coin->vy = -COIN_SPEED_Y;
+								Grid::GetInstance()->DeterminedGridToObtainObject(coin);
+							}
+						}
 						questionBrick->isEmptyBrick = true;
+					}
+					else {
 						vx = -vx;
 					}
 				}

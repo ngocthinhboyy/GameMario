@@ -216,6 +216,9 @@
     <ClCompile Include="Mushroom.cpp">
       <Filter>Framework\Game_Object\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Flower.cpp">
+      <Filter>Framework\Game_Object\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -385,6 +388,9 @@
     </ClInclude>
     <ClInclude Include="Mushroom.h">
       <Filter>Framework\Game_Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Flower.h">
+      <Filter>Framework\Game_Object\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
