@@ -129,7 +129,6 @@ void Mario::Update(DWORD dt)
 		float rdx = 0;
 		float rdy = 0;
 
-		
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
 		x += min_tx * dx + nx * 0.4f;
@@ -179,7 +178,6 @@ void Mario::Render()
 		scale = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_SCALE);
 	if(ani != NULL)
 		ani->Render(x, y, alpha, scale);
-
 	RenderBoundingBox();
 }
 
@@ -218,6 +216,8 @@ void Mario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 		}
 		else
 		{
+			left = x;
+			top = y;
 			right = left + MARIO_RACCOON_BBOX_WIDTH;
 			bottom = top + MARIO_RACCOON_BBOX_HEIGHT;
 		}

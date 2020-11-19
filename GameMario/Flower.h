@@ -2,7 +2,13 @@
 #include "Enemy.h"
 class Flower : public Enemy
 {
-	int type;
+	int type = 0;
+	bool isMoving = true;
+	bool isGoUp = true;
+	int startAttacking = 0;
+	bool finishedAttacking = false;
+	int state = 0;
+	int lastMoving = 0;
 public:
 
 	Flower();

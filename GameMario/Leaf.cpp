@@ -38,6 +38,7 @@ void Leaf::Render()
 void Leaf::Update(DWORD dt)
 {
 	vy += ITEM_GRAVITY * dt;
+	vx = 0;
 	if (vy >= 0) {
 		if (y < startPositionY) {
 			vy = ITEM_GRAVITY * dt * 2;
@@ -45,10 +46,10 @@ void Leaf::Update(DWORD dt)
 		else {
 			vy = 0;
 			vy = ITEM_GRAVITY * dt * 2;
-			//DebugOut(L"AAAA \n");
 		}
 		float time = GetTickCount64() - startTime;
-		x = startPositionX - LEAF_AMPLITUDE * cos(LEAF_SPEED * time);
+		vx = LEAF_SPEED;
+		x = startPositionX - LEAF_AMPLITUDE * cos(vx * time);
 	}
 	GameObject::Update(dt);
 	y += dy;
@@ -70,12 +71,12 @@ void Leaf::GetBoundingBox(float& l, float& t, float& r, float& b)
 
 void Leaf::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 {
-	/*Mario* mario = Mario::GetInstance();
+	Mario* mario = Mario::GetInstance();
 	mario->SetLevel(mario->GetLevel() + 1);
 	this->stillAlive = false;
 	mario->vx = 0;
 	mario->vy = 0;
-	mario->y -= 80;*/
+	mario->y -= 50;
 }
 
 Leaf::~Leaf()

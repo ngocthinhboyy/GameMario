@@ -2,6 +2,7 @@
 #include "EnemyDefine.h"
 #include "AnimationDatabase.h"
 #include "Mario.h"
+#include "debug.h"
 
 Flower::Flower()
 {
@@ -16,6 +17,7 @@ Flower::Flower(float x, float y, float w, float h, int type)
 	this->type = type;
 	this->startPositionX = x;
 	this->startPositionY = y;
+	this->state = FLOWER_STATE_MOVE;
 }
 
 void Flower::SetAnimation()
@@ -24,15 +26,24 @@ void Flower::SetAnimation()
 	switch (this->type)
 	{
 		case RED_FIRE_FLOWER_TYPE: {
-			this->animation = animationDatabase->Get(RED_FIRE_FLOWER_ANI);
+			if(state == FLOWER_STATE_MOVE)
+				this->animation = animationDatabase->Get(RED_FIRE_FLOWER_ANI_MOVE);
+			else if(state == FLOWER_STATE_ATTACK)
+				this->animation = animationDatabase->Get(RED_FIRE_FLOWER_ANI_ATTACK);
 			break;
 		}
 		case GREEN_FIRE_FLOWER_TYPE: {
-			this->animation = animationDatabase->Get(GREEN_FIRE_FLOWER_ANI);
+			if (state == FLOWER_STATE_MOVE)
+				this->animation = animationDatabase->Get(GREEN_FIRE_FLOWER_ANI_MOVE);
+			else if (state == FLOWER_STATE_ATTACK)
+				this->animation = animationDatabase->Get(GREEN_FIRE_FLOWER_ANI_ATTACK);
 			break;
 		}
 		case GREEN_FLOWER_TYPE: {
-			this->animation = animationDatabase->Get(GREEN_FLOWER_ANI);
+			if (state == FLOWER_STATE_MOVE)
+				this->animation = animationDatabase->Get(GREEN_FLOWER_ANI_MOVE);
+			else if (state == FLOWER_STATE_ATTACK)
+				this->animation = animationDatabase->Get(GREEN_FLOWER_ANI_ATTACK);
 			break;
 		}
 	default:
@@ -52,11 +63,47 @@ void Flower::Render()
 	if (animation != NULL) {
 		animation->Render(x, y, alpha, scale);
 	}
-	RenderBoundingBox();
 }
 
 void Flower::Update(DWORD dt)
 {
+	if (isMoving && state == FLOWER_STATE_MOVE) {
+		if (isGoUp) {
+			vy = -0.08f;
+		}
+		else {
+			vy = 0.08f;
+		}
+		if (y + 96 < startPositionY && !finishedAttacking) {
+			this->state = FLOWER_STATE_ATTACK;
+			isGoUp = false;
+			startAttacking = GetTickCount64();
+			vy = 0;
+		}
+		if (y > startPositionY) {
+			isGoUp = true;
+			isMoving = false;
+			lastMoving = GetTickCount64();
+		}
+	}
+	else if (state == FLOWER_STATE_ATTACK) {
+		int timeAttack = GetTickCount64();
+		if (timeAttack - startAttacking >= 1000) {
+			this->state = FLOWER_STATE_MOVE;
+			finishedAttacking = true;
+		}
+	}
+	else {
+		vy = 0;
+		int now = GetTickCount64();
+		if (now - lastMoving >= 500) {
+			isMoving = true;
+			isGoUp = true;
+			finishedAttacking = false;
+		}
+	}
+	GameObject::Update(dt);
+	y += dy;
 }
 
 void Flower::GetBoundingBox(float& l, float& t, float& r, float& b)

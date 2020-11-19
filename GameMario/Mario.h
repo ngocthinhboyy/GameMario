@@ -27,8 +27,8 @@ public:
 	virtual void Render();
 
 	void SetState(int state);
-	void SetLevel(int l) { level = l; }
-	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
+	void SetLevel(int level) { this->level = level; }
+	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 
 
 	void Reset();

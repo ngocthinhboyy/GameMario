@@ -81,13 +81,13 @@ void PlayerFlyingState::OnKeyDown(int KeyCode)
 	{
 	case DIK_S:
 		if (mario->GetLevel() == MARIO_LEVEL_RACCOON) {
-			DWORD now = GetTickCount();
-			if (now - timeStartFlying < 1000) {
+			DWORD now = GetTickCount64();
+			//if (now - timeStartFlying < 500) {
 				mario->vy += -0.7f;
-			}
-			else {
+			//}
+			/*else {
 
-			}
+			}*/
 		}
 		break;
 	default:
@@ -116,7 +116,7 @@ void PlayerFlyingState::OnKeyUp(int KeyCode)
 PlayerState* PlayerFlyingState::GetInstance()
 {
 	if (__instance == NULL) __instance = new PlayerFlyingState();
-	timeStartFlying = GetTickCount();
+	timeStartFlying = GetTickCount64();
 	return __instance;
 }
 
