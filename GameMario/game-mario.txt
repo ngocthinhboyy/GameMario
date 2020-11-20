@@ -1,5 +1,14 @@
+#----------SHARED RESOURCES------------------
 [RESOURCES]
-resource-shared.txt
+#shared-resources
+SharedResources\resource-shared.txt
+#----BOARD GAME----
+[BOARDGAME_ITEMS]
+#board-game
+SharedResources\Boardgame\boardgame.txt
+[POSITION_IN_BOARDGAME]
+SharedResources\Boardgame\positionInBoardGame.txt
+#----------SETTING------------
 [SETTINGS]
 start	1
 #scene list

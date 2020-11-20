@@ -23,6 +23,7 @@
     <ClCompile Include="AnimationDatabase.cpp" />
     <ClCompile Include="AnimationFrame.cpp" />
     <ClCompile Include="AnimationManager.cpp" />
+    <ClCompile Include="BoardGame.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="CollisionMapObject.cpp" />
@@ -74,6 +75,7 @@
     <ClInclude Include="AnimationDatabase.h" />
     <ClInclude Include="AnimationFrame.h" />
     <ClInclude Include="AnimationManager.h" />
+    <ClInclude Include="BoardGame.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="CollisionMapObject.h" />

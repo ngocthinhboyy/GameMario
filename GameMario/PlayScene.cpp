@@ -17,6 +17,7 @@
 #include "LoadDefine.h"
 #include "QuestionBrick.h"
 #include "Grid.h"
+#include "BoardGame.h"
 
 using namespace std;
 
@@ -198,6 +199,7 @@ void PlayScene::Load()
 
 
 	Textures::GetInstance()->AddTexture(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
+	Textures::GetInstance()->AddTexture(ID_TEX_BOARDGAME, L"textures\\boardgame_panel.png", D3DCOLOR_XRGB(255, 255, 255));
 
 	DebugOut(L"[INFO] Done loading scene resources %s\n", sceneFilePath);
 }
@@ -270,6 +272,8 @@ void PlayScene::Render()
 		enemies[i]->Render();
 	}
 	player->Render();
+	BoardGame* board = BoardGame::GetInstance();
+	board->RenderBoardGame();
 }
 
 /*

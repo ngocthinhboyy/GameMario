@@ -4,6 +4,7 @@
 #include "PlayScene.h"
 #include "Camera.h"
 #include "QuestionBrick.h"
+#include "Leaf.h"
 
 Mushroom::Mushroom(float x, float y, float w, float h)
 {

@@ -99,7 +99,6 @@ void Goomba::Update(DWORD dt)
 	//vector<LPGAMEOBJECT> coEnemies = scene->enemies;
 	vector<LPGAMEOBJECT> coCollisionMapObjects = scene->collisionMapObjects;
 	vector<LPGAMEOBJECT> coObjects = scene->objects;
-
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
@@ -108,6 +107,7 @@ void Goomba::Update(DWORD dt)
 		CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
 		CalcPotentialCollisions(&coObjects, coEvents);
 		//CalcPotentialCollisions(&coEnemies, coEvents);
+		//CalcPotentialCollisions(Mario::GetInstance(), coEvents);
 	}
 
 	if (coEvents.size() == 0 || isUpsideDown)

@@ -5,6 +5,7 @@
 3	textures\transparent_brick.png	255	0	255
 4	textures\fireball.png	0	0	0
 5	textures\enemy.png	190	65	171
+6	textures\boardgame.png	163	73	164
 # id	left	top	width	height	texture_id
 [SPRITES]
 # SMALL MARIO

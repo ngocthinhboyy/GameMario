@@ -9,6 +9,7 @@
 #include "AnimationDatabase.h"
 #include "Camera.h"
 #include "ResourcesSharedLoad.h"
+#include "BoardGame.h"
 
 Game* Game::__instance = NULL;
 
@@ -351,6 +352,20 @@ void Game::_ParseSection_RESOURCES(string line)
 	LoadSharedResource(path.c_str());
 }
 
+void Game::_ParseSection_POSITION_IN_BOARDGAME(string line)
+{
+	vector<string> tokens = split(line);
+	wstring path = ToWSTR(tokens[0]);
+	LoadPositionInBoardGame(path.c_str());
+}
+
+void Game::_ParseSection_BOARDGAME_ITEMS(string line)
+{
+	vector<string> tokens = split(line);
+	wstring path = ToWSTR(tokens[0]);
+	LoadBoardGameItems(path.c_str());
+}
+
 /*
 	Load game campaign file and load/initiate first scene
 */
@@ -374,12 +389,16 @@ void Game::Load(LPCWSTR gameFile)
 		if (line == "[RESOURCES]") { section = GAME_FILE_SECTION_RESOURCES; continue; }
 		if (line == "[SETTINGS]") { section = GAME_FILE_SECTION_SETTINGS; continue; }
 		if (line == "[SCENES]") { section = GAME_FILE_SECTION_SCENES; continue; }
+		if (line == "[BOARDGAME_ITEMS]") { section = GAME_FILE_SECTION_BOARDGAME_ITEMS; continue; }
+		if (line == "[POSITION_IN_BOARDGAME]") { section = GAME_FILE_SECTION_POSITION_IN_BOARDGAME; continue; }
 
 		//
 		// data section
 		//
 		switch (section)
 		{
+		case GAME_FILE_SECTION_BOARDGAME_ITEMS: _ParseSection_BOARDGAME_ITEMS(line); break;
+		case GAME_FILE_SECTION_POSITION_IN_BOARDGAME: _ParseSection_POSITION_IN_BOARDGAME(line); break;
 		case GAME_FILE_SECTION_RESOURCES: _ParseSection_RESOURCES(line); break;
 		case GAME_FILE_SECTION_SETTINGS: _ParseSection_SETTINGS(line); break;
 		case GAME_FILE_SECTION_SCENES: _ParseSection_SCENES(line); break;
@@ -397,6 +416,18 @@ void Game::LoadSharedResource(LPCWSTR filePath)
 	ResourcesSharedLoad* resourceLoader = new ResourcesSharedLoad();
 	resourceLoader->LoadSharedResource(filePath);
 	delete resourceLoader;
+}
+
+void Game::LoadBoardGameItems(LPCWSTR boardGameFile)
+{
+	BoardGame* boardGame = BoardGame::GetInstance();
+	boardGame->LoadBoardGameItems(boardGameFile);
+}
+
+void Game::LoadPositionInBoardGame(LPCWSTR positionInBoardgameFile)
+{
+	BoardGame* boardGame = BoardGame::GetInstance();
+	boardGame->LoadPositionInBoardGame(positionInBoardgameFile);
 }
 
 void Game::SwitchScene(int scene_id)

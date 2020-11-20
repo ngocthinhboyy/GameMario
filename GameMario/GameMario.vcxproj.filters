@@ -70,6 +70,9 @@
     <Filter Include="Framework\Game_Object\Item">
       <UniqueIdentifier>{46b33b99-8ca7-4de8-9662-a4e277fc8fd5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\BoardGame">
+      <UniqueIdentifier>{936e108e-8766-41ef-a59b-a7eb9ec036aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -218,6 +221,9 @@
     </ClCompile>
     <ClCompile Include="Flower.cpp">
       <Filter>Framework\Game_Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="BoardGame.cpp">
+      <Filter>Framework\BoardGame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -391,6 +397,9 @@
     </ClInclude>
     <ClInclude Include="Flower.h">
       <Filter>Framework\Game_Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BoardGame.h">
+      <Filter>Framework\BoardGame</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
