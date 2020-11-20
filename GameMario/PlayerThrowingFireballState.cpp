@@ -30,7 +30,7 @@ void PlayerThrowingFireballState::SetAnimation(int levelPlayer)
 void PlayerThrowingFireballState::Update(int dt)
 {
 	Mario* mario = Mario::GetInstance();
-	DWORD now = GetTickCount();
+	DWORD now = GetTickCount64();
 	if (now - lastThrowingTime < FIREBALL_TIME_LIMIT_TO_THROWING && quantityFireball == FIREBALL_MAX_QUANTITY) {
 		lastThrowingTime = now;
 		mario->ChangeState(PlayerStandingState::GetInstance());
@@ -46,7 +46,7 @@ void PlayerThrowingFireballState::KeyState(BYTE* states)
 	Game* game = Game::GetInstance();
 	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
 	LPANIMATION animation = animationDatabase->Get(animationID);
-	DWORD now = GetTickCount();
+	DWORD now = GetTickCount64();
 	if (now - lastThrowingTime < FIREBALL_TIME_LIMIT_TO_THROWING && quantityFireball == FIREBALL_MAX_QUANTITY) {
 		lastThrowingTime = now;
 		animation->ResetAnimation();

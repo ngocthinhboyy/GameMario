@@ -146,7 +146,6 @@ void Mario::Update(DWORD dt)
 				enemy->CollisionWithPlayer(e);
 			}
 			else if (LPITEM item = dynamic_cast<LPITEM> (e->obj)) {
-				DebugOut(L"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa\n");
 				item->CollisionWithPlayer(e);
 			}
 			else if (QuestionBrick* questionBrick = dynamic_cast<QuestionBrick*> (e->obj)) {

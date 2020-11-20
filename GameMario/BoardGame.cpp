@@ -140,7 +140,6 @@ void BoardGame::ParsePositionInBoardGame(string line)
 	componentPosition->x = x;
 	componentPosition->y = y;
 	componentPosition->id = id;
-	DebugOut(L"ID %d\n", componentPosition->id);
 	componentPositionInBoards.push_back(componentPosition);
 }
 void BoardGame::RenderBoardGame()
