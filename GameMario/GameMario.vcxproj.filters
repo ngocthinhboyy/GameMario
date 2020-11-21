@@ -401,5 +401,8 @@
     <ClInclude Include="BoardGame.h">
       <Filter>Framework\BoardGame</Filter>
     </ClInclude>
+    <ClInclude Include="BoardGameDefine.h">
+      <Filter>Framework\Define</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

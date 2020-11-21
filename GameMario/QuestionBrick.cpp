@@ -43,6 +43,7 @@ void QuestionBrick::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 				{
 					Coin* coin = new Coin(x + QUESTION_BRICK_BBOX_WIDTH / 2 - COIN_BBOX_WIDTH / 2, y - 3, COIN_BBOX_WIDTH, COIN_BBOX_HEIGHT);
 					coin->vy = -COIN_SPEED_Y;
+					mario->SetCoin(mario->GetCoin()+1);
 					Grid::GetInstance()->DeterminedGridToObtainObject(coin);
 				}
 				else if (type == QUESTION_BRICK_TYPE_HAS_ESPECIAL_ITEM) {

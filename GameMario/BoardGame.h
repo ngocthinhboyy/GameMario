@@ -14,7 +14,8 @@ struct Panel {
 struct ComponentPositionInBoard {
 	float x;
 	float y;
-	float id;
+	int idPosition;
+	int idFontRender;
 };
 class BoardGame
 {
@@ -30,7 +31,10 @@ public:
 	int GetFontNumber(int number);
 	void ParseFontBoardGame(string line);
 	void ParsePositionInBoardGame(string line);
+
+	void UpdateBoardGame();
 	void RenderBoardGame();
+
 	static BoardGame* GetInstance();
 };
 

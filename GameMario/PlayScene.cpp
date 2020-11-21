@@ -98,7 +98,7 @@ void PlayScene::_ParseSection_OBJECTS_NOT_IN_GRID(string line)
 			return;
 		}
 		Mario* mario = Mario::GetInstance();
-		mario->SetLevel(MARIO_LEVEL_FIRE);
+		mario->SetLevel(MARIO_LEVEL_BIG);
 		mario->ChangeState(PlayerStandingState::GetInstance());
 		ani_set = AnimationManager::GetInstance()->Get(ani_set_id);
 
@@ -164,6 +164,15 @@ void PlayScene::_ParseSection_MAP(string line)
 	mapManager->RenderMap(mapID);
 }
 
+void PlayScene::_ParseSection_REMAINING_TIME(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 1) return;
+	this->remainingTime = atoi(tokens[0].c_str());
+
+}
+
 void PlayScene::Load()
 {
 	DebugOut(L"[INFO] Start loading scene resources from : %s \n", sceneFilePath);
@@ -186,12 +195,16 @@ void PlayScene::Load()
 		if (line == "[OBJECTS]") {
 			section = SCENE_SECTION_OBJECTS; continue;
 		}
+		if (line == "[REMAINING TIME]") {
+			section = SCENE_SECTION_REMAINING_TIME; continue;
+		}
 		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }
 
 		switch (section)
 		{
 		case SCENE_SECTION_MAP: _ParseSection_MAP(line); break;
 		case SCENE_SECTION_OBJECTS: _ParseSection_OBJECTS(line); break;
+		case SCENE_SECTION_REMAINING_TIME: _ParseSection_REMAINING_TIME(line); break;
 		}
 	}
 
@@ -206,6 +219,11 @@ void PlayScene::Load()
 
 void PlayScene::Update(DWORD dt)
 {
+	DWORD now = GetTickCount64();
+	if (now - timeOfPreviousSecond >= 1000) {
+		timeOfPreviousSecond = now;
+		remainingTime--;
+	}
 	Grid* grid = Grid::GetInstance();
 	grid->GetListObjectInCamera();
 
@@ -225,6 +243,7 @@ void PlayScene::Update(DWORD dt)
 		//}
 	}
 	player->Update(dt);
+
 	for (size_t i = 0; i < enemies.size(); i++)
 	{
 		Grid::GetInstance()->UpdateGrid(enemies[i]);
@@ -236,7 +255,9 @@ void PlayScene::Update(DWORD dt)
 	}
 	if (player == NULL) return;
 
+	BoardGame* board = BoardGame::GetInstance();
 
+	board->UpdateBoardGame();
 	// Update camera to follow mario
 	float cx, cy;
 	player->GetPosition(cx, cy);

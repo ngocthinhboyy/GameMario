@@ -21,6 +21,9 @@ class Mario : public GameObject
 	bool isCrouching = false;
 	bool isRunning = false;
 	bool isOnGround = true;
+	int heart = 4;
+	int point = 0;
+	int coin = 0;
 public:
 	Mario(float x = 0.0f, float y = 0.0f);
 	virtual void Update(DWORD dt);
@@ -45,6 +48,13 @@ public:
 	int GetLevel() { return level; };
 	void ChangeState(PlayerState* newState);
 	PlayerState* GetPlayerState() { return this->playerState; };
+
+	void SetHeart(int heart) { this->heart = heart; };
+	int GetHeart() { return this->heart; };
+	void SetPoint(int point) { this->point = point; };
+	int GetPoint() { return this->point; };
+	void SetCoin(int coin) { this->coin = coin; };
+	int GetCoin() { return this->coin; };
 
 	void CollisionWithEnemy(LPCOLLISIONEVENT collisionEvent, LPENEMY collisionMapObject);
 	//void CalcPotentialCollisionsWithEnemy(vector<LPENEMY>* coEnemies, vector<LPCOLLISIONEVENT>& coEvents);

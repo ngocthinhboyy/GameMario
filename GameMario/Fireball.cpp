@@ -26,6 +26,7 @@ Fireball::Fireball(float x, float y, float w, float h)
 	this->y = y;
 	this->w = w;
 	this->h = h;
+	this->gameObjectID = idGenerate++;
 	this->vx = Mario::GetInstance()->nx * FIREBALL_ROLLING_SPEED_X;
 	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
 	animation = animationDatabase->Get(FIREBALL_ANI_ROLLING);
@@ -129,28 +130,11 @@ void Fireball::Update(DWORD dt)
 
 void Fireball::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
-	/*l = x - FIREBALL_BBOX_WIDTH / 2;
-	t = y - FIREBALL_BBOX_HEIGHT / 2;*/
 	l = x;
 	t = y;
 	r = l + FIREBALL_BBOX_WIDTH;
 	b = t + FIREBALL_BBOX_HEIGHT;
 }
-
-//void Fireball::CalcPotentialCollisionsWithEnemy(vector<LPENEMY>* coEnemies, vector<LPCOLLISIONEVENT>& coEvents)
-//{
-//	for (UINT i = 0; i < coEnemies->size(); i++)
-//	{
-//		LPCOLLISIONEVENT e = SweptAABBEx(coEnemies->at(i));
-//
-//		if (e->t > 0 && e->t <= 1.0f)
-//			coEvents.push_back(e);
-//		else
-//			delete e;
-//	}
-//
-//	std::sort(coEvents.begin(), coEvents.end(), CollisionEvent::compare);
-//}
 
 void Fireball::CollisionWithOneCollisionMapObject(LPCOLLISIONEVENT collisionEvent, CollisionMapObject* collisionMapObject)
 {

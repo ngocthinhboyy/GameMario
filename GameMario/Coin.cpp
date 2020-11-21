@@ -2,6 +2,7 @@
 #include "AnimationDatabase.h"
 #include "ItemDefine.h"
 #include "debug.h"
+#include "Mario.h"
 
 Coin::Coin(float x, float y, float w, float h)
 {
@@ -33,10 +34,12 @@ void Coin::Render()
 
 void Coin::Update(DWORD dt)
 {
+	Mario* mario = Mario::GetInstance();
 	if (!isBonused) {
 		vy += ITEM_GRAVITY * dt;
 		GameObject::Update(dt);
 		if (y + dy >= startPositionY) {
+			mario->SetPoint(mario->GetPoint() + MARIO_BONUS_POINT_COIN);
 			this->isBonused = true;
 			this->stillAlive = false;
 		}
