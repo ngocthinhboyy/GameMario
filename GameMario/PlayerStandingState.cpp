@@ -56,7 +56,6 @@ void PlayerStandingState::SetAnimation(int levelPlayer)
 }
 void PlayerStandingState::Update(int dt)
 {
-	Mario* mario = Mario::GetInstance();
 }
 void PlayerStandingState::OnKeyDown(int KeyCode) {
 	Mario* mario = Mario::GetInstance();

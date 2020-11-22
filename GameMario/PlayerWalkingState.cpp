@@ -75,10 +75,12 @@ void PlayerWalkingState::OnKeyDown(int KeyCode) {
 	{
 		case DIK_X:
 				mario->vy = -MARIO_JUMP_SPEED_Y;
+				isSlow = false;
 				mario->ChangeState(PlayerJumpingState::GetInstance());
 			break;
 		case DIK_S:
 				mario->vy = -MARIO_JUMP_SPEED_Y;
+				isSlow = false;
 				mario->ChangeState(PlayerHighJumpingState::GetInstance());
 			break;
 		/*case DIK_A:
@@ -95,18 +97,22 @@ void PlayerWalkingState::KeyState(BYTE* states) {
 	Game* game = Game::GetInstance();
 	if (game->IsKeyDown(DIK_X)) {
 			mario->vy = -MARIO_JUMP_SPEED_Y;
+			isSlow = false;
 			mario->ChangeState(PlayerJumpingState::GetInstance());
 		return;
 	}
 	if (game->IsKeyDown(DIK_A)) {
 		if (mario->GetLevel() == MARIO_LEVEL_RACCOON) {
+			isSlow = false;
 			mario->ChangeState(PlayerSpinningState::GetInstance());
 			return;
 		}
 		else if (mario->GetLevel() == MARIO_LEVEL_FIRE) {
+			isSlow = false;
 			mario->ChangeState(PlayerThrowingFireballState::GetInstance());
 			return;
 		}
+		isSlow = false;
 		mario->ChangeState(PlayerRunningState::GetInstance());
 		return;
 	}
@@ -117,12 +123,14 @@ void PlayerWalkingState::KeyState(BYTE* states) {
 	} else if (game->IsKeyDown(DIK_RIGHT)) {
 		mario->vx = MARIO_WALKING_SPEED;
 		if (game->IsKeyDown(DIK_Z) && mario->GetLevel() == MARIO_LEVEL_RACCOON) {
+			isSlow = false;
 			mario->ChangeState(PlayerSpinningState::GetInstance());
 		}
 		mario->nx = 1;
 	} else if (game->IsKeyDown(DIK_LEFT)) {
 		mario->vx = -MARIO_WALKING_SPEED;
 		if (game->IsKeyDown(DIK_Z) && mario->GetLevel() == MARIO_LEVEL_RACCOON) {
+			isSlow = false;
 			mario->ChangeState(PlayerSpinningState::GetInstance());
 		}
 		mario->nx = -1;

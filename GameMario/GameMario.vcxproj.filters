@@ -61,9 +61,6 @@
     <Filter Include="game\Object\Player\PlayerState">
       <UniqueIdentifier>{06b45705-ecd4-439a-8b3d-e6e780dd25fe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="game\Object\Player\PlayerState\AllState">
-      <UniqueIdentifier>{b02f26a1-438c-402d-ace0-80e031447549}</UniqueIdentifier>
-    </Filter>
     <Filter Include="game\Object\Enemy">
       <UniqueIdentifier>{3b76a7c3-abcf-4eb3-b5ad-b36796751709}</UniqueIdentifier>
     </Filter>
@@ -78,6 +75,12 @@
     </Filter>
     <Filter Include="Framework\Game_Object">
       <UniqueIdentifier>{40744084-f26d-44cb-a845-a08a3ae1bc09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\Object\Player\PlayerState\ActivityState">
+      <UniqueIdentifier>{b02f26a1-438c-402d-ace0-80e031447549}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\Object\Player\PlayerState\EffectState">
+      <UniqueIdentifier>{e0adbf22-a74e-470a-8857-bc79bb6250ac}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -136,31 +139,31 @@
       <Filter>Framework\Camera</Filter>
     </ClCompile>
     <ClCompile Include="PlayerWalkingState.cpp">
-      <Filter>game\Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerStandingState.cpp">
-      <Filter>game\Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerJumpingState.cpp">
-      <Filter>game\Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerFallingState.cpp">
-      <Filter>game\Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerHighJumpingState.cpp">
-      <Filter>game\Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerCrouchingState.cpp">
-      <Filter>game\Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerState.cpp">
       <Filter>game\Object\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerRunningState.cpp">
-      <Filter>game\Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerSkiddingState.cpp">
-      <Filter>game\Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClCompile>
     <ClCompile Include="ResourcesSharedLoad.cpp">
       <Filter>Framework</Filter>
@@ -169,13 +172,13 @@
       <Filter>game\Object\StaticObject</Filter>
     </ClCompile>
     <ClCompile Include="PlayerSpinningState.cpp">
-      <Filter>game\Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerFlyingState.cpp">
-      <Filter>game\Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerThrowingFireballState.cpp">
-      <Filter>game\Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClCompile>
     <ClCompile Include="Fireball.cpp">
       <Filter>game\Object\DynamicObject</Filter>
@@ -193,13 +196,13 @@
       <Filter>game\Object\StaticObject</Filter>
     </ClCompile>
     <ClCompile Include="PlayerKickingState.cpp">
-      <Filter>game\Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerHoldingState.cpp">
-      <Filter>game\Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerFallingSlowlyState.cpp">
-      <Filter>game\Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClCompile>
     <ClCompile Include="Grid.cpp">
       <Filter>Framework\Grid</Filter>
@@ -230,6 +233,9 @@
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Framework\Game_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerTransformState.cpp">
+      <Filter>game\Object\Player\PlayerState\EffectState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -294,31 +300,31 @@
       <Filter>Framework\Camera</Filter>
     </ClInclude>
     <ClInclude Include="PlayerWalkingState.h">
-      <Filter>game\Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClInclude>
     <ClInclude Include="PlayerStandingState.h">
-      <Filter>game\Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClInclude>
     <ClInclude Include="PlayerJumpingState.h">
-      <Filter>game\Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClInclude>
     <ClInclude Include="PlayerFallingState.h">
-      <Filter>game\Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClInclude>
     <ClInclude Include="PlayerHighJumpingState.h">
-      <Filter>game\Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClInclude>
     <ClInclude Include="PlayerCrouchingState.h">
-      <Filter>game\Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClInclude>
     <ClInclude Include="PlayerRunningState.h">
-      <Filter>game\Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClInclude>
     <ClInclude Include="PlayerState.h">
       <Filter>game\Object\Player\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="PlayerSkiddingState.h">
-      <Filter>game\Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClInclude>
     <ClInclude Include="GraphicsDefine.h">
       <Filter>game\Define</Filter>
@@ -336,13 +342,13 @@
       <Filter>game\Object\StaticObject</Filter>
     </ClInclude>
     <ClInclude Include="PlayerSpinningState.h">
-      <Filter>game\Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClInclude>
     <ClInclude Include="PlayerFlyingState.h">
-      <Filter>game\Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClInclude>
     <ClInclude Include="PlayerThrowingFireballState.h">
-      <Filter>game\Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClInclude>
     <ClInclude Include="Fireball.h">
       <Filter>game\Object\DynamicObject</Filter>
@@ -369,13 +375,13 @@
       <Filter>game\Define</Filter>
     </ClInclude>
     <ClInclude Include="PlayerKickingState.h">
-      <Filter>game\Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClInclude>
     <ClInclude Include="PlayerHoldingState.h">
-      <Filter>game\Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClInclude>
     <ClInclude Include="PlayerFallingSlowlyState.h">
-      <Filter>game\Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClInclude>
     <ClInclude Include="Grid.h">
       <Filter>Framework\Grid</Filter>
@@ -409,6 +415,9 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Framework\Game_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerTransformState.h">
+      <Filter>game\Object\Player\PlayerState\EffectState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -5,6 +5,7 @@
 #include "Mario.h"
 #include "Camera.h"
 #include "PlayScene.h"
+#include "PlayerTransformState.h"
 
 Leaf::Leaf(float x, float y, float w, float h)
 {
@@ -91,7 +92,8 @@ void Leaf::GetBoundingBox(float& l, float& t, float& r, float& b)
 void Leaf::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 {
 	Mario* mario = Mario::GetInstance();
-	mario->SetLevel(mario->GetLevel() + 1);
+	//mario->SetLevel(mario->GetLevel() + 1);
+	mario->ChangeState(PlayerTransformState::GetInstance());
 	mario->SetPoint(mario->GetPoint() + MARIO_BONUS_POINT_LEAF);
 	this->stillAlive = false;
 	mario->vx = 0;

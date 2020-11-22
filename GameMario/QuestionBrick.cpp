@@ -21,6 +21,7 @@ QuestionBrick::QuestionBrick(float x, float y, float w, float h, int type)
 	this->gameObjectID = idGenerate++;
 	this->startPositionX = x;
 	this->startPositionY = y;
+	this->vx = 0;
 	this->y = y;
 	this->w = w;
 	this->h = h;
@@ -35,6 +36,13 @@ QuestionBrick::QuestionBrick(float x, float y, float w, float h, int type)
 void QuestionBrick::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 {
 	Mario* mario = Mario::GetInstance();
+	//if (collisionEvent->nx != 0) {
+	//	DebugOut(L"AAA %d\n", mario->nx);
+	//	DebugOut(L"BBB %f\n", mario->vx);
+	//	PlayerRunningState::lastStateIsSkidding = true;
+	//	Mario* mario = Mario::GetInstance();
+	//	mario->vx += (dt * MARIO_SPEED_ACCELERATION * 3.5 * -(mario->nx));
+	//}
 	if (collisionEvent->ny != 0) {
 		if (collisionEvent->ny > 0)
 		{
@@ -62,11 +70,6 @@ void QuestionBrick::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 			mario->SetIsOnGround(true);
 		}
 		mario->vy = 0;
-	}
-	if (collisionEvent->nx != 0) {
-		PlayerRunningState::lastStateIsSkidding = true;
-		Mario* mario = Mario::GetInstance();
-		mario->vx += (dt * MARIO_SPEED_ACCELERATION * 3 * -(mario->nx));
 	}
 }
 

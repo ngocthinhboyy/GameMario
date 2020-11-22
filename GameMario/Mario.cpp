@@ -67,6 +67,7 @@ void Mario::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPC
 		else {
 			PlayerRunningState::lastStateIsSkidding = true;
 			vx += (dt * MARIO_SPEED_ACCELERATION * 3.5 * -nx);
+			DebugOut(L"vxxxx %f\n", vx);
 		}
 	}
 	if (collisionEvent->ny != 0) {
@@ -151,8 +152,14 @@ void Mario::Update(DWORD dt)
 			else if (LPITEM item = dynamic_cast<LPITEM> (e->obj)) {
 				item->CollisionWithPlayer(e);
 			}
-			else if (QuestionBrick* questionBrick = dynamic_cast<QuestionBrick*> (e->obj)) {
-				questionBrick->CollisionWithPlayer(e);
+			else if (QuestionBrick * questionBrick = dynamic_cast<QuestionBrick*> (e->obj)) {
+				if (e->nx != 0) {
+					PlayerRunningState::lastStateIsSkidding = true;
+					Mario* mario = Mario::GetInstance();
+					vx += (dt * MARIO_SPEED_ACCELERATION * 3.5 * -this->nx);
+				}
+				else
+					questionBrick->CollisionWithPlayer(e);
 			}
 			/*else {
 				if (e->nx != 0) vx = 0;
@@ -181,7 +188,7 @@ void Mario::Render()
 		scale = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_SCALE);
 	if(ani != NULL)
 		ani->Render(x, y, alpha, scale);
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void Mario::SetState(int state)
