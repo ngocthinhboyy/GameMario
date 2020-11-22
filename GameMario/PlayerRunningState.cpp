@@ -9,8 +9,10 @@
 #include "PlayerHighJumpingState.h"
 #include "PlayerSpinningState.h"
 #include "PlayerFlyingState.h"
+#include "PlayerCrouchingState.h"
 
 PlayerState* PlayerRunningState::__instance = NULL;
+bool PlayerRunningState::lastStateIsSkidding = false;
 PlayerRunningState::PlayerRunningState()
 {
 }
@@ -61,14 +63,7 @@ void PlayerRunningState::Update(int dt)
 	if (!increaseSpeed && mario->vx != 0 && !isSkidding) {
 		mario->vx += (dt * MARIO_SPEED_ACCELERATION * - (mario->nx));
 	}
-	if (isSkidding) {
-		mario->ChangeState(PlayerSkiddingState::GetInstance());
-		if ((mario->vx * mario->nx) <= 0) {
-			mario->nx = -mario->nx;
-			prevKeyIsLeft = false;
-			prevKeyIsRight = false;
-			isSkidding = false;
-		}
+	if (isSkidding && lastStateIsSkidding) {
 		return;
 	}
 	if ((mario->vx)*(mario->nx) <= 0) {
@@ -87,6 +82,19 @@ void PlayerRunningState::KeyState(BYTE* states)
 	Game* game = Game::GetInstance();
 	Mario* mario = Mario::GetInstance();
 	SetAnimation(mario->GetLevel());
+	if (isSkidding) {
+		if (lastStateIsSkidding) {
+			mario->nx = -mario->nx;
+			mario->vx = -mario->vx;
+			lastStateIsSkidding = false;
+			prevKeyIsLeft = false;
+			prevKeyIsRight = false;
+			isSkidding = false;
+			return;
+		}
+		mario->ChangeState(PlayerSkiddingState::GetInstance());
+		return;
+	}
 	if (game->IsKeyDown(DIK_A)) {
 		if (abs(mario->vx) >= MARIO_RUNNING_MAX_SPEED) {
 			isMaxSpeed = true;
@@ -118,6 +126,7 @@ void PlayerRunningState::KeyState(BYTE* states)
 				prevKeyIsLeft = false;
 			}
 			else {
+				mario->speedLast = abs(mario->vx);
 				isSkidding = true;
 				prevKeyIsLeft = false;
 				prevKeyIsRight = true;
@@ -131,11 +140,22 @@ void PlayerRunningState::KeyState(BYTE* states)
 				prevKeyIsRight = false;
 			}
 			else {
+
+				mario->speedLast = abs(mario->vx);
 				isSkidding = true;
 				prevKeyIsRight = false;
 				prevKeyIsLeft = true;
 			}
 		}
+		/*else if (game->IsKeyDown(DIK_Z)) {
+			isMaxSpeed = false;
+			increaseSpeed = true;
+			prevKeyIsLeft = false;
+			prevKeyIsRight = false;
+			isSkidding = false;
+			mario->SetIsRunning(false);
+			mario->ChangeState(PlayerCrouchingState::GetInstance());
+		}*/
 		else {
 			if (mario->vx != 0) {
 				increaseSpeed = false;
@@ -179,7 +199,6 @@ void PlayerRunningState::OnKeyDown(int KeyCode)
 		prevKeyIsLeft = false;
 		prevKeyIsRight = false;
 		isSkidding = false;
-		//mario->ChangeState(PlayerHighJumpingState::GetInstance());
 		if (abs(mario->vx) >= MARIO_RUNNING_MAX_SPEED) {;
 			mario->ChangeState(PlayerFlyingState::GetInstance());
 		}

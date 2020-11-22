@@ -50,6 +50,8 @@ void Mushroom::Update(DWORD dt)
 
 	vector<LPGAMEOBJECT> coCollisionMapObjects = scene->collisionMapObjects;
 	vector<LPGAMEOBJECT> coObjs = scene->objects;
+	Mario* mario = Mario::GetInstance();
+	coObjs.push_back(mario);
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -92,6 +94,13 @@ void Mushroom::Update(DWORD dt)
 			else if (QuestionBrick * brick = dynamic_cast<QuestionBrick*> (e->obj)) {
 				if (e->ny != 0) vy = 0;
 				if (e->nx != 0) vx = - vx;
+			}
+			else if (Mario * mario = dynamic_cast<Mario*> (e->obj)) {
+				mario->SetLevel(mario->GetLevel() + 1);
+				this->stillAlive = false;
+				mario->vx = 0;
+				mario->vy = 0;
+				mario->y -= 50;
 			}
 		}
 	}

@@ -4,6 +4,7 @@
 class PlayerWalkingState : PlayerState
 {
 	static PlayerState* __instance;
+	bool isSlow = false;
 public:
 	PlayerWalkingState();
 	void SetAnimation(int levelPlayer);

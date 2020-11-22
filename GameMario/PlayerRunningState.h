@@ -12,6 +12,7 @@ class PlayerRunningState : PlayerState
 	bool isSkidding = false;
 public:
 	PlayerRunningState();
+	static bool lastStateIsSkidding;
 	void SetAnimation(int levelPlayer);
 	void Update(int dt);
 	void KeyState(BYTE* states);

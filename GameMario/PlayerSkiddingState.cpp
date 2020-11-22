@@ -37,10 +37,17 @@ void PlayerSkiddingState::SetAnimation(int levelPlayer)
 void PlayerSkiddingState::Update(int dt)
 {
 	Mario* mario = Mario::GetInstance();
-	mario->vx += (dt * MARIO_SPEED_ACCELERATION * 2.5 * -(mario->nx));
-	if ((mario->vx * mario->nx) <= 0) {
+	mario->vx += (dt * marioSkiddingAcceleration * -(mario->nx));
+	float check = mario->speedLast - abs(mario->vx);
+	if ( check >= MARIO_RUNNING_MAX_SPEED * 0.1429 * 2 || mario->vx * mario->nx <= 0) {
+		PlayerRunningState::lastStateIsSkidding = true;
 		mario->ChangeState(PlayerRunningState::GetInstance());
 	}
+	/*if ((mario->vx * mario->nx) <= 0) {
+		PlayerRunningState::lastStateIsSkidding = true;
+		DebugOut(L"BBBBBBB \n");
+		mario->ChangeState(PlayerRunningState::GetInstance());
+	}*/
 }
 
 void PlayerSkiddingState::KeyState(BYTE* states)
@@ -52,6 +59,7 @@ void PlayerSkiddingState::KeyState(BYTE* states)
 PlayerState* PlayerSkiddingState::GetInstance()
 {
 	if (__instance == NULL) __instance = new PlayerSkiddingState();
+	//Mario::GetInstance()->speedLast = abs(Mario::GetInstance()->vx);
 	return __instance;
 }
 

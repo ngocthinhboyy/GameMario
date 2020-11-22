@@ -8,6 +8,7 @@
 #include "Grid.h"
 #include "Leaf.h"
 #include "Mushroom.h"
+#include "PlayerRunningState.h"
 
 QuestionBrick::QuestionBrick()
 {
@@ -63,7 +64,9 @@ void QuestionBrick::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 		mario->vy = 0;
 	}
 	if (collisionEvent->nx != 0) {
-		mario->vx = 0;
+		PlayerRunningState::lastStateIsSkidding = true;
+		Mario* mario = Mario::GetInstance();
+		mario->vx += (dt * MARIO_SPEED_ACCELERATION * 3 * -(mario->nx));
 	}
 }
 

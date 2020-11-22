@@ -58,7 +58,15 @@ void PlayerWalkingState::SetAnimation(int levelPlayer)
 }
 void PlayerWalkingState::Update(int dt)
 {
-
+	Mario* mario = Mario::GetInstance();
+	if (isSlow) {
+		mario->vx -= MARIO_SLOWLY_SPEED_ACCECLERATION *dt* mario->nx;
+	}
+	if (mario->vx * mario->nx <= 0 && isSlow) {
+		mario->vx = 0;
+		isSlow = false;
+		mario->ChangeState(PlayerStandingState::GetInstance());
+	}
 }
 void PlayerWalkingState::OnKeyDown(int KeyCode) {
 
@@ -103,7 +111,8 @@ void PlayerWalkingState::KeyState(BYTE* states) {
 		return;
 	}
 	if (game->IsKeyDown(DIK_RIGHT) && game->IsKeyDown(DIK_LEFT)) {
-		mario->ChangeState(PlayerStandingState::GetInstance());
+		isSlow = true;
+		//mario->ChangeState(PlayerStandingState::GetInstance());
 		return;
 	} else if (game->IsKeyDown(DIK_RIGHT)) {
 		mario->vx = MARIO_WALKING_SPEED;
@@ -118,7 +127,9 @@ void PlayerWalkingState::KeyState(BYTE* states) {
 		}
 		mario->nx = -1;
 	}
-	else
-		mario->ChangeState(PlayerStandingState::GetInstance());
+	else {
+		isSlow = true;
+		//mario->ChangeState(PlayerStandingState::GetInstance());
+	}
 }
 PlayerWalkingState::~PlayerWalkingState() {};

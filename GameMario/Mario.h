@@ -25,6 +25,7 @@ class Mario : public GameObject
 	int point = 0;
 	int coin = 0;
 public:
+	float speedLast;
 	Mario(float x = 0.0f, float y = 0.0f);
 	virtual void Update(DWORD dt);
 	virtual void Render();

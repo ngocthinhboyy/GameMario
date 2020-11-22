@@ -35,6 +35,13 @@ public:
 	void UpdateBoardGame();
 	void RenderBoardGame();
 
+	void SetWorldInBoardGame(int world);
+	void SetSpeedInBoardGame(float speed);
+	void SetCoinInBoardGame(int coin);
+	void SetHeartInBoardGame(int heart);
+	void SetPointInBoardGame(int point);
+	void SetTimeInBoardGame(int time);
+
 	static BoardGame* GetInstance();
 };
 

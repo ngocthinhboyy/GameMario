@@ -20,6 +20,7 @@
 #include "StaticObjectDefine.h"
 #include "ItemDefine.h"
 #include "Grid.h"
+#include "PlayerRunningState.h"
 
 Mario* Mario::Mario::__instance = NULL;
 Mario* Mario::GetInstance() {
@@ -63,8 +64,10 @@ void Mario::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPC
 			x += dx;
 		else if (collisionEvent->nx > 0 && collisionMapObjectDirectionX == -1)
 			x += dx;
-		else
-			vx = 0;
+		else {
+			PlayerRunningState::lastStateIsSkidding = true;
+			vx += (dt * MARIO_SPEED_ACCELERATION * 3.5 * -nx);
+		}
 	}
 	if (collisionEvent->ny != 0) {
 		if (collisionMapObjectDirectionY == 0)

@@ -10,12 +10,6 @@
     <Filter Include="Framework\Debug">
       <UniqueIdentifier>{eb0991b0-a453-4fb1-bdc8-3b515f4c0687}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\Define">
-      <UniqueIdentifier>{3944a8d8-f05f-411d-986c-bfe191613e96}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\Game_Object">
-      <UniqueIdentifier>{57130d89-a4db-44d9-b27a-0087a2cfd654}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\KeyEvent">
       <UniqueIdentifier>{1822f798-a466-4bd2-a3ad-e7ae15e275c6}</UniqueIdentifier>
     </Filter>
@@ -37,21 +31,6 @@
     <Filter Include="Framework\Game_Graphics\Sprite">
       <UniqueIdentifier>{e576559a-cd89-4f80-aaf2-d68bfd92067b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\Game_Object\Player">
-      <UniqueIdentifier>{81ae15c5-100d-459a-b1e4-6c99670b4ff5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\Game_Object\Enemy">
-      <UniqueIdentifier>{3b76a7c3-abcf-4eb3-b5ad-b36796751709}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\Game_Object\StaticObject">
-      <UniqueIdentifier>{628aab49-fd46-478f-8fb3-77555dd27b1d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\Game_Object\Player\PlayerState">
-      <UniqueIdentifier>{06b45705-ecd4-439a-8b3d-e6e780dd25fe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\Game_Object\Player\PlayerState\AllState">
-      <UniqueIdentifier>{b02f26a1-438c-402d-ace0-80e031447549}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\Game_Scene">
       <UniqueIdentifier>{faf9994b-9aa5-4bd6-ab11-fb23c639f14f}</UniqueIdentifier>
     </Filter>
@@ -61,28 +40,49 @@
     <Filter Include="Framework\Game_Scene\PlayScene">
       <UniqueIdentifier>{ebb52b12-9144-4f37-9dde-8d5e206e3258}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\Game_Object\DynamicObject">
-      <UniqueIdentifier>{e37ceeed-f49e-4c4d-a28c-17f91f31236f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\Grid">
       <UniqueIdentifier>{731d9b9c-9e89-4b15-a14b-970b90e27d9f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\Game_Object\Item">
-      <UniqueIdentifier>{46b33b99-8ca7-4de8-9662-a4e277fc8fd5}</UniqueIdentifier>
     </Filter>
     <Filter Include="Framework\BoardGame">
       <UniqueIdentifier>{936e108e-8766-41ef-a59b-a7eb9ec036aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="game">
+      <UniqueIdentifier>{f60383a0-e1fa-4e08-b60a-ddf0b02ba51b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\Define">
+      <UniqueIdentifier>{3944a8d8-f05f-411d-986c-bfe191613e96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\Object">
+      <UniqueIdentifier>{57130d89-a4db-44d9-b27a-0087a2cfd654}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\Object\Player">
+      <UniqueIdentifier>{81ae15c5-100d-459a-b1e4-6c99670b4ff5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\Object\Player\PlayerState">
+      <UniqueIdentifier>{06b45705-ecd4-439a-8b3d-e6e780dd25fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\Object\Player\PlayerState\AllState">
+      <UniqueIdentifier>{b02f26a1-438c-402d-ace0-80e031447549}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\Object\Enemy">
+      <UniqueIdentifier>{3b76a7c3-abcf-4eb3-b5ad-b36796751709}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\Object\StaticObject">
+      <UniqueIdentifier>{628aab49-fd46-478f-8fb3-77555dd27b1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\Object\DynamicObject">
+      <UniqueIdentifier>{e37ceeed-f49e-4c4d-a28c-17f91f31236f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\Object\Item">
+      <UniqueIdentifier>{46b33b99-8ca7-4de8-9662-a4e277fc8fd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Game_Object">
+      <UniqueIdentifier>{40744084-f26d-44cb-a845-a08a3ae1bc09}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>Framework\Game_Graphics\Sprite</Filter>
-    </ClCompile>
-    <ClCompile Include="game.cpp">
-      <Filter>Framework</Filter>
     </ClCompile>
     <ClCompile Include="debug.cpp">
       <Filter>Framework\Debug</Filter>
@@ -102,11 +102,8 @@
     <ClCompile Include="AnimationManager.cpp">
       <Filter>Framework\Game_Graphics\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Framework\Game_Object</Filter>
-    </ClCompile>
     <ClCompile Include="Mario.cpp">
-      <Filter>Framework\Game_Object\Player</Filter>
+      <Filter>game\Object\Player</Filter>
     </ClCompile>
     <ClCompile Include="Portal.cpp">
       <Filter>Framework\Game_Scene</Filter>
@@ -139,99 +136,105 @@
       <Filter>Framework\Camera</Filter>
     </ClCompile>
     <ClCompile Include="PlayerWalkingState.cpp">
-      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\AllState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerStandingState.cpp">
-      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\AllState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerJumpingState.cpp">
-      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\AllState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerFallingState.cpp">
-      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\AllState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerHighJumpingState.cpp">
-      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\AllState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerCrouchingState.cpp">
-      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\AllState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerState.cpp">
-      <Filter>Framework\Game_Object\Player\PlayerState</Filter>
+      <Filter>game\Object\Player\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerRunningState.cpp">
-      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\AllState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerSkiddingState.cpp">
-      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\AllState</Filter>
     </ClCompile>
     <ClCompile Include="ResourcesSharedLoad.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
     <ClCompile Include="CollisionMapObject.cpp">
-      <Filter>Framework\Game_Object\StaticObject</Filter>
+      <Filter>game\Object\StaticObject</Filter>
     </ClCompile>
     <ClCompile Include="PlayerSpinningState.cpp">
-      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\AllState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerFlyingState.cpp">
-      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\AllState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerThrowingFireballState.cpp">
-      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\AllState</Filter>
     </ClCompile>
     <ClCompile Include="Fireball.cpp">
-      <Filter>Framework\Game_Object\DynamicObject</Filter>
+      <Filter>game\Object\DynamicObject</Filter>
     </ClCompile>
     <ClCompile Include="Goomba.cpp">
-      <Filter>Framework\Game_Object\Enemy</Filter>
+      <Filter>game\Object\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
-      <Filter>Framework\Game_Object\Enemy</Filter>
+      <Filter>game\Object\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Koopa.cpp">
-      <Filter>Framework\Game_Object\Enemy</Filter>
+      <Filter>game\Object\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="QuestionBrick.cpp">
-      <Filter>Framework\Game_Object\StaticObject</Filter>
+      <Filter>game\Object\StaticObject</Filter>
     </ClCompile>
     <ClCompile Include="PlayerKickingState.cpp">
-      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\AllState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerHoldingState.cpp">
-      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\AllState</Filter>
     </ClCompile>
     <ClCompile Include="PlayerFallingSlowlyState.cpp">
-      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\AllState</Filter>
     </ClCompile>
     <ClCompile Include="Grid.cpp">
       <Filter>Framework\Grid</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">
-      <Filter>Framework\Game_Object\Item</Filter>
+      <Filter>game\Object\Item</Filter>
     </ClCompile>
     <ClCompile Include="Coin.cpp">
-      <Filter>Framework\Game_Object\Item</Filter>
+      <Filter>game\Object\Item</Filter>
     </ClCompile>
     <ClCompile Include="Leaf.cpp">
-      <Filter>Framework\Game_Object\Item</Filter>
+      <Filter>game\Object\Item</Filter>
     </ClCompile>
     <ClCompile Include="Mushroom.cpp">
-      <Filter>Framework\Game_Object\Item</Filter>
+      <Filter>game\Object\Item</Filter>
     </ClCompile>
     <ClCompile Include="Flower.cpp">
-      <Filter>Framework\Game_Object\Enemy</Filter>
+      <Filter>game\Object\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="BoardGame.cpp">
       <Filter>Framework\BoardGame</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Framework\Game_Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
       <Filter>Framework\Game_Graphics\Sprite</Filter>
-    </ClInclude>
-    <ClInclude Include="game.h">
-      <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="debug.h">
       <Filter>Framework\Debug</Filter>
@@ -254,11 +257,8 @@
     <ClInclude Include="AnimationManager.h">
       <Filter>Framework\Game_Graphics\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Framework\Game_Object</Filter>
-    </ClInclude>
     <ClInclude Include="Mario.h">
-      <Filter>Framework\Game_Object\Player</Filter>
+      <Filter>game\Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="Portal.h">
       <Filter>Framework\Game_Scene</Filter>
@@ -294,115 +294,121 @@
       <Filter>Framework\Camera</Filter>
     </ClInclude>
     <ClInclude Include="PlayerWalkingState.h">
-      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\AllState</Filter>
     </ClInclude>
     <ClInclude Include="PlayerStandingState.h">
-      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\AllState</Filter>
     </ClInclude>
     <ClInclude Include="PlayerJumpingState.h">
-      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\AllState</Filter>
     </ClInclude>
     <ClInclude Include="PlayerFallingState.h">
-      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\AllState</Filter>
     </ClInclude>
     <ClInclude Include="PlayerHighJumpingState.h">
-      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\AllState</Filter>
     </ClInclude>
     <ClInclude Include="PlayerCrouchingState.h">
-      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\AllState</Filter>
     </ClInclude>
     <ClInclude Include="PlayerRunningState.h">
-      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\AllState</Filter>
     </ClInclude>
     <ClInclude Include="PlayerState.h">
-      <Filter>Framework\Game_Object\Player\PlayerState</Filter>
+      <Filter>game\Object\Player\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="PlayerSkiddingState.h">
-      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\AllState</Filter>
     </ClInclude>
     <ClInclude Include="GraphicsDefine.h">
-      <Filter>Framework\Define</Filter>
+      <Filter>game\Define</Filter>
     </ClInclude>
     <ClInclude Include="LoadDefine.h">
-      <Filter>Framework\Define</Filter>
+      <Filter>game\Define</Filter>
     </ClInclude>
     <ClInclude Include="ResourcesSharedLoad.h">
       <Filter>Framework</Filter>
     </ClInclude>
     <ClInclude Include="MarioDefine.h">
-      <Filter>Framework\Define</Filter>
+      <Filter>game\Define</Filter>
     </ClInclude>
     <ClInclude Include="CollisionMapObject.h">
-      <Filter>Framework\Game_Object\StaticObject</Filter>
+      <Filter>game\Object\StaticObject</Filter>
     </ClInclude>
     <ClInclude Include="PlayerSpinningState.h">
-      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\AllState</Filter>
     </ClInclude>
     <ClInclude Include="PlayerFlyingState.h">
-      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\AllState</Filter>
     </ClInclude>
     <ClInclude Include="PlayerThrowingFireballState.h">
-      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\AllState</Filter>
     </ClInclude>
     <ClInclude Include="Fireball.h">
-      <Filter>Framework\Game_Object\DynamicObject</Filter>
+      <Filter>game\Object\DynamicObject</Filter>
     </ClInclude>
     <ClInclude Include="DynamicObjectDefine.h">
-      <Filter>Framework\Define</Filter>
+      <Filter>game\Define</Filter>
     </ClInclude>
     <ClInclude Include="EnemyDefine.h">
-      <Filter>Framework\Define</Filter>
+      <Filter>game\Define</Filter>
     </ClInclude>
     <ClInclude Include="Goomba.h">
-      <Filter>Framework\Game_Object\Enemy</Filter>
+      <Filter>game\Object\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
-      <Filter>Framework\Game_Object\Enemy</Filter>
+      <Filter>game\Object\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Koopa.h">
-      <Filter>Framework\Game_Object\Enemy</Filter>
+      <Filter>game\Object\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="QuestionBrick.h">
-      <Filter>Framework\Game_Object\StaticObject</Filter>
+      <Filter>game\Object\StaticObject</Filter>
     </ClInclude>
     <ClInclude Include="StaticObjectDefine.h">
-      <Filter>Framework\Define</Filter>
+      <Filter>game\Define</Filter>
     </ClInclude>
     <ClInclude Include="PlayerKickingState.h">
-      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\AllState</Filter>
     </ClInclude>
     <ClInclude Include="PlayerHoldingState.h">
-      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\AllState</Filter>
     </ClInclude>
     <ClInclude Include="PlayerFallingSlowlyState.h">
-      <Filter>Framework\Game_Object\Player\PlayerState\AllState</Filter>
+      <Filter>game\Object\Player\PlayerState\AllState</Filter>
     </ClInclude>
     <ClInclude Include="Grid.h">
       <Filter>Framework\Grid</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
-      <Filter>Framework\Game_Object\Item</Filter>
+      <Filter>game\Object\Item</Filter>
     </ClInclude>
     <ClInclude Include="Coin.h">
-      <Filter>Framework\Game_Object\Item</Filter>
+      <Filter>game\Object\Item</Filter>
     </ClInclude>
     <ClInclude Include="ItemDefine.h">
-      <Filter>Framework\Define</Filter>
+      <Filter>game\Define</Filter>
     </ClInclude>
     <ClInclude Include="Leaf.h">
-      <Filter>Framework\Game_Object\Item</Filter>
+      <Filter>game\Object\Item</Filter>
     </ClInclude>
     <ClInclude Include="Mushroom.h">
-      <Filter>Framework\Game_Object\Item</Filter>
+      <Filter>game\Object\Item</Filter>
     </ClInclude>
     <ClInclude Include="Flower.h">
-      <Filter>Framework\Game_Object\Enemy</Filter>
+      <Filter>game\Object\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="BoardGame.h">
       <Filter>Framework\BoardGame</Filter>
     </ClInclude>
     <ClInclude Include="BoardGameDefine.h">
-      <Filter>Framework\Define</Filter>
+      <Filter>game\Define</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Framework\Game_Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
