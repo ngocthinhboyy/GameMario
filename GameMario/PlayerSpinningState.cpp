@@ -12,10 +12,10 @@ PlayerSpinningState::PlayerSpinningState()
 {
 }
 
-void PlayerSpinningState::SetAnimation(int levelPlayer)
+void PlayerSpinningState::SetAnimation()
 {
-	switch (levelPlayer)
-	{
+	Mario* mario = Mario::GetInstance();
+	switch (mario->GetLevel()){
 	case MARIO_LEVEL_RACCOON:
 	{
 		animationID = MARIO_ANI_RACCOON_SPIN;
@@ -33,7 +33,6 @@ void PlayerSpinningState::Update(int dt)
 void PlayerSpinningState::KeyState(BYTE* states)
 {
 	Mario* mario = Mario::GetInstance();
-	SetAnimation(mario->GetLevel());
 	Game* game = Game::GetInstance();
 	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
 	LPANIMATION animation = animationDatabase->Get(animationID);
@@ -66,6 +65,7 @@ void PlayerSpinningState::KeyState(BYTE* states)
 PlayerState* PlayerSpinningState::GetInstance()
 {
 	if (__instance == NULL) __instance = new PlayerSpinningState();
+	SetAnimation();
 	return __instance;
 }
 

@@ -15,10 +15,10 @@ PlayerFallingState::PlayerFallingState()
 
 PlayerState* PlayerFallingState::__instance = NULL;
 
-void PlayerFallingState::SetAnimation(int levelPlayer)
+void PlayerFallingState::SetAnimation()
 {
 	Mario* mario = Mario::GetInstance();
-	switch (levelPlayer)
+	switch (mario->GetLevel())
 	{
 	case MARIO_LEVEL_BIG: {
 		if (mario->GetIsCrouChing()) {
@@ -84,7 +84,6 @@ void PlayerFallingState::Update(int dt)
 void PlayerFallingState::KeyState(BYTE* states)
 {
 	Mario* mario = Mario::GetInstance();
-	SetAnimation(mario->GetLevel());
 	Game* game = Game::GetInstance();
 	if (game->IsKeyDown(DIK_DOWN)) {
 		if (mario->vy == 0) {
@@ -120,7 +119,7 @@ void PlayerFallingState::OnKeyDown(int KeyCode)
 PlayerState* PlayerFallingState::GetInstance()
 {
 	if (__instance == NULL) __instance = new PlayerFallingState();
-	Mario* mario = Mario::GetInstance();
+	SetAnimation();
 	return __instance;
 }
 

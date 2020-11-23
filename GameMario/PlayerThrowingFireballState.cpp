@@ -11,13 +11,15 @@
 
 PlayerState* PlayerThrowingFireballState::__instance = NULL;
 int PlayerThrowingFireballState::quantityFireball = 0;
+
 PlayerThrowingFireballState::PlayerThrowingFireballState()
 {
 }
 
-void PlayerThrowingFireballState::SetAnimation(int levelPlayer)
+void PlayerThrowingFireballState::SetAnimation()
 {
-	switch (levelPlayer)
+	Mario* mario = Mario::GetInstance();
+	switch (mario->GetLevel())
 	{
 	case MARIO_LEVEL_FIRE:
 	{
@@ -43,7 +45,7 @@ void PlayerThrowingFireballState::Update(int dt)
 void PlayerThrowingFireballState::KeyState(BYTE* states)
 {
 	Mario* mario = Mario::GetInstance();
-	SetAnimation(mario->GetLevel());
+	//SetAnimation();
 	Game* game = Game::GetInstance();
 	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
 	LPANIMATION animation = animationDatabase->Get(animationID);
@@ -72,6 +74,7 @@ void PlayerThrowingFireballState::KeyState(BYTE* states)
 PlayerState* PlayerThrowingFireballState::GetInstance()
 {
 	if (__instance == NULL) __instance = new PlayerThrowingFireballState();
+	SetAnimation();
 	return __instance;
 }
 

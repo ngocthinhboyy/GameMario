@@ -67,7 +67,6 @@ void Mario::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPC
 		else {
 			PlayerRunningState::lastStateIsSkidding = true;
 			vx += (dt * MARIO_SPEED_ACCELERATION * 3.5 * -nx);
-			DebugOut(L"vxxxx %f\n", vx);
 		}
 	}
 	if (collisionEvent->ny != 0) {
@@ -182,13 +181,16 @@ void Mario::Render()
 	if (untouchable) alpha = 128;
 	D3DXVECTOR2 scale;
 	LPANIMATION ani = playerState->GetAnimation();
+	int offset = 0;
+	if (level == MARIO_LEVEL_RACCOON && nx > 0)
+		offset = 6;
 	if (nx < 1)
 		scale = D3DXVECTOR2(RATIO_X_FLIP_SCALE, RATIO_Y_SCALE);
 	else
 		scale = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_SCALE);
 	if(ani != NULL)
-		ani->Render(x, y, alpha, scale);
-	//RenderBoundingBox();
+		ani->Render(x, y, alpha, scale,offset);
+	RenderBoundingBox();
 }
 
 void Mario::SetState(int state)

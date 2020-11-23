@@ -20,7 +20,7 @@ void Animation::Add(int spriteId, DWORD time)
 }
 
 //bool Animation::isLastFrame = false;
-void Animation::Render(float x, float y, int alpha, D3DXVECTOR2 scale)
+void Animation::Render(float x, float y, int alpha, D3DXVECTOR2 scale, int offset)
 {
 	DWORD now = GetTickCount();
 	if (currentFrame == -1)
@@ -44,7 +44,7 @@ void Animation::Render(float x, float y, int alpha, D3DXVECTOR2 scale)
 		}
 	}
 
-	frames[currentFrame]->GetSprite()->Draw(x, y, alpha, scale);
+	frames[currentFrame]->GetSprite()->Draw(x, y, alpha, scale, offset);
 }
 
 void Animation::ResetAnimation()

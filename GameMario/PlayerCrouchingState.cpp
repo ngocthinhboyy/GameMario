@@ -11,10 +11,10 @@ PlayerCrouchingState::PlayerCrouchingState()
 {
 }
 PlayerState* PlayerCrouchingState::__instance = NULL;
-void PlayerCrouchingState::SetAnimation(int levelPlayer)
+void PlayerCrouchingState::SetAnimation()
 {
 	Mario* mario = Mario::GetInstance();
-	switch (levelPlayer)
+	switch (mario->GetLevel())
 	{
 	case MARIO_LEVEL_BIG:
 	{
@@ -45,7 +45,6 @@ void PlayerCrouchingState::KeyState(BYTE* states)
 {
 	Game* game = Game::GetInstance();
 	Mario* mario = Mario::GetInstance();
-	SetAnimation(mario->GetLevel());
 	if (game->IsKeyDown(DIK_DOWN)) {
 		if (game->IsKeyDown(DIK_RIGHT)) {
 			mario->SetIsCrouching(false);
@@ -88,6 +87,7 @@ PlayerState* PlayerCrouchingState::GetInstance()
 	if (__instance == NULL) __instance = new PlayerCrouchingState();
 	Mario* mario = Mario::GetInstance();
 	mario->SetIsCrouching(true);
+	SetAnimation();
 	return __instance;
 }
 

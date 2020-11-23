@@ -18,12 +18,16 @@ PlayerState* PlayerStandingState::GetInstance() {
 	if (__instance == NULL) __instance = new PlayerStandingState();
 	Mario* mario = Mario::GetInstance();
 	mario->vx = 0;
+	SetAnimation();
 	return __instance;
 }
-void PlayerStandingState::SetAnimation(int levelPlayer)
+PlayerStandingState::PlayerStandingState()
+{
+}
+void PlayerStandingState::SetAnimation()
 {
 	Mario* mario = Mario::GetInstance();
-	switch (levelPlayer) {
+	switch (mario->GetLevel()) {
 	case MARIO_LEVEL_BIG:
 	{
 		animationID = MARIO_ANI_BIG_IDLE_RIGHT;
@@ -72,6 +76,7 @@ void PlayerStandingState::OnKeyDown(int KeyCode) {
 	case DIK_DOWN:
 	{
 		if (mario->GetLevel() != MARIO_LEVEL_SMALL) {
+			mario->y += MARIO_DEVIATION_CROUCHING_Y;
 			mario->ChangeState(PlayerCrouchingState::GetInstance());
 		}
 		break;
@@ -91,7 +96,6 @@ void PlayerStandingState::OnKeyDown(int KeyCode) {
 }
 void PlayerStandingState::KeyState(BYTE* states) {
 	Mario* mario = Mario::GetInstance();
-	SetAnimation(mario->GetLevel());
 	Game* game = Game::GetInstance();
 	if (game->IsKeyDown(DIK_X)) {
 		mario->vy = -MARIO_JUMP_SPEED_Y;
@@ -121,6 +125,4 @@ void PlayerStandingState::KeyState(BYTE* states) {
 		mario->ChangeState(PlayerSpinningState::GetInstance());
 	}
 }
-PlayerStandingState::PlayerStandingState() {
-};
 PlayerStandingState::~PlayerStandingState() {};

@@ -10,10 +10,10 @@ PlayerFlyingState::PlayerFlyingState()
 {
 }
 
-void PlayerFlyingState::SetAnimation(int levelPlayer)
+void PlayerFlyingState::SetAnimation()
 {
 	Mario* mario = Mario::GetInstance();
-	switch (levelPlayer) {
+	switch (mario->GetLevel()){
 	case MARIO_LEVEL_BIG:
 	{
 		animationID = MARIO_ANI_BIG_FLY;
@@ -54,7 +54,6 @@ void PlayerFlyingState::Update(int dt)
 void PlayerFlyingState::KeyState(BYTE* states)
 {
 	Mario* mario = Mario::GetInstance();
-	SetAnimation(mario->GetLevel());
 	Game* game = Game::GetInstance();
 	if (game->IsKeyDown(DIK_S)) {
 		if (abs(mario->vy) >= MARIO_JUMP_MAX_SPEED_Y)
@@ -117,6 +116,7 @@ PlayerState* PlayerFlyingState::GetInstance()
 {
 	if (__instance == NULL) __instance = new PlayerFlyingState();
 	timeStartFlying = GetTickCount64();
+	SetAnimation();
 	return __instance;
 }
 

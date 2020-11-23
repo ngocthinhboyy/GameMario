@@ -10,10 +10,10 @@ PlayerKickingState::PlayerKickingState()
 {
 }
 
-void PlayerKickingState::SetAnimation(int levelPlayer)
+void PlayerKickingState::SetAnimation()
 {
 	Mario* mario = Mario::GetInstance();
-	switch (levelPlayer) {
+	switch (mario->GetLevel()){
 	case MARIO_LEVEL_BIG:
 	{
 		animationID = MARIO_ANI_BIG_KICK;
@@ -47,7 +47,6 @@ void PlayerKickingState::Update(int dt)
 void PlayerKickingState::KeyState(BYTE* states)
 {
 	Mario* mario = Mario::GetInstance();
-	SetAnimation(mario->GetLevel());
 	Game* game = Game::GetInstance();
 	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
 	LPANIMATION animation = animationDatabase->Get(animationID);
@@ -61,6 +60,7 @@ void PlayerKickingState::KeyState(BYTE* states)
 PlayerState* PlayerKickingState::GetInstance()
 {
 	if (__instance == NULL) __instance = new PlayerKickingState();
+	SetAnimation();
 	return __instance;
 }
 

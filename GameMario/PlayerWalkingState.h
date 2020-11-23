@@ -7,7 +7,7 @@ class PlayerWalkingState : PlayerState
 	bool isSlow = false;
 public:
 	PlayerWalkingState();
-	void SetAnimation(int levelPlayer);
+	static void SetAnimation();
 	void Update(int dt);
 	void KeyState(BYTE* states);
 	void OnKeyDown(int KeyCode);

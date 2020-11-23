@@ -6,7 +6,7 @@ class PlayerTransformState : PlayerState
 	bool isSlow = false;
 public:
 	PlayerTransformState();
-	void SetAnimation(int levelPlayer);
+	static void SetAnimation();
 	void Update(int dt);
 	void KeyState(BYTE* states);
 	static PlayerState* GetInstance();

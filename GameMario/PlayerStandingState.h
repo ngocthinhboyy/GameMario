@@ -7,7 +7,7 @@ class PlayerStandingState : PlayerState
 	static PlayerState* __instance;
 public:
 	PlayerStandingState();
-	void SetAnimation(int levelPlayer);
+	static void SetAnimation();
 	void Update(int dt);
 	void KeyState(BYTE* states);
 	void OnKeyDown(int KeyCode);

@@ -10,10 +10,10 @@ PlayerTransformState::PlayerTransformState()
 {
 }
 
-void PlayerTransformState::SetAnimation(int levelPlayer)
+void PlayerTransformState::SetAnimation()
 {
 	Mario* mario = Mario::GetInstance();
-	switch (levelPlayer) {
+	switch (mario->GetLevel()) {
 	case MARIO_LEVEL_SMALL:
 	{
 		animationID = MARIO_EFFECT_HAVE_BONUS;
@@ -36,7 +36,6 @@ void PlayerTransformState::Update(int dt)
 void PlayerTransformState::KeyState(BYTE* states)
 {
 	Mario* mario = Mario::GetInstance();
-	SetAnimation(mario->GetLevel());
 	Game* game = Game::GetInstance();
 	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
 	LPANIMATION animation = animationDatabase->Get(animationID);
@@ -52,6 +51,7 @@ void PlayerTransformState::KeyState(BYTE* states)
 PlayerState* PlayerTransformState::GetInstance()
 {
 	if (__instance == NULL) __instance = new PlayerTransformState();
+	SetAnimation();
 	return __instance;
 }
 

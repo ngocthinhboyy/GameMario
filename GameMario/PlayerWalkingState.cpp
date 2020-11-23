@@ -13,13 +13,14 @@
 PlayerState* PlayerWalkingState::__instance = NULL;
 PlayerState* PlayerWalkingState::GetInstance() {
 	if (__instance == NULL) __instance = new PlayerWalkingState();
+	SetAnimation();
 	return __instance;
 }
 PlayerWalkingState::PlayerWalkingState() {}
-void PlayerWalkingState::SetAnimation(int levelPlayer)
+void PlayerWalkingState::SetAnimation()
 {
 	Mario* mario = Mario::GetInstance();
-		switch (levelPlayer) {
+		switch (mario->GetLevel()) {
 		case MARIO_LEVEL_BIG:
 		{
 			if (mario->nx == 1)
@@ -93,7 +94,7 @@ void PlayerWalkingState::OnKeyDown(int KeyCode) {
 }
 void PlayerWalkingState::KeyState(BYTE* states) {
 	Mario* mario = Mario::GetInstance();
-	SetAnimation(mario->GetLevel());
+	//SetAnimation(mario->GetLevel());
 	Game* game = Game::GetInstance();
 	if (game->IsKeyDown(DIK_X)) {
 			mario->vy = -MARIO_JUMP_SPEED_Y;

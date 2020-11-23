@@ -6,7 +6,7 @@ class PlayerSpinningState : PlayerState
 	static PlayerState* __instance;
 public:
 	PlayerSpinningState();
-	void SetAnimation(int levelPlayer);
+	static void SetAnimation();
 	void Update(int dt);
 	void KeyState(BYTE* states);
 	static PlayerState* GetInstance();

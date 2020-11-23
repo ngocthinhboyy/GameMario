@@ -14,12 +14,13 @@ PlayerJumpingState::~PlayerJumpingState() {};
 PlayerState* PlayerJumpingState::__instance = NULL;
 PlayerState* PlayerJumpingState::GetInstance() {
 	if (__instance == NULL) __instance = new PlayerJumpingState();
+	SetAnimation();
 	return __instance;
 };
 
-void PlayerJumpingState::SetAnimation(int levelPlayer) {
+void PlayerJumpingState::SetAnimation() {
 	Mario* mario = Mario::GetInstance();
-	switch (levelPlayer)
+	switch (mario->GetLevel())
 	{
 	case MARIO_LEVEL_BIG: {
 		if (mario->GetIsCrouChing()) {
@@ -76,7 +77,6 @@ void PlayerJumpingState::Update(int dt)
 }
 void PlayerJumpingState::KeyState(BYTE* states) {
 	Mario* mario = Mario::GetInstance();
-	SetAnimation(mario->GetLevel());
 	Game* game = Game::GetInstance();
 	if (game->IsKeyDown(DIK_X))
 	{

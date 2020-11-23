@@ -13,10 +13,10 @@ PlayerHoldingState::PlayerHoldingState()
 {
 }
 
-void PlayerHoldingState::SetAnimation(int levelPlayer)
+void PlayerHoldingState::SetAnimation()
 {
 	Mario* mario = Mario::GetInstance();
-	switch (levelPlayer) {
+	switch (mario->GetLevel()){
 	case MARIO_LEVEL_BIG:
 	{
 		animationID = MARIO_ANI_BIG_HOLD;
@@ -72,7 +72,6 @@ void PlayerHoldingState::KeyState(BYTE* states)
 {
 	Mario* mario = Mario::GetInstance();
 	Game* game = Game::GetInstance();
-	SetAnimation(mario->GetLevel());
 	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 	vector<LPGAMEOBJECT> enemies = scene->enemies;
 	Koopa* koopa = NULL;
@@ -137,6 +136,7 @@ PlayerState* PlayerHoldingState::GetInstance()
 	if (__instance == NULL) __instance = new PlayerHoldingState();
 	Mario* mario = Mario::GetInstance();
 	mario->SetIsRunning(false);
+	SetAnimation();
 	return __instance;
 }
 

@@ -9,9 +9,10 @@ PlayerSkiddingState::PlayerSkiddingState()
 {
 }
 
-void PlayerSkiddingState::SetAnimation(int levelPlayer)
+void PlayerSkiddingState::SetAnimation()
 {
-	switch (levelPlayer)
+	Mario* mario = Mario::GetInstance();
+	switch (mario->GetLevel())
 	{
 	case MARIO_LEVEL_BIG: {
 		animationID = MARIO_ANI_BIG_SKID;
@@ -52,14 +53,16 @@ void PlayerSkiddingState::Update(int dt)
 
 void PlayerSkiddingState::KeyState(BYTE* states)
 {
-	Mario* mario = Mario::GetInstance();
-	SetAnimation(mario->GetLevel());
 }
 
 PlayerState* PlayerSkiddingState::GetInstance()
 {
 	if (__instance == NULL) __instance = new PlayerSkiddingState();
 	//Mario::GetInstance()->speedLast = abs(Mario::GetInstance()->vx);
+	Mario* mario = Mario::GetInstance();
+	SetAnimation();
+	if (PlayerRunningState::isCrouching)
+		mario->y -= MARIO_DEVIATION_CROUCHING_Y;
 	return __instance;
 }
 

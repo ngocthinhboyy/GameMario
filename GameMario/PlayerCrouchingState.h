@@ -6,7 +6,7 @@ class PlayerCrouchingState : PlayerState
 	static PlayerState* __instance;
 public:
 	PlayerCrouchingState();
-	void SetAnimation(int levelPlayer);
+	static void SetAnimation();
 	void Update(int dt);
 	void KeyState(BYTE* states);
 	void OnKeyDown(int KeyCode);

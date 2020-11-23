@@ -8,10 +8,10 @@ PlayerFallingSlowlyState::PlayerFallingSlowlyState()
 {
 }
 
-void PlayerFallingSlowlyState::SetAnimation(int levelPlayer)
+void PlayerFallingSlowlyState::SetAnimation()
 {
 	Mario* mario = Mario::GetInstance();
-	switch (levelPlayer)
+	switch (mario->GetLevel())
 	{
 	case MARIO_LEVEL_RACCOON:
 		animationID = MARIO_ANI_RACCOON_FALLING_SLOWLY;
@@ -33,10 +33,9 @@ void PlayerFallingSlowlyState::Update(int dt)
 void PlayerFallingSlowlyState::KeyState(BYTE* states)
 {
 	Mario* mario = Mario::GetInstance();
-	SetAnimation(mario->GetLevel());
 	Game* game = Game::GetInstance();
 	if (game->IsKeyDown(DIK_S)) {
-		DWORD now = GetTickCount();
+		DWORD now = GetTickCount64();
 		if(mario->vy > 0 && now-timePress < 250)
 			mario->vy += -mario->vy * 0.4f;
 	}
@@ -59,7 +58,7 @@ void PlayerFallingSlowlyState::OnKeyDown(int KeyCode)
 	{
 
 	case DIK_S: {
-		timePress = GetTickCount();
+		timePress = GetTickCount64();
 		break;
 	}
 	default:
@@ -74,7 +73,7 @@ void PlayerFallingSlowlyState::OnKeyUp(int KeyCode)
 	{
 
 	case DIK_S: {
-		timePress = GetTickCount();
+		timePress = GetTickCount64();
 		break;
 	}
 	default:
@@ -85,6 +84,7 @@ void PlayerFallingSlowlyState::OnKeyUp(int KeyCode)
 PlayerState* PlayerFallingSlowlyState::GetInstance()
 {
 	if (__instance == NULL) __instance = new PlayerFallingSlowlyState();
+	SetAnimation();
 	return __instance;
 }
 

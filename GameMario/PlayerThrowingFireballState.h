@@ -7,7 +7,7 @@ class PlayerThrowingFireballState : PlayerState
 	DWORD lastThrowingTime;
 public:
 	PlayerThrowingFireballState();
-	void SetAnimation(int levelPlayer);
+	static void SetAnimation();
 	void Update(int dt);
 	static void decreaseQuantityOneValue() { quantityFireball--; };
 	void KeyState(BYTE* states);

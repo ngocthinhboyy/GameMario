@@ -11,10 +11,10 @@ PlayerHighJumpingState::PlayerHighJumpingState()
 {
 }
 PlayerState* PlayerHighJumpingState::__instance = NULL;
-void PlayerHighJumpingState::SetAnimation(int levelPlayer)
+void PlayerHighJumpingState::SetAnimation()
 {
 	Mario* mario = Mario::GetInstance();
-	switch (levelPlayer)
+	switch (mario->GetLevel())
 	{
 	case MARIO_LEVEL_BIG: {
 		if (mario->GetIsCrouChing()) {
@@ -79,7 +79,6 @@ void PlayerHighJumpingState::Update(int dt)
 void PlayerHighJumpingState::KeyState(BYTE* states)
 {
 	Mario* mario = Mario::GetInstance();
-	SetAnimation(mario->GetLevel());
 	Game* game = Game::GetInstance();
 	//DebugOut(L"mario VX %f\n", mario->vx);
 	if (mario->vy >= 0) {
@@ -154,6 +153,7 @@ void PlayerHighJumpingState::OnKeyUp(int KeyCode)
 PlayerState* PlayerHighJumpingState::GetInstance()
 {
 	if (__instance == NULL) __instance = new PlayerHighJumpingState();
+	SetAnimation();
 	return __instance;
 }
 

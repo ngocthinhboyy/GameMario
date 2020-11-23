@@ -12,20 +12,25 @@
 #include "PlayerCrouchingState.h"
 
 PlayerState* PlayerRunningState::__instance = NULL;
+bool PlayerRunningState::isCrouching = false;
+bool PlayerRunningState::isMaxSpeed = false;
 bool PlayerRunningState::lastStateIsSkidding = false;
 PlayerRunningState::PlayerRunningState()
 {
 }
 
-void PlayerRunningState::SetAnimation(int levelPlayer)
+void PlayerRunningState::SetAnimation()
 {
-	switch (levelPlayer)
-	{
+	Mario* mario = Mario::GetInstance();
+	switch (mario->GetLevel()){
 	case MARIO_LEVEL_BIG: {
 		if(isMaxSpeed)
 			animationID = MARIO_ANI_BIG_RUN;
 		else
 			animationID = MARIO_ANI_BIG_WALKING_RIGHT;
+		if (isCrouching ){
+			animationID = MARIO_ANI_BIG_CROUCH;
+		}
 		break;
 	}
 	case MARIO_LEVEL_SMALL: {
@@ -40,6 +45,9 @@ void PlayerRunningState::SetAnimation(int levelPlayer)
 			animationID = MARIO_ANI_RACCOON_RUN;
 		else
 			animationID = MARIO_ANI_RACCOON_WALKING_RIGHT;
+		if (isCrouching) {
+			animationID = MARIO_ANI_RACCOON_CROUCH;
+		}
 		break;
 	}
 	case MARIO_LEVEL_FIRE: {
@@ -47,6 +55,9 @@ void PlayerRunningState::SetAnimation(int levelPlayer)
 			animationID = MARIO_ANI_FIRE_RUN;
 		else
 			animationID = MARIO_ANI_FIRE_WALKING_RIGHT;
+		if (isCrouching) {
+			animationID = MARIO_ANI_FIRE_CROUCH;
+		}
 		break;
 	}
 	default:
@@ -57,8 +68,22 @@ void PlayerRunningState::SetAnimation(int levelPlayer)
 void PlayerRunningState::Update(int dt)
 {
 	Mario* mario = Mario::GetInstance();
-	if ((abs(mario->vx) < MARIO_RUNNING_MAX_SPEED) && !isMaxSpeed && increaseSpeed && !isSkidding) {
+	if ((abs(mario->vx) < MARIO_RUNNING_MAX_SPEED) && !isMaxSpeed && increaseSpeed && !isSkidding && !isCrouching) {
 		mario->vx += (dt * MARIO_SPEED_ACCELERATION * (mario->nx));
+	}
+	if (isCrouching) {
+		mario->vx += (dt * MARIO_SPEED_ACCELERATION * 1.5 * -(mario->nx));
+		if (mario->vx * mario->nx <= 0) {
+			isCrouching = false;
+			isMaxSpeed = false;
+			increaseSpeed = true;
+			prevKeyIsLeft = false;
+			prevKeyIsRight = false;
+			isSkidding = false;
+			mario->SetIsRunning(false);
+			mario->ChangeState(PlayerCrouchingState::GetInstance());
+		}
+		return;
 	}
 	if (!increaseSpeed && mario->vx != 0 && !isSkidding) {
 		mario->vx += (dt * MARIO_SPEED_ACCELERATION * - (mario->nx));
@@ -67,6 +92,7 @@ void PlayerRunningState::Update(int dt)
 		return;
 	}
 	if ((mario->vx)*(mario->nx) <= 0) {
+		isCrouching = false;
 		isMaxSpeed = false;
 		increaseSpeed = true;
 		prevKeyIsLeft = false;
@@ -81,7 +107,7 @@ void PlayerRunningState::KeyState(BYTE* states)
 {
 	Game* game = Game::GetInstance();
 	Mario* mario = Mario::GetInstance();
-	SetAnimation(mario->GetLevel());
+	DWORD now = GetTickCount64();
 	if (isSkidding) {
 		if (lastStateIsSkidding) {
 			mario->nx = -mario->nx;
@@ -109,6 +135,7 @@ void PlayerRunningState::KeyState(BYTE* states)
 			prevKeyIsLeft = false;
 			prevKeyIsRight = false;
 			isSkidding = false;
+			isCrouching = false;
 			mario->SetIsRunning(false);
 			mario->ChangeState(PlayerJumpingState::GetInstance());
 			return;
@@ -126,6 +153,12 @@ void PlayerRunningState::KeyState(BYTE* states)
 				prevKeyIsLeft = false;
 			}
 			else {
+				if (game->IsKeyDown(DIK_DOWN)) {
+					mario->y -= MARIO_DEVIATION_CROUCHING_Y;
+					isCrouching = false;
+					mario->SetIsCrouching(false);
+					SetAnimation();
+				}
 				mario->speedLast = abs(mario->vx);
 				isSkidding = true;
 				prevKeyIsLeft = false;
@@ -140,22 +173,26 @@ void PlayerRunningState::KeyState(BYTE* states)
 				prevKeyIsRight = false;
 			}
 			else {
-
+				if (game->IsKeyDown(DIK_DOWN)) {
+					mario->y -= MARIO_DEVIATION_CROUCHING_Y;
+					isCrouching = false;
+					mario->SetIsCrouching(false);
+					SetAnimation();
+				}
 				mario->speedLast = abs(mario->vx);
 				isSkidding = true;
 				prevKeyIsRight = false;
 				prevKeyIsLeft = true;
 			}
 		}
-		/*else if (game->IsKeyDown(DIK_Z)) {
-			isMaxSpeed = false;
-			increaseSpeed = true;
-			prevKeyIsLeft = false;
-			prevKeyIsRight = false;
-			isSkidding = false;
-			mario->SetIsRunning(false);
-			mario->ChangeState(PlayerCrouchingState::GetInstance());
-		}*/
+		else if (game->IsKeyDown(DIK_DOWN) && !game->IsKeyDown(DIK_LEFT) && !game->IsKeyDown(DIK_RIGHT)) {
+			if (!isCrouching) {
+				isCrouching = true;
+				mario->SetIsCrouching(true);
+				mario->y += MARIO_DEVIATION_CROUCHING_Y;
+				SetAnimation();
+			}
+		}
 		else {
 			if (mario->vx != 0) {
 				increaseSpeed = false;
@@ -167,6 +204,7 @@ void PlayerRunningState::KeyState(BYTE* states)
 		if (abs(mario->vx) <= MARIO_WALKING_SPEED) {
 			isMaxSpeed = false;
 			increaseSpeed = true;
+			isCrouching = false;
 			prevKeyIsLeft = false;
 			prevKeyIsRight = false;
 			isSkidding = false;
@@ -187,6 +225,7 @@ void PlayerRunningState::OnKeyDown(int KeyCode)
 		increaseSpeed = true;
 		prevKeyIsLeft = false;
 		prevKeyIsRight = false;
+		isCrouching = false;
 		isSkidding = false;
 		mario->SetIsRunning(false);
 		mario->ChangeState(PlayerJumpingState::GetInstance());
@@ -197,9 +236,10 @@ void PlayerRunningState::OnKeyDown(int KeyCode)
 		isMaxSpeed = false;
 		increaseSpeed = true;
 		prevKeyIsLeft = false;
+		isCrouching = false;
 		prevKeyIsRight = false;
 		isSkidding = false;
-		if (abs(mario->vx) >= MARIO_RUNNING_MAX_SPEED) {;
+		if (abs(mario->vx) >= MARIO_RUNNING_MAX_SPEED) {
 			mario->ChangeState(PlayerFlyingState::GetInstance());
 		}
 		else {
@@ -212,11 +252,35 @@ void PlayerRunningState::OnKeyDown(int KeyCode)
 			isMaxSpeed = false;
 			increaseSpeed = true;
 			prevKeyIsLeft = false;
+			isCrouching = false;
 			prevKeyIsRight = false;
 			isSkidding = false;
 			mario->SetIsRunning(false);
 			mario->ChangeState(PlayerSpinningState::GetInstance());
 		}
+		break;
+	default:
+		break;
+	}
+	}
+}
+
+void PlayerRunningState::OnKeyUp(int KeyCode)
+{
+	Mario* mario = Mario::GetInstance();
+	switch (KeyCode)
+	{
+	case DIK_RIGHT: {
+		break;
+	}
+	case DIK_LEFT: {
+		break;
+	}
+	case DIK_DOWN: {
+		mario->SetIsCrouching(false);
+		isCrouching = false;
+		mario->y -= MARIO_DEVIATION_CROUCHING_Y;
+		SetAnimation();
 		break;
 	}
 	default:
@@ -229,6 +293,7 @@ PlayerState* PlayerRunningState::GetInstance()
 	if (__instance == NULL) __instance = new PlayerRunningState();
 	Mario* mario = Mario::GetInstance();
 	mario->SetIsRunning(true);
+	SetAnimation();
 	return __instance;
 }
 

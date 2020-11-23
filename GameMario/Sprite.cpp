@@ -11,7 +11,7 @@ Sprite::Sprite(int id, int left, int top, int right, int bottom, LPDIRECT3DTEXTU
 	this->bottom = bottom;
 	this->texture = texture;
 }
-void Sprite::Draw(float x, float y, int alpha, D3DXVECTOR2 scale)
+void Sprite::Draw(float x, float y, int alpha, D3DXVECTOR2 scale,int offset)
 {
 	LPD3DXSPRITE spriteHandler = Game::GetInstance()->GetSpriteHandler();
 	D3DXMATRIX newMatrix;
@@ -33,7 +33,7 @@ void Sprite::Draw(float x, float y, int alpha, D3DXVECTOR2 scale)
 	else
 		D3DXMatrixTransformation2D(&newMatrix, &D3DXVECTOR2(p.x, p.y), 0, &scale, NULL, NULL, NULL);
 
-	D3DXVECTOR3 center = D3DXVECTOR3((float)(right - left) / 2, (float)(bottom - top) / 2, 0);
+	D3DXVECTOR3 center = D3DXVECTOR3((float)(right - left) / 2 + offset, (float)(bottom - top) / 2, 0);
 	D3DXMATRIX oldMatrix;
 
 	spriteHandler->GetTransform(&oldMatrix);

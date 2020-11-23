@@ -6,7 +6,7 @@ class PlayerKickingState : PlayerState
 	static PlayerState* __instance;
 public:
 	PlayerKickingState();
-	void SetAnimation(int levelPlayer);
+	static void SetAnimation();
 	void Update(int dt);
 	void KeyState(BYTE* states);
 	static PlayerState* GetInstance();
