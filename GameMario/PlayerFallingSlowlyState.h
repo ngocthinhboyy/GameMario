@@ -5,6 +5,7 @@ class PlayerFallingSlowlyState : PlayerState
 	static PlayerState* __instance;
 	bool isSlowly = false;
 	DWORD timePress = 0;
+	bool downPress = false;
 public:
 	PlayerFallingSlowlyState();
 	static void SetAnimation();

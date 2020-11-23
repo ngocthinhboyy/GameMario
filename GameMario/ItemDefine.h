@@ -7,6 +7,8 @@
 #define COIN_BBOX_HEIGHT	42
 #define COIN_SPEED_Y		0.8f
 
+#define STATIC_COIN_ANI		1801
+
 #define LEAF_ANI			1101
 #define LEAF_BBOX_WIDTH		48
 #define LEAF_BBOX_HEIGHT	42

@@ -98,7 +98,7 @@ void PlayScene::_ParseSection_OBJECTS_NOT_IN_GRID(string line)
 			return;
 		}
 		Mario* mario = Mario::GetInstance();
-		mario->SetLevel(MARIO_LEVEL_BIG);
+		mario->SetLevel(MARIO_LEVEL_RACCOON);
 		mario->ChangeState(PlayerStandingState::GetInstance());
 		ani_set = AnimationManager::GetInstance()->Get(ani_set_id);
 
@@ -273,9 +273,10 @@ void PlayScene::Update(DWORD dt)
 			cx -= game->GetScreenWidth() / 2;
 		}
 		else {
-			cx = 8448-game->GetScreenWidth();
-	}
+			cx = 8448 - game->GetScreenWidth();
+		}
 
+	}
 	Camera::GetInstance()->SetCamPos(cx, CAM_Y_DRAW_MAP);
 }
 

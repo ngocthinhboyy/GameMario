@@ -70,8 +70,9 @@ void PlayerFallingState::Update(int dt)
 {
 	Mario* mario = Mario::GetInstance();
 	if (mario->vy == 0 && mario->GetIsOnGround()) {
-		if (mario->GetIsCrouChing() && mario->GetLevel() != MARIO_LEVEL_SMALL)
+		if (mario->GetIsCrouChing() && mario->GetLevel() != MARIO_LEVEL_SMALL) {
 			mario->ChangeState(PlayerCrouchingState::GetInstance());
+		}
 		else if (abs(mario->vx) > MARIO_WALKING_SPEED)
 		{
 			mario->ChangeState(PlayerRunningState::GetInstance());

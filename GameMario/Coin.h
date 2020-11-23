@@ -4,8 +4,9 @@
 class Coin : public Item
 {
 	bool isBonused = false;
+	int type = 0;
 public:
-	Coin(float x, float y, float w, float h);
+	Coin(float x, float y, float w, float h, int type);
 	void SetAnimation();
 	void Render();
 	void Update(DWORD dt);

@@ -6,6 +6,7 @@
 #include "debug.h"
 #include "Camera.h"
 #include "QuestionBrick.h"
+#include "Tail.h"
 
 Goomba::Goomba()
 {
@@ -138,6 +139,14 @@ void Goomba::Update(DWORD dt)
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			if (LPCOLLISIONMAPOBJECT collMapObj = dynamic_cast<LPCOLLISIONMAPOBJECT> (e->obj)) {
 				CollisionWithCollisionMapObject(e, collMapObj);
+			}
+			else if (Tail * tail = dynamic_cast<Tail*> (e->obj)) {
+				vx = ENEMY_DIE_SPEED_X;
+				if (x < Mario::GetInstance()->x) {
+					vx = -ENEMY_DIE_SPEED_X;
+				}
+				vy = -ENEMY_DIE_SPEED_Y;
+				isUpsideDown = true;
 			}
 			else if (LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
 				/*if (dynamic_cast<Koopa*> (enemy))

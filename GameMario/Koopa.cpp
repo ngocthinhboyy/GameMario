@@ -209,7 +209,7 @@ void Koopa::Update(DWORD dt)
 								}
 							}
 							else if (questionBrick->GetType() == QUESTION_BRICK_TYPE_HAS_COIN) {
-								Coin* coin = new Coin(questionBrick->x + QUESTION_BRICK_BBOX_WIDTH / 2 - COIN_BBOX_WIDTH / 2, questionBrick->y - 3, COIN_BBOX_WIDTH, COIN_BBOX_HEIGHT);
+								Coin* coin = new Coin(questionBrick->x + QUESTION_BRICK_BBOX_WIDTH / 2 - COIN_BBOX_WIDTH / 2, questionBrick->y - 3, COIN_BBOX_WIDTH, COIN_BBOX_HEIGHT,1);
 								coin->vy = -COIN_SPEED_Y;
 								Grid::GetInstance()->DeterminedGridToObtainObject(coin);
 							}

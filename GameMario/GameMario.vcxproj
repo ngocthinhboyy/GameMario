@@ -67,6 +67,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteManager.cpp" />
+    <ClCompile Include="Tail.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileManager.cpp" />
@@ -129,6 +130,7 @@
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteManager.h" />
     <ClInclude Include="StaticObjectDefine.h" />
+    <ClInclude Include="Tail.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileManager.h" />

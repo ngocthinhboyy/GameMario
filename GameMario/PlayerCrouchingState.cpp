@@ -38,7 +38,6 @@ void PlayerCrouchingState::SetAnimation()
 
 void PlayerCrouchingState::Update(int dt)
 {
-	Mario* mario = Mario::GetInstance();
 }
 
 void PlayerCrouchingState::KeyState(BYTE* states)
@@ -48,7 +47,7 @@ void PlayerCrouchingState::KeyState(BYTE* states)
 	if (game->IsKeyDown(DIK_DOWN)) {
 		if (game->IsKeyDown(DIK_RIGHT)) {
 			mario->SetIsCrouching(false);
-			mario->y = mario->y - MARIO_DEVIATION_CROUCHING_Y;
+			mario->y -= MARIO_DEVIATION_CROUCHING_Y;
 			mario->ChangeState(PlayerWalkingState::GetInstance());
 		}
 		else if (game->IsKeyDown(DIK_LEFT)) {

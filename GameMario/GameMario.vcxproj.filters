@@ -237,6 +237,9 @@
     <ClCompile Include="PlayerTransformState.cpp">
       <Filter>game\Object\Player\PlayerState\EffectState</Filter>
     </ClCompile>
+    <ClCompile Include="Tail.cpp">
+      <Filter>game\Object\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -368,9 +371,6 @@
     <ClInclude Include="Koopa.h">
       <Filter>game\Object\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="QuestionBrick.h">
-      <Filter>game\Object\StaticObject</Filter>
-    </ClInclude>
     <ClInclude Include="StaticObjectDefine.h">
       <Filter>game\Define</Filter>
     </ClInclude>
@@ -418,6 +418,12 @@
     </ClInclude>
     <ClInclude Include="PlayerTransformState.h">
       <Filter>game\Object\Player\PlayerState\EffectState</Filter>
+    </ClInclude>
+    <ClInclude Include="QuestionBrick.h">
+      <Filter>game\Object\StaticObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Tail.h">
+      <Filter>game\Object\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

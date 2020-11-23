@@ -81,6 +81,7 @@ void PlayerRunningState::Update(int dt)
 			prevKeyIsRight = false;
 			isSkidding = false;
 			mario->SetIsRunning(false);
+			mario->vx = 0;
 			mario->ChangeState(PlayerCrouchingState::GetInstance());
 		}
 		return;
@@ -105,6 +106,7 @@ void PlayerRunningState::Update(int dt)
 
 void PlayerRunningState::KeyState(BYTE* states)
 {
+	// de A de phai roi tha A de trai no chua co quay dau
 	Game* game = Game::GetInstance();
 	Mario* mario = Mario::GetInstance();
 	DWORD now = GetTickCount64();
@@ -123,6 +125,7 @@ void PlayerRunningState::KeyState(BYTE* states)
 	}
 	if (game->IsKeyDown(DIK_A)) {
 		if (abs(mario->vx) >= MARIO_RUNNING_MAX_SPEED) {
+			SetAnimation();
 			isMaxSpeed = true;
 		}
 		else {

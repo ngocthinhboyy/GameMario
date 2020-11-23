@@ -2,6 +2,8 @@
 #include "PlayerStandingState.h"
 #include "Mario.h"
 #include "Game.h"
+#include "PlayerCrouchingState.h"
+#include "debug.h"
 
 PlayerState* PlayerFallingSlowlyState::__instance = NULL;
 PlayerFallingSlowlyState::PlayerFallingSlowlyState()
@@ -14,7 +16,12 @@ void PlayerFallingSlowlyState::SetAnimation()
 	switch (mario->GetLevel())
 	{
 	case MARIO_LEVEL_RACCOON:
-		animationID = MARIO_ANI_RACCOON_FALLING_SLOWLY;
+		if (mario->GetIsCrouChing()) {
+			animationID = MARIO_ANI_RACCOON_CROUCH;
+		}
+		else {
+			animationID = MARIO_ANI_RACCOON_FALLING_SLOWLY;
+		}
 		break;
 	default:
 		break;
@@ -24,12 +31,14 @@ void PlayerFallingSlowlyState::SetAnimation()
 void PlayerFallingSlowlyState::Update(int dt)
 {
 	Mario* mario = Mario::GetInstance();
-	if (mario->vy == 0) {
+	if (mario->vy == 0 && mario->GetIsOnGround()) {
 		timePress = 0;
 		if (mario->GetIsCrouChing()) {
-			mario->y -= MARIO_DEVIATION_CROUCHING_Y;
+			mario->ChangeState(PlayerCrouchingState::GetInstance());
 		}
-		mario->ChangeState(PlayerStandingState::GetInstance());
+		else
+			mario->ChangeState(PlayerStandingState::GetInstance());
+		return;
 	}
 }
 
@@ -41,6 +50,13 @@ void PlayerFallingSlowlyState::KeyState(BYTE* states)
 		DWORD now = GetTickCount64();
 		if(mario->vy > 0 && now-timePress < 250)
 			mario->vy += -mario->vy * 0.4f;
+	}
+	if (game->IsKeyDown(DIK_DOWN)) {
+		if (mario->vy == 0) {
+			mario->vx = 0;
+			mario->ChangeState(PlayerCrouchingState::GetInstance());
+			return;
+		}
 	}
 	if (game->IsKeyDown(DIK_RIGHT)) {
 		if (mario->vx < 0)

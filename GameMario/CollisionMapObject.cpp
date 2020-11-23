@@ -32,7 +32,7 @@ void CollisionMapObject::RenderBoundingBox()
 }
 void CollisionMapObject::Render()
 {
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CollisionMapObject::GetBoundingBox(float& left, float& top, float& right, float& bottom)
