@@ -65,20 +65,53 @@ void Leaf::Update(DWORD dt)
 		}
 	}
 	GameObject::Update(dt);
-	x += dx;
-	y += dy;
-	if (x >= startPositionX + 48) {
-		nx = -1;
+	GameObject::Update(dt);
+
+	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+
+	vector<LPGAMEOBJECT> coObjects;
+	coObjects.clear();
+	coObjects.push_back(Mario::GetInstance());
+
+	vector<LPCOLLISIONEVENT> coEvents;
+	vector<LPCOLLISIONEVENT> coEventsResult;
+
+	coEvents.clear();
+	CalcPotentialCollisions(&coObjects, coEvents);
+
+	if (coEvents.size() == 0)
+	{
+		x += dx;
+		y += dy;
+		if (x >= startPositionX + 48) {
+			nx = -1;
+		}
+		else if (x <= startPositionX - 48) {
+			nx = 1;
+		}
+		Camera* cam = Camera::GetInstance();
+		float cam_x, cam_y;
+		cam->GetCamPos(cam_x, cam_y);
+		if (y > cam_y + SCREEN_HEIGHT) {
+			this->stillAlive = false;
+		}
 	}
-	else if (x <= startPositionX - 48) {
-		nx = 1;
-	}
-	Camera* cam = Camera::GetInstance();
-	float cam_x, cam_y;
-	cam->GetCamPos(cam_x, cam_y);
-	if (y > cam_y + SCREEN_HEIGHT) {
+	else
+	{
+		Mario* mario = Mario::GetInstance();
+		//mario->SetLevel(mario->GetLevel() + 1);
+		mario->ChangeState(PlayerTransformState::GetInstance());
+		mario->SetPoint(mario->GetPoint() + MARIO_BONUS_POINT_LEAF);
 		this->stillAlive = false;
+		mario->vx = 0;
+		mario->vy = 0;
+		mario->y -= 50;
+
 	}
+
+	// clean up collision events
+	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+
 }
 
 void Leaf::GetBoundingBox(float& l, float& t, float& r, float& b)

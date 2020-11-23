@@ -263,15 +263,20 @@ void PlayScene::Update(DWORD dt)
 	player->GetPosition(cx, cy);
 
 	Game* game = Game::GetInstance();
-
-	if (cx < (game->GetScreenWidth() / 2))
+	if (cx < (game->GetScreenWidth() / 2)) {
 		cx = 0.0f;
-	else {
-		cx -= game->GetScreenWidth() / 2;
-		cy -= game->GetScreenHeight() / 2;
+		//cy = CAM_Y_DRAW_MAP;
+	}
+	else
+	{
+		if (cx + game->GetScreenWidth() / 2 < 8448) {
+			cx -= game->GetScreenWidth() / 2;
+		}
+		else {
+			cx = 8448-game->GetScreenWidth();
 	}
 
-	Camera::GetInstance()->SetCamPos(cx, CAM_Y_DRAW_MAP/*cy*/);
+	Camera::GetInstance()->SetCamPos(cx, CAM_Y_DRAW_MAP);
 }
 
 void PlayScene::Render()

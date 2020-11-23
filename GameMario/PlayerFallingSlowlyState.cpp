@@ -26,6 +26,9 @@ void PlayerFallingSlowlyState::Update(int dt)
 	Mario* mario = Mario::GetInstance();
 	if (mario->vy == 0) {
 		timePress = 0;
+		if (mario->GetIsCrouChing()) {
+			mario->y -= MARIO_DEVIATION_CROUCHING_Y;
+		}
 		mario->ChangeState(PlayerStandingState::GetInstance());
 	}
 }

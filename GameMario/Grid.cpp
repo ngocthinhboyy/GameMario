@@ -121,8 +121,6 @@ void Grid::GetListObjectInCamera()
 						if (!enemy->GetInGrid()) {
 							enemy->SetInGrid(true);
 							enemies.push_back(enemy);
-							//DebugOut(L"IIII %d\n", i);
-							//DebugOut(L"JJJJJ %d\n", j);
 						}
 					}
 					else if(!cells[i][j].at(k)->GetInGrid()){
