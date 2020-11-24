@@ -50,6 +50,7 @@ PlayerState* PlayerSpinningState::GetInstance()
 	if (__instance == NULL) __instance = new PlayerSpinningState();
 	SetAnimation();
 	Mario* mario = Mario::GetInstance();
+	mario->vx = 0;
 	if (tailFront == NULL && tailBack == NULL) {
 			tailFront = new Tail(mario->x + MARIO_BIG_BBOX_WIDTH, mario->y + MARIO_BIG_BBOX_HEIGHT / 2, 20, 30);
 			tailBack = new Tail(mario->x - 20, mario->y + MARIO_BIG_BBOX_HEIGHT / 2, 20, 30);

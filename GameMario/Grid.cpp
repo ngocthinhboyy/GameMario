@@ -121,24 +121,32 @@ void Grid::GetListObjectInCamera()
 
 	int left = (int)((cam_x) / CELL_WIDTH);
 	int right = (int)((cam_x + 745) / CELL_WIDTH);
-	/*DebugOut(L"CAMXXX %f\n", cam_x);
-	DebugOut(L"BOTTOMMM %d\n", bottom);*/
-	//DebugOut(L"LEFFFTTT %d\n", left);
-	//DebugOut(L"RIGHTTTT %d\n", right);
-	for (int i = top; i <= bottom; i++)
-		for (int j = left; j <= right; j++) {
+	/*DebugOut(L"TOPPP %d\n", top);
+	DebugOut(L"BOTTOMMM %d\n", bottom);
+	DebugOut(L"LEFFFTTT %d\n", left);
+	DebugOut(L"RIGHTTTT %d\n", right);*/
+	if (left < 3) {
+		left = 3;
+	}
+	if (right > 23) {
+		right = 23;
+	}
+	for (int i = top; i <= bottom + 1 ; i++)
+		for (int j = left - 3 ; j <= right + 3; j++) {
 			for (int k = 0; k < cells[i][j].size(); k++) {
-				//DebugOut(L"objectIDGET %d\n", cells[i][j].at(k)->gameObjectID);
-				if (cells[i][j].at(k)->stillAlive) {
-					if (LPENEMY enemy = dynamic_cast<LPENEMY> (cells[i][j].at(k))) {
-						if (!enemy->GetInGrid()) {
-							enemy->SetInGrid(true);
-							enemies.push_back(enemy);
+				if ((cells[i][j].at(k)->x + cells[i][j].at(k)->w >= cam_x && cells[i][j].at(k)->x <= cam_x + 745) || cells[i][j].at(k)->GetIsAlreadyAppeared()) {
+					if (cells[i][j].at(k)->stillAlive) {
+						cells[i][j].at(k)->SetIsAlreadyAppeared(true);
+						if (LPENEMY enemy = dynamic_cast<LPENEMY> (cells[i][j].at(k))) {
+							if (!enemy->GetInGrid()) {
+								enemy->SetInGrid(true);
+								enemies.push_back(enemy);
+							}
 						}
-					}
-					else if(!cells[i][j].at(k)->GetInGrid()){
-						cells[i][j].at(k)->SetInGrid(true);
-						objects.push_back(cells[i][j].at(k));
+						else if (!cells[i][j].at(k)->GetInGrid()) {
+							cells[i][j].at(k)->SetInGrid(true);
+							objects.push_back(cells[i][j].at(k));
+						}
 					}
 				}
 			}
@@ -173,36 +181,39 @@ void Grid::SetNewGrid(LPGAMEOBJECT object)
 
 	int leftFocusCam = (int)((cam_x) / CELL_WIDTH);
 	int rightFocusCam = (int)((cam_x + 745) / CELL_WIDTH);
-	//DebugOut(L"CX %f\n", cam_x);
-	//DebugOut(L"B %d\n", bottomFocusCam);
-	//DebugOut(L"L %d\n", leftFocusCam);
-	//DebugOut(L"R %d\n", rightFocusCam);
-	for (int i = 0; i < MAX_ROW; i++)
-		for (int j = 0; j < MAX_COLUMN; j++) {
+	if (leftFocusCam > 1)
+		leftFocusCam = leftFocusCam - 2;
+	else if (leftFocusCam > 0)
+		leftFocusCam--;
+	for (int i = topFocusCam; i <= bottomFocusCam + 1; i++)
+		for (int j = leftFocusCam; j <= rightFocusCam + 1; j++) {
 			for (int k = 0; k < cells[i][j].size(); k++) {
-				cells[i][j].at(k)->SetInGrid(false);
 				if (cells[i][j].at(k)->gameObjectID == object->gameObjectID) {
-				//	DebugOut(L"objectIDELEYE %d\n", object->gameObjectID);
 					cells[i][j].erase(cells[i][j].begin() + k);
 				}
 			}
 		}
-	/*for (int i = topFocusCam; i <= bottomFocusCam; i++)
-		for (int j = leftFocusCam; j <= rightFocusCam; j++) {
-			if (cells[i][j].size() != 0) {
-				DebugOut(L"i %d\n", i);
-				DebugOut(L"j %d\n", j);
-			}
-		}*/
 	int top = (int)(object->y / CELL_HEIGHT);
 	int bottom = (int)((object->y + object->h) / CELL_HEIGHT);
 	int left = (int)(object->x / CELL_WIDTH);
 	int right = (int)((object->x + object->w) / CELL_WIDTH);
 
-	for (int i = top; i <= bottom; i++)
-		for (int j = left; j <= right; j++) {
-			cells[i][j].push_back(object);
-		}
+	if (leftFocusCam > 1)
+		leftFocusCam = leftFocusCam + 2;
+	else if (leftFocusCam > 0)
+		leftFocusCam++;
+
+	if (left < leftFocusCam - 1 || right > rightFocusCam + 1 || bottom > bottomFocusCam + 1) {
+		object->SetStartPosition();
+		object->SetIsAlreadyAppeared(false);
+		objectsWaitingToSetStartPosition.push_back(object);
+	}
+	else {
+		for (int i = top; i <= bottom; i++)
+			for (int j = left; j <= right; j++) {
+				cells[i][j].push_back(object);
+			}
+	}
 
 }
 void Grid::SetStartPosition()
@@ -211,28 +222,15 @@ void Grid::SetStartPosition()
 	Camera* camera = Camera::GetInstance();
 	camera->GetCamPos(cam_x, cam_y);
 
-	int top = (int)((cam_y) / CELL_HEIGHT);
-	int bottom = (int)((cam_y + 692) / CELL_HEIGHT);
 
-	int left = (int)((cam_x) / CELL_WIDTH);
-	int right = (int)((cam_x + 745) / CELL_WIDTH);
-
-	/*DebugOut(L"T %d\n", top);
-	DebugOut(L"B %d\n", bottom);
-	DebugOut(L"L %d\n", left);
-	DebugOut(L"R %d\n", right);*/
-//	DebugOut(L"L %d\n", left - 1);
-
-	for (int i = top; i <= bottom; i++) {
-		for (int j = 0; j < cells[i][left - 1].size(); j++) {
-			cells[i][left - 1].at(j)->SetStartPosition();
-			SetNewGrid(cells[i][left - 1].at(j));
-		}
-		for (int j = 0; j < cells[i][right + 1].size(); j++) {
-			cells[i][right + 1].at(j)->SetStartPosition();
-			SetNewGrid(cells[i][right + 1].at(j));
+	for (int i = 0; i < objectsWaitingToSetStartPosition.size(); i++) {
+		LPGAMEOBJECT object = objectsWaitingToSetStartPosition.at(i);
+		if (object->x + object->w < cam_x || object->x > cam_x + 745) {
+			DeterminedGridToObtainObject(object);
+			objectsWaitingToSetStartPosition.erase(objectsWaitingToSetStartPosition.begin() + i);
 		}
 	}
+
 }
 Grid* Grid::GetInstance()
 {

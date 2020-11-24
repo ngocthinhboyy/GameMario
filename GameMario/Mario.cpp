@@ -21,6 +21,7 @@
 #include "ItemDefine.h"
 #include "Grid.h"
 #include "PlayerRunningState.h"
+#include "PlayerThrowingFireballState.h"
 
 Mario* Mario::Mario::__instance = NULL;
 Mario* Mario::GetInstance() {

@@ -71,16 +71,20 @@ public:
 	float startPositionX;
 	float startPositionY;
 	int startNx;
+
+	bool isAlreadyAppeared = false;
 public:
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
 	void GetPosition(float& x, float& y) { x = this->x; y = this->y; }
 	void GetSpeed(float& vx, float& vy) { vx = this->vx; vy = this->vy; }
+	void SetIsAlreadyAppeared(bool isAlreadyAppeared) { this->isAlreadyAppeared = isAlreadyAppeared; };
+	bool GetIsAlreadyAppeared() { return this->isAlreadyAppeared; };
 
 	virtual void RenderBoundingBox();
 
 	void SetAnimationSet(LPANIMATION_SET ani_set) { animation_set = ani_set; }
-	void SetStartPosition();
+	virtual void SetStartPosition();
 
 	LPCOLLISIONEVENT SweptAABBEx(LPGAMEOBJECT coO);
 	void CalcPotentialCollisions(vector<LPGAMEOBJECT>* coObjects, vector<LPCOLLISIONEVENT>& coEvents);

@@ -93,6 +93,7 @@ void Goomba::Render()
 
 void Goomba::Update(DWORD dt)
 {
+	//DebugOut(L"GOOMBA NE \n");
 	vy += ENEMY_GRAVITY * dt;
 	GameObject::Update(dt);
 
@@ -226,4 +227,15 @@ void Goomba::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 		//mario->vx = 0;
 		isUpsideDown = true;
 	}
+}
+
+void Goomba::SetStartPosition()
+{
+	nx = startNx;
+    x = this->startPositionX;
+	y = this->startPositionY; 
+	isUpsideDown = false;
+	vx = -GOOMBA_WALKING_SPEED;
+	//vy = 0;
+	SetState(ENEMY_STATE_WALKING);
 }

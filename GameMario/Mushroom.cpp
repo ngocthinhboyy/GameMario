@@ -65,11 +65,12 @@ void Mushroom::Update(DWORD dt)
 	{
 		x += dx;
 		y += dy;
+		Camera* cam = Camera::GetInstance();
 		float cam_x, cam_y;
-		Camera* camera = Camera::GetInstance();
-		camera->GetCamPos(cam_x, cam_y);
-		if (y > (cam_y + SCREEN_HEIGHT) || x > (cam_x + SCREEN_WIDTH) || x < cam_x)
+		cam->GetCamPos(cam_x, cam_y);
+		if (x < cam_x || x > cam_x + SCREEN_WIDTH || y < cam_y || y > cam_y + SCREEN_HEIGHT) {
 			stillAlive = false;
+		}
 	}
 	else
 	{

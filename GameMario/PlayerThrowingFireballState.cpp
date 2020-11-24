@@ -1,13 +1,4 @@
 #include "PlayerThrowingFireballState.h"
-#include "Mario.h"
-#include "game.h"
-#include "AnimationDatabase.h"
-#include "PlayerStandingState.h"
-#include "Fireball.h"
-#include "PlayScene.h"
-#include "DynamicObjectDefine.h"
-#include "Grid.h"
-#include "debug.h"
 
 PlayerState* PlayerThrowingFireballState::__instance = NULL;
 int PlayerThrowingFireballState::quantityFireball = 0;
@@ -45,7 +36,6 @@ void PlayerThrowingFireballState::Update(int dt)
 void PlayerThrowingFireballState::KeyState(BYTE* states)
 {
 	Mario* mario = Mario::GetInstance();
-	//SetAnimation();
 	Game* game = Game::GetInstance();
 	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
 	LPANIMATION animation = animationDatabase->Get(animationID);

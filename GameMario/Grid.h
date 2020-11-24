@@ -10,7 +10,7 @@ class Grid
 {
 	vector<LPGAMEOBJECT> enemies;
 	vector<LPGAMEOBJECT> objects;
-
+	vector <LPGAMEOBJECT> objectsWaitingToSetStartPosition;
 	vector<LPGAMEOBJECT> cells[MAX_ROW][MAX_COLUMN];
 
 	static Grid* __instance;

@@ -85,7 +85,6 @@ void PlayerStandingState::OnKeyDown(int KeyCode) {
 		if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
 			mario->ChangeState(PlayerSpinningState::GetInstance());
 		else if (mario->GetLevel() == MARIO_LEVEL_FIRE) {
-			//DebugOut(L"CHANGEEEEEEEEEEEEEEEEE \n");
 			mario->ChangeState(PlayerThrowingFireballState::GetInstance());
 		}
 		break;

@@ -31,6 +31,7 @@ Koopa::Koopa(float x, float y, float w, float h, int typeKoopa, int typeMove)
 	this->startNx = -1;
 	this->startPositionX = x;
 	this->startPositionY = y;
+	this->startTypeMove = typeMove;
 	this->vx = -KOOPA_WALKING_SPEED_X;
 	if(typeMove == 1)
 		SetState(ENEMY_STATE_WALKING);
@@ -159,10 +160,10 @@ void Koopa::Update(DWORD dt)
 			x += dx;
 			y += dy;
 			float cam_x, cam_y;
-			Camera* camera = Camera::GetInstance();
+			/*Camera* camera = Camera::GetInstance();
 			camera->GetCamPos(cam_x, cam_y);
 			if (y > (cam_y + SCREEN_HEIGHT))
-				stillAlive = false;
+				stillAlive = false;*/
 	}
 	else
 	{
@@ -260,22 +261,30 @@ void Koopa::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPC
 	int collisionMapObjectDirectionY = collisionMapObject->GetCollisionDirectionY();
 	if (collisionEvent->nx != 0) {
 		if (collisionMapObjectDirectionX == 0)
-			x += dx;
+				x += dx;
 		else if (collisionEvent->nx < 0 && collisionMapObjectDirectionX == 1)
-			x += dx;
+				x += dx;
 		else if (collisionEvent->nx > 0 && collisionMapObjectDirectionX == -1)
-			x += dx;
-		else {
+				x += dx;
+		else
 			vx = -vx;
-		}
 	}
 	if (collisionEvent->ny != 0) {
+		if (state == ENEMY_STATE_WALKING) {
+			if (x + dx <= collisionMapObject->x || x + dx + KOOPA_BBOX_WIDTH >= collisionMapObject->x + collisionMapObject->w) {
+				vx = -vx;
+			}
+		}
 		if (collisionMapObjectDirectionY == 0)
+		{
 			y += dy;
-		else if (collisionEvent->ny < 0 && collisionMapObjectDirectionY == 1)
+		}
+		else if (collisionEvent->ny < 0 && collisionMapObjectDirectionY == 1) {
 			y += dy;
-		else if (collisionEvent->ny > 0 && collisionMapObjectDirectionY == -1)
+		}
+		else if (collisionEvent->ny > 0 && collisionMapObjectDirectionY == -1) {
 			y += dy;
+		}
 		else
 		{
 			vy = 0;
@@ -325,5 +334,21 @@ void Koopa::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 				vx = KOOPA_SPEED_TORTOISESHELL;
 			state = ENEMY_STATE_SPIN_DIE_KICK;
 		}
+	}
+}
+
+void Koopa::SetStartPosition()
+{
+	this->x = this->startPositionX;
+	this->y = this->startPositionY;
+	this->nx = this->startNx;
+	this->vx = -KOOPA_WALKING_SPEED_X;
+	this->isUpsideDown = false;
+	if (startTypeMove == 1) {
+		SetState(ENEMY_STATE_WALKING);
+	}
+	else if (startTypeMove == 2) {
+
+		SetState(ENEMY_STATE_WALKING_WITH_SWINGS);
 	}
 }

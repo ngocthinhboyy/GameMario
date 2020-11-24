@@ -98,7 +98,7 @@ void PlayScene::_ParseSection_OBJECTS_NOT_IN_GRID(string line)
 			return;
 		}
 		Mario* mario = Mario::GetInstance();
-		mario->SetLevel(MARIO_LEVEL_RACCOON);
+		mario->SetLevel(MARIO_LEVEL_FIRE);
 		mario->ChangeState(PlayerStandingState::GetInstance());
 		ani_set = AnimationManager::GetInstance()->Get(ani_set_id);
 
@@ -241,12 +241,14 @@ void PlayScene::Update(DWORD dt)
 	for (size_t i = 0; i < enemies.size(); i++)
 	{
 		Grid::GetInstance()->SetNewGrid(enemies[i]);
+		if (!enemies[i]->GetIsAlreadyAppeared())
+			enemies.erase(enemies.begin() + i);
 	}
 
-	for (size_t i = 0; i < objects.size(); i++)
+	/*for (size_t i = 0; i < objects.size(); i++)
 	{
 		Grid::GetInstance()->SetNewGrid(objects[i]);
-	}
+	}*/
 
 	Grid::GetInstance()->SetStartPosition();
 	if (player == NULL) return;
