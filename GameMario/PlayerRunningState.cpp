@@ -204,6 +204,28 @@ void PlayerRunningState::KeyState(BYTE* states)
 	}
 	else {
 		increaseSpeed = false;
+		if (game->IsKeyDown(DIK_DOWN)) {
+			if (!isCrouching) {
+				isCrouching = true;
+				mario->SetIsCrouching(true);
+				mario->y += MARIO_DEVIATION_CROUCHING_Y;
+				SetAnimation();
+			}
+		}
+		if (game->IsKeyDown(DIK_DOWN) && abs(mario->vx) <= MARIO_WALKING_SPEED) {
+			isMaxSpeed = false;
+			increaseSpeed = true;
+			isCrouching = false;
+			prevKeyIsLeft = false;
+			prevKeyIsRight = false;
+			isSkidding = false;
+			isCrouching = false;
+			lastStateIsSkidding = false;
+			mario->SetIsRunning(false);
+			mario->vx = 0;
+			mario->ChangeState(PlayerCrouchingState::GetInstance());
+			return;
+		}
 		if (abs(mario->vx) <= MARIO_WALKING_SPEED) {
 			isMaxSpeed = false;
 			increaseSpeed = true;

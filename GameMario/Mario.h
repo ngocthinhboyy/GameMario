@@ -10,7 +10,7 @@
 class Mario : public GameObject
 {
 	int level;
-	int untouchable;
+	bool untouchable;
 	DWORD untouchable_start;
 
 	float start_x;			// initial position of Mario at scene
@@ -32,7 +32,9 @@ public:
 
 	void SetState(int state);
 	void SetLevel(int level) { this->level = level; }
-	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
+	void StartUntouchable() { untouchable = true; untouchable_start = GetTickCount64(); }
+
+	bool GetUntouchable() { return this->untouchable; };
 
 
 	void Reset();

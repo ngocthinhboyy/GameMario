@@ -7,6 +7,7 @@
 #include "Camera.h"
 #include "QuestionBrick.h"
 #include "Tail.h"
+#include "PlayerLevelDownTransformState.h"
 
 Goomba::Goomba()
 {
@@ -219,7 +220,13 @@ void Goomba::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 	Mario* mario = Mario::GetInstance();
 	if (collisionEvent->nx != 0) {
 		mario->vx = 0;
-		//mario->stillAlive = false;
+		if (mario->GetLevel() >= 2) {
+			mario->StartUntouchable();
+			mario->ChangeState(PlayerLevelDownTransformState::GetInstance());
+			mario->vx = 0;
+			mario->vy = 0;
+			//mario->x += w + 5;
+		}
 	}
 	if (collisionEvent->ny == -1) {
 		state = ENEMY_STATE_DIE;

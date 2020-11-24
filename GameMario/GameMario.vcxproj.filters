@@ -234,11 +234,14 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Framework\Game_Object</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerTransformState.cpp">
-      <Filter>game\Object\Player\PlayerState\EffectState</Filter>
-    </ClCompile>
     <ClCompile Include="Tail.cpp">
       <Filter>game\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerBonusTransformState.cpp">
+      <Filter>game\Object\Player\PlayerState\EffectState</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerLevelDownTransformState.cpp">
+      <Filter>game\Object\Player\PlayerState\EffectState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -416,14 +419,17 @@
     <ClInclude Include="GameObject.h">
       <Filter>Framework\Game_Object</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerTransformState.h">
-      <Filter>game\Object\Player\PlayerState\EffectState</Filter>
-    </ClInclude>
     <ClInclude Include="QuestionBrick.h">
       <Filter>game\Object\StaticObject</Filter>
     </ClInclude>
     <ClInclude Include="Tail.h">
       <Filter>game\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerBonusTransformState.h">
+      <Filter>game\Object\Player\PlayerState\EffectState</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerLevelDownTransformState.h">
+      <Filter>game\Object\Player\PlayerState\EffectState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

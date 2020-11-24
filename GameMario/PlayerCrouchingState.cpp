@@ -86,6 +86,7 @@ PlayerState* PlayerCrouchingState::GetInstance()
 	if (__instance == NULL) __instance = new PlayerCrouchingState();
 	Mario* mario = Mario::GetInstance();
 	mario->SetIsCrouching(true);
+	mario->vx = 0;
 	SetAnimation();
 	return __instance;
 }

@@ -63,6 +63,8 @@ void PlayerStandingState::Update(int dt)
 }
 void PlayerStandingState::OnKeyDown(int KeyCode) {
 	Mario* mario = Mario::GetInstance();
+	if (mario->GetUntouchable())
+		return;
 	switch (KeyCode)
 	{
 	case DIK_X:
@@ -96,6 +98,8 @@ void PlayerStandingState::OnKeyDown(int KeyCode) {
 void PlayerStandingState::KeyState(BYTE* states) {
 	Mario* mario = Mario::GetInstance();
 	Game* game = Game::GetInstance();
+	if (mario->GetUntouchable())
+		return;
 	if (game->IsKeyDown(DIK_X)) {
 		mario->vy = -MARIO_JUMP_SPEED_Y;
 		mario->ChangeState(PlayerJumpingState::GetInstance());

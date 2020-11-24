@@ -117,15 +117,20 @@ void Mario::Update(DWORD dt)
 	if (GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME)
 	{
 		untouchable_start = 0;
-		untouchable = 0;
+		untouchable = false;
 	}
 
-	if (coEvents.size() == 0)
+	if (coEvents.size() == 0 || untouchable)
 	{
-		x += dx;
-		y += dy;
-		if (x <= 0)
-			x = 0;
+		if (!untouchable) {
+			x += dx;
+			y += dy;
+			if (x <= 0)
+				x = 0;
+		}
+		else {
+
+		}
 	}
 	else
 	{

@@ -5,7 +5,7 @@
 #include "Mario.h"
 #include "Camera.h"
 #include "PlayScene.h"
-#include "PlayerTransformState.h"
+#include "PlayerBonusTransformState.h"
 
 Leaf::Leaf(float x, float y, float w, float h)
 {
@@ -101,11 +101,11 @@ void Leaf::Update(DWORD dt)
 		//mario->SetLevel(mario->GetLevel() + 1);
 		if (mario->GetLevel() < MARIO_LEVEL_RACCOON)
 		{
-			mario->ChangeState(PlayerTransformState::GetInstance());
+			mario->ChangeState(PlayerBonusTransformState::GetInstance());
 			mario->vx = 0;
 			mario->vy = 0;
-			mario->y -= 50;
 		}
+		mario->y -= 50;
 		mario->SetPoint(mario->GetPoint() + MARIO_BONUS_POINT_LEAF);
 		this->stillAlive = false;
 
@@ -130,11 +130,11 @@ void Leaf::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 	//mario->SetLevel(mario->GetLevel() + 1);
 	if (mario->GetLevel() < MARIO_LEVEL_RACCOON)
 	{
-		mario->ChangeState(PlayerTransformState::GetInstance());
+		mario->ChangeState(PlayerBonusTransformState::GetInstance());
 		mario->vx = 0;
 		mario->vy = 0;
-		mario->y -= 50;
 	}
+	mario->y -= 50;
 	mario->SetPoint(mario->GetPoint() + MARIO_BONUS_POINT_LEAF);
 	this->stillAlive = false;
 
