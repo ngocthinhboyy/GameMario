@@ -20,6 +20,8 @@ Goomba::Goomba(float x, float y, float w, float h, int type)
 	this->h = h;
 	this->type = type;
 	this->gameObjectID = idGenerate++;
+	this->nx = -1;
+	this->startNx = -1;
 	this->startPositionX = x;
 	this->startPositionY = y;
 	this->vx = -GOOMBA_WALKING_SPEED;
@@ -91,7 +93,6 @@ void Goomba::Render()
 
 void Goomba::Update(DWORD dt)
 {
-	//DebugOut(L"Tui la goomba \n");
 	vy += ENEMY_GRAVITY * dt;
 	GameObject::Update(dt);
 
@@ -118,8 +119,8 @@ void Goomba::Update(DWORD dt)
 		float cam_x,cam_y;
 		Camera* camera = Camera::GetInstance();
 		camera->GetCamPos(cam_x, cam_y);
-		if (y > (cam_y + SCREEN_HEIGHT))
-			stillAlive = false;
+		/*if (y > (cam_y + SCREEN_HEIGHT))
+			stillAlive = false;*/
 	}
 	else
 	{

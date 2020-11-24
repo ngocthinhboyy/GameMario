@@ -27,6 +27,7 @@ void GameObject::SetStartPosition()
 {
 	this->x = this->startPositionX;
 	this->y = this->startPositionY;
+	this->nx = this->startNx;
 }
 
 /*

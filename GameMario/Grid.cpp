@@ -117,17 +117,18 @@ void Grid::GetListObjectInCamera()
 	Camera* camera = Camera::GetInstance();
 	camera->GetCamPos(cam_x, cam_y);
 	int top = (int)((cam_y) / CELL_HEIGHT);
-	int bottom = (int)((cam_y + SCREEN_HEIGHT) / CELL_HEIGHT);
+	int bottom = (int)((cam_y + 692) / CELL_HEIGHT);
 
 	int left = (int)((cam_x) / CELL_WIDTH);
-	int right = (int)((cam_x + SCREEN_WIDTH) / CELL_WIDTH);
-	/*DebugOut(L"TOPPPP %d\n", top);
-	DebugOut(L"BOTTOMMM %d\n", bottom);
-	DebugOut(L"LEFFFTTT %d\n", left -1);
-	DebugOut(L"RIGHTTTT %d\n", right );*/
+	int right = (int)((cam_x + 745) / CELL_WIDTH);
+	/*DebugOut(L"CAMXXX %f\n", cam_x);
+	DebugOut(L"BOTTOMMM %d\n", bottom);*/
+	//DebugOut(L"LEFFFTTT %d\n", left);
+	//DebugOut(L"RIGHTTTT %d\n", right);
 	for (int i = top; i <= bottom; i++)
-		for (int j = left - 1; j <= right; j++) {
+		for (int j = left; j <= right; j++) {
 			for (int k = 0; k < cells[i][j].size(); k++) {
+				//DebugOut(L"objectIDGET %d\n", cells[i][j].at(k)->gameObjectID);
 				if (cells[i][j].at(k)->stillAlive) {
 					if (LPENEMY enemy = dynamic_cast<LPENEMY> (cells[i][j].at(k))) {
 						if (!enemy->GetInGrid()) {
@@ -161,26 +162,38 @@ void Grid::DeterminedGridToObtainObject(LPGAMEOBJECT object)
 			cells[i][j].push_back(object);
 		}
 }
-void Grid::UpdateGrid(LPGAMEOBJECT object)
+void Grid::SetNewGrid(LPGAMEOBJECT object)
 {
 	float cam_x, cam_y;
 	Camera* camera = Camera::GetInstance();
 	camera->GetCamPos(cam_x, cam_y);
+
 	int topFocusCam = (int)((cam_y) / CELL_HEIGHT);
-	int bottomFocusCam = (int)((cam_y + SCREEN_HEIGHT) / CELL_HEIGHT);
+	int bottomFocusCam = (int)((cam_y + 692) / CELL_HEIGHT);
 
 	int leftFocusCam = (int)((cam_x) / CELL_WIDTH);
-	int rightFocusCam = (int)((cam_x + SCREEN_WIDTH) / CELL_WIDTH);
-
-	for (int i = topFocusCam; i <= bottomFocusCam; i++)
-		for (int j = leftFocusCam - 1; j <= rightFocusCam; j++) {
+	int rightFocusCam = (int)((cam_x + 745) / CELL_WIDTH);
+	//DebugOut(L"CX %f\n", cam_x);
+	//DebugOut(L"B %d\n", bottomFocusCam);
+	//DebugOut(L"L %d\n", leftFocusCam);
+	//DebugOut(L"R %d\n", rightFocusCam);
+	for (int i = 0; i < MAX_ROW; i++)
+		for (int j = 0; j < MAX_COLUMN; j++) {
 			for (int k = 0; k < cells[i][j].size(); k++) {
 				cells[i][j].at(k)->SetInGrid(false);
 				if (cells[i][j].at(k)->gameObjectID == object->gameObjectID) {
+				//	DebugOut(L"objectIDELEYE %d\n", object->gameObjectID);
 					cells[i][j].erase(cells[i][j].begin() + k);
 				}
 			}
 		}
+	/*for (int i = topFocusCam; i <= bottomFocusCam; i++)
+		for (int j = leftFocusCam; j <= rightFocusCam; j++) {
+			if (cells[i][j].size() != 0) {
+				DebugOut(L"i %d\n", i);
+				DebugOut(L"j %d\n", j);
+			}
+		}*/
 	int top = (int)(object->y / CELL_HEIGHT);
 	int bottom = (int)((object->y + object->h) / CELL_HEIGHT);
 	int left = (int)(object->x / CELL_WIDTH);
@@ -191,12 +204,35 @@ void Grid::UpdateGrid(LPGAMEOBJECT object)
 			cells[i][j].push_back(object);
 		}
 
-	/*for (int i = topFocusCam; i <= bottomFocusCam; i++) {
-		for (int j = 0; j < cells[i][leftFocusCam - 2].size(); j++)
-			cells[i][leftFocusCam - 2].at(j)->SetStartPosition();
-		for (int j = 0; j < cells[i][rightFocusCam + 1].size(); j++)
-			cells[i][rightFocusCam + 1].at(j)->SetStartPosition();
-	}*/
+}
+void Grid::SetStartPosition()
+{
+	float cam_x, cam_y;
+	Camera* camera = Camera::GetInstance();
+	camera->GetCamPos(cam_x, cam_y);
+
+	int top = (int)((cam_y) / CELL_HEIGHT);
+	int bottom = (int)((cam_y + 692) / CELL_HEIGHT);
+
+	int left = (int)((cam_x) / CELL_WIDTH);
+	int right = (int)((cam_x + 745) / CELL_WIDTH);
+
+	/*DebugOut(L"T %d\n", top);
+	DebugOut(L"B %d\n", bottom);
+	DebugOut(L"L %d\n", left);
+	DebugOut(L"R %d\n", right);*/
+//	DebugOut(L"L %d\n", left - 1);
+
+	for (int i = top; i <= bottom; i++) {
+		for (int j = 0; j < cells[i][left - 1].size(); j++) {
+			cells[i][left - 1].at(j)->SetStartPosition();
+			SetNewGrid(cells[i][left - 1].at(j));
+		}
+		for (int j = 0; j < cells[i][right + 1].size(); j++) {
+			cells[i][right + 1].at(j)->SetStartPosition();
+			SetNewGrid(cells[i][right + 1].at(j));
+		}
+	}
 }
 Grid* Grid::GetInstance()
 {

@@ -15,6 +15,8 @@ Flower::Flower(float x, float y, float w, float h, int type)
 	this->w = w;
 	this->h = h;
 	this->type = type;
+	this->nx = -1;
+	this->startNx = -1;
 	this->startPositionX = x;
 	this->startPositionY = y;
 	this->state = FLOWER_STATE_MOVE;

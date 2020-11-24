@@ -1,8 +1,8 @@
 #pragma once
 #include "GameObject.h"
 
-#define CELL_WIDTH (SCREEN_WIDTH/4.0f)
-#define CELL_HEIGHT (SCREEN_HEIGHT/4.0f)
+#define CELL_WIDTH (745/2.0f)
+#define CELL_HEIGHT (692/2.0f)
 
 #define MAX_ROW (int)((1968/CELL_HEIGHT) + 1)
 #define MAX_COLUMN (int)((8848/CELL_WIDTH) + 1)
@@ -18,7 +18,8 @@ public:
 	void LoadObjectInSceneAddToGrid(string line);
 	void GetListObjectInCamera();
 	void DeterminedGridToObtainObject(LPGAMEOBJECT object);
-	void UpdateGrid(LPGAMEOBJECT object);
+	void SetNewGrid(LPGAMEOBJECT object);
+	void SetStartPosition();
 	static Grid* GetInstance();
 
 

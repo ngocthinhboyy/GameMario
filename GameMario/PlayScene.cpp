@@ -231,28 +231,24 @@ void PlayScene::Update(DWORD dt)
 	for (size_t i = 0; i < enemies.size(); i++)
 	{
 		enemies[i]->Update(dt);
-		/*if (!(enemies[i]->stillAlive)) {
-			enemies.erase(enemies.begin() + i);
-		}*/
 	}
 	for (size_t i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Update(dt);
-		//if (!(objects[i]->stillAlive)) {
-			//objects.erase(objects.begin() + i);
-		//}
 	}
 	player->Update(dt);
 
 	for (size_t i = 0; i < enemies.size(); i++)
 	{
-		Grid::GetInstance()->UpdateGrid(enemies[i]);
+		Grid::GetInstance()->SetNewGrid(enemies[i]);
 	}
 
 	for (size_t i = 0; i < objects.size(); i++)
 	{
-		Grid::GetInstance()->UpdateGrid(objects[i]);
+		Grid::GetInstance()->SetNewGrid(objects[i]);
 	}
+
+	Grid::GetInstance()->SetStartPosition();
 	if (player == NULL) return;
 
 	BoardGame* board = BoardGame::GetInstance();

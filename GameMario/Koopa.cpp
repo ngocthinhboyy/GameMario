@@ -27,6 +27,8 @@ Koopa::Koopa(float x, float y, float w, float h, int typeKoopa, int typeMove)
 	this->h = h;
 	this->type = typeKoopa;
 	this->gameObjectID = idGenerate++;
+	this->nx = -1;
+	this->startNx = -1;
 	this->startPositionX = x;
 	this->startPositionY = y;
 	this->vx = -KOOPA_WALKING_SPEED_X;
