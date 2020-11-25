@@ -78,8 +78,11 @@ void Mario::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPC
 		else if (collisionEvent->ny > 0 && collisionMapObjectDirectionY == -1)
 			y += dy;
 		else {
-			isOnGround = true;
 			vy = 0;
+			if (collisionEvent->ny < 0)
+				isOnGround = true;
+			else if (collisionEvent->ny > 0)
+				isOnGround = false;
 		}
 	}
 }
@@ -120,17 +123,12 @@ void Mario::Update(DWORD dt)
 		untouchable = false;
 	}
 
-	if (coEvents.size() == 0 || untouchable)
+	if (coEvents.size() == 0)
 	{
-		if (!untouchable) {
-			x += dx;
-			y += dy;
-			if (x <= 0)
-				x = 0;
-		}
-		else {
-
-		}
+		x += dx;
+		y += dy;
+		if (x <= 0)
+			x = 0;
 	}
 	else
 	{
@@ -142,7 +140,7 @@ void Mario::Update(DWORD dt)
 
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
-		
+
 		int coEventsSize = coEventsResult.size();
 
 		for (UINT i = 0; i < coEventsSize; i++)
@@ -151,13 +149,21 @@ void Mario::Update(DWORD dt)
 			if (LPCOLLISIONMAPOBJECT collMapObj = dynamic_cast<LPCOLLISIONMAPOBJECT> (e->obj)) {
 				CollisionWithCollisionMapObject(e, collMapObj);
 			}
-			else if(LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
-				enemy->CollisionWithPlayer(e);
+			else if (LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
+				if (untouchable) {
+					if(e->nx != 0)
+						x += min_tx * dx + nx * 0.4f;
+					if(e->ny != 0)
+						y += min_ty * dy + ny * 0.4f;
+				}
+				else {
+					enemy->CollisionWithPlayer(e);
+				}
 			}
 			else if (LPITEM item = dynamic_cast<LPITEM> (e->obj)) {
 				item->CollisionWithPlayer(e);
 			}
-			else if (QuestionBrick * questionBrick = dynamic_cast<QuestionBrick*> (e->obj)) {
+			else if (QuestionBrick* questionBrick = dynamic_cast<QuestionBrick*> (e->obj)) {
 				if (e->nx != 0) {
 					PlayerRunningState::lastStateIsSkidding = true;
 					Mario* mario = Mario::GetInstance();
@@ -175,7 +181,6 @@ void Mario::Update(DWORD dt)
 			}*/
 		}
 	}
-
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 
@@ -183,8 +188,20 @@ void Mario::Update(DWORD dt)
 
 void Mario::Render()
 {
-	int alpha = 255;
-	if (untouchable) alpha = 128;
+	if (untouchable) {
+		DWORD now = GetTickCount64();
+		if (startHideAndUnhide != 0 && now - startHideAndUnhide >= 60) {
+			alpha = 0;
+			startHideAndUnhide = now;
+		}
+		else {
+			alpha = 170;
+		}
+	}
+	else {
+		startHideAndUnhide = 0;
+		alpha = 255;
+	}
 	D3DXVECTOR2 scale;
 	LPANIMATION ani = playerState->GetAnimation();
 	int offset = 0;
@@ -199,9 +216,9 @@ void Mario::Render()
 	RenderBoundingBox();
 }
 
-void Mario::SetState(int state)
-{
-}
+//void Mario::SetState(int state)
+//{
+//}
 
 void Mario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {

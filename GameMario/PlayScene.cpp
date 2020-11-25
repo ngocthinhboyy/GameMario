@@ -98,7 +98,7 @@ void PlayScene::_ParseSection_OBJECTS_NOT_IN_GRID(string line)
 			return;
 		}
 		Mario* mario = Mario::GetInstance();
-		mario->SetLevel(MARIO_LEVEL_FIRE);
+		mario->SetLevel(MARIO_LEVEL_BIG);
 		mario->ChangeState(PlayerStandingState::GetInstance());
 		ani_set = AnimationManager::GetInstance()->Get(ani_set_id);
 

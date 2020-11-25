@@ -14,6 +14,7 @@
 #include "ItemDefine.h"
 #include "Grid.h"
 #include "Coin.h"
+#include "PlayerLevelDownTransformState.h"
 
 Koopa::Koopa()
 {
@@ -318,21 +319,39 @@ void Koopa::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 						}
 				}
 			}
+			else {
+				if (mario->GetLevel() >= MARIO_LEVEL_BIG) {
+					mario->StartUntouchable();
+					mario->ChangeState(PlayerLevelDownTransformState::GetInstance());
+					mario->vx = 0;
+					mario->vy = 0;
+			}
+			}
 		}
 	}
-	if (collisionEvent->ny == -1) {
-		if (state != ENEMY_STATE_DIE) {
-			state = ENEMY_STATE_DIE;
-			mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
-			vx = 0;
+	if (collisionEvent->ny != 0) {
+		if (collisionEvent->ny < 0) {
+			if (state != ENEMY_STATE_DIE) {
+				state = ENEMY_STATE_DIE;
+				mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
+				vx = 0;
+			}
+			else if (state == ENEMY_STATE_DIE) {
+				mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
+				if (mario->x > x)
+					vx = -KOOPA_SPEED_TORTOISESHELL;
+				else if (mario->x <= x)
+					vx = KOOPA_SPEED_TORTOISESHELL;
+				state = ENEMY_STATE_SPIN_DIE_KICK;
+			}
 		}
-		else if(state == ENEMY_STATE_DIE) {
-			mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
-			if (mario->x > x)
-				vx = -KOOPA_SPEED_TORTOISESHELL;
-			else if (mario->x <= x)
-				vx = KOOPA_SPEED_TORTOISESHELL;
-			state = ENEMY_STATE_SPIN_DIE_KICK;
+		if (collisionEvent->ny > 0) {
+			if (mario->GetLevel() >= MARIO_LEVEL_BIG) {
+				mario->StartUntouchable();
+				mario->ChangeState(PlayerLevelDownTransformState::GetInstance());
+				mario->vx = 0;
+				mario->vy = 0;
+			}
 		}
 	}
 }

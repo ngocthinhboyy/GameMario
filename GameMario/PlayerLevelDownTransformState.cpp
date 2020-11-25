@@ -44,6 +44,7 @@ void PlayerLevelDownTransformState::KeyState(BYTE* states)
 	if (isLastFrame) {
 		animation->ResetAnimation();
 		mario->SetLevel(mario->GetLevel() - 1);
+		mario->StartHideAndUnhide();
 		mario->ChangeState(PlayerStandingState::GetInstance());
 	}
 }

@@ -103,7 +103,12 @@ void Fireball::Update(DWORD dt)
 				PlayerThrowingFireballState::decreaseQuantityOneValue();
 				if(dynamic_cast<Koopa*> (enemy))
 					enemy->SetState(ENEMY_STATE_DIE);
-				enemy->vx = ENEMY_DIE_SPEED_X;
+				if (enemy->x > Mario::GetInstance()->x) {
+					enemy->vx = ENEMY_DIE_SPEED_X;
+				}
+				else {
+					enemy->vx = -ENEMY_DIE_SPEED_X;
+				}
 				enemy->vy = -ENEMY_DIE_SPEED_Y;
 				enemy->SetIsUpsideDown(true);
 			}

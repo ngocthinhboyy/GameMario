@@ -24,13 +24,15 @@ class Mario : public GameObject
 	int heart = 4;
 	int point = 0;
 	int coin = 0;
+	int alpha = 255;
+	DWORD startHideAndUnhide = 0;
 public:
 	float speedLast;
 	Mario(float x = 0.0f, float y = 0.0f);
 	virtual void Update(DWORD dt);
 	virtual void Render();
 
-	void SetState(int state);
+	//void SetState(int state);
 	void SetLevel(int level) { this->level = level; }
 	void StartUntouchable() { untouchable = true; untouchable_start = GetTickCount64(); }
 
@@ -44,6 +46,9 @@ public:
 	bool GetIsRunning() { return this->isRunning; };
 	void SetIsOnGround(bool isOnGround) { this->isOnGround = isOnGround; };
 	bool GetIsOnGround() { return this->isOnGround; };
+	void SetAlpha(int alpha) { this->alpha = alpha; };
+	int GetAlpha() { return this->alpha; };
+	void StartHideAndUnhide() { startHideAndUnhide = GetTickCount64(); };
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	static Mario* GetInstance();

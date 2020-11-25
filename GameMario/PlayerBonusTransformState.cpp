@@ -16,7 +16,7 @@ void PlayerBonusTransformState::SetAnimation()
 	switch (mario->GetLevel()) {
 	case MARIO_LEVEL_SMALL:
 	{
-		animationID = MARIO_EFFECT_HAVE_BONUS;
+		animationID = MARIO_EFFECT_GROW_UP;
 		break;
 	}
 	case MARIO_LEVEL_BIG:

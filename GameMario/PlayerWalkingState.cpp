@@ -60,6 +60,15 @@ void PlayerWalkingState::SetAnimation()
 void PlayerWalkingState::Update(int dt)
 {
 	Mario* mario = Mario::GetInstance();
+	if (mario->vy > 0) {
+		isSlow = false;
+		if (mario->GetLevel() == MARIO_LEVEL_RACCOON) {
+			mario->ChangeState(PlayerFallingState::GetInstance());
+			return;
+		}
+		mario->ChangeState(PlayerFallingState::GetInstance());
+		return;
+	}
 	if (isSlow) {
 		mario->vx -= MARIO_SLOWLY_SPEED_ACCECLERATION *dt* mario->nx;
 	}

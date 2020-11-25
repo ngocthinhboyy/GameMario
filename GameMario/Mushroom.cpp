@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "QuestionBrick.h"
 #include "Leaf.h"
+#include "PlayerBonusTransformState.h"
 
 Mushroom::Mushroom(float x, float y, float w, float h)
 {
@@ -97,11 +98,12 @@ void Mushroom::Update(DWORD dt)
 				if (e->nx != 0) vx = - vx;
 			}
 			else if (Mario * mario = dynamic_cast<Mario*> (e->obj)) {
-				mario->SetLevel(mario->GetLevel() + 1);
-				this->stillAlive = false;
+				mario->ChangeState(PlayerBonusTransformState::GetInstance());
 				mario->vx = 0;
 				mario->vy = 0;
 				mario->y -= 50;
+				mario->SetPoint(mario->GetPoint() + MARIO_BONUS_POINT_LEAF);
+				this->stillAlive = false;
 			}
 		}
 	}
@@ -121,11 +123,12 @@ void Mushroom::GetBoundingBox(float& l, float& t, float& r, float& b)
 void Mushroom::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 {
 	Mario* mario = Mario::GetInstance();
-	mario->SetLevel(mario->GetLevel() + 1);
-	this->stillAlive = false;
+	mario->ChangeState(PlayerBonusTransformState::GetInstance());
 	mario->vx = 0;
 	mario->vy = 0;
 	mario->y -= 50;
+	mario->SetPoint(mario->GetPoint() + MARIO_BONUS_POINT_LEAF);
+	this->stillAlive = false;
 }
 
 void Mushroom::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPCOLLISIONMAPOBJECT collisionMapObject)

@@ -98,7 +98,6 @@ void Leaf::Update(DWORD dt)
 	else
 	{
 		Mario* mario = Mario::GetInstance();
-		//mario->SetLevel(mario->GetLevel() + 1);
 		if (mario->GetLevel() < MARIO_LEVEL_RACCOON)
 		{
 			mario->ChangeState(PlayerBonusTransformState::GetInstance());
