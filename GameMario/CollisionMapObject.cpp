@@ -2,6 +2,7 @@
 #include "Textures.h"
 #include "game.h"
 #include "debug.h"
+#include "AnimationDatabase.h"
 
 CollisionMapObject::CollisionMapObject()
 {
@@ -33,6 +34,13 @@ void CollisionMapObject::RenderBoundingBox()
 void CollisionMapObject::Render()
 {
 	RenderBoundingBox();
+	if (x == 1056) {
+		D3DXVECTOR2 scale;
+		scale = D3DXVECTOR2(3, 3);
+		AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
+		LPANIMATION animation = animationDatabase->Get(2101);
+		animation->Render(x, y,255,scale);
+	}
 }
 
 void CollisionMapObject::GetBoundingBox(float& left, float& top, float& right, float& bottom)

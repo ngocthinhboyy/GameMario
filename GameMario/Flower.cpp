@@ -3,6 +3,9 @@
 #include "AnimationDatabase.h"
 #include "Mario.h"
 #include "debug.h"
+#include "Fireball.h"
+#include "Grid.h"
+#include "DynamicObjectDefine.h"
 
 Flower::Flower()
 {
@@ -28,17 +31,17 @@ void Flower::SetAnimation()
 	switch (this->type)
 	{
 		case RED_FIRE_FLOWER_TYPE: {
-			if(state == FLOWER_STATE_MOVE)
-				this->animation = animationDatabase->Get(RED_FIRE_FLOWER_ANI_MOVE);
-			else if(state == FLOWER_STATE_ATTACK)
-				this->animation = animationDatabase->Get(RED_FIRE_FLOWER_ANI_ATTACK);
+			if(Mario::GetInstance()->y < y)
+				this->animation = animationDatabase->Get(RED_FIRE_FLOWER_ANI_LOOK_DOWN);
+			else
+				this->animation = animationDatabase->Get(RED_FIRE_FLOWER_ANI_LOOK_UP);
 			break;
 		}
 		case GREEN_FIRE_FLOWER_TYPE: {
-			if (state == FLOWER_STATE_MOVE)
-				this->animation = animationDatabase->Get(GREEN_FIRE_FLOWER_ANI_MOVE);
-			else if (state == FLOWER_STATE_ATTACK)
-				this->animation = animationDatabase->Get(GREEN_FIRE_FLOWER_ANI_ATTACK);
+			if (Mario::GetInstance()->y < y)
+				this->animation = animationDatabase->Get(GREEN_FIRE_FLOWER_ANI_LOOK_DOWN);
+			else
+				this->animation = animationDatabase->Get(GREEN_FIRE_FLOWER_ANI_LOOK_UP);
 			break;
 		}
 		case GREEN_FLOWER_TYPE: {
@@ -58,25 +61,32 @@ void Flower::Render()
 	int alpha = 255;
 	D3DXVECTOR2 scale;
 	SetAnimation();
-	if (Mario::GetInstance()->x > x)
+	if (nx > 0)
 		scale = D3DXVECTOR2(RATIO_X_FLIP_SCALE, RATIO_Y_SCALE);
 	else
 		scale = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_SCALE);
 	if (animation != NULL) {
 		animation->Render(x, y, alpha, scale);
+		//animation = AnimationDatabase::GetInstance()->Get(2101);
 	}
+	RenderBoundingBox();
 }
 
 void Flower::Update(DWORD dt)
 {
+	Mario* mario = Mario::GetInstance();
+	if (mario->x > x)
+		nx = 1;
+	else
+		nx = -1;
 	if (isMoving && state == FLOWER_STATE_MOVE) {
 		if (isGoUp) {
-			vy = -0.08f;
+			vy = -0.1f;
 		}
 		else {
-			vy = 0.08f;
+			vy = 0.1f;
 		}
-		if (y + 96 < startPositionY && !finishedAttacking) {
+		if (y + 96 < startPositionY && !finishedAttackingState) {
 			this->state = FLOWER_STATE_ATTACK;
 			isGoUp = false;
 			startAttacking = GetTickCount64();
@@ -90,18 +100,29 @@ void Flower::Update(DWORD dt)
 	}
 	else if (state == FLOWER_STATE_ATTACK) {
 		int timeAttack = GetTickCount64();
-		if (timeAttack - startAttacking >= 1000) {
+		if (timeAttack - startAttacking >= 1000 && !alreadyAttacked) {
+			Attack();
+			alreadyAttacked = true;
+		}
+		else if(timeAttack - startAttacking >= 1500) {
 			this->state = FLOWER_STATE_MOVE;
-			finishedAttacking = true;
+			finishedAttackingState = true;
+			alreadyAttacked = false;
 		}
 	}
 	else {
 		vy = 0;
-		int now = GetTickCount64();
-		if (now - lastMoving >= 500) {
-			isMoving = true;
-			isGoUp = true;
-			finishedAttacking = false;
+		if (x - 24 - 46 >= mario->x || x + 48 + 24 + 47 <= mario->x + 46) {
+			int now = GetTickCount64();
+			if (now - lastMoving >= 1000) {
+				isMoving = true;
+				isGoUp = true;
+				finishedAttackingState = false;
+				alreadyAttacked = false;
+			}
+		}
+		else {
+			isMoving = false;
 		}
 	}
 	GameObject::Update(dt);
@@ -119,6 +140,25 @@ void Flower::GetBoundingBox(float& l, float& t, float& r, float& b)
 	else {
 		b = t + FLOWER_BBOX_HEIGHT;
 	}
+}
+
+void Flower::Attack()
+{
+	Mario* mario = Mario::GetInstance();
+	Fireball* fireball = new Fireball(x + (FLOWER_BBOX_WIDTH / 2 - FIREBALL_BBOX_WIDTH / 2), y + 5, FIREBALL_WIDTH, FIREBALL_HEIGHT, FIREBALL_TYPE_OF_FLOWER);
+	if (mario->y < y) {
+		fireball->vy = -0.1f;
+	}
+	else
+		fireball->vy = 0.1f;
+	if (mario->x <= x - 220 || mario->x >= x + 220) {
+		fireball->vx = 0.27 * nx;
+	}
+	else {
+		fireball->vx = 0.13 * nx;
+	}
+	Grid* grid = Grid::GetInstance();
+	grid->DeterminedGridToObtainObject(fireball);
 }
 
 void Flower::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPCOLLISIONMAPOBJECT collisionMapObject)

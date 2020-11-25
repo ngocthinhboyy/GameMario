@@ -223,9 +223,6 @@ void Goomba::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 		if (mario->GetLevel() >= 2) {
 			mario->StartUntouchable();
 			mario->ChangeState(PlayerLevelDownTransformState::GetInstance());
-			mario->vx = 0;
-			mario->vy = 0;
-			//mario->x += w + 5;
 		}
 	}
 	if (collisionEvent->ny == -1) {

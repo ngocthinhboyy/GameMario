@@ -22,6 +22,7 @@
 #include "Grid.h"
 #include "PlayerRunningState.h"
 #include "PlayerThrowingFireballState.h"
+#include "PlayerLevelDownTransformState.h"
 
 Mario* Mario::Mario::__instance = NULL;
 Mario* Mario::GetInstance() {
@@ -66,8 +67,13 @@ void Mario::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPC
 		else if (collisionEvent->nx > 0 && collisionMapObjectDirectionX == -1)
 			x += dx;
 		else {
-			PlayerRunningState::lastStateIsSkidding = true;
-			vx += (dt * MARIO_SPEED_ACCELERATION * 3.5 * -nx);
+			if (isRunning) {
+				PlayerRunningState::lastStateIsSkidding = true;
+				vx += (dt * MARIO_SPEED_ACCELERATION * 3.5 * -nx);
+			}
+			else {
+				vx = 0;
+			}
 		}
 	}
 	if (collisionEvent->ny != 0) {
@@ -151,10 +157,12 @@ void Mario::Update(DWORD dt)
 			}
 			else if (LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
 				if (untouchable) {
-					if(e->nx != 0)
-						x += min_tx * dx + nx * 0.4f;
-					if(e->ny != 0)
-						y += min_ty * dy + ny * 0.4f;
+					if (e->nx != 0)
+						//x -= min_tx * dx + nx * 0.4f;
+						x += dx;
+					if (e->ny != 0)
+						//y -= min_ty * dy + ny * 0.4f;
+						y += dy;
 				}
 				else {
 					enemy->CollisionWithPlayer(e);
@@ -171,6 +179,26 @@ void Mario::Update(DWORD dt)
 				}
 				else
 					questionBrick->CollisionWithPlayer(e);
+			}
+			else if (Fireball * fireball = dynamic_cast<Fireball*> (e->obj)) {
+				if (untouchable) {
+					if (e->nx != 0)
+						x -= min_tx * dx + nx * 0.4f;
+					if (e->ny != 0)
+						y -= min_ty * dy + ny * 0.4f;
+				}
+				else
+				{
+					if (e->nx != 0)
+						x -= min_tx * dx + nx * 0.4f;
+					if (e->ny != 0)
+						y -= min_ty * dy + ny * 0.4f;
+					if (level >= 2) {
+						StartUntouchable();
+						ChangeState(PlayerLevelDownTransformState::GetInstance());
+						vy = 0;
+					}
+				}
 			}
 			/*else {
 				if (e->nx != 0) vx = 0;

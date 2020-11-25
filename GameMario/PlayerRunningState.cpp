@@ -264,6 +264,8 @@ void PlayerRunningState::OnKeyDown(int KeyCode)
 		isCrouching = false;
 		prevKeyIsRight = false;
 		isSkidding = false;
+		//*
+		mario->SetIsRunning(false);
 		if (abs(mario->vx) >= MARIO_RUNNING_MAX_SPEED) {
 			mario->ChangeState(PlayerFlyingState::GetInstance());
 		}

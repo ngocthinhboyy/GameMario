@@ -98,7 +98,7 @@ void PlayScene::_ParseSection_OBJECTS_NOT_IN_GRID(string line)
 			return;
 		}
 		Mario* mario = Mario::GetInstance();
-		mario->SetLevel(MARIO_LEVEL_BIG);
+		mario->SetLevel(MARIO_LEVEL_RACCOON);
 		mario->ChangeState(PlayerStandingState::GetInstance());
 		ani_set = AnimationManager::GetInstance()->Get(ani_set_id);
 
@@ -283,11 +283,6 @@ void PlayScene::Render()
 	MapManager* mapManager = MapManager::GetInstance();
 	mapManager->RenderMap(mapID);
 
-	for (size_t i = 0; i < collisionMapObjects.size(); i++)
-	{
-		collisionMapObjects[i]->Render();
-	}
-
 	for (int i = 0; i < objects.size(); i++) {
 		objects[i]->Render();
 	}
@@ -296,6 +291,11 @@ void PlayScene::Render()
 	for (int i = 0; i < enemies.size(); i++) {
 		enemies[i]->Render();
 	}
+	for (size_t i = 0; i < collisionMapObjects.size(); i++)
+	{
+		collisionMapObjects[i]->Render();
+	}
+
 	player->Render();
 	BoardGame* board = BoardGame::GetInstance();
 	board->RenderBoardGame();
