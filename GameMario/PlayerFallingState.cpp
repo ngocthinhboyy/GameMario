@@ -81,16 +81,21 @@ void PlayerFallingState::Update(int dt)
 			mario->ChangeState(PlayerStandingState::GetInstance());
 		}
 	}
+	return;
 }
 void PlayerFallingState::KeyState(BYTE* states)
 {
 	Mario* mario = Mario::GetInstance();
 	Game* game = Game::GetInstance();
 	if (game->IsKeyDown(DIK_DOWN)) {
-		if (mario->vy == 0) {
+		mario->SetIsCrouching(true);
+		/*if (mario->vx == 0 && mario->GetIsOnGround()) {
 			mario->ChangeState(PlayerCrouchingState::GetInstance());
-			return;
 		}
+		return;*/
+	}
+	else {
+		mario->SetIsCrouching(false);
 	}
 	if (game->IsKeyDown(DIK_RIGHT)) {
 		mario->nx = 1;
