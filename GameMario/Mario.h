@@ -28,12 +28,14 @@ class Mario : public GameObject
 	int alpha = 255;
 	int offset = 0;
 	DWORD startHideAndUnhide = 0;
+	bool isCollisionWithWall = false;
 public:
 	float speedLast;
 	Mario(float x = 0.0f, float y = 0.0f);
 	virtual void Update(DWORD dt);
 	virtual void Render();
 
+	bool GetIsCollisionWithWall() { return this->isCollisionWithWall; };
 	//void SetState(int state);
 	void SetLevel(int level) { this->level = level; }
 	void StartUntouchable() { untouchable = true; untouchable_start = GetTickCount64(); }

@@ -71,7 +71,7 @@ public:
 	float startPositionX;
 	float startPositionY;
 	int startNx;
-
+	int state;
 	bool isAlreadyAppeared = false;
 public:
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
@@ -82,6 +82,8 @@ public:
 	bool GetIsAlreadyAppeared() { return this->isAlreadyAppeared; };
 
 	virtual void RenderBoundingBox();
+	int GetState() { return this->state; };
+	void SetState(int state) { this->state = state; };
 
 	void SetAnimationSet(LPANIMATION_SET ani_set) { animation_set = ani_set; }
 	virtual void SetStartPosition();

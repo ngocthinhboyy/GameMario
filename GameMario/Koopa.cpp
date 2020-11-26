@@ -15,6 +15,7 @@
 #include "Grid.h"
 #include "Coin.h"
 #include "PlayerLevelDownTransformState.h"
+#include "PlayerStandingState.h"
 
 Koopa::Koopa()
 {
@@ -120,6 +121,28 @@ void Koopa::SetAnimation()
 
 void Koopa::Update(DWORD dt)
 {
+	if (state == ENEMY_STATE_DIE) {
+		if (GetTickCount64() - timeDie >= 5000) {
+			this->nx = -1;
+			this->vx = -KOOPA_WALKING_SPEED_X;
+			this->isUpsideDown = false;
+			this->isDiedByFireball = false;
+			y -= 30;
+			if (isHold) {
+				isHold = false;
+				this->vx = KOOPA_WALKING_SPEED_X * Mario::GetInstance()->nx;
+				this->nx = Mario::GetInstance()->nx;
+				Mario::GetInstance()->ChangeState(PlayerStandingState::GetInstance());
+			}
+			if (startTypeMove == 1) {
+				SetState(ENEMY_STATE_WALKING);
+			}
+			else if (startTypeMove == 2) {
+
+				SetState(ENEMY_STATE_WALKING_WITH_SWINGS);
+			}
+		}
+	}
 	if (isHold) {
 		Mario* mario = Mario::GetInstance();
 		if (Mario::GetInstance()->nx * vx <= 0) {
@@ -129,8 +152,14 @@ void Koopa::Update(DWORD dt)
 			else
 				y = mario->y - KOOPA_HOLDING_DISTANCE_TURN_BACK_Y;
 		}
-		vx = mario->vx;
-		vy = mario->vy;
+		/*if (!mario->GetIsCollisionWithWall()) {
+			vx = mario->vx;
+			vy = mario->vy;
+		}
+		else {
+			vx = 0;
+			vy = 0;
+		}*/
 	}
 	else {
 		vy += ENEMY_GRAVITY * dt;
@@ -142,12 +171,16 @@ void Koopa::Update(DWORD dt)
 	vector<LPGAMEOBJECT> coCollisionMapObjects = scene->collisionMapObjects;
 	vector<LPGAMEOBJECT> coObjs = scene->objects;
 	vector<LPGAMEOBJECT> coEnemies = scene->enemies;
+	//for (LPGAMEOBJECT x : scene->enemies) {
+	//	if (x->GetState() != ENEMY_STATE_DIE)
+	//		coEnemies.push_back(x);
+	//}
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
 	coEvents.clear();
-	if (stillAlive && !isUpsideDown) {
+	if (stillAlive && !isDiedByFireball) {
 		if (state == ENEMY_STATE_SPIN_DIE_KICK || isHold)
 		{
 			CalcPotentialCollisions(&coEnemies, coEvents);
@@ -156,7 +189,7 @@ void Koopa::Update(DWORD dt)
 		CalcPotentialCollisions(&coObjs, coEvents);
 	}
 
-	if (coEvents.size() == 0 || !stillAlive || isUpsideDown)
+	if (coEvents.size() == 0 || !stillAlive)
 	{
 			x += dx;
 			y += dy;
@@ -292,6 +325,9 @@ void Koopa::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPC
 			if (this->state == ENEMY_STATE_WALKING_WITH_SWINGS) {
 				vy -= KOOPA_WALKING_WITH_SWINGS_Y;
 			}
+			else if (this->state == ENEMY_STATE_DIE) {
+				vx = 0;
+			}
 		}
 	}
 }
@@ -335,6 +371,7 @@ void Koopa::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 				state = ENEMY_STATE_DIE;
 				mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
 				vx = 0;
+				SetTimeDie();
 			}
 			else if (state == ENEMY_STATE_DIE) {
 				mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
@@ -363,6 +400,7 @@ void Koopa::SetStartPosition()
 	this->nx = this->startNx;
 	this->vx = -KOOPA_WALKING_SPEED_X;
 	this->isUpsideDown = false;
+	this->isDiedByFireball = false;
 	if (startTypeMove == 1) {
 		SetState(ENEMY_STATE_WALKING);
 	}

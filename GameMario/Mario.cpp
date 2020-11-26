@@ -69,6 +69,7 @@ void Mario::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPC
 			x += dx;
 		else {
 			if (isRunning) {
+				//isCollisionWithWall = true;
 				PlayerRunningState::lastStateIsSkidding = true;
 				vx += (dt * MARIO_SPEED_ACCELERATION * 3.5 * -nx);
 			}
@@ -176,6 +177,7 @@ void Mario::Update(DWORD dt)
 				if (e->nx != 0) {
 					PlayerRunningState::lastStateIsSkidding = true;
 					Mario* mario = Mario::GetInstance();
+					isCollisionWithWall = true;
 					vx += (dt * MARIO_SPEED_ACCELERATION * 3.5 * -this->nx);
 				}
 				else

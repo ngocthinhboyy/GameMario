@@ -68,14 +68,21 @@ void Tail::CheckOverlapBoundingBox(vector<LPGAMEOBJECT> enemies)
 			LPENEMY enemy = dynamic_cast<LPENEMY> (x);
 			if (enemy != NULL) {
 				hasEffect = true;
-				if (dynamic_cast<Koopa*> (enemy))
-					enemy->SetState(ENEMY_STATE_DIE);
-				enemy->vx = ENEMY_DIE_SPEED_X;
-				if (enemy->x < mario->x) {
-					enemy->vx = -ENEMY_DIE_SPEED_X;
+				if (Koopa* koopa = dynamic_cast<Koopa*> (enemy)) {
+					koopa->SetTimeDie();
+					koopa->SetState(ENEMY_STATE_DIE);
+					koopa->vy = -ENEMY_DIE_SPEED_Y - 0.2f;
+					koopa->SetIsUpsideDown(true);
+					koopa->vx = mario->nx * ENEMY_DIE_SPEED_X;
 				}
-				enemy->vy = -ENEMY_DIE_SPEED_Y;
-				enemy->SetIsUpsideDown(true);
+				else {
+					enemy->vx = ENEMY_DIE_SPEED_X;
+					if (enemy->x < mario->x) {
+						enemy->vx = -ENEMY_DIE_SPEED_X;
+					}
+					enemy->vy = -ENEMY_DIE_SPEED_Y;
+					enemy->SetIsUpsideDown(true);
+				}
 			}
 		}
 	}

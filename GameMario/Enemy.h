@@ -5,12 +5,10 @@
 class Enemy : public GameObject
 {
 protected:
-	int state;
 	LPANIMATION animation;
 	bool isUpsideDown = false;
 public:
 	Enemy();
-	void SetState(int state) { this->state = state; };
 	virtual void SetAnimation() = 0;
 	virtual void CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent) = 0;
 	virtual void CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPCOLLISIONMAPOBJECT collisionMapObject) = 0;

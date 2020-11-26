@@ -228,8 +228,9 @@ void Goomba::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 	if (collisionEvent->ny == -1) {
 		state = ENEMY_STATE_DIE;
 		mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
+		y += 15;
 		//mario->vx = 0;
-		isUpsideDown = true;
+		//isUpsideDown = true;
 	}
 }
 

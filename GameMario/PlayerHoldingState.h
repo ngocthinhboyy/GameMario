@@ -10,6 +10,7 @@ class PlayerHoldingState : PlayerState
 	bool prevKeyIsRight = false;
 	bool prevKeyIsLeft = false;
 	bool isTurnBack = false;
+	static bool isStanding;
 public:
 	PlayerHoldingState();
 	static void SetAnimation();

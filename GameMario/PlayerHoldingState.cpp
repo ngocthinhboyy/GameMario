@@ -8,6 +8,7 @@
 #include "PlayerKickingState.h"
 
 PlayerState* PlayerHoldingState::__instance = NULL;
+bool PlayerHoldingState::isStanding = false;
 
 PlayerHoldingState::PlayerHoldingState()
 {
@@ -19,22 +20,42 @@ void PlayerHoldingState::SetAnimation()
 	switch (mario->GetLevel()){
 	case MARIO_LEVEL_BIG:
 	{
-		animationID = MARIO_ANI_BIG_HOLD;
+		if (isStanding) {
+			animationID = MARIO_ANI_BIG_HOLD_IDLE;
+		}
+		else {
+			animationID = MARIO_ANI_BIG_HOLD;
+		}
 		break;
 	}
 	case MARIO_LEVEL_SMALL:
 	{
-		animationID = MARIO_ANI_SMALL_HOLD;
+		if (isStanding) {
+			animationID = MARIO_ANI_SMALL_HOLD_IDLE;
+		}
+		else {
+			animationID = MARIO_ANI_SMALL_HOLD;
+		}
 		break;
 	}
 	case MARIO_LEVEL_RACCOON:
 	{
-		animationID = MARIO_ANI_RACCOON_HOLD;
+		if (isStanding) {
+			animationID = MARIO_ANI_RACCOON_HOLD_IDLE;
+		}
+		else {
+			animationID = MARIO_ANI_RACCOON_HOLD;
+		}
 		break;
 	}
 	case MARIO_LEVEL_FIRE:
 	{
-		animationID = MARIO_ANI_FIRE_HOLD;
+		if (isStanding) {
+			animationID = MARIO_ANI_FIRE_HOLD_IDLE;
+		}
+		else {
+			animationID = MARIO_ANI_FIRE_HOLD;
+		}
 		break;
 	}
 	default:
@@ -44,25 +65,27 @@ void PlayerHoldingState::SetAnimation()
 
 void PlayerHoldingState::Update(int dt)
 {
-	Mario* mario = Mario::GetInstance();
-	if ((abs(mario->vx) < MARIO_RUNNING_MAX_SPEED) && !isMaxSpeed && increaseSpeed) {
-		mario->vx += (dt * MARIO_SPEED_ACCELERATION * (mario->nx));
-	}
-	if (!increaseSpeed && mario->vx != 0) {
-		mario->vx += (dt * MARIO_SPEED_ACCELERATION * -(mario->nx));
-	}
-	if (mario->vx * mario->nx <= 0) {
-		mario->vx = 0;
-	}
-	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
-	vector<LPGAMEOBJECT> enemies = scene->enemies;
-	Koopa* koopaRRR = NULL;
-	for (LPGAMEOBJECT object : enemies) {
-		if (koopaRRR = dynamic_cast<Koopa*>(object)) {
-			if (koopaRRR->GetIsHold() && increaseSpeed)
-			{
-				koopaRRR->x += (mario->vx - koopaRRR->vx) * dt;
-				break;
+	if (!isStanding) {
+		Mario* mario = Mario::GetInstance();
+		if ((abs(mario->vx) < MARIO_RUNNING_MAX_SPEED) && !isMaxSpeed && increaseSpeed) {
+			mario->vx += (dt * MARIO_SPEED_ACCELERATION * (mario->nx));
+		}
+		if (!increaseSpeed && mario->vx != 0) {
+			mario->vx += (dt * MARIO_SPEED_ACCELERATION * -(mario->nx));
+		}
+		if (mario->vx * mario->nx <= 0) {
+			mario->vx = 0;
+		}
+		PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+		vector<LPGAMEOBJECT> enemies = scene->enemies;
+		Koopa* koopaRRR = NULL;
+		for (LPGAMEOBJECT object : enemies) {
+			if (koopaRRR = dynamic_cast<Koopa*>(object)) {
+				if (koopaRRR->GetIsHold() && increaseSpeed)
+				{
+					koopaRRR->x += (mario->vx - koopaRRR->vx) * dt;
+					break;
+				}
 			}
 		}
 	}
@@ -82,6 +105,10 @@ void PlayerHoldingState::KeyState(BYTE* states)
 		}
 	}
 	if (game->IsKeyDown(DIK_A)) {
+		if (mario->vx == 0) {
+			isStanding = true;
+			SetAnimation();
+		}
 		if (abs(mario->vx) >= MARIO_RUNNING_MAX_SPEED) {
 			isMaxSpeed = true;
 		}
@@ -92,18 +119,28 @@ void PlayerHoldingState::KeyState(BYTE* states)
 			if (mario->vx != 0) {
 				increaseSpeed = false;
 			}
+			else {
+				isStanding = true;
+			}
 		}
 		else if (game->IsKeyDown(DIK_RIGHT)) {
-				increaseSpeed = true;
-				mario->nx = 1;
+			isStanding = false;
+			SetAnimation();
+			increaseSpeed = true;
+			mario->nx = 1;
 		}
 		else if (game->IsKeyDown(DIK_LEFT)) {
-				increaseSpeed = true;
-				mario->nx = -1;
+			isStanding = false;
+			SetAnimation();
+			increaseSpeed = true;
+			mario->nx = -1;
 		}
 		else {
 			if (mario->vx != 0) {
 				increaseSpeed = false;
+			}
+			else {
+				isStanding = true;
 			}
 		}
 	}

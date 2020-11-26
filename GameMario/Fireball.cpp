@@ -131,8 +131,10 @@ void Fireball::Update(DWORD dt)
 				}
 				else if (LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
 					isDie = true;
-					if (dynamic_cast<Koopa*> (enemy))
+					if (Koopa* koopa = dynamic_cast<Koopa*> (enemy)) {
 						enemy->SetState(ENEMY_STATE_DIE);
+						koopa->SetIsDiedByFireball();
+					}
 					if (enemy->x > Mario::GetInstance()->x) {
 						enemy->vx = ENEMY_DIE_SPEED_X;
 					}
