@@ -21,7 +21,7 @@ Tail::Tail(float x, float y, float w, float h)
 
 void Tail::Render()
 {
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void Tail::Update(DWORD dt)

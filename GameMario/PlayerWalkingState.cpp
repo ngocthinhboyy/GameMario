@@ -8,6 +8,7 @@
 #include "PlayerRunningState.h"
 #include "PlayerSpinningState.h"
 #include "PlayerThrowingFireballState.h"
+#include "PlayerCrouchingState.h"
 
 
 PlayerState* PlayerWalkingState::__instance = NULL;
@@ -27,6 +28,9 @@ void PlayerWalkingState::SetAnimation()
 				animationID = MARIO_ANI_BIG_WALKING_RIGHT;
 			else
 				animationID = MARIO_ANI_BIG_WALKING_LEFT;
+			if (mario->GetIsCrouChing()) {
+				animationID = MARIO_ANI_BIG_CROUCH;
+			}
 			break;
 		}
 		case MARIO_LEVEL_SMALL:
@@ -43,6 +47,9 @@ void PlayerWalkingState::SetAnimation()
 				animationID = MARIO_ANI_RACCOON_WALKING_RIGHT;
 			else
 				animationID = MARIO_ANI_RACCOON_WALKING_LEFT;
+			if (mario->GetIsCrouChing()) {
+				animationID = MARIO_ANI_RACCOON_CROUCH;
+			}
 			break;
 		}
 		case MARIO_LEVEL_FIRE:
@@ -51,6 +58,9 @@ void PlayerWalkingState::SetAnimation()
 				animationID = MARIO_ANI_FIRE_WALKING_RIGHT;
 			else
 				animationID = MARIO_ANI_FIRE_WALKING_LEFT;
+			if (mario->GetIsCrouChing()) {
+				animationID = MARIO_ANI_FIRE_CROUCH;
+			}
 			break;
 		}
 		default:
@@ -62,6 +72,7 @@ void PlayerWalkingState::Update(int dt)
 	Mario* mario = Mario::GetInstance();
 	if (mario->vy > 0) {
 		isSlow = false;
+		mario->SetIsCrouching(false);
 		if (mario->GetLevel() == MARIO_LEVEL_RACCOON) {
 			mario->ChangeState(PlayerFallingState::GetInstance());
 			return;
@@ -75,6 +86,10 @@ void PlayerWalkingState::Update(int dt)
 	if (mario->vx * mario->nx <= 0 && isSlow) {
 		mario->vx = 0;
 		isSlow = false;
+		if (mario->GetIsCrouChing()) {
+			mario->ChangeState(PlayerCrouchingState::GetInstance());
+			return;
+		}
 		mario->ChangeState(PlayerStandingState::GetInstance());
 	}
 }
@@ -86,11 +101,13 @@ void PlayerWalkingState::OnKeyDown(int KeyCode) {
 		case DIK_X:
 				mario->vy = -MARIO_JUMP_SPEED_Y;
 				isSlow = false;
+				mario->SetIsCrouching(false);
 				mario->ChangeState(PlayerJumpingState::GetInstance());
 			break;
 		case DIK_S:
 				mario->vy = -MARIO_JUMP_SPEED_Y;
 				isSlow = false;
+				mario->SetIsCrouching(false);
 				mario->ChangeState(PlayerHighJumpingState::GetInstance());
 			break;
 		/*case DIK_A:
@@ -101,53 +118,90 @@ void PlayerWalkingState::OnKeyDown(int KeyCode) {
 			break;
 	}
 }
+void PlayerWalkingState::OnKeyUp(int KeyCode)
+{
+}
 void PlayerWalkingState::KeyState(BYTE* states) {
 	Mario* mario = Mario::GetInstance();
-	//SetAnimation(mario->GetLevel());
 	Game* game = Game::GetInstance();
 	if (game->IsKeyDown(DIK_X)) {
-			mario->vy = -MARIO_JUMP_SPEED_Y;
-			isSlow = false;
-			mario->ChangeState(PlayerJumpingState::GetInstance());
+		mario->vy = -MARIO_JUMP_SPEED_Y;
+		isSlow = false;
+		mario->SetIsCrouching(false);
+		mario->ChangeState(PlayerJumpingState::GetInstance());
 		return;
 	}
 	if (game->IsKeyDown(DIK_A)) {
 		if (mario->GetLevel() == MARIO_LEVEL_RACCOON) {
 			isSlow = false;
+			mario->SetIsCrouching(false);
 			mario->ChangeState(PlayerSpinningState::GetInstance());
 			return;
 		}
 		else if (mario->GetLevel() == MARIO_LEVEL_FIRE) {
 			isSlow = false;
+			mario->SetIsCrouching(false);
 			mario->ChangeState(PlayerThrowingFireballState::GetInstance());
 			return;
 		}
 		isSlow = false;
+		mario->SetIsCrouching(false);
 		mario->ChangeState(PlayerRunningState::GetInstance());
 		return;
 	}
 	if (game->IsKeyDown(DIK_RIGHT) && game->IsKeyDown(DIK_LEFT)) {
 		isSlow = true;
-		//mario->ChangeState(PlayerStandingState::GetInstance());
-		return;
-	} else if (game->IsKeyDown(DIK_RIGHT)) {
-		mario->vx = MARIO_WALKING_SPEED;
+		//DebugOut(L"EEEEEE %f\n", mario->vx);
+		//if (game->IsKeyDown(DIK_DOWN) && mario->vx == 0) {
+		//	if (mario->GetLevel() >= MARIO_LEVEL_BIG) {
+		//		mario->SetIsCrouching(true);
+		//		SetAnimation();
+		//	}
+		//	//mario->ChangeState(PlayerStandingState::GetInstance());
+		//	return;
+		//}
+	}
+	else if (game->IsKeyDown(DIK_RIGHT)) {
+		if (mario->GetIsCrouChing()) {
+			mario->SetIsCrouching(false);
+			mario->y -= MARIO_DEVIATION_CROUCHING_Y;
+			SetAnimation();
+		}
 		if (game->IsKeyDown(DIK_Z) && mario->GetLevel() == MARIO_LEVEL_RACCOON) {
 			isSlow = false;
+			mario->SetIsCrouching(false);
 			mario->ChangeState(PlayerSpinningState::GetInstance());
 		}
 		mario->nx = 1;
-	} else if (game->IsKeyDown(DIK_LEFT)) {
-		mario->vx = -MARIO_WALKING_SPEED;
+	}
+	else if (game->IsKeyDown(DIK_LEFT)) {
+		if (mario->GetIsCrouChing()) {
+			mario->SetIsCrouching(false);
+			mario->y -= MARIO_DEVIATION_CROUCHING_Y;
+			SetAnimation();
+		}
 		if (game->IsKeyDown(DIK_Z) && mario->GetLevel() == MARIO_LEVEL_RACCOON) {
 			isSlow = false;
+			mario->SetIsCrouching(false);
 			mario->ChangeState(PlayerSpinningState::GetInstance());
 		}
 		mario->nx = -1;
+	}
+	else if (game->IsKeyDown(DIK_DOWN) && !game->IsKeyDown(DIK_RIGHT) && !game->IsKeyDown(DIK_LEFT)) {
+		isSlow = true;
+		if (mario->GetLevel() >= MARIO_LEVEL_BIG) {
+			if (!mario->GetIsCrouChing()) {
+				mario->y += MARIO_DEVIATION_CROUCHING_Y;
+				mario->SetIsCrouching(true);
+				SetAnimation();
+			}
+		}
+		return;
 	}
 	else {
 		isSlow = true;
 		//mario->ChangeState(PlayerStandingState::GetInstance());
 	}
 }
-PlayerWalkingState::~PlayerWalkingState() {};
+PlayerWalkingState::~PlayerWalkingState() {
+};

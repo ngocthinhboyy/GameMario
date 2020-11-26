@@ -11,6 +11,7 @@ public:
 	void Update(int dt);
 	void KeyState(BYTE* states);
 	void OnKeyDown(int KeyCode);
+	void OnKeyUp(int KeyCode);
 	static PlayerState* GetInstance();
 	~PlayerWalkingState();
 };

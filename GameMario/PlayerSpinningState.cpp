@@ -3,6 +3,7 @@
 PlayerState* PlayerSpinningState::__instance = NULL;
 GameObject* PlayerSpinningState::tailFront = NULL;
 GameObject* PlayerSpinningState::tailBack = NULL;
+int PlayerSpinningState::offset = 0;
 PlayerSpinningState::PlayerSpinningState()
 {
 }
@@ -31,10 +32,58 @@ void PlayerSpinningState::KeyState(BYTE* states)
 	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
 	LPANIMATION animation = animationDatabase->Get(animationID);
 	bool isLastFrame = animation->GetIsLastFrame();
+	int currentFrame = animation->GetCurrentFrame();
+	if (mario->nx > 0) {
+		if (currentFrame == 1 || currentFrame == 2 || currentFrame == 3) {
+			offset = 0;
+		}
+		else {
+			offset = 6;
+		}
+	}
+	else if (mario->nx < 0) {
+		if (currentFrame == 2) {
+			offset = -6;
+		}
+		else {
+			offset = 0;
+		}
+	}
+	if (currentFrame == 0 || currentFrame == 4) {
+		if (mario->nx > 0) {
+			offset = 7;
+			tailBack->stillAlive = true;
+			tailFront->stillAlive = false;
+		}
+		else if (mario->nx < 0) {
+			tailBack->stillAlive = false;
+			tailFront->stillAlive = true;
+		}
+	}
+	else if (currentFrame == 2) {
+		if (mario->nx > 0) {
+			tailFront->stillAlive = true;
+			tailBack->stillAlive = false;
+		}
+		else {
+			tailFront->stillAlive = false;
+			tailBack->stillAlive = true;
+		}
+	}
+	else {
+		tailFront->stillAlive = false;
+		tailBack->stillAlive = false;
+	}
+	/*else {
+		tailFront->stillAlive = false;
+		tailBack->stillAlive = false;
+	}*/
+	//else if(currentFrame == 4){}
 	if (isLastFrame) {
 		animation->ResetAnimation();
 		tailFront->stillAlive = false;
 		tailBack->stillAlive = false;
+		mario->SetIsSpinning(false);
 		if(game->IsKeyDown(DIK_A))
 			mario->ChangeState(PlayerRunningState::GetInstance());
 		else if (mario->vy > 0) {
@@ -50,23 +99,24 @@ PlayerState* PlayerSpinningState::GetInstance()
 	if (__instance == NULL) __instance = new PlayerSpinningState();
 	SetAnimation();
 	Mario* mario = Mario::GetInstance();
+	mario->SetIsSpinning(true);
 	mario->vx = 0;
 	if (tailFront == NULL && tailBack == NULL) {
-			tailFront = new Tail(mario->x + MARIO_BIG_BBOX_WIDTH, mario->y + MARIO_BIG_BBOX_HEIGHT / 2, 20, 30);
-			tailBack = new Tail(mario->x - 20, mario->y + MARIO_BIG_BBOX_HEIGHT / 2, 20, 30);
+			tailFront = new Tail(mario->x + MARIO_BIG_BBOX_WIDTH, mario->y + MARIO_BIG_BBOX_HEIGHT / 2, 27, 30);
+			tailBack = new Tail(mario->x - 27, mario->y + MARIO_BIG_BBOX_HEIGHT / 2, 27, 30);
 
-			tailFront->stillAlive = true;
-			tailBack->stillAlive = true;
+			tailFront->stillAlive = false;
+			tailBack->stillAlive = false;
 
 			Grid::GetInstance()->DeterminedGridToObtainObject(tailFront);
 			Grid::GetInstance()->DeterminedGridToObtainObject(tailBack);
 	}
 	else if(tailFront !=NULL && tailBack !=NULL) {
 		tailFront->SetPosition(mario->x + MARIO_BIG_BBOX_WIDTH, mario->y + MARIO_BIG_BBOX_HEIGHT / 2);
-		tailBack->SetPosition(mario->x - 20, mario->y + MARIO_BIG_BBOX_HEIGHT / 2);
+		tailBack->SetPosition(mario->x - 27, mario->y + MARIO_BIG_BBOX_HEIGHT / 2);
 
-		tailFront->stillAlive = true;
-		tailBack->stillAlive = true;
+		tailFront->stillAlive = false;
+		tailBack->stillAlive = false;
 
 		Grid::GetInstance()->DeterminedGridToObtainObject(tailFront);
 		Grid::GetInstance()->DeterminedGridToObtainObject(tailBack);

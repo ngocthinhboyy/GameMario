@@ -15,7 +15,9 @@ class PlayerSpinningState : PlayerState
 	static PlayerState* __instance;
 	static LPGAMEOBJECT tailFront; 
 	static LPGAMEOBJECT tailBack;
+
 public:
+	static int offset;
 	PlayerSpinningState();
 	static void SetAnimation();
 	void Update(int dt);

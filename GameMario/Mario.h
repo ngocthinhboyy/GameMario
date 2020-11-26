@@ -21,10 +21,12 @@ class Mario : public GameObject
 	bool isCrouching = false;
 	bool isRunning = false;
 	bool isOnGround = true;
+	bool isSpinning = false;
 	int heart = 4;
 	int point = 0;
 	int coin = 0;
 	int alpha = 255;
+	int offset = 0;
 	DWORD startHideAndUnhide = 0;
 public:
 	float speedLast;
@@ -37,6 +39,9 @@ public:
 	void StartUntouchable() { untouchable = true; untouchable_start = GetTickCount64(); }
 
 	bool GetUntouchable() { return this->untouchable; };
+
+	void SetIsSpinning(bool isSpinning) { this->isSpinning = isSpinning; };
+	void SetOffset(int offset) { this->offset = offset; };
 
 
 	void Reset();

@@ -67,7 +67,11 @@ void Flower::Render()
 		scale = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_SCALE);
 	if (animation != NULL) {
 		animation->Render(x, y, alpha, scale);
-		//animation = AnimationDatabase::GetInstance()->Get(2101);
+		D3DXVECTOR2 scalePipe;
+		scalePipe = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_SCALE);
+		AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
+		animation = animationDatabase->Get(2101);
+		animation->Render(1056, 1104, 255, scalePipe);
 	}
 	RenderBoundingBox();
 }

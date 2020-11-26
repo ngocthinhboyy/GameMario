@@ -23,6 +23,7 @@
 #include "PlayerRunningState.h"
 #include "PlayerThrowingFireballState.h"
 #include "PlayerLevelDownTransformState.h"
+#include "PlayerSpinningState.h"
 
 Mario* Mario::Mario::__instance = NULL;
 Mario* Mario::GetInstance() {
@@ -232,9 +233,14 @@ void Mario::Render()
 	}
 	D3DXVECTOR2 scale;
 	LPANIMATION ani = playerState->GetAnimation();
-	int offset = 0;
-	if (level == MARIO_LEVEL_RACCOON && nx > 0)
+	if (level == MARIO_LEVEL_RACCOON && nx > 0 && !isSpinning)
 		offset = 6;
+	else if (level == MARIO_LEVEL_RACCOON && isSpinning) {
+		offset = PlayerSpinningState::offset;
+	}
+	else {
+		offset = 0;
+	}
 	if (nx < 1)
 		scale = D3DXVECTOR2(RATIO_X_FLIP_SCALE, RATIO_Y_SCALE);
 	else

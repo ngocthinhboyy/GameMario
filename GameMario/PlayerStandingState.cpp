@@ -113,6 +113,8 @@ void PlayerStandingState::KeyState(BYTE* states) {
 		mario->ChangeState(PlayerJumpingState::GetInstance());
 	}
 	else if ((game->IsKeyDown(DIK_RIGHT) && game->IsKeyDown(DIK_LEFT))) {
+		/*if (game->IsKeyDown(DIK_DOWN))
+			mario->ChangeState(PlayerCrouchingState::GetInstance());*/
 		return;
 	}
 	else if (game->IsKeyDown(DIK_A) && (game->IsKeyDown(DIK_RIGHT) || game->IsKeyDown(DIK_LEFT))) {
@@ -124,16 +126,18 @@ void PlayerStandingState::KeyState(BYTE* states) {
 		return;
 	}
 	else if (game->IsKeyDown(DIK_RIGHT) || game->IsKeyDown(DIK_LEFT)) {
-		mario->ChangeState(PlayerWalkingState::GetInstance());
+			mario->ChangeState(PlayerWalkingState::GetInstance());
 	}
 	else if (game->IsKeyDown(DIK_DOWN)) {
 		if (mario->GetLevel() != MARIO_LEVEL_SMALL) {
 			mario->y += MARIO_DEVIATION_CROUCHING_Y;
 			mario->ChangeState(PlayerCrouchingState::GetInstance());
+			return;
 		}
 	}
 	else if (game->IsKeyDown(DIK_Z) && mario->GetLevel() == MARIO_LEVEL_RACCOON) {
 		mario->ChangeState(PlayerSpinningState::GetInstance());
+		return;
 	}
 }
 PlayerStandingState::~PlayerStandingState() {};
