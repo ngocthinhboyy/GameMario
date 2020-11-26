@@ -9,11 +9,16 @@
 #include "PlayerSpinningState.h"
 #include "PlayerThrowingFireballState.h"
 #include "PlayerCrouchingState.h"
+#include "PlayerSkiddingState.h"
 
 
 PlayerState* PlayerWalkingState::__instance = NULL;
+bool PlayerWalkingState::prevKeyIsLeft = false;
+bool PlayerWalkingState::prevKeyIsRight = false;
 PlayerState* PlayerWalkingState::GetInstance() {
 	if (__instance == NULL) __instance = new PlayerWalkingState();
+	prevKeyIsLeft = false;
+	prevKeyIsRight = false;
 	SetAnimation();
 	return __instance;
 }
@@ -162,10 +167,18 @@ void PlayerWalkingState::KeyState(BYTE* states) {
 		//}
 	}
 	else if (game->IsKeyDown(DIK_RIGHT)) {
+		prevKeyIsRight = true;
 		if (mario->GetIsCrouChing()) {
 			mario->SetIsCrouching(false);
 			mario->y -= MARIO_DEVIATION_CROUCHING_Y;
 			SetAnimation();
+		}
+		if (prevKeyIsLeft) {
+			mario->ChangeState(PlayerSkiddingState::GetInstance());
+			return;
+		}
+		else {
+			mario->vx = MARIO_WALKING_SPEED;
 		}
 		if (game->IsKeyDown(DIK_Z) && mario->GetLevel() == MARIO_LEVEL_RACCOON) {
 			isSlow = false;
@@ -175,10 +188,18 @@ void PlayerWalkingState::KeyState(BYTE* states) {
 		mario->nx = 1;
 	}
 	else if (game->IsKeyDown(DIK_LEFT)) {
+		prevKeyIsLeft = true;
 		if (mario->GetIsCrouChing()) {
 			mario->SetIsCrouching(false);
 			mario->y -= MARIO_DEVIATION_CROUCHING_Y;
 			SetAnimation();
+		}
+		if (prevKeyIsRight) {
+			mario->ChangeState(PlayerSkiddingState::GetInstance());
+			return;
+		}
+		else {
+			mario->vx = -MARIO_WALKING_SPEED;
 		}
 		if (game->IsKeyDown(DIK_Z) && mario->GetLevel() == MARIO_LEVEL_RACCOON) {
 			isSlow = false;

@@ -3,6 +3,8 @@
 #include "game.h"
 #include "PlayerRunningState.h"
 #include "debug.h"
+#include "AnimationDatabase.h"
+#include "PlayerWalkingState.h"
 
 PlayerState* PlayerSkiddingState::__instance = NULL;
 PlayerSkiddingState::PlayerSkiddingState()
@@ -40,9 +42,22 @@ void PlayerSkiddingState::Update(int dt)
 	Mario* mario = Mario::GetInstance();
 	mario->vx += (dt * marioSkiddingAcceleration * -(mario->nx));
 	float check = mario->speedLast - abs(mario->vx);
-	if ( check >= MARIO_RUNNING_MAX_SPEED * 0.1429 * 2 || mario->vx * mario->nx <= 0) {
-		PlayerRunningState::lastStateIsSkidding = true;
-		mario->ChangeState(PlayerRunningState::GetInstance());
+	if (mario->GetIsRunning()) {
+		if (check >= MARIO_RUNNING_MAX_SPEED * 0.1429 * 2 || mario->vx * mario->nx <= 0) {
+			PlayerRunningState::lastStateIsSkidding = true;
+			mario->ChangeState(PlayerRunningState::GetInstance());
+		}
+	}
+	else {
+		Game* game = Game::GetInstance();
+		AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
+		LPANIMATION animation = animationDatabase->Get(animationID);
+		bool isLastFrame = animation->GetIsLastFrame();
+		if (isLastFrame) {
+			animation->ResetAnimation();
+			PlayerWalkingState::isSkidding = false;
+			mario->ChangeState(PlayerWalkingState::GetInstance());
+		}
 	}
 	/*if ((mario->vx * mario->nx) <= 0) {
 		PlayerRunningState::lastStateIsSkidding = true;
