@@ -6,6 +6,7 @@
 #include "debug.h"
 #include "PlayerSpinningState.h"
 #include "PlayerFallingSlowlyState.h"
+#include "PlayerThrowingFireballState.h"
 
 PlayerHighJumpingState::PlayerHighJumpingState()
 {
@@ -120,8 +121,14 @@ void PlayerHighJumpingState::OnKeyDown(int KeyCode)
 	{
 
 	case DIK_A: {
-		if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
+		if (mario->GetLevel() == MARIO_LEVEL_RACCOON) {
+			stopIncreasingSpeed = false;
 			mario->ChangeState(PlayerSpinningState::GetInstance());
+		}
+		else if (mario->GetLevel() == MARIO_LEVEL_FIRE){
+			stopIncreasingSpeed = false;
+			mario->ChangeState(PlayerThrowingFireballState::GetInstance()); 
+		}
 		break;
 	}
 	default:

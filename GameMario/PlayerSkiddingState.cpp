@@ -55,7 +55,7 @@ void PlayerSkiddingState::Update(int dt)
 		bool isLastFrame = animation->GetIsLastFrame();
 		if (isLastFrame) {
 			animation->ResetAnimation();
-			PlayerWalkingState::isSkidding = false;
+			mario->nx = -mario->nx;
 			mario->ChangeState(PlayerWalkingState::GetInstance());
 		}
 	}

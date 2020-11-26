@@ -1,4 +1,5 @@
 #include "PlayerSpinningState.h"
+#include "PlayerFallingSlowlyState.h"
 
 PlayerState* PlayerSpinningState::__instance = NULL;
 GameObject* PlayerSpinningState::tailFront = NULL;
@@ -87,6 +88,10 @@ void PlayerSpinningState::KeyState(BYTE* states)
 		if(game->IsKeyDown(DIK_A))
 			mario->ChangeState(PlayerRunningState::GetInstance());
 		else if (mario->vy > 0) {
+			if (mario->GetLevel() == MARIO_LEVEL_RACCOON) {
+				mario->ChangeState(PlayerFallingSlowlyState::GetInstance());
+				return;
+			}
 			mario->ChangeState(PlayerFallingState::GetInstance());
 		}
 		else
