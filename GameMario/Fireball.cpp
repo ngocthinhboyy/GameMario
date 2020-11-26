@@ -30,27 +30,51 @@ Fireball::Fireball(float x, float y, float w, float h, int type)
 	this->type = type;
 	this->gameObjectID = idGenerate++;
 	this->vx = Mario::GetInstance()->nx * FIREBALL_ROLLING_SPEED_X;
+}
+
+void Fireball::SetAnimation()
+{
 	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
-	animation = animationDatabase->Get(FIREBALL_ANI_ROLLING);
+	if (isDie)
+		animation = animationDatabase->Get(FIREBALL_ANI_DIE_EFFECT);
+	else
+		animation = animationDatabase->Get(FIREBALL_ANI_ROLLING);
 }
 
 void Fireball::Render()
 {
 	int alpha = 255;
 	D3DXVECTOR2 scale;
+	SetAnimation();
 	if (nx < 1)
 		scale = D3DXVECTOR2(RATIO_X_FLIP_SCALE, RATIO_Y_SCALE);
 	else
 		scale = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_SCALE);
 	if (animation != NULL) {
-		animation->Render(x, y, alpha, scale);
+		if(!isDie || type == 2)
+			animation->Render(x, y, alpha, scale);
+		else {
+			scale = D3DXVECTOR2(1, 1);
+			animation->Render(x - 20, y, alpha, scale, -6);
+			bool isLastFrame = animation->GetIsLastFrame();
+			if (isLastFrame) {
+				animation->ResetAnimation();
+				isDie = true;
+				stillAlive = false;
+				PlayerThrowingFireballState::decreaseQuantityOneValue();
+			}
+		}
 	}
 
-	RenderBoundingBox();
+//	RenderBoundingBox();
 }
 
 void Fireball::Update(DWORD dt)
 {
+
+
+	if (isDie)
+		return;
 	if (type == 1) {
 		vy += FIREBALL_GRAVITY * dt * 2;
 	}
@@ -64,6 +88,9 @@ void Fireball::Update(DWORD dt)
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
+	
+	if (type == 1 && IsOverlapWithEnemy(coEnemies))
+		return;
 
 	coEvents.clear();
 	CalcPotentialCollisions(&coObjects, coEvents);
@@ -103,8 +130,7 @@ void Fireball::Update(DWORD dt)
 					CollisionWithOneCollisionMapObject(e, collMapObj);
 				}
 				else if (LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
-					stillAlive = false;
-					PlayerThrowingFireballState::decreaseQuantityOneValue();
+					isDie = true;
 					if (dynamic_cast<Koopa*> (enemy))
 						enemy->SetState(ENEMY_STATE_DIE);
 					if (enemy->x > Mario::GetInstance()->x) {
@@ -119,8 +145,7 @@ void Fireball::Update(DWORD dt)
 				else {
 					if (e->nx != 0) {
 						vx = 0;
-						stillAlive = false;
-						PlayerThrowingFireballState::decreaseQuantityOneValue();
+						isDie = true;
 					}
 					if (e->ny != 0 && e->nx == 0) {
 						vy = -FIREBALL_ROLLING_SPEED_Y;
@@ -133,37 +158,6 @@ void Fireball::Update(DWORD dt)
 			}
 		}
 		else if (type == 2) {
-			/*for (UINT i = 0; i < coEventsSize; i++)
-			{
-				LPCOLLISIONEVENT e = coEventsResult[i];
-				if (Mario * mario = dynamic_cast<Mario*> (e->obj)) {
-					if (mario->GetLevel() >= 2) {
-						mario->StartUntouchable();
-						mario->ChangeState(PlayerLevelDownTransformState::GetInstance());
-						vy = 0;
-					}
-					for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-					x += dx;
-					y += dy;
-					Camera* camera = Camera::GetInstance();
-					float cam_x, cam_y;
-					camera->GetCamPos(cam_x, cam_y);
-					if (x < cam_x || x > cam_x + SCREEN_WIDTH || y < cam_y || y > cam_y + SCREEN_HEIGHT)
-						stillAlive = false;
-					return;
-				}
-
-			}
-			Mario* mario = Mario::GetInstance();
-			if (!mario->GetUntouchable()) {
-				if (IsOverlapBoundingBoxWithMario()) {
-					if (mario->GetLevel() >= 2) {
-						mario->StartUntouchable();
-						mario->ChangeState(PlayerLevelDownTransformState::GetInstance());
-						vy = 0;
-					}
-				}
-			}*/
 			x += dx;
 			y += dy;
 			Camera* camera = Camera::GetInstance();
@@ -203,6 +197,41 @@ bool Fireball::IsOverlapBoundingBoxWithMario()
 	return false;
 }
 
+bool Fireball::IsOverlapWithEnemy(vector<LPGAMEOBJECT> enemies)
+{
+	for (LPGAMEOBJECT x : enemies) {
+		if (x->stillAlive) {
+			float leftBBEnemy, rightBBEnemy, topBBEnemy, bottomBBEnemy = .0f;
+			float leftBBFireball, rightBBFireball, topBBFireball, bottomBBFireball = .0f;
+			x->GetBoundingBox(leftBBEnemy, topBBEnemy, rightBBEnemy, bottomBBEnemy);
+			GetBoundingBox(leftBBFireball, topBBFireball, rightBBFireball, bottomBBFireball);
+			float widthEnemy = rightBBEnemy - leftBBEnemy;
+			float heightEnemy = bottomBBEnemy - topBBEnemy;
+			float widthFireball = rightBBFireball - leftBBFireball;
+			float heightFireball = bottomBBFireball - topBBFireball;
+
+			if ((leftBBEnemy + widthEnemy >= leftBBFireball) && (leftBBFireball + widthFireball >= leftBBEnemy) && (topBBEnemy + heightEnemy >= topBBFireball) && (topBBFireball + heightFireball >= topBBEnemy)) {
+				LPENEMY enemy = dynamic_cast<LPENEMY> (x);
+				if (enemy != NULL) {
+					isDie = true;
+					if (dynamic_cast<Koopa*> (enemy))
+						enemy->SetState(ENEMY_STATE_DIE);
+					if (enemy->x > Mario::GetInstance()->x) {
+						enemy->vx = ENEMY_DIE_SPEED_X;
+					}
+					else {
+						enemy->vx = -ENEMY_DIE_SPEED_X;
+					}
+					enemy->vy = -ENEMY_DIE_SPEED_Y;
+					enemy->SetIsUpsideDown(true);
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}
+
 void Fireball::CollisionWithOneCollisionMapObject(LPCOLLISIONEVENT collisionEvent, CollisionMapObject* collisionMapObject)
 {
 	int collisionMapObjectDirectionX = collisionMapObject->GetCollisionDirectionX();
@@ -215,8 +244,7 @@ void Fireball::CollisionWithOneCollisionMapObject(LPCOLLISIONEVENT collisionEven
 		else if (collisionEvent->nx > 0 && collisionMapObjectDirectionX == -1)
 			x += dx;
 		else {
-			stillAlive = false;
-			PlayerThrowingFireballState::decreaseQuantityOneValue();
+			isDie = true;
 			vx = 0;
 		}
 	}

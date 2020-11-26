@@ -247,7 +247,7 @@ void Mario::Render()
 		scale = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_SCALE);
 	if(ani != NULL)
 		ani->Render(x, y, alpha, scale,offset);
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 //void Mario::SetState(int state)

@@ -2,8 +2,8 @@
 #include "PlayerFallingSlowlyState.h"
 
 PlayerState* PlayerSpinningState::__instance = NULL;
-GameObject* PlayerSpinningState::tailFront = NULL;
-GameObject* PlayerSpinningState::tailBack = NULL;
+Tail* PlayerSpinningState::tailFront = NULL;
+Tail* PlayerSpinningState::tailBack = NULL;
 int PlayerSpinningState::offset = 0;
 PlayerSpinningState::PlayerSpinningState()
 {
@@ -119,6 +119,8 @@ PlayerState* PlayerSpinningState::GetInstance()
 	else if(tailFront !=NULL && tailBack !=NULL) {
 		tailFront->SetPosition(mario->x + MARIO_BIG_BBOX_WIDTH, mario->y + MARIO_BIG_BBOX_HEIGHT / 2);
 		tailBack->SetPosition(mario->x - 27, mario->y + MARIO_BIG_BBOX_HEIGHT / 2);
+		tailFront->SetHasEffect(false);
+		tailBack->SetHasEffect(false);
 
 		tailFront->stillAlive = false;
 		tailBack->stillAlive = false;

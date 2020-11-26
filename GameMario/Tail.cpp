@@ -5,6 +5,7 @@
 #include "PlayScene.h"
 #include "EnemyDefine.h"
 #include "debug.h"
+#include "AnimationDatabase.h"
 
 Tail::Tail()
 {
@@ -22,6 +23,12 @@ Tail::Tail(float x, float y, float w, float h)
 void Tail::Render()
 {
 	//RenderBoundingBox();
+	if (hasEffect) {
+		AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
+		D3DXVECTOR2 scale = D3DXVECTOR2(3, 3);
+		animation = animationDatabase->Get(2201);
+		animation->Render(x + 10, y, 255, scale);
+	}
 }
 
 void Tail::Update(DWORD dt)
@@ -60,6 +67,7 @@ void Tail::CheckOverlapBoundingBox(vector<LPGAMEOBJECT> enemies)
 		if ((leftBBEnemy + widthEnemy >= leftBBTail) && (leftBBTail + widthTail >= leftBBEnemy) && (topBBEnemy + heightEnemy >= topBBTail) && (topBBTail + heightTail >= topBBEnemy)) {
 			LPENEMY enemy = dynamic_cast<LPENEMY> (x);
 			if (enemy != NULL) {
+				hasEffect = true;
 				if (dynamic_cast<Koopa*> (enemy))
 					enemy->SetState(ENEMY_STATE_DIE);
 				enemy->vx = ENEMY_DIE_SPEED_X;

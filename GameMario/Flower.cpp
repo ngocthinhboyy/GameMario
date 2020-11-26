@@ -73,7 +73,7 @@ void Flower::Render()
 		animation = animationDatabase->Get(2101);
 		animation->Render(1056, 1104, 255, scalePipe);
 	}
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void Flower::Update(DWORD dt)

@@ -89,7 +89,7 @@ void Goomba::Render()
 	if (animation != NULL) {
 		animation->Render(x, y, alpha, scale);
 	}
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void Goomba::Update(DWORD dt)

@@ -51,7 +51,7 @@ void PlayerThrowingFireballState::KeyState(BYTE* states)
 	if (isLastFrame) {
 		if (now - lastThrowingTime < FIREBALL_TIME_LIMIT_TO_THROWING && quantityFireball < FIREBALL_MAX_QUANTITY) {
 			PlayScene* scene = dynamic_cast<PlayScene*> (game->GetCurrentScene());
-			Fireball* fireball = new Fireball(mario->x + MARIO_BIG_BBOX_WIDTH / 2, mario->y, FIREBALL_WIDTH, FIREBALL_HEIGHT, FIREBALL_TYPE_WEAPON);
+			Fireball* fireball = new Fireball(mario->x + MARIO_BIG_BBOX_WIDTH / 2, mario->y - 10, FIREBALL_WIDTH, FIREBALL_HEIGHT, FIREBALL_TYPE_WEAPON);
 			Grid* grid = Grid::GetInstance();
 			grid->DeterminedGridToObtainObject(fireball);
 			quantityFireball++;

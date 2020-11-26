@@ -13,8 +13,8 @@
 class PlayerSpinningState : PlayerState
 {
 	static PlayerState* __instance;
-	static LPGAMEOBJECT tailFront; 
-	static LPGAMEOBJECT tailBack;
+	static Tail* tailFront; 
+	static Tail* tailBack;
 
 public:
 	static int offset;
