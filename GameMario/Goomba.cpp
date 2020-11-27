@@ -121,8 +121,9 @@ void Goomba::Update(DWORD dt)
 		float cam_x,cam_y;
 		Camera* camera = Camera::GetInstance();
 		camera->GetCamPos(cam_x, cam_y);
-		/*if (y > (cam_y + SCREEN_HEIGHT))
-			stillAlive = false;*/
+		if (y > (cam_y + SCREEN_HEIGHT) && (state == ENEMY_STATE_DIE || isUpsideDown)) {
+			stillAlive = false;
+		}
 	}
 	else
 	{
@@ -152,11 +153,8 @@ void Goomba::Update(DWORD dt)
 				isUpsideDown = true;
 			}
 			else if (LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
-				/*if (dynamic_cast<Koopa*> (enemy))
-					enemy->SetState(ENEMY_STATE_DIE);
-				vx = 0.2f;
-				vy = -0.5f;
-				stillAlive = false;*/
+				vx = -vx;
+				enemy->vx = -enemy->vx;
 			}
 			else if (QuestionBrick* brick = dynamic_cast<QuestionBrick*> (e->obj)) {
 				//DebugOut(L"AAAA %f\n", e->nx);

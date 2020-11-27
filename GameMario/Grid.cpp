@@ -204,9 +204,11 @@ void Grid::SetNewGrid(LPGAMEOBJECT object)
 		leftFocusCam++;
 
 	if (left < leftFocusCam - 1 || right > rightFocusCam + 1 || bottom > bottomFocusCam + 1) {
-		object->SetStartPosition();
-		object->SetIsAlreadyAppeared(false);
-		objectsWaitingToSetStartPosition.push_back(object);
+		if (object->stillAlive) {
+			object->SetStartPosition();
+			object->SetIsAlreadyAppeared(false);
+			objectsWaitingToSetStartPosition.push_back(object);
+		}
 	}
 	else {
 		for (int i = top; i <= bottom; i++)

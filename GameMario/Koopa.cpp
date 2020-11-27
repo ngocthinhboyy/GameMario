@@ -220,11 +220,13 @@ void Koopa::Update(DWORD dt)
 				CollisionWithCollisionMapObject(e, collMapObj);
 			}
 			else if(LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
-				if (dynamic_cast<Koopa*> (enemy))
-					enemy->SetState(ENEMY_STATE_DIE);
-				enemy->vx = ENEMY_DIE_SPEED_X;
-				enemy->vy = -ENEMY_DIE_SPEED_Y;
-				enemy->SetIsUpsideDown(true);
+				if (this->state == ENEMY_STATE_SPIN_DIE_KICK) {
+					if (dynamic_cast<Koopa*> (enemy))
+						enemy->SetState(ENEMY_STATE_DIE);
+					enemy->vx = ENEMY_DIE_SPEED_X;
+					enemy->vy = -ENEMY_DIE_SPEED_Y;
+					enemy->SetIsUpsideDown(true);
+				}
 			}
 			else if (QuestionBrick* questionBrick = dynamic_cast<QuestionBrick*> (e->obj)) {
 				if (e->ny != 0) {
