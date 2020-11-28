@@ -4,7 +4,7 @@ class Camera
 	float cam_x;
 	float cam_y;
 	static Camera* __instance;
-	bool canChangeCamY = true;
+	bool canChangeCamY = false;
 public:
 	Camera();
 	void SetCamPos(float x, float y);
