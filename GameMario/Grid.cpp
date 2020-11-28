@@ -128,10 +128,13 @@ void Grid::GetListObjectInCamera()
 	if (left < 3) {
 		left = 3;
 	}
-	if (right > 23) {
-		right = 23;
+	if (right >= 19) {
+		right = 19;
 	}
-	for (int i = top; i <= bottom + 1 ; i++)
+	if (bottom > 4)
+		bottom = 4;
+
+	for (int i = top; i <= bottom + 1; i++)
 		for (int j = left - 3 ; j <= right + 3; j++) {
 			for (int k = 0; k < cells[i][j].size(); k++) {
 				if ((cells[i][j].at(k)->x + cells[i][j].at(k)->w >= cam_x && cells[i][j].at(k)->x <= cam_x + 745) || cells[i][j].at(k)->GetIsAlreadyAppeared()) {
@@ -185,6 +188,8 @@ void Grid::SetNewGrid(LPGAMEOBJECT object)
 		leftFocusCam = leftFocusCam - 2;
 	else if (leftFocusCam > 0)
 		leftFocusCam--;
+	if (bottomFocusCam > 4)
+		bottomFocusCam = 4;
 	for (int i = topFocusCam; i <= bottomFocusCam + 1; i++)
 		for (int j = leftFocusCam; j <= rightFocusCam + 1; j++) {
 			for (int k = 0; k < cells[i][j].size(); k++) {

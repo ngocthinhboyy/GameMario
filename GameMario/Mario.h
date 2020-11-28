@@ -22,6 +22,7 @@ class Mario : public GameObject
 	bool isRunning = false;
 	bool isOnGround = true;
 	bool isSpinning = false;
+	bool isFlying = false;
 	int heart = 4;
 	int point = 0;
 	int coin = 0;
@@ -30,6 +31,7 @@ class Mario : public GameObject
 	DWORD startHideAndUnhide = 0;
 	bool isCollisionWithWall = false;
 public:
+	bool isCollisionWithPortal = false;
 	float speedLast;
 	Mario(float x = 0.0f, float y = 0.0f);
 	virtual void Update(DWORD dt);
@@ -53,6 +55,8 @@ public:
 	bool GetIsRunning() { return this->isRunning; };
 	void SetIsOnGround(bool isOnGround) { this->isOnGround = isOnGround; };
 	bool GetIsOnGround() { return this->isOnGround; };
+	void SetIsFlying(bool isFlying) { this->isFlying = isFlying; };
+	bool GetIsFlying() { return this->isFlying; };
 	void SetAlpha(int alpha) { this->alpha = alpha; };
 	int GetAlpha() { return this->alpha; };
 	void StartHideAndUnhide() { startHideAndUnhide = GetTickCount64(); };

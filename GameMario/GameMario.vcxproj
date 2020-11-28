@@ -33,6 +33,7 @@
     <ClCompile Include="Flower.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Gate.cpp" />
     <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="Item.cpp" />
@@ -62,7 +63,6 @@
     <ClCompile Include="PlayerWalkingState.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="PlaySceneKeyHandler.cpp" />
-    <ClCompile Include="Portal.cpp" />
     <ClCompile Include="QuestionBrick.cpp" />
     <ClCompile Include="ResourcesSharedLoad.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -91,6 +91,7 @@
     <ClInclude Include="Flower.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Gate.h" />
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="GraphicsDefine.h" />
     <ClInclude Include="Grid.h" />
@@ -124,7 +125,6 @@
     <ClInclude Include="PlayerWalkingState.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="PlaySceneKeyHandler.h" />
-    <ClInclude Include="Portal.h" />
     <ClInclude Include="QuestionBrick.h" />
     <ClInclude Include="ResourcesSharedLoad.h" />
     <ClInclude Include="Scene.h" />

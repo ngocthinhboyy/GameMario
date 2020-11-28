@@ -6,7 +6,6 @@
 #include "Game.h"
 
 #include "Goomba.h"
-#include "Portal.h"
 #include "PlayerCrouchingState.h"
 #include "PlayerStandingState.h"
 #include "PlayerState.h"
@@ -24,6 +23,7 @@
 #include "PlayerThrowingFireballState.h"
 #include "PlayerLevelDownTransformState.h"
 #include "PlayerSpinningState.h"
+#include "Gate.h"
 
 Mario* Mario::Mario::__instance = NULL;
 Mario* Mario::GetInstance() {
@@ -156,6 +156,14 @@ void Mario::Update(DWORD dt)
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			if (LPCOLLISIONMAPOBJECT collMapObj = dynamic_cast<LPCOLLISIONMAPOBJECT> (e->obj)) {
 				CollisionWithCollisionMapObject(e, collMapObj);
+			}
+			else if (Gate* gate = dynamic_cast<Gate*> (e->obj)) {
+				if (e->nx != 0)
+					vx = 0;
+				if (e->ny != 0) {
+					vy = 0;
+					isCollisionWithPortal = true;
+				}
 			}
 			else if (LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
 				if (untouchable) {

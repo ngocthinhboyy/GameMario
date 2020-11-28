@@ -108,9 +108,6 @@
     <ClCompile Include="Mario.cpp">
       <Filter>game\Object\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Portal.cpp">
-      <Filter>Framework\Game_Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Framework\Game_Scene\Scene</Filter>
     </ClCompile>
@@ -243,6 +240,9 @@
     <ClCompile Include="PlayerLevelDownTransformState.cpp">
       <Filter>game\Object\Player\PlayerState\EffectState</Filter>
     </ClCompile>
+    <ClCompile Include="Gate.cpp">
+      <Filter>game\Object\StaticObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -271,9 +271,6 @@
     </ClInclude>
     <ClInclude Include="Mario.h">
       <Filter>game\Object\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Portal.h">
-      <Filter>Framework\Game_Scene</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Framework\Game_Scene\Scene</Filter>
@@ -430,6 +427,9 @@
     </ClInclude>
     <ClInclude Include="PlayerLevelDownTransformState.h">
       <Filter>game\Object\Player\PlayerState\EffectState</Filter>
+    </ClInclude>
+    <ClInclude Include="Gate.h">
+      <Filter>game\Object\StaticObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

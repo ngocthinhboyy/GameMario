@@ -122,7 +122,7 @@ void Koopa::SetAnimation()
 void Koopa::Update(DWORD dt)
 {
 	if (state == ENEMY_STATE_DIE) {
-		if (GetTickCount64() - timeDie >= 5000) {
+		if (GetTickCount64() - timeDie >= 1000000) {
 			this->nx = -1;
 			this->vx = -KOOPA_WALKING_SPEED_X;
 			this->isUpsideDown = false;

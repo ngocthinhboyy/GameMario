@@ -129,6 +129,9 @@ void PlayerStandingState::KeyState(BYTE* states) {
 			mario->ChangeState(PlayerWalkingState::GetInstance());
 	}
 	else if (game->IsKeyDown(DIK_DOWN)) {
+		/*if (mario->isCollisionWithPortal) {
+			mario->x = 
+		}*/
 		if (mario->GetLevel() != MARIO_LEVEL_SMALL) {
 			mario->y += MARIO_DEVIATION_CROUCHING_Y;
 			mario->ChangeState(PlayerCrouchingState::GetInstance());

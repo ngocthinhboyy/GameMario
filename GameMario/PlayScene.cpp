@@ -5,7 +5,7 @@
 #include "debug.h"
 #include "Textures.h"
 #include "SpriteManager.h"
-#include "Portal.h"
+#include "Gate.h"
 #include "PlaySceneKeyHandler.h"
 #include "AnimationManager.h"
 #include "AnimationDatabase.h"
@@ -110,8 +110,6 @@ void PlayScene::_ParseSection_OBJECTS_NOT_IN_GRID(string line)
 		DebugOut(L"[INFO] Player object created!\n");
 		break;
 	}
-	case OBJECT_TYPE_PORTAL:
-		break;
 	case OBJECT_TYPE_COLLISION_MAP: {
 		int collisionDirectionX = atoi(tokens[6].c_str());
 		int collisionDirectionY = atoi(tokens[7].c_str());
@@ -121,6 +119,18 @@ void PlayScene::_ParseSection_OBJECTS_NOT_IN_GRID(string line)
 		ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
+		collisionMapObjects.push_back(obj);
+		break;
+	}
+	case OBJECT_TYPE_PORTAL: {
+		int type = atoi(tokens[6].c_str());
+		float cam_x = atof(tokens[7].c_str());
+		float cam_y = atof(tokens[8].c_str());
+		float newPositionMario = atof(tokens[9].c_str());
+		int wayDirectionX = atoi(tokens[10].c_str());
+		obj = new Gate(x, y, w, h, type, cam_x, cam_y, newPositionMario, wayDirectionX);
+		obj->SetAnimationSet(ani_set);
+		//DebugOut(L"tttttttttt \n");
 		collisionMapObjects.push_back(obj);
 		break;
 	}
@@ -258,24 +268,9 @@ void PlayScene::Update(DWORD dt)
 	board->UpdateBoardGame();
 	// Update camera to follow mario
 	float cx, cy;
-	player->GetPosition(cx, cy);
-
-	Game* game = Game::GetInstance();
-	if (cx < (game->GetScreenWidth() / 2)) {
-		cx = 0.0f;
-		//cy = CAM_Y_DRAW_MAP;
-	}
-	else
-	{
-		if (cx + game->GetScreenWidth() / 2 < 8448) {
-			cx -= game->GetScreenWidth() / 2;
-		}
-		else {
-			cx = 8448 - game->GetScreenWidth();
-		}
-
-	}
-	Camera::GetInstance()->SetCamPos(cx, CAM_Y_DRAW_MAP);
+	Camera::GetInstance()->UpdateCamPos();
+	Camera::GetInstance()->GetCamPos(cx, cy);
+	Camera::GetInstance()->SetCamPos(cx, cy);
 }
 
 void PlayScene::Render()

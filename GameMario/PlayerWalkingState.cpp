@@ -10,6 +10,7 @@
 #include "PlayerThrowingFireballState.h"
 #include "PlayerCrouchingState.h"
 #include "PlayerSkiddingState.h"
+#include "PlayerFallingSlowlyState.h"
 
 
 PlayerState* PlayerWalkingState::__instance = NULL;
@@ -79,7 +80,7 @@ void PlayerWalkingState::Update(int dt)
 		isSlow = false;
 		mario->SetIsCrouching(false);
 		if (mario->GetLevel() == MARIO_LEVEL_RACCOON) {
-			mario->ChangeState(PlayerFallingState::GetInstance());
+			mario->ChangeState(PlayerFallingSlowlyState::GetInstance());
 			return;
 		}
 		mario->ChangeState(PlayerFallingState::GetInstance());
@@ -122,9 +123,6 @@ void PlayerWalkingState::OnKeyDown(int KeyCode) {
 		default:
 			break;
 	}
-}
-void PlayerWalkingState::OnKeyUp(int KeyCode)
-{
 }
 void PlayerWalkingState::KeyState(BYTE* states) {
 	Mario* mario = Mario::GetInstance();

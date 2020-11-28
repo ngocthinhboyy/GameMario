@@ -176,7 +176,7 @@ void BoardGame::RenderBoardGame()
 	// cam y = -38 692
 	panelBoardGame.x = cam_x;
 	panelBoardGame.y = cam_y + Game::GetInstance()->GetScreenHeight() - 116;
-	panelBoardGame.h = 116;
+	panelBoardGame.h = 118;
 	panelBoardGame.w = Game::GetInstance()->GetScreenWidth();
 	D3DXVECTOR3 p(panelBoardGame.x - cam_x, panelBoardGame.y - cam_y, 0);
 	RECT rect;
@@ -207,6 +207,16 @@ void BoardGame::SetWorldInBoardGame(int world)
 }
 void BoardGame::SetSpeedInBoardGame(float speed)
 {
+	if (Mario::GetInstance()->GetIsFlying()) {
+		componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_1)->idFontRender = GetFontNumber(42);
+		componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_2)->idFontRender = GetFontNumber(42);
+		componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_3)->idFontRender = GetFontNumber(42);
+		componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_4)->idFontRender = GetFontNumber(42);
+		componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_5)->idFontRender = GetFontNumber(42);
+		componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_6)->idFontRender = GetFontNumber(42);
+		componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_MAX)->idFontRender = GetFontNumber(44);
+		return;
+	}
 	if (Mario::GetInstance()->GetIsRunning()) {
 		if (speed >= SPEED_LEVEL_MAX) {
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_1)->idFontRender = GetFontNumber(42);
