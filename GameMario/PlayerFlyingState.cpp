@@ -44,7 +44,7 @@ void PlayerFlyingState::Update(int dt)
 {
 	Mario* mario = Mario::GetInstance();
 	if (mario->GetLevel() == MARIO_LEVEL_RACCOON) {
-		if (GetTickCount64() - timeStartFlying >= 4000) {
+		if (GetTickCount64() - timeStartFlying >= 10000) {
 			stopIncreasingSpeed = false;
 			mario->SetIsFlying(false);
 			mario->ChangeState(PlayerFallingSlowlyState::GetInstance());
@@ -106,7 +106,7 @@ void PlayerFlyingState::OnKeyDown(int KeyCode)
 		if (mario->GetLevel() == MARIO_LEVEL_RACCOON) {
 			stopIncreasingSpeed = true;
 			DWORD now = GetTickCount64();
-			if (now - timeStartFlying < 4000) {
+			if (now - timeStartFlying < 10000) {
 				mario->vy += -0.4f;
 			}
 		}

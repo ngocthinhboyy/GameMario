@@ -51,13 +51,13 @@ void PlayerFallingSlowlyState::KeyState(BYTE* states)
 		if(mario->vy > 0 && now-timePress < 250)
 			mario->vy += -mario->vy * 0.4f;
 	}
-	if (game->IsKeyDown(DIK_DOWN)) {
+	/*if (game->IsKeyDown(DIK_DOWN)) {
 		if (mario->vy == 0) {
 			mario->vx = 0;
 			mario->ChangeState(PlayerCrouchingState::GetInstance());
 			return;
 		}
-	}
+	}*/
 	if (game->IsKeyDown(DIK_RIGHT)) {
 		if (mario->vx < 0)
 			mario->vx = -mario->vx;
@@ -103,6 +103,7 @@ void PlayerFallingSlowlyState::OnKeyUp(int KeyCode)
 PlayerState* PlayerFallingSlowlyState::GetInstance()
 {
 	if (__instance == NULL) __instance = new PlayerFallingSlowlyState();
+	Mario::GetInstance()->SetCanGoDownIntoGate(false);
 	SetAnimation();
 	return __instance;
 }

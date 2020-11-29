@@ -243,6 +243,9 @@
     <ClCompile Include="Gate.cpp">
       <Filter>game\Object\StaticObject</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerMovingDownAndUpState.cpp">
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -430,6 +433,9 @@
     </ClInclude>
     <ClInclude Include="Gate.h">
       <Filter>game\Object\StaticObject</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMovingDownAndUpState.h">
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

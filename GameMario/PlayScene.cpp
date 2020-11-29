@@ -122,18 +122,6 @@ void PlayScene::_ParseSection_OBJECTS_NOT_IN_GRID(string line)
 		collisionMapObjects.push_back(obj);
 		break;
 	}
-	case OBJECT_TYPE_PORTAL: {
-		int type = atoi(tokens[6].c_str());
-		float cam_x = atof(tokens[7].c_str());
-		float cam_y = atof(tokens[8].c_str());
-		float newPositionMario = atof(tokens[9].c_str());
-		int wayDirectionX = atoi(tokens[10].c_str());
-		obj = new Gate(x, y, w, h, type, cam_x, cam_y, newPositionMario, wayDirectionX);
-		obj->SetAnimationSet(ani_set);
-		//DebugOut(L"tttttttttt \n");
-		collisionMapObjects.push_back(obj);
-		break;
-	}
 	default:
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
 		return;
@@ -278,9 +266,6 @@ void PlayScene::Render()
 	MapManager* mapManager = MapManager::GetInstance();
 	mapManager->RenderMap(mapID);
 
-	for (int i = 0; i < objects.size(); i++) {
-		objects[i]->Render();
-	}
 	//DebugOut(L"SIZEEEE %d\n", objects.size());
 	//DebugOut(L"ENEMI %d\n", enemies.size());
 	for (int i = 0; i < enemies.size(); i++) {
@@ -292,6 +277,9 @@ void PlayScene::Render()
 	}
 
 	player->Render();
+	for (int i = 0; i < objects.size(); i++) {
+		objects[i]->Render();
+	}
 	BoardGame* board = BoardGame::GetInstance();
 	board->RenderBoardGame();
 }

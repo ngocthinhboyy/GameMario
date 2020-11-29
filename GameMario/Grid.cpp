@@ -10,6 +10,7 @@
 #include "QuestionBrick.h"
 #include "Flower.h"
 #include "Coin.h"
+#include "Gate.h"
 
 Grid* Grid::__instance = NULL;
 void Grid::LoadObjectInSceneAddToGrid(string line)
@@ -90,6 +91,20 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 
 		obj->SetPosition(x, y);
 		ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
+		DeterminedGridToObtainObject(obj);
+		break;
+	}
+	case OBJECT_TYPE_GATE: {
+		int type = atoi(tokens[6].c_str());
+		float cam_x = atof(tokens[7].c_str());
+		float cam_y = atof(tokens[8].c_str());
+		float newPositionXMario = atof(tokens[9].c_str());
+		float newPositionYMario = atof(tokens[10].c_str());
+		int wayDirectionY = atoi(tokens[11].c_str());
+		obj = new Gate(x, y, w, h, type, cam_x, cam_y, newPositionXMario, newPositionYMario, wayDirectionY);
+		obj->SetPosition(x, y);
 
 		obj->SetAnimationSet(ani_set);
 		DeterminedGridToObtainObject(obj);

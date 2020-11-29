@@ -24,6 +24,7 @@
 #include "PlayerLevelDownTransformState.h"
 #include "PlayerSpinningState.h"
 #include "Gate.h"
+#include "PlayerMovingDownAndUpState.h"
 
 Mario* Mario::Mario::__instance = NULL;
 Mario* Mario::GetInstance() {
@@ -121,9 +122,9 @@ void Mario::Update(DWORD dt)
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
 	coEvents.clear();
-	CalcPotentialCollisions(&coEnemies, coEvents);
-	CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
-	CalcPotentialCollisions(&coObjects, coEvents);
+		CalcPotentialCollisions(&coEnemies, coEvents);
+		CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
+		CalcPotentialCollisions(&coObjects, coEvents);
 
 	if (GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME)
 	{
@@ -158,20 +159,13 @@ void Mario::Update(DWORD dt)
 				CollisionWithCollisionMapObject(e, collMapObj);
 			}
 			else if (Gate* gate = dynamic_cast<Gate*> (e->obj)) {
-				if (e->nx != 0)
-					vx = 0;
-				if (e->ny != 0) {
-					vy = 0;
-					isCollisionWithPortal = true;
-				}
+				gate->CollisionWithPlayer(e);
 			}
 			else if (LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
 				if (untouchable) {
 					if (e->nx != 0)
-						//x -= min_tx * dx + nx * 0.4f;
 						x += dx;
 					if (e->ny != 0)
-						//y -= min_ty * dy + ny * 0.4f;
 						y += dy;
 				}
 				else {
@@ -185,7 +179,6 @@ void Mario::Update(DWORD dt)
 				if (e->nx != 0) {
 					PlayerRunningState::lastStateIsSkidding = true;
 					Mario* mario = Mario::GetInstance();
-					isCollisionWithWall = true;
 					vx += (dt * MARIO_SPEED_ACCELERATION * 3.5 * -this->nx);
 				}
 				else

@@ -215,6 +215,8 @@ void Goomba::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LP
 
 void Goomba::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 {
+	if (state == ENEMY_STATE_DIE || isUpsideDown)
+		return;
 	Mario* mario = Mario::GetInstance();
 	if (collisionEvent->nx != 0) {
 		mario->vx = 0;

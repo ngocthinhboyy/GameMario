@@ -11,6 +11,7 @@
 #include "PlayerSpinningState.h"
 #include "PlayerThrowingFireballState.h"
 #include "PlayerBonusTransformState.h"
+#include "PlayerMovingDownAndUpState.h"
 
 
 PlayerState* PlayerStandingState::__instance = NULL;
@@ -86,11 +87,13 @@ void PlayerStandingState::OnKeyDown(int KeyCode) {
 			mario->ChangeState(PlayerHighJumpingState::GetInstance());
 		break;
 	case DIK_DOWN:
-	{
-		if (mario->GetLevel() != MARIO_LEVEL_SMALL) {
-			mario->y += MARIO_DEVIATION_CROUCHING_Y;
-			mario->ChangeState(PlayerCrouchingState::GetInstance());
-		}
+	{		if (mario->GetCanGoDownIntoGate()) {
+				mario->ChangeState(PlayerMovingDownAndUpState::GetInstance());
+			}
+			else if (mario->GetLevel() != MARIO_LEVEL_SMALL) {
+				mario->y += MARIO_DEVIATION_CROUCHING_Y;
+				mario->ChangeState(PlayerCrouchingState::GetInstance());
+			}
 		break;
 	}
 	case DIK_A: {
@@ -129,10 +132,11 @@ void PlayerStandingState::KeyState(BYTE* states) {
 			mario->ChangeState(PlayerWalkingState::GetInstance());
 	}
 	else if (game->IsKeyDown(DIK_DOWN)) {
-		/*if (mario->isCollisionWithPortal) {
-			mario->x = 
-		}*/
-		if (mario->GetLevel() != MARIO_LEVEL_SMALL) {
+		if (mario->GetCanGoDownIntoGate()) {
+			mario->ChangeState(PlayerMovingDownAndUpState::GetInstance());
+			return;
+		}
+		else if (mario->GetLevel() != MARIO_LEVEL_SMALL) {
 			mario->y += MARIO_DEVIATION_CROUCHING_Y;
 			mario->ChangeState(PlayerCrouchingState::GetInstance());
 			return;

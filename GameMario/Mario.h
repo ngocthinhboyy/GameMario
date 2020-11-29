@@ -29,15 +29,25 @@ class Mario : public GameObject
 	int alpha = 255;
 	int offset = 0;
 	DWORD startHideAndUnhide = 0;
-	bool isCollisionWithWall = false;
+
+	bool canGoDownIntoGate = false;
+	bool canGoUpIntoGate = false;
+	bool isMovingIntoGate = false;
 public:
-	bool isCollisionWithPortal = false;
 	float speedLast;
 	Mario(float x = 0.0f, float y = 0.0f);
 	virtual void Update(DWORD dt);
 	virtual void Render();
 
-	bool GetIsCollisionWithWall() { return this->isCollisionWithWall; };
+	bool GetCanGoDownIntoGate() { return this->canGoDownIntoGate; };
+	void SetCanGoDownIntoGate(bool canGoDownIntoGate) { this->canGoDownIntoGate = canGoDownIntoGate; };
+	bool GetCanGoUpIntoGate() { return this->canGoUpIntoGate; };
+	void SetCanGoUpIntoGate(bool canGoUpIntoGate) { this->canGoUpIntoGate = canGoUpIntoGate; };
+
+	bool GetIsMovingIntoGate() { return this->isMovingIntoGate; };
+	void SetIsMovingIntoGate(bool isMovingIntoGate) { this->isMovingIntoGate = isMovingIntoGate; };
+
+
 	//void SetState(int state);
 	void SetLevel(int level) { this->level = level; }
 	void StartUntouchable() { untouchable = true; untouchable_start = GetTickCount64(); }

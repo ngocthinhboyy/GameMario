@@ -223,7 +223,12 @@ void Koopa::Update(DWORD dt)
 				if (this->state == ENEMY_STATE_SPIN_DIE_KICK) {
 					if (dynamic_cast<Koopa*> (enemy))
 						enemy->SetState(ENEMY_STATE_DIE);
-					enemy->vx = ENEMY_DIE_SPEED_X;
+					if (e->nx > 0) {
+						enemy->vx = -ENEMY_DIE_SPEED_X;
+					}
+					else {
+						enemy->vx = ENEMY_DIE_SPEED_X;
+					}
 					enemy->vy = -ENEMY_DIE_SPEED_Y;
 					enemy->SetIsUpsideDown(true);
 				}

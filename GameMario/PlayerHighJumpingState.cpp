@@ -7,6 +7,7 @@
 #include "PlayerSpinningState.h"
 #include "PlayerFallingSlowlyState.h"
 #include "PlayerThrowingFireballState.h"
+#include "PlayerMovingDownAndUpState.h"
 
 PlayerHighJumpingState::PlayerHighJumpingState()
 {
@@ -111,6 +112,12 @@ void PlayerHighJumpingState::KeyState(BYTE* states)
 			mario->vx = -0.3 * (mario->vx);
 		}
 		mario->nx = -1;
+	}
+	if (game->IsKeyDown(DIK_UP)) {
+		if (mario->GetCanGoUpIntoGate()) {
+			stopIncreasingSpeed = false;
+			mario->ChangeState(PlayerMovingDownAndUpState::GetInstance());
+		}
 	}
 }
 

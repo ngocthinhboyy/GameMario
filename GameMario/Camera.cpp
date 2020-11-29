@@ -74,8 +74,15 @@ void Camera::UpdateCamPos()
 			canChangeCamY = false;
 		}
 	}
+	//else if()
 	else {
-		cy = CAM_Y_DRAW_MAP;
+		if (cy > 1300) {
+			cy = 1392;
+		}
+		else {
+			cy = CAM_Y_DRAW_MAP;
+		}
+		canChangeCamY = false;
 	}
 	this->cam_x = cx;
 	this->cam_y = cy;
