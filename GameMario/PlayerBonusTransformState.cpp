@@ -40,7 +40,12 @@ void PlayerBonusTransformState::KeyState(BYTE* states)
 	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
 	LPANIMATION animation = animationDatabase->Get(animationID);
 	bool isLastFrame = animation->GetIsLastFrame();
-
+	/*if (mario->GetLevel() == MARIO_LEVEL_SMALL) {
+		DWORD now = GetTickCount64();
+		if (now - startTransform >= 500) {
+			mario->y -= 12;
+		}
+	}*/
 	if (isLastFrame) {
 		animation->ResetAnimation();
 		mario->SetLevel(mario->GetLevel() + 1);
@@ -48,10 +53,12 @@ void PlayerBonusTransformState::KeyState(BYTE* states)
 	}
 }
 
+DWORD PlayerBonusTransformState::startTransform = 0;
 PlayerState* PlayerBonusTransformState::GetInstance()
 {
 	if (__instance == NULL) __instance = new PlayerBonusTransformState();
 	SetAnimation();
+	startTransform = GetTickCount64();
 	return __instance;
 }
 

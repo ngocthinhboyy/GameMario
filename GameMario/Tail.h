@@ -12,6 +12,6 @@ public:
 	void Update(DWORD dt);
 	void SetHasEffect(bool hasEffect) { this->hasEffect = hasEffect; };
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
-	void CheckOverlapBoundingBox(vector<LPGAMEOBJECT> enemies);
+	void CheckOverlapBoundingBox(vector<LPGAMEOBJECT> objects);
 	void RenderBoundingBox();
 };

@@ -173,7 +173,9 @@ void Mario::Update(DWORD dt)
 				}
 			}
 			else if (LPITEM item = dynamic_cast<LPITEM> (e->obj)) {
-				item->CollisionWithPlayer(e);
+				if (item->stillAlive) {
+					item->CollisionWithPlayer(e);
+				}
 			}
 			else if (QuestionBrick* questionBrick = dynamic_cast<QuestionBrick*> (e->obj)) {
 				if (e->nx != 0) {
@@ -212,6 +214,8 @@ void Mario::Update(DWORD dt)
 				}
 			}*/
 		}
+		if (x <= 0)
+			x = 0;
 	}
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];

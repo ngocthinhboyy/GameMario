@@ -4,6 +4,7 @@ class PlayerBonusTransformState : PlayerState
 {
 	static PlayerState* __instance;
 	bool isSlow = false;
+	static DWORD startTransform;
 public:
 	PlayerBonusTransformState();
 	static void SetAnimation();
