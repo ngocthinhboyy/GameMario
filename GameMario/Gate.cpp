@@ -49,14 +49,17 @@ void Gate::Update(DWORD dt)
 			if (wayDirectionY < 0) {
 				if (mario->y > y) {
 					Camera::GetInstance()->SetCamPos(cam_x, cam_y);
+					Camera::GetInstance()->SetLockCamY(false);
 					mario->x = newPostitionXMario;
 					mario->y = newPostitionYMario;
+
 					isUsingThisGate = false;
 				}
 			}
 			else if (wayDirectionY > 0) {
 				if (mario->y < y) {
 					Camera::GetInstance()->SetCamPos(cam_x, cam_y);
+					Camera::GetInstance()->SetLockCamY(false);
 					mario->x = newPostitionXMario;
 					mario->y = newPostitionYMario;
 					isUsingThisGate = false;

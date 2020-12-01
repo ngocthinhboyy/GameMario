@@ -138,6 +138,8 @@ void Mario::Update(DWORD dt)
 		y += dy;
 		if (x <= 0)
 			x = 0;
+		if (x >= 8415)
+			x = 8415;
 	}
 	else
 	{
@@ -216,6 +218,8 @@ void Mario::Update(DWORD dt)
 		}
 		if (x <= 0)
 			x = 0;
+		if (x >= 8415)
+			x = 8415;
 	}
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];

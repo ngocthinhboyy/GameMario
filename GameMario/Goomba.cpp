@@ -27,7 +27,12 @@ Goomba::Goomba(float x, float y, float w, float h, int type)
 	this->startPositionY = y;
 	this->vx = -GOOMBA_WALKING_SPEED;
 	this->type = type;
-	SetState(ENEMY_STATE_WALKING);
+	if (type == 1)
+		SetState(ENEMY_STATE_WALKING);
+	else if (type == 2) {
+		timeWalkingType2 = GetTickCount64();
+		SetState(ENEMY_STATE_WALKING_WITH_SWINGS);
+	}
 	
 }
 
@@ -69,6 +74,16 @@ void Goomba::SetAnimation()
 				animation = animationDatabase->Get(GOOMBA_RED_ANI_WALKING_WITH_SWINGS);
 				break;
 			}
+			case RED_GOOMBA_STATE_JUMP:
+			{
+				animation = animationDatabase->Get(GOOMBA_RED_JUMPING_ANI);
+				break;
+			}
+			case RED_GOOMBA_STATE_HIGH_JUMP:
+			{
+				animation = animationDatabase->Get(GOOMBA_RED_JUMPING_ANI);
+				break;
+			}
 			default:
 				break;
 		}
@@ -89,12 +104,21 @@ void Goomba::Render()
 	if (animation != NULL) {
 		animation->Render(x, y, alpha, scale);
 	}
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void Goomba::Update(DWORD dt)
 {
 	//DebugOut(L"GOOMBA NE \n");
+
+	if (state == ENEMY_STATE_DIE) {
+		if (GetTickCount64() - timeDie >= 200)
+			stillAlive = false;
+		return;
+	}
+	if (type == 2) {
+		ChangeStateRedGoomba();
+	}
 	vy += ENEMY_GRAVITY * dt;
 	GameObject::Update(dt);
 
@@ -113,7 +137,6 @@ void Goomba::Update(DWORD dt)
 		//CalcPotentialCollisions(&coEnemies, coEvents);
 		//CalcPotentialCollisions(Mario::GetInstance(), coEvents);
 	}
-
 	if (coEvents.size() == 0 || isUpsideDown)
 	{
 		x += dx;
@@ -157,18 +180,11 @@ void Goomba::Update(DWORD dt)
 				enemy->vx = -enemy->vx;
 			}
 			else if (QuestionBrick* brick = dynamic_cast<QuestionBrick*> (e->obj)) {
-				//DebugOut(L"AAAA %f\n", e->nx);
 				if (e->ny != 0) vy = 0;
 				if (e->nx != 0) {
 					vx = -vx;
 				}
 			}
-			/*else {
-				if (e->ny != 0) vy = 0;
-				if (e->nx != 0) {
-					vx = -vx;
-				}
-			}*/
 		}
 	}
 
@@ -180,10 +196,18 @@ void Goomba::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 	/*l = x - GOOMBA_BBOX_WIDTH / 2;
 	t = y - GOOMBA_BBOX_HEIGHT / 2;*/
-	l = x;
-	t = y;
-	r = l + GOOMBA_BBOX_WIDTH;
-	b = t + GOOMBA_BBOX_HEIGHT;
+	if (type == 1) {
+		l = x;
+		t = y;
+		r = l + w;
+		b = t + h;
+	}
+	else if (type == 2) {
+		l = x;
+		t = y;
+		r = l + w;
+		b = t + h;
+	}
 }
 
 void Goomba::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPCOLLISIONMAPOBJECT collisionMapObject)
@@ -208,15 +232,37 @@ void Goomba::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LP
 			y += dy;
 		else if (collisionEvent->ny > 0 && collisionMapObjectDirectionY == -1)
 			y += dy;
-		else
-			vy = 0;
+		else {
+			if (type == 2) {
+				if (state == RED_GOOMBA_STATE_JUMP) {
+					if (countTimeJump < 2) {
+						timeJumpType2 = GetTickCount64();
+						countTimeJump++;
+					}
+					else if (countTimeJump == 2) {
+						state = RED_GOOMBA_STATE_HIGH_JUMP;
+						timeJumpType2 = GetTickCount64();
+						countTimeJump = 0;
+					}
+				}
+				else if (state == RED_GOOMBA_STATE_HIGH_JUMP) {
+					state = ENEMY_STATE_WALKING_WITH_SWINGS;
+					vy = 0;
+					timeJumpType2 = 0;
+					timeWalkingType2 = GetTickCount64();
+					countTimeJump = 0;
+				}
+				else
+					vy = 0;
+			}
+			else if (type == 1)
+				vy = 0;
+		}
 	}
 }
 
 void Goomba::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 {
-	if (state == ENEMY_STATE_DIE || isUpsideDown)
-		return;
 	Mario* mario = Mario::GetInstance();
 	if (collisionEvent->nx != 0) {
 		mario->vx = 0;
@@ -226,11 +272,31 @@ void Goomba::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 		}
 	}
 	if (collisionEvent->ny == -1) {
-		state = ENEMY_STATE_DIE;
-		mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
-		y += 15;
-		//mario->vx = 0;
-		//isUpsideDown = true;
+		if (type == 1) {
+			state = ENEMY_STATE_DIE;
+			mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
+			h = 24;
+			vx = 0;
+			y += 24;
+			timeDie = GetTickCount64();
+		}
+		else if (type == 2) {
+			if (state != ENEMY_STATE_WALKING) {
+				state = ENEMY_STATE_WALKING;
+				mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
+				y -= 2;
+				w = 48;
+				h = 48;
+			}
+			else if (state == ENEMY_STATE_WALKING) {
+				state = ENEMY_STATE_DIE;
+				mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
+				h = 24;
+				vx = 0;
+				y += 24;
+				timeDie = GetTickCount64();
+			}
+		}
 	}
 }
 
@@ -241,6 +307,42 @@ void Goomba::SetStartPosition()
 	y = this->startPositionY; 
 	isUpsideDown = false;
 	vx = -GOOMBA_WALKING_SPEED;
-	//vy = 0;
-	SetState(ENEMY_STATE_WALKING);
+	if (type == 1)
+		SetState(ENEMY_STATE_WALKING);
+	else if (type == 2) {
+		timeWalkingType2 = GetTickCount64();
+		SetState(ENEMY_STATE_WALKING_WITH_SWINGS);
+		w = 60;
+	}
+}
+
+void Goomba::ChangeStateRedGoomba()
+{
+	DWORD now = GetTickCount64();
+	if (state == ENEMY_STATE_WALKING_WITH_SWINGS && now - timeWalkingType2 >= 1000) {
+		state = RED_GOOMBA_STATE_JUMP;
+		timeJumpType2 = now;
+		timeWalkingType2 = 0;
+	}
+	if (state == ENEMY_STATE_WALKING_WITH_SWINGS) {
+		h = 57;
+		if (Mario::GetInstance()->x < x)
+			vx = -GOOMBA_WALKING_SPEED;
+		else
+			vx = GOOMBA_WALKING_SPEED;
+	}
+	else if (state == RED_GOOMBA_STATE_JUMP) {
+		h = 72;
+		vy = -0.2f;
+		if (now - timeJumpType2 >= 150) {
+			vy = 0.17f;
+		}
+	}
+	else if (state == RED_GOOMBA_STATE_HIGH_JUMP) {
+		h = 72;
+		vy = -0.2f;
+		if (now - timeJumpType2 >= 600) {
+			vy = 0.17f;
+		}
+	}
 }

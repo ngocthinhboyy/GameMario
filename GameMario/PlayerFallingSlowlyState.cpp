@@ -59,12 +59,12 @@ void PlayerFallingSlowlyState::KeyState(BYTE* states)
 		}
 	}*/
 	if (game->IsKeyDown(DIK_RIGHT)) {
-		if (mario->vx < 0)
+		if (mario->vx <= 0)
 			mario->vx = -mario->vx;
 		mario->nx = 1;
 	}
 	else if (game->IsKeyDown(DIK_LEFT)) {
-		if (mario->vx > 0)
+		if (mario->vx >= 0)
 			mario->vx = -mario->vx;
 		mario->nx = -1;
 	}

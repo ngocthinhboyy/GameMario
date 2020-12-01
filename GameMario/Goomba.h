@@ -4,6 +4,10 @@
 class Goomba : public Enemy
 {
 	int type;
+	DWORD timeWalkingType2 = 0;
+	DWORD timeJumpType2 = 0;
+	int countTimeJump = 0;
+	DWORD timeDie = 0;
 public:
 
 	Goomba();
@@ -15,6 +19,7 @@ public:
 	void CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPCOLLISIONMAPOBJECT collisionMapObject);
 	void CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent);
 	void SetStartPosition();
+	void ChangeStateRedGoomba();
 	//void CollisionWithAnotherEnemy(DWORD dt, vector<LPENEMY>* enemies = NULL);
 };
 

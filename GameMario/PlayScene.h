@@ -22,6 +22,7 @@ protected:
 	void _ParseSection_OBJECTS_IN_GRID(string line);
 	void _ParseSection_MAP(string line);
 	void _ParseSection_REMAINING_TIME(string line);
+	int timeScale = 1;
 
 
 public:

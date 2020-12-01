@@ -122,7 +122,7 @@ void Koopa::SetAnimation()
 void Koopa::Update(DWORD dt)
 {
 	if (state == ENEMY_STATE_DIE) {
-		if (GetTickCount64() - timeDie >= 1000000) {
+		if (GetTickCount64() - timeDie >= 6000) {
 			this->nx = -1;
 			this->vx = -KOOPA_WALKING_SPEED_X;
 			this->isUpsideDown = false;
@@ -315,6 +315,10 @@ void Koopa::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPC
 			if (x + dx <= collisionMapObject->x || x + dx + KOOPA_BBOX_WIDTH >= collisionMapObject->x + collisionMapObject->w) {
 				vx = -vx;
 			}
+			if (x < collisionMapObject->x)
+				x = collisionMapObject->x;
+			else if (x + KOOPA_BBOX_WIDTH > collisionMapObject->x + collisionMapObject->w)
+				x = collisionMapObject->x + collisionMapObject->w - KOOPA_BBOX_WIDTH;
 		}
 		if (collisionMapObjectDirectionY == 0)
 		{

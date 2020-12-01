@@ -1,9 +1,4 @@
 #include "Camera.h"
-#include <stdio.h>
-#include "Mario.h"
-#include "game.h"
-#include "PlayScene.h"
-#include "debug.h"
 
 Camera* Camera::__instance = NULL;
 Camera::Camera()
@@ -53,50 +48,31 @@ void Camera::UpdateCamPos()
 			}
 			else
 				cy = 145;
-		}
-		else {
-			cy = CAM_Y_DRAW_MAP;
-		}
-		this->cam_y = cy;
-	}
-	/*else if (canChangeCamY) {
-		if ((cy - game->GetScreenHeight() / 2) < 720) {
-			if ((cy - game->GetScreenHeight() / 2) > 145) {
-				cy -= game->GetScreenHeight() / 2;
-			}
-			else
-				cy = 145;
+			this->cam_y = cy;
 		}
 		else {
 			if (cam_y == CAM_Y_DRAW_MAP) {
 				cy = CAM_Y_DRAW_MAP;
 			}
-			canChangeCamY = false;
+			this->cam_y = cy;
 		}
-		this->cam_y = cy;
-	}*/
-	//else if()
-	else {
+	}
+	else if (canChangeCamY) {
 		if (cy - game->GetScreenHeight() / 2 < 720.0f) {
 			if ((cy - game->GetScreenHeight() / 2) > 145) {
 				cy -= game->GetScreenHeight() / 2;
 			}
 			else
 				cy = 145;
+			this->cam_y = cy;
 		}
 		else {
-			if (cam_y == CAM_Y_DRAW_MAP) {
-				cy = CAM_Y_DRAW_MAP;
-			}
-		}
-		if (cx < (game->GetScreenWidth() / 2)) {
 			cy = CAM_Y_DRAW_MAP;
+			canChangeCamY = false;
+			this->cam_y = cy;
 		}
-		if (cam_y == CAM_Y_DRAW_MAP) {
-			cy = CAM_Y_DRAW_MAP;
-		}
-		this->cam_y = cy;
-		/*this->cam_y = cy;
+	}
+	else {
 		if (cx < (game->GetScreenWidth() / 2)) {
 			cy = CAM_Y_DRAW_MAP;
 			this->cam_y = cy;
@@ -105,7 +81,7 @@ void Camera::UpdateCamPos()
 			cy = CAM_Y_DRAW_MAP;
 			this->cam_y = cy;
 		}
-		canChangeCamY = false;*/
+		canChangeCamY = false;
 	}
 
 
