@@ -36,7 +36,7 @@ class Mario : public GameObject
 public:
 	float speedLast;
 	Mario(float x = 0.0f, float y = 0.0f);
-	virtual void Update(DWORD dt);
+	void Update(DWORD dt, int scaleTime);
 	virtual void Render();
 
 	bool GetCanGoDownIntoGate() { return this->canGoDownIntoGate; };

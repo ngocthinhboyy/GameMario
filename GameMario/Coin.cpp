@@ -36,13 +36,13 @@ void Coin::Render()
 	//RenderBoundingBox();
 }
 
-void Coin::Update(DWORD dt)
+void Coin::Update(DWORD dt, int scaleTime)
 {
 	Mario* mario = Mario::GetInstance();
 	if (type == 1) {
 		if (!isBonused) {
 			vy += ITEM_GRAVITY * dt;
-			GameObject::Update(dt);
+			GameObject::Update(dt, scaleTime);
 			if (y + dy >= startPositionY) {
 				mario->SetPoint(mario->GetPoint() + MARIO_BONUS_POINT_COIN);
 				this->isBonused = true;

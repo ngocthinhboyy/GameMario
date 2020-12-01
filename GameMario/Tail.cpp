@@ -37,9 +37,9 @@ void Tail::Render()
 	}
 }
 
-void Tail::Update(DWORD dt)
+void Tail::Update(DWORD dt, int scaleTime)
 {
-	GameObject::Update(dt);
+	GameObject::Update(dt, scaleTime);
 
 	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 

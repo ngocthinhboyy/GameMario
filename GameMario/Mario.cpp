@@ -106,11 +106,11 @@ Mario::Mario(float x, float y) : GameObject()
 	this->isCrouching = false;
 }
 
-void Mario::Update(DWORD dt)
+void Mario::Update(DWORD dt, int scaleTime)
 {
 	playerState->Update(dt);
 	vy += MARIO_GRAVITY * dt;
-	GameObject::Update(dt);
+	GameObject::Update(dt, scaleTime);
 
 	PlayScene * scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 

@@ -27,6 +27,25 @@ PlayScene::PlayScene(int id, LPCWSTR filePath) :
 	key_handler = new PlaySceneKeyHandler(this);
 }
 
+void PlayScene::StopGame(DWORD time)
+{
+	this->timeStartStoppingGame = GetTickCount64();
+	this->timeStop = time;
+	this->isStopGame = true;
+	this->timeScale = 0;
+}
+
+void PlayScene::RestartGame()
+{
+	if (GetTickCount64() - timeStartStoppingGame >= timeStop) {
+		this->timeStartStoppingGame = 0;
+		this->timeStop = 0;
+		this->isStopGame = false;
+		this->timeScale = 1;
+	}
+}
+
+
 void PlayScene::_ParseSection_OBJECTS(string line)
 {
 
@@ -217,10 +236,14 @@ void PlayScene::Load()
 
 void PlayScene::Update(DWORD dt)
 {
-	DWORD now = GetTickCount64();
-	if (now - timeOfPreviousSecond >= 1000) {
-		timeOfPreviousSecond = now;
-		remainingTime--;
+	if (isStopGame)
+		RestartGame();
+	else {
+		DWORD now = GetTickCount64();
+		if (now - timeOfPreviousSecond >= 1000) {
+			timeOfPreviousSecond = now;
+			remainingTime--;
+		}
 	}
 	Grid* grid = Grid::GetInstance();
 	grid->GetListObjectInCamera();
@@ -228,13 +251,13 @@ void PlayScene::Update(DWORD dt)
 
 	for (size_t i = 0; i < enemies.size(); i++)
 	{
-		enemies[i]->Update(dt);
+		enemies[i]->Update(dt, this->timeScale);
 	}
 	for (size_t i = 0; i < objects.size(); i++)
 	{
-		objects[i]->Update(dt);
+		objects[i]->Update(dt, this->timeScale);
 	}
-	player->Update(dt);
+	player->Update(dt, this->timeScale);
 
 	for (size_t i = 0; i < enemies.size(); i++)
 	{

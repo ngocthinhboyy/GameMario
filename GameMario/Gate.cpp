@@ -38,7 +38,7 @@ void Gate::Render()
 	
 }
 
-void Gate::Update(DWORD dt)
+void Gate::Update(DWORD dt, int scaleTime)
 {
 	Mario* mario = Mario::GetInstance();
 	if (isOverlapWithMario()) {

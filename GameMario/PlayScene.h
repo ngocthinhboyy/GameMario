@@ -23,13 +23,19 @@ protected:
 	void _ParseSection_MAP(string line);
 	void _ParseSection_REMAINING_TIME(string line);
 	int timeScale = 1;
-
+	DWORD timeStartStoppingGame = 0;
+	DWORD timeStop = 0;
+	bool isStopGame = false;
 
 public:
 	vector<LPGAMEOBJECT> objects;
 	vector<LPGAMEOBJECT> enemies;
 	vector<LPGAMEOBJECT> collisionMapObjects;
 	PlayScene(int id, LPCWSTR filePath);
+
+	void StopGame(DWORD time);
+
+	void RestartGame();
 
 	int GetRemainingTime() { return this->remainingTime; };
 	int GetTimeOfPreviousSecond() { return this->timeOfPreviousSecond; };

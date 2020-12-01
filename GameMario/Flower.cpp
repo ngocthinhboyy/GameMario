@@ -75,7 +75,7 @@ void Flower::Render()
 	}
 }
 
-void Flower::Update(DWORD dt)
+void Flower::Update(DWORD dt, int scaleTime)
 {
 	Mario* mario = Mario::GetInstance();
 	if (mario->x > x)
@@ -128,7 +128,7 @@ void Flower::Update(DWORD dt)
 			isMoving = false;
 		}
 	}
-	GameObject::Update(dt);
+	GameObject::Update(dt,scaleTime);
 	y += dy;
 }
 

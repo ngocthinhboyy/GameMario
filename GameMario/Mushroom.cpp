@@ -35,7 +35,7 @@ void Mushroom::Render()
 	RenderBoundingBox();
 }
 
-void Mushroom::Update(DWORD dt)
+void Mushroom::Update(DWORD dt, int scaleTime)
 {
 	//vy += ITEM_GRAVITY * dt;
 	if (y + MUSHROOM_BBOX_HEIGHT <= startPositionY && !alreadyAppear) {
@@ -46,7 +46,7 @@ void Mushroom::Update(DWORD dt)
 	if (alreadyAppear) {
 		vy += ITEM_GRAVITY * dt;
 	}
-	GameObject::Update(dt);
+	GameObject::Update(dt, scaleTime);
 	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 
 	vector<LPGAMEOBJECT> coCollisionMapObjects = scene->collisionMapObjects;

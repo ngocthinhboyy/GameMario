@@ -12,7 +12,7 @@ class Gate : public GameObject
 public:
 	Gate(float x, float y, float w, float h, int type, float cam_x, float cam_y, float newPositionXMario, float newPositionYMario, int wayDirectionY);
 	void Render();
-	void Update(DWORD dt);
+	void Update(DWORD dt, int scaleTime);
 	int GetWayDirectionY() { return wayDirectionY; };
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	int GetCollisionDirectionY() { return this->wayDirectionY; };

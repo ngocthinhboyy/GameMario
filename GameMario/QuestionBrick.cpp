@@ -88,7 +88,7 @@ void QuestionBrick::Render()
 	RenderBoundingBox();
 }
 
-void QuestionBrick::Update(DWORD dt)
+void QuestionBrick::Update(DWORD dt, int scaleTime)
 {
 
 	if (isEmptyBrick && !alreadyMoving) {
@@ -110,7 +110,7 @@ void QuestionBrick::Update(DWORD dt)
 			else
 				vy += 0.005 *dt;
 		}
-		GameObject::Update(dt);
+		GameObject::Update(dt,scaleTime);
 		y += dy;
 	}
 }

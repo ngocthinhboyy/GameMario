@@ -16,11 +16,11 @@ GameObject::GameObject()
 	nx = 1;
 }
 
-void GameObject::Update(DWORD dt)
+void GameObject::Update(DWORD dt, int scaleTime)
 {
 	this->dt = dt;
-	dx = vx * dt;
-	dy = vy * dt;
+	dx = vx * dt * scaleTime;
+	dy = vy * dt * scaleTime;
 }
 
 void GameObject::SetStartPosition()

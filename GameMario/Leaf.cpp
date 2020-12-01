@@ -41,7 +41,7 @@ void Leaf::Render()
 	//RenderBoundingBox();
 }
 
-void Leaf::Update(DWORD dt)
+void Leaf::Update(DWORD dt, int scaleTime)
 {
 	vy += ITEM_GRAVITY * dt;
 	if (vy >= 0) {
@@ -64,7 +64,7 @@ void Leaf::Update(DWORD dt)
 			vx = 0.14f;
 		}
 	}
-	GameObject::Update(dt);
+	GameObject::Update(dt, scaleTime);
 
 	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 
@@ -101,6 +101,8 @@ void Leaf::Update(DWORD dt)
 		if (mario->GetLevel() < MARIO_LEVEL_RACCOON)
 		{
 			mario->ChangeState(PlayerBonusTransformState::GetInstance());
+			PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+			scene->StopGame(700);
 			mario->vx = 0;
 			mario->vy = 0;
 		}
@@ -130,6 +132,8 @@ void Leaf::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 	if (mario->GetLevel() < MARIO_LEVEL_RACCOON)
 	{
 		mario->ChangeState(PlayerBonusTransformState::GetInstance());
+		PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+		scene->StopGame(700);
 		mario->vx = 0;
 		mario->vy = 0;
 	}

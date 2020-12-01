@@ -12,7 +12,7 @@ public:
 	Fireball();
 	Fireball(float x, float y, float w, float h, int type);
 	void Render();
-	void Update(DWORD dt);
+	void Update(DWORD dt, int scaleTime);
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	void SetAnimation();
 	//void CalcPotentialCollisionsWithEnemy(vector<LPENEMY>* coEnemies, vector<LPCOLLISIONEVENT>& coEvents);

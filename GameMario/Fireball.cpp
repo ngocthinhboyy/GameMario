@@ -69,7 +69,7 @@ void Fireball::Render()
 //	RenderBoundingBox();
 }
 
-void Fireball::Update(DWORD dt)
+void Fireball::Update(DWORD dt, int scaleTime)
 {
 
 
@@ -78,7 +78,7 @@ void Fireball::Update(DWORD dt)
 	if (type == 1) {
 		vy += FIREBALL_GRAVITY * dt * 2;
 	}
-	GameObject::Update(dt);
+	GameObject::Update(dt, scaleTime);
 
 	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 

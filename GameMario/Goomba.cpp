@@ -107,20 +107,21 @@ void Goomba::Render()
 	RenderBoundingBox();
 }
 
-void Goomba::Update(DWORD dt)
+void Goomba::Update(DWORD dt, int scaleTime)
 {
 	//DebugOut(L"GOOMBA NE \n");
 
 	if (state == ENEMY_STATE_DIE) {
-		if (GetTickCount64() - timeDie >= 200)
+		if (GetTickCount64() - timeDie >= 200) {
 			stillAlive = false;
+		}
 		return;
 	}
 	if (type == 2) {
 		ChangeStateRedGoomba();
 	}
 	vy += ENEMY_GRAVITY * dt;
-	GameObject::Update(dt);
+	GameObject::Update(dt, scaleTime);
 
 	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 
@@ -269,11 +270,14 @@ void Goomba::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 		if (mario->GetLevel() >= 2) {
 			mario->StartUntouchable();
 			mario->ChangeState(PlayerLevelDownTransformState::GetInstance());
+			PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+			scene->StopGame(1000);
 		}
 	}
 	if (collisionEvent->ny == -1) {
 		if (type == 1) {
 			state = ENEMY_STATE_DIE;
+			mario->SetPoint(mario->GetPoint() + 100);
 			mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
 			h = 24;
 			vx = 0;
@@ -282,6 +286,7 @@ void Goomba::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 		}
 		else if (type == 2) {
 			if (state != ENEMY_STATE_WALKING) {
+				mario->SetPoint(mario->GetPoint() + 100);
 				state = ENEMY_STATE_WALKING;
 				mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
 				y -= 2;
@@ -289,6 +294,7 @@ void Goomba::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 				h = 48;
 			}
 			else if (state == ENEMY_STATE_WALKING) {
+				mario->SetPoint(mario->GetPoint() + 100);
 				state = ENEMY_STATE_DIE;
 				mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
 				h = 24;

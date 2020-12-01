@@ -119,7 +119,7 @@ void Koopa::SetAnimation()
 	}
 }
 
-void Koopa::Update(DWORD dt)
+void Koopa::Update(DWORD dt, int scaleTime)
 {
 	if (state == ENEMY_STATE_DIE) {
 		if (GetTickCount64() - timeDie >= 6000) {
@@ -164,7 +164,7 @@ void Koopa::Update(DWORD dt)
 	else {
 		vy += ENEMY_GRAVITY * dt;
 	}
-	GameObject::Update(dt);
+	GameObject::Update(dt, scaleTime);
 
 	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 
@@ -370,6 +370,8 @@ void Koopa::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 				if (mario->GetLevel() >= MARIO_LEVEL_BIG) {
 					mario->StartUntouchable();
 					mario->ChangeState(PlayerLevelDownTransformState::GetInstance());
+					PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+					scene->StopGame(1000);
 					mario->vx = 0;
 					mario->vy = 0;
 			}
@@ -379,6 +381,7 @@ void Koopa::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 	if (collisionEvent->ny != 0) {
 		if (collisionEvent->ny < 0) {
 			if (state != ENEMY_STATE_DIE) {
+				mario->SetPoint(mario->GetPoint() + 100);
 				state = ENEMY_STATE_DIE;
 				mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
 				vx = 0;
@@ -397,6 +400,8 @@ void Koopa::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 			if (mario->GetLevel() >= MARIO_LEVEL_BIG) {
 				mario->StartUntouchable();
 				mario->ChangeState(PlayerLevelDownTransformState::GetInstance());
+				PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+				scene->StopGame(1000);
 				mario->vx = 0;
 				mario->vy = 0;
 			}

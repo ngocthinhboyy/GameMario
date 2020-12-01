@@ -9,7 +9,7 @@ public:
 	Coin(float x, float y, float w, float h, int type);
 	void SetAnimation();
 	void Render();
-	void Update(DWORD dt);
+	void Update(DWORD dt, int scaleTime);
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	void SetIsBonused(bool isBonused) { this->isBonused = isBonused; };
 	bool GetIsBonused() { return this->isBonused; };

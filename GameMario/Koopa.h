@@ -15,7 +15,7 @@ public:
 	void SetAnimation();
 	void SetIsDiedByFireball() { this->isDiedByFireball = true; };
 	void SetTimeDie() { this->timeDie = GetTickCount64(); };
-	void Update(DWORD dt);
+	void Update(DWORD dt, int scaleTime);
 	void SetIsHold(bool isHold) { this->isHold = isHold; };
 	bool GetIsHold() { return isHold; };
 	void GetBoundingBox(float& l, float& t, float& r, float& b);

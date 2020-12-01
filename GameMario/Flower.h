@@ -16,7 +16,7 @@ public:
 	Flower(float x, float y, float w, float h, int type);
 	void SetAnimation();
 	void Render();
-	void Update(DWORD dt);
+	void Update(DWORD dt, int scaleTime);
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	void Attack();
 	void CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPCOLLISIONMAPOBJECT collisionMapObject);
