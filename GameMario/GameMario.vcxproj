@@ -29,6 +29,7 @@
     <ClCompile Include="CollisionMapObject.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EspecialBrick.cpp" />
     <ClCompile Include="Fireball.cpp" />
     <ClCompile Include="Flower.cpp" />
     <ClCompile Include="game.cpp" />
@@ -89,6 +90,7 @@
     <ClInclude Include="DynamicObjectDefine.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyDefine.h" />
+    <ClInclude Include="EspecialBrick.h" />
     <ClInclude Include="Fireball.h" />
     <ClInclude Include="Flower.h" />
     <ClInclude Include="game.h" />

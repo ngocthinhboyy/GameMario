@@ -249,6 +249,9 @@
     <ClCompile Include="Point.cpp">
       <Filter>game\Object\StaticObject</Filter>
     </ClCompile>
+    <ClCompile Include="EspecialBrick.cpp">
+      <Filter>game\Object\StaticObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -441,6 +444,9 @@
       <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClInclude>
     <ClInclude Include="Point.h">
+      <Filter>game\Object\StaticObject</Filter>
+    </ClInclude>
+    <ClInclude Include="EspecialBrick.h">
       <Filter>game\Object\StaticObject</Filter>
     </ClInclude>
   </ItemGroup>

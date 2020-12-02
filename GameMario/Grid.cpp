@@ -8,6 +8,7 @@
 #include "AnimationManager.h"
 #include "PlayerStandingState.h"
 #include "QuestionBrick.h"
+#include "EspecialBrick.h"
 #include "Flower.h"
 #include "Coin.h"
 #include "Gate.h"
@@ -105,6 +106,16 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 		int wayDirectionY = atoi(tokens[11].c_str());
 		obj = new Gate(x, y, w, h, type, cam_x, cam_y, newPositionXMario, newPositionYMario, wayDirectionY);
 		obj->SetPosition(x, y);
+
+		obj->SetAnimationSet(ani_set);
+		DeterminedGridToObtainObject(obj);
+		break;
+	}
+	case OBJECT_TYPE_ESPECIAL_BRICK: {
+		int type = atoi(tokens[6].c_str());
+		obj = new EspecialBrick(x, y, w, h, type);
+		obj->SetPosition(x, y);
+		ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
 		DeterminedGridToObtainObject(obj);
