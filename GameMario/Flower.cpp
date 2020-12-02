@@ -22,6 +22,7 @@ Flower::Flower(float x, float y, float w, float h, int type)
 	this->startNx = -1;
 	this->startPositionX = x;
 	this->startPositionY = y;
+	this->gameObjectID = idGenerate++;
 	this->state = FLOWER_STATE_MOVE;
 }
 
@@ -45,10 +46,7 @@ void Flower::SetAnimation()
 			break;
 		}
 		case GREEN_FLOWER_TYPE: {
-			if (state == FLOWER_STATE_MOVE)
 				this->animation = animationDatabase->Get(GREEN_FLOWER_ANI_MOVE);
-			else if (state == FLOWER_STATE_ATTACK)
-				this->animation = animationDatabase->Get(GREEN_FLOWER_ANI_ATTACK);
 			break;
 		}
 	default:
@@ -72,7 +70,11 @@ void Flower::Render()
 		AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
 		animation = animationDatabase->Get(2101);
 		animation->Render(1056, 1104, 255, scalePipe);
+		animation->Render(5568, 1104, 255, scalePipe);
+		animation = animationDatabase->Get(2601);
+		animation->Render(5376, 1152, 255, scalePipe);
 	}
+	RenderBoundingBox();
 }
 
 void Flower::Update(DWORD dt, int scaleTime)
@@ -89,7 +91,7 @@ void Flower::Update(DWORD dt, int scaleTime)
 		else {
 			vy = 0.1f;
 		}
-		if (y + 96 < startPositionY && !finishedAttackingState) {
+		if (y + h < startPositionY && !finishedAttackingState) {
 			this->state = FLOWER_STATE_ATTACK;
 			isGoUp = false;
 			startAttacking = GetTickCount64();
@@ -104,10 +106,11 @@ void Flower::Update(DWORD dt, int scaleTime)
 	else if (state == FLOWER_STATE_ATTACK) {
 		int timeAttack = GetTickCount64();
 		if (timeAttack - startAttacking >= 1000 && !alreadyAttacked) {
-			Attack();
+			if (type == RED_FIRE_FLOWER_TYPE || type == GREEN_FIRE_FLOWER_TYPE)
+				Attack();
 			alreadyAttacked = true;
 		}
-		else if(timeAttack - startAttacking >= 1500) {
+		else if (timeAttack - startAttacking >= 1500) {
 			this->state = FLOWER_STATE_MOVE;
 			finishedAttackingState = true;
 			alreadyAttacked = false;
@@ -117,11 +120,21 @@ void Flower::Update(DWORD dt, int scaleTime)
 		vy = 0;
 		if (x - 24 - 46 >= mario->x || x + 48 + 24 + 47 <= mario->x + 46) {
 			int now = GetTickCount64();
-			if (now - lastMoving >= 1000) {
-				isMoving = true;
-				isGoUp = true;
-				finishedAttackingState = false;
-				alreadyAttacked = false;
+			if (type == RED_FIRE_FLOWER_TYPE || type == GREEN_FIRE_FLOWER_TYPE) {
+				if (now - lastMoving >= 1000) {
+					isMoving = true;
+					isGoUp = true;
+					finishedAttackingState = false;
+					alreadyAttacked = false;
+				}
+			}
+			else if (type == GREEN_FLOWER_TYPE) {
+				if (now - lastMoving >= 500) {
+					isMoving = true;
+					isGoUp = true;
+					finishedAttackingState = false;
+					alreadyAttacked = false;
+				}
 			}
 		}
 		else {

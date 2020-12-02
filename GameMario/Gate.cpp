@@ -32,7 +32,7 @@ void Gate::Render()
 		animation->Render(x, y, 255, scale);
 	}
 	else if (type == 1) {
-		animation = animationDatabase->Get(2101);
+		animation = animationDatabase->Get(2601);
 		animation->Render(x, y, 255, scale);
 	}
 	
