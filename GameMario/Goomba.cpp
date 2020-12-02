@@ -8,6 +8,8 @@
 #include "QuestionBrick.h"
 #include "Tail.h"
 #include "PlayerLevelDownTransformState.h"
+#include "Point.h"
+#include "Grid.h"
 
 Goomba::Goomba()
 {
@@ -277,8 +279,11 @@ void Goomba::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 	if (collisionEvent->ny == -1) {
 		if (type == 1) {
 			state = ENEMY_STATE_DIE;
-			mario->SetPoint(mario->GetPoint() + 100);
 			mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
+			Point* point = new Point(x, y, 39, 30);
+			Grid* grid = Grid::GetInstance();
+			grid->DeterminedGridToObtainObject(point);
+			mario->SetPoint(mario->GetPoint() + 100);
 			h = 24;
 			vx = 0;
 			y += 24;
@@ -286,17 +291,23 @@ void Goomba::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 		}
 		else if (type == 2) {
 			if (state != ENEMY_STATE_WALKING) {
-				mario->SetPoint(mario->GetPoint() + 100);
 				state = ENEMY_STATE_WALKING;
 				mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
+				Point* point = new Point(x, y, 39, 30);
+				Grid* grid = Grid::GetInstance();
+				grid->DeterminedGridToObtainObject(point);
+				mario->SetPoint(mario->GetPoint() + 100);
 				y -= 2;
 				w = 48;
 				h = 48;
 			}
 			else if (state == ENEMY_STATE_WALKING) {
-				mario->SetPoint(mario->GetPoint() + 100);
 				state = ENEMY_STATE_DIE;
 				mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
+				Point* point = new Point(x, y, 39, 30);
+				Grid* grid = Grid::GetInstance();
+				grid->DeterminedGridToObtainObject(point);
+				mario->SetPoint(mario->GetPoint() + 100);
 				h = 24;
 				vx = 0;
 				y += 24;

@@ -16,6 +16,7 @@
 #include "Coin.h"
 #include "PlayerLevelDownTransformState.h"
 #include "PlayerStandingState.h"
+#include "Point.h"
 
 Koopa::Koopa()
 {
@@ -346,6 +347,7 @@ void Koopa::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPC
 void Koopa::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 {
 	Mario* mario = Mario::GetInstance();
+	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 	if (collisionEvent->nx != 0) {
 		if (!isHold) {
 			mario->vx = 0;
@@ -370,7 +372,6 @@ void Koopa::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 				if (mario->GetLevel() >= MARIO_LEVEL_BIG) {
 					mario->StartUntouchable();
 					mario->ChangeState(PlayerLevelDownTransformState::GetInstance());
-					PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 					scene->StopGame(1000);
 					mario->vx = 0;
 					mario->vy = 0;
@@ -381,6 +382,10 @@ void Koopa::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 	if (collisionEvent->ny != 0) {
 		if (collisionEvent->ny < 0) {
 			if (state != ENEMY_STATE_DIE) {
+				Game* game = Game::GetInstance();
+				Point* point = new Point(x, y, 39, 30);
+				Grid* grid = Grid::GetInstance();
+				grid->DeterminedGridToObtainObject(point);
 				mario->SetPoint(mario->GetPoint() + 100);
 				state = ENEMY_STATE_DIE;
 				mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
@@ -400,7 +405,6 @@ void Koopa::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 			if (mario->GetLevel() >= MARIO_LEVEL_BIG) {
 				mario->StartUntouchable();
 				mario->ChangeState(PlayerLevelDownTransformState::GetInstance());
-				PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 				scene->StopGame(1000);
 				mario->vx = 0;
 				mario->vy = 0;

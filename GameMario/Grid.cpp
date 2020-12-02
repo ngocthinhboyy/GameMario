@@ -172,8 +172,8 @@ void Grid::GetListObjectInCamera()
 	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 	scene->enemies = enemies;
 	scene->objects = objects;
-	//DebugOut(L"SIZEEEEEEEE %d\n", objects.size());
-	//DebugOut(L"OBJECT %d\n", objects.size());
+	//DebugOut(L"SIZEEEEEEEE %d\n", enemies.size());
+//	DebugOut(L"OBJECT %d\n", objects.size());
 	
 }
 

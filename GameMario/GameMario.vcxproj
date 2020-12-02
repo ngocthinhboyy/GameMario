@@ -64,6 +64,7 @@
     <ClCompile Include="PlayerWalkingState.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="PlaySceneKeyHandler.cpp" />
+    <ClCompile Include="Point.cpp" />
     <ClCompile Include="QuestionBrick.cpp" />
     <ClCompile Include="ResourcesSharedLoad.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -127,6 +128,7 @@
     <ClInclude Include="PlayerWalkingState.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="PlaySceneKeyHandler.h" />
+    <ClInclude Include="Point.h" />
     <ClInclude Include="QuestionBrick.h" />
     <ClInclude Include="ResourcesSharedLoad.h" />
     <ClInclude Include="Scene.h" />

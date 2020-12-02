@@ -3,6 +3,10 @@
 #include "ItemDefine.h"
 #include "debug.h"
 #include "Mario.h"
+#include "game.h"
+#include "PlayScene.h"
+#include "Point.h"
+#include "Grid.h"
 
 Coin::Coin(float x, float y, float w, float h, int type)
 {
@@ -47,6 +51,11 @@ void Coin::Update(DWORD dt, int scaleTime)
 				mario->SetPoint(mario->GetPoint() + MARIO_BONUS_POINT_COIN);
 				this->isBonused = true;
 				this->stillAlive = false;
+				Game* game = Game::GetInstance();
+				PlayScene* scene = dynamic_cast<PlayScene*> (game->GetCurrentScene());
+				Point* point = new Point(x, y, 39, 30);
+				Grid* grid = Grid::GetInstance();
+				grid->DeterminedGridToObtainObject(point);
 			}
 			else {
 				y += dy;

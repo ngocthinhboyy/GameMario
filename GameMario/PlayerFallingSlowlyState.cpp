@@ -51,6 +51,11 @@ void PlayerFallingSlowlyState::KeyState(BYTE* states)
 		if(mario->vy > 0 && now-timePress < 250)
 			mario->vy += -mario->vy * 0.4f;
 	}
+	else if(game->IsKeyDown(DIK_X)) {
+		DWORD now = GetTickCount64();
+		if (mario->vy > 0 && now - timePress < 250)
+			mario->vy += -mario->vy * 0.4f;
+	}
 	/*if (game->IsKeyDown(DIK_DOWN)) {
 		if (mario->vy == 0) {
 			mario->vx = 0;
@@ -80,6 +85,10 @@ void PlayerFallingSlowlyState::OnKeyDown(int KeyCode)
 		timePress = GetTickCount64();
 		break;
 	}
+	case DIK_X: {
+		timePress = GetTickCount64();
+		break;
+	}
 	default:
 		break;
 	}
@@ -92,6 +101,10 @@ void PlayerFallingSlowlyState::OnKeyUp(int KeyCode)
 	{
 
 	case DIK_S: {
+		timePress = GetTickCount64();
+		break;
+	}
+	case DIK_X: {
 		timePress = GetTickCount64();
 		break;
 	}
