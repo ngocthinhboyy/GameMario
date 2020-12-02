@@ -13,6 +13,8 @@
 #include "Coin.h"
 #include "Grid.h"
 #include "Point.h"
+#include "EspecialBrick.h"
+#include "FragmentOfEspecialBrick.h"
 
 Tail::Tail()
 {
@@ -46,7 +48,7 @@ void Tail::Update(DWORD dt, int scaleTime)
 
 	vector<LPGAMEOBJECT> coObjects = scene->enemies;
 	for (auto x : scene->objects) {
-		if (dynamic_cast<QuestionBrick*> (x))
+		if (dynamic_cast<QuestionBrick*> (x) || dynamic_cast<EspecialBrick*> (x))
 			coObjects.push_back(x);
 	}
 
@@ -124,6 +126,20 @@ void Tail::CheckOverlapBoundingBox(vector<LPGAMEOBJECT> objects)
 					}
 				}
 				questionBrick->isEmptyBrick = true;
+			}
+			else if (EspecialBrick * especialBrick = dynamic_cast<EspecialBrick*> (x)) {
+
+				if (especialBrick->stillAlive) {
+					especialBrick->stillAlive = false;
+					FragmentOfEspecialBrick* fragment1 = new FragmentOfEspecialBrick(especialBrick->x, especialBrick->y, 39, 39, -0.15, -1.1);
+					FragmentOfEspecialBrick* fragment2 = new FragmentOfEspecialBrick(especialBrick->x, especialBrick->y, 39, 39, 0.15, -1.1);
+					FragmentOfEspecialBrick* fragment3 = new FragmentOfEspecialBrick(especialBrick->x, especialBrick->y, 39, 39, -0.15, -0.8);
+					FragmentOfEspecialBrick* fragment4 = new FragmentOfEspecialBrick(especialBrick->x, especialBrick->y, 39, 39, 0.15, -0.8);
+					Grid::GetInstance()->DeterminedGridToObtainObject(fragment1);
+					Grid::GetInstance()->DeterminedGridToObtainObject(fragment2);
+					Grid::GetInstance()->DeterminedGridToObtainObject(fragment3);
+					Grid::GetInstance()->DeterminedGridToObtainObject(fragment4);
+				}
 			}
 		}
 	}

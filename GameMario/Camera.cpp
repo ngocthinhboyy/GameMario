@@ -73,8 +73,8 @@ void Camera::UpdateCamPos()
 		}
 	}
 	else {
-		//cy = CAM_Y_DRAW_MAP;
-		//this->cam_y = cy;
+		cy = CAM_Y_DRAW_MAP;
+		this->cam_y = cy;
 		if (cx < (game->GetScreenWidth() / 2)) {
 			cy = CAM_Y_DRAW_MAP;
 			this->cam_y = cy;

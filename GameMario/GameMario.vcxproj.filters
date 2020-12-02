@@ -252,6 +252,9 @@
     <ClCompile Include="EspecialBrick.cpp">
       <Filter>game\Object\StaticObject</Filter>
     </ClCompile>
+    <ClCompile Include="FragmentOfEspecialBrick.cpp">
+      <Filter>game\Object\StaticObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -447,6 +450,9 @@
       <Filter>game\Object\StaticObject</Filter>
     </ClInclude>
     <ClInclude Include="EspecialBrick.h">
+      <Filter>game\Object\StaticObject</Filter>
+    </ClInclude>
+    <ClInclude Include="FragmentOfEspecialBrick.h">
       <Filter>game\Object\StaticObject</Filter>
     </ClInclude>
   </ItemGroup>

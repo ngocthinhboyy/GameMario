@@ -32,6 +32,7 @@
     <ClCompile Include="EspecialBrick.cpp" />
     <ClCompile Include="Fireball.cpp" />
     <ClCompile Include="Flower.cpp" />
+    <ClCompile Include="FragmentOfEspecialBrick.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Gate.cpp" />
@@ -93,6 +94,7 @@
     <ClInclude Include="EspecialBrick.h" />
     <ClInclude Include="Fireball.h" />
     <ClInclude Include="Flower.h" />
+    <ClInclude Include="FragmentOfEspecialBrick.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Gate.h" />

@@ -1,6 +1,7 @@
 #include "EspecialBrick.h"
 #include "AnimationDatabase.h"
 #include "StaticObjectDefine.h"
+#include "Mario.h"
 
 EspecialBrick::EspecialBrick(float x, float y, float w, float h, int type)
 {
@@ -14,6 +15,17 @@ EspecialBrick::EspecialBrick(float x, float y, float w, float h, int type)
 
 void EspecialBrick::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 {
+	Mario* mario = Mario::GetInstance();
+	if (collisionEvent->ny != 0) {
+		if (collisionEvent->ny > 0)
+		{
+			mario->SetIsOnGround(false);
+		}
+		else if (collisionEvent->ny < 0) {
+			mario->SetIsOnGround(true);
+		}
+		mario->vy = 0;
+	}
 }
 
 void EspecialBrick::Render()

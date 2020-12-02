@@ -8,7 +8,7 @@
 6	textures\boardgame.png	163	73	164
 7	textures\effect.png	0	0	0
 8	textures\mario_2.png	255	255	255
-9	textures\ongcong.png	255	255	255
+9	textures\fragment.png	163	73	164
 10	textures\ongcong_den.png	255	255	255
 11	textures\ongcong2.png	255	255	255
 # id	left	top	width	height	texture_id
@@ -285,6 +285,11 @@
 #POINT
 #100
 25001	60	88	13	10	6
+#fragment
+28001	0	0	33	39	9
+28002	36	0	39	39	9
+28003	78	0	33	39	9
+28004	114	0	39	39	9
 
 #ESPECIALBRICKKKK
 27001	274	188	16	16	2
@@ -528,6 +533,8 @@
 
 #ESPECIALBRICK
 2701	27001	50	27002	50	27003	50	27004	50
+#FRAGMENT
+2801	28001	50	28002	50	28003	50	28004	50
 
 
 # id	ani1	ani2	ani3
@@ -559,4 +566,6 @@
 13	2401
 #POINTTT
 14	2501
+#FRAGMENT
+15	2801
 

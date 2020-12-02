@@ -25,6 +25,7 @@
 #include "PlayerSpinningState.h"
 #include "Gate.h"
 #include "PlayerMovingDownAndUpState.h"
+#include "EspecialBrick.h"
 
 Mario* Mario::Mario::__instance = NULL;
 Mario* Mario::GetInstance() {
@@ -187,6 +188,15 @@ void Mario::Update(DWORD dt, int scaleTime)
 				}
 				else
 					questionBrick->CollisionWithPlayer(e);
+			}
+			else if (EspecialBrick * especialBrick = dynamic_cast<EspecialBrick*> (e->obj)) {
+				if (e->nx != 0) {
+					PlayerRunningState::lastStateIsSkidding = true;
+					Mario* mario = Mario::GetInstance();
+					vx += (dt * MARIO_SPEED_ACCELERATION * 3.5 * -this->nx);
+				}
+				else
+					especialBrick->CollisionWithPlayer(e);
 			}
 			else if (Fireball * fireball = dynamic_cast<Fireball*> (e->obj)) {
 				if (untouchable) {
