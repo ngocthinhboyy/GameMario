@@ -24,6 +24,7 @@
     <ClCompile Include="AnimationFrame.cpp" />
     <ClCompile Include="AnimationManager.cpp" />
     <ClCompile Include="BoardGame.cpp" />
+    <ClCompile Include="ButtonP.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="CollisionMapObject.cpp" />
@@ -84,6 +85,7 @@
     <ClInclude Include="AnimationManager.h" />
     <ClInclude Include="BoardGame.h" />
     <ClInclude Include="BoardGameDefine.h" />
+    <ClInclude Include="ButtonP.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="CollisionMapObject.h" />

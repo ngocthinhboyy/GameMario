@@ -15,6 +15,7 @@
 #include "Point.h"
 #include "EspecialBrick.h"
 #include "FragmentOfEspecialBrick.h"
+#include "ButtonP.h"
 
 Tail::Tail()
 {
@@ -130,15 +131,24 @@ void Tail::CheckOverlapBoundingBox(vector<LPGAMEOBJECT> objects)
 			else if (EspecialBrick * especialBrick = dynamic_cast<EspecialBrick*> (x)) {
 
 				if (especialBrick->stillAlive) {
-					especialBrick->stillAlive = false;
-					FragmentOfEspecialBrick* fragment1 = new FragmentOfEspecialBrick(especialBrick->x, especialBrick->y, 39, 39, -0.15, -1.1);
-					FragmentOfEspecialBrick* fragment2 = new FragmentOfEspecialBrick(especialBrick->x, especialBrick->y, 39, 39, 0.15, -1.1);
-					FragmentOfEspecialBrick* fragment3 = new FragmentOfEspecialBrick(especialBrick->x, especialBrick->y, 39, 39, -0.15, -0.8);
-					FragmentOfEspecialBrick* fragment4 = new FragmentOfEspecialBrick(especialBrick->x, especialBrick->y, 39, 39, 0.15, -0.8);
-					Grid::GetInstance()->DeterminedGridToObtainObject(fragment1);
-					Grid::GetInstance()->DeterminedGridToObtainObject(fragment2);
-					Grid::GetInstance()->DeterminedGridToObtainObject(fragment3);
-					Grid::GetInstance()->DeterminedGridToObtainObject(fragment4);
+					if (especialBrick->GetType() == 1) {
+						especialBrick->stillAlive = false;
+						FragmentOfEspecialBrick* fragment1 = new FragmentOfEspecialBrick(especialBrick->x, especialBrick->y, 39, 39, -0.15, -1.1);
+						FragmentOfEspecialBrick* fragment2 = new FragmentOfEspecialBrick(especialBrick->x, especialBrick->y, 39, 39, 0.15, -1.1);
+						FragmentOfEspecialBrick* fragment3 = new FragmentOfEspecialBrick(especialBrick->x, especialBrick->y, 39, 39, -0.15, -0.8);
+						FragmentOfEspecialBrick* fragment4 = new FragmentOfEspecialBrick(especialBrick->x, especialBrick->y, 39, 39, 0.15, -0.8);
+						Grid::GetInstance()->DeterminedGridToObtainObject(fragment1);
+						Grid::GetInstance()->DeterminedGridToObtainObject(fragment2);
+						Grid::GetInstance()->DeterminedGridToObtainObject(fragment3);
+						Grid::GetInstance()->DeterminedGridToObtainObject(fragment4);
+					}
+					else if (especialBrick->GetType() == 2) {
+						if (!especialBrick->GetIsEmptyBrick()) {
+							especialBrick->SetIsEmptyBrick(true);
+							ButtonP* buttonP = new ButtonP(especialBrick->x, especialBrick->y, 48, 48);
+							Grid::GetInstance()->DeterminedGridToObtainObject(buttonP);
+						}
+					}
 				}
 			}
 		}

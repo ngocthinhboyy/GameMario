@@ -26,6 +26,7 @@
 #include "Gate.h"
 #include "PlayerMovingDownAndUpState.h"
 #include "EspecialBrick.h"
+#include "ButtonP.h"
 
 Mario* Mario::Mario::__instance = NULL;
 Mario* Mario::GetInstance() {
@@ -198,7 +199,7 @@ void Mario::Update(DWORD dt, int scaleTime)
 				else
 					especialBrick->CollisionWithPlayer(e);
 			}
-			else if (Fireball * fireball = dynamic_cast<Fireball*> (e->obj)) {
+			else if (Fireball* fireball = dynamic_cast<Fireball*> (e->obj)) {
 				if (untouchable) {
 					if (e->nx != 0)
 						x -= min_tx * dx + nx * 0.4f;
@@ -217,6 +218,9 @@ void Mario::Update(DWORD dt, int scaleTime)
 						vy = 0;
 					}
 				}
+			}
+			else if (ButtonP * buttonP = dynamic_cast<ButtonP*> (e->obj)) {
+				buttonP->CollisionWithPlayer(e);
 			}
 			/*else {
 				if (e->nx != 0) vx = 0;

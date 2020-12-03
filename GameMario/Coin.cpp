@@ -16,6 +16,8 @@ Coin::Coin(float x, float y, float w, float h, int type)
 	this->h = h;
 	this->startPositionY = y;
 	this->type = type;
+	if (type == 3)
+		timeStartTransform = GetTickCount64();
 	this->gameObjectID = idGenerate++;
 }
 
@@ -24,7 +26,7 @@ void Coin::SetAnimation()
 	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
 	if(type == 1 )
 		this->animation = animationDatabase->Get(COIN_ANI);
-	else if(type == 2)
+	else if(type == 2 || type == 3)
 		this->animation = animationDatabase->Get(STATIC_COIN_ANI);
 }
 
@@ -62,8 +64,11 @@ void Coin::Update(DWORD dt, int scaleTime)
 			}
 		}
 	}
-	else if (type == 2) {
-
+	else if (type == 3) {
+		if (GetTickCount64() - timeStartTransform >= 8000) {
+			Grid::GetInstance()->DeterminedGridToObtainObject(new EspecialBrick(x, y, 48, 48, 1));
+			stillAlive = false;
+		}
 	}
 }
 

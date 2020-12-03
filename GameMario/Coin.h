@@ -5,6 +5,7 @@ class Coin : public Item
 {
 	bool isBonused = false;
 	int type = 0;
+	DWORD timeStartTransform = 0;
 public:
 	Coin(float x, float y, float w, float h, int type);
 	void SetAnimation();

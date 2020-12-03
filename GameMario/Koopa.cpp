@@ -17,6 +17,8 @@
 #include "PlayerLevelDownTransformState.h"
 #include "PlayerStandingState.h"
 #include "Point.h"
+#include "EspecialBrick.h"
+#include "FragmentOfEspecialBrick.h"
 
 Koopa::Koopa()
 {
@@ -56,7 +58,12 @@ void Koopa::Render()
 	if(isUpsideDown)
 		scale = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_FLIP_SCALE);
 	if (animation != NULL) {
-		animation->Render(x, y, alpha, scale);
+		if (state == ENEMY_STATE_DIE || state == ENEMY_STATE_SPIN_DIE_KICK) {
+			animation->Render(x, y, alpha, scale);
+		}
+		else {
+			animation->Render(x, y - 31, alpha, scale);
+		}
 	}
 	//RenderBoundingBox();
 }
@@ -266,6 +273,15 @@ void Koopa::Update(DWORD dt, int scaleTime)
 					}
 				}
 			}
+			else if (EspecialBrick * especialBrick = dynamic_cast<EspecialBrick*> (e->obj)) {
+				CollisionWithEspecialBrick(e, especialBrick);
+			}
+			else if (dynamic_cast<Coin*> (e->obj)) {
+				if (e->nx != 0)
+					x += dx;
+				if (e->ny != 0)
+					y += dy;
+			}
 			/*else {
 				if (e->nx != 0) vx = -vx;
 				if (e->ny != 0) vy = 0;
@@ -284,7 +300,7 @@ void Koopa::GetBoundingBox(float& l, float& t, float& r, float& b)
 		t = y - KOOPA_DIE_BBOX_HEIGHT / 2;*/
 		l = x;
 		t = y;
-		r = l + KOOPA_BBOX_WIDTH;
+		r = l + KOOPA_BBOX_WIDTH + 10;
 		b = t + KOOPA_DIE_BBOX_HEIGHT;
 	}
 	else {
@@ -339,6 +355,40 @@ void Koopa::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPC
 			}
 			else if (this->state == ENEMY_STATE_DIE) {
 				vx = 0;
+			}
+		}
+	}
+}
+
+void Koopa::CollisionWithEspecialBrick(LPCOLLISIONEVENT collisionEvent, EspecialBrick* especialBrick)
+{
+	if (collisionEvent->nx != 0) {
+		vx = -vx;
+		if (state == ENEMY_STATE_SPIN_DIE_KICK) {
+			if (especialBrick->stillAlive) {
+				especialBrick->stillAlive = false;
+				FragmentOfEspecialBrick* fragment1 = new FragmentOfEspecialBrick(especialBrick->x, especialBrick->y, 39, 39, -0.15, -1.1);
+				FragmentOfEspecialBrick* fragment2 = new FragmentOfEspecialBrick(especialBrick->x, especialBrick->y, 39, 39, 0.15, -1.1);
+				FragmentOfEspecialBrick* fragment3 = new FragmentOfEspecialBrick(especialBrick->x, especialBrick->y, 39, 39, -0.15, -0.8);
+				FragmentOfEspecialBrick* fragment4 = new FragmentOfEspecialBrick(especialBrick->x, especialBrick->y, 39, 39, 0.15, -0.8);
+				Grid::GetInstance()->DeterminedGridToObtainObject(fragment1);
+				Grid::GetInstance()->DeterminedGridToObtainObject(fragment2);
+				Grid::GetInstance()->DeterminedGridToObtainObject(fragment3);
+				Grid::GetInstance()->DeterminedGridToObtainObject(fragment4);
+			}
+		}
+	}
+	if (collisionEvent->ny != 0) {
+		vy = 0;
+		if (collisionEvent->ny < 0) {
+			if (state == ENEMY_STATE_WALKING) {
+				if (x + dx <= especialBrick->x - 20 || x + dx + KOOPA_BBOX_WIDTH >= especialBrick->x + especialBrick->w + 20) {
+					vx = -vx;
+				}
+				if (x < especialBrick->x - 20)
+					x = especialBrick->x;
+				else if (x + KOOPA_BBOX_WIDTH > especialBrick->x + especialBrick->w + 20)
+					x = especialBrick->x + especialBrick->w - KOOPA_BBOX_WIDTH;
 			}
 		}
 	}
