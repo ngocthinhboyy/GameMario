@@ -51,9 +51,10 @@ void Camera::UpdateCamPos()
 			this->cam_y = cy;
 		}
 		else {
-			if (cam_y == CAM_Y_DRAW_MAP) {
+			/*if (cam_y == CAM_Y_DRAW_MAP) {
 				cy = CAM_Y_DRAW_MAP;
-			}
+			}*/
+			cy = CAM_Y_DRAW_MAP;
 			this->cam_y = cy;
 		}
 	}

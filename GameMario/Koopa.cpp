@@ -436,7 +436,7 @@ void Koopa::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 	if (collisionEvent->ny != 0) {
 		if (collisionEvent->ny < 0) {
 			if (state != ENEMY_STATE_DIE) {
-				if (state == ENEMY_STATE_WALKING) {
+				if (state != ENEMY_STATE_WALKING_WITH_SWINGS) {
 					Point* point = new Point(x, y, 39, 30);
 					Grid* grid = Grid::GetInstance();
 					grid->DeterminedGridToObtainObject(point);

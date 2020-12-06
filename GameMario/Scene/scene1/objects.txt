@@ -55,7 +55,7 @@
 #ghost platform in the airrr
 2	3936	432	192	48	3	0	-1
 2	4224	576	192	48	3	0	-1
-2	4464	528	700	48	3	0	-1
+2	4464	528	624	48	3	0	-1
 [OBJECTS IN GRID]
 # ENEMY
 # goomba

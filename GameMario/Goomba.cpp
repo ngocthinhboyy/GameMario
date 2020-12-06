@@ -170,12 +170,20 @@ void Goomba::Update(DWORD dt, int scaleTime)
 				CollisionWithCollisionMapObject(e, collMapObj);
 			}
 			else if (Tail * tail = dynamic_cast<Tail*> (e->obj)) {
-				vx = ENEMY_DIE_SPEED_X;
+				isUpsideDown = true;
+				if (type == 2)
+					state = ENEMY_STATE_WALKING;
 				if (x < Mario::GetInstance()->x) {
 					vx = -ENEMY_DIE_SPEED_X;
 				}
+				else
+					vx = ENEMY_DIE_SPEED_X;
 				vy = -ENEMY_DIE_SPEED_Y;
-				isUpsideDown = true;
+				noCollisionConsideration = true;
+				Point* point = new Point(x, y, 39, 30);
+				Grid* grid = Grid::GetInstance();
+				grid->DeterminedGridToObtainObject(point);
+				Mario::GetInstance()->SetPoint(Mario::GetInstance()->GetPoint() + 100);
 			}
 			else if (LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
 				if (enemy->state != ENEMY_STATE_SPIN_DIE_KICK) {

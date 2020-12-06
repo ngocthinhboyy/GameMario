@@ -87,29 +87,36 @@ void Tail::CheckOverlapBoundingBox(vector<LPGAMEOBJECT> objects)
 							koopa->SetTimeDie();
 							koopa->SetState(ENEMY_STATE_DIE);
 							koopa->vy = -ENEMY_DIE_SPEED_Y - 0.2f;
-							koopa->SetIsUpsideDown(true);
-							if (mario->x > koopa->x) {
-								koopa->vx = -ENEMY_DIE_SPEED_X;
-							}
-							else {
-								koopa->vx = ENEMY_DIE_SPEED_X;
-							}
 						}
 						else if (Goomba * goomba = dynamic_cast<Goomba*> (enemy)) {
 							if (goomba->GetType() == 2)
 								goomba->SetState(ENEMY_STATE_WALKING);
-							enemy->vx = ENEMY_DIE_SPEED_X;
-							if (enemy->x < mario->x) {
-								enemy->vx = -ENEMY_DIE_SPEED_X;
-							}
-							enemy->vy = -ENEMY_DIE_SPEED_Y;
-							enemy->SetIsUpsideDown(true);
-							enemy->noCollisionConsideration = true;
+							goomba->noCollisionConsideration = true;
 						}
+						enemy->vx = ENEMY_DIE_SPEED_X;
+						if (enemy->x < mario->x) {
+							enemy->vx = -ENEMY_DIE_SPEED_X;
+						}
+						else
+							enemy->vx = ENEMY_DIE_SPEED_X;
+						enemy->vy = -ENEMY_DIE_SPEED_Y;
+						enemy->SetIsUpsideDown(true);
 						Point* point = new Point(enemy->x, enemy->y, 39, 30);
 						Grid* grid = Grid::GetInstance();
 						grid->DeterminedGridToObtainObject(point);
 						Mario::GetInstance()->SetPoint(Mario::GetInstance()->GetPoint() + 100);
+					}
+					else if (Koopa * koopa = dynamic_cast<Koopa*> (enemy)) {
+						koopa->SetTimeDie();
+						koopa->SetState(ENEMY_STATE_DIE);
+						koopa->vy = -ENEMY_DIE_SPEED_Y - 0.2f;
+						koopa->SetIsUpsideDown(true);
+						if (mario->x > koopa->x) {
+							koopa->vx = -ENEMY_DIE_SPEED_X;
+						}
+						else {
+							koopa->vx = ENEMY_DIE_SPEED_X;
+						}
 					}
 				}
 			}
