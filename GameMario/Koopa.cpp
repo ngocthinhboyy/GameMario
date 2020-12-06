@@ -129,8 +129,8 @@ void Koopa::SetAnimation()
 
 void Koopa::Update(DWORD dt, int scaleTime)
 {
-	if (state == ENEMY_STATE_DIE) {
-		if (GetTickCount64() - timeDie >= 6000) {
+	if (state == ENEMY_STATE_DIE && !isDiedByFireball) {
+		if (GetTickCount64() - timeDie >= 50000) {
 			this->nx = -1;
 			this->vx = -KOOPA_WALKING_SPEED_X;
 			this->isUpsideDown = false;
@@ -183,6 +183,8 @@ void Koopa::Update(DWORD dt, int scaleTime)
 	//	if (x->GetState() != ENEMY_STATE_DIE)
 	//		coEnemies.push_back(x);
 	//}
+	if (isHold)
+		CheckOverlapWithEnemy(coEnemies);
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -202,10 +204,10 @@ void Koopa::Update(DWORD dt, int scaleTime)
 			x += dx;
 			y += dy;
 			float cam_x, cam_y;
-			/*Camera* camera = Camera::GetInstance();
+			Camera* camera = Camera::GetInstance();
 			camera->GetCamPos(cam_x, cam_y);
-			if (y > (cam_y + SCREEN_HEIGHT))
-				stillAlive = false;*/
+			if (y > (cam_y + SCREEN_HEIGHT) && isDiedByFireball)
+				stillAlive = false;
 	}
 	else
 	{
@@ -239,6 +241,7 @@ void Koopa::Update(DWORD dt, int scaleTime)
 					}
 					enemy->vy = -ENEMY_DIE_SPEED_Y;
 					enemy->SetIsUpsideDown(true);
+					enemy->noCollisionConsideration = true;
 				}
 			}
 			else if (QuestionBrick* questionBrick = dynamic_cast<QuestionBrick*> (e->obj)) {
@@ -404,6 +407,7 @@ void Koopa::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 			if (state == ENEMY_STATE_DIE) {
 				if (mario->GetIsRunning()) {
 					isHold = true;
+					noCollisionConsideration = true;
 					mario->ChangeState(PlayerHoldingState::GetInstance());
 				}
 				else {
@@ -468,7 +472,10 @@ void Koopa::SetStartPosition()
 	this->x = this->startPositionX;
 	this->y = this->startPositionY;
 	this->nx = this->startNx;
-	this->vx = -KOOPA_WALKING_SPEED_X;
+	if (Mario::GetInstance()->x > this->startPositionX)
+		vx = KOOPA_WALKING_SPEED_X;
+	else
+		vx = -KOOPA_WALKING_SPEED_X;
 	this->isUpsideDown = false;
 	this->isDiedByFireball = false;
 	if (startTypeMove == 1) {
@@ -477,5 +484,47 @@ void Koopa::SetStartPosition()
 	else if (startTypeMove == 2) {
 
 		SetState(ENEMY_STATE_WALKING_WITH_SWINGS);
+	}
+}
+
+void Koopa::CheckOverlapWithEnemy(vector<LPGAMEOBJECT> enemies)
+{
+	for (LPGAMEOBJECT x : enemies) {
+		if (x->stillAlive && !x->noCollisionConsideration) {
+			float leftBB, rightBB, topBB, bottomBB = .0f;
+			float leftBBEnemy, rightBBEnemy, topBBEnemy, bottomBBEnemy = .0f;
+			GetBoundingBox(leftBB, topBB, rightBB, bottomBB);
+			x->GetBoundingBox(leftBBEnemy, topBBEnemy, rightBBEnemy, bottomBBEnemy);
+			float widthBB = rightBB - leftBB;
+			float heightBB = bottomBB - topBB;
+			float widthEnemy = rightBBEnemy - leftBBEnemy;
+			float heightEnemy = bottomBBEnemy - topBBEnemy;
+			if ((leftBB + widthBB >= leftBBEnemy) && (leftBBEnemy + widthEnemy >= leftBB) && (topBB + heightBB >= topBBEnemy) && (topBBEnemy + heightEnemy >= topBB)) {
+				if (LPENEMY enemy = dynamic_cast<LPENEMY> (x)) {
+					if (enemy != NULL) {
+						if (dynamic_cast<Koopa*> (enemy))
+							enemy->SetState(ENEMY_STATE_DIE);
+						if (enemy->x > Mario::GetInstance()->x) {
+							enemy->vx = ENEMY_DIE_SPEED_X;
+							vx = ENEMY_DIE_SPEED_X;
+						}
+						else {
+							enemy->vx = -ENEMY_DIE_SPEED_X;
+							vx = -ENEMY_DIE_SPEED_X;
+						}
+						enemy->vy = -ENEMY_DIE_SPEED_Y;
+						enemy->SetIsUpsideDown(true);
+						enemy->noCollisionConsideration = true;
+						noCollisionConsideration = true;
+						vy = -ENEMY_DIE_SPEED_Y;
+						isHold = false;
+						isUpsideDown = true;
+						isDiedByFireball = true;
+						Mario::GetInstance()->ChangeState(PlayerStandingState::GetInstance());
+
+					}
+				}
+			}
+		}
 	}
 }

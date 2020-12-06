@@ -106,7 +106,7 @@ void Leaf::Update(DWORD dt, int scaleTime)
 			mario->vx = 0;
 			mario->vy = 0;
 		}
-		mario->y -= 50;
+		mario->y -= 5;
 		mario->SetPoint(mario->GetPoint() + MARIO_BONUS_POINT_LEAF);
 		this->stillAlive = false;
 
@@ -137,7 +137,7 @@ void Leaf::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 		mario->vx = 0;
 		mario->vy = 0;
 	}
-	mario->y -= 50;
+	mario->y -= 5;
 	mario->SetPoint(mario->GetPoint() + MARIO_BONUS_POINT_LEAF);
 	this->stillAlive = false;
 

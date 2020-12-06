@@ -106,13 +106,11 @@ void Goomba::Render()
 	if (animation != NULL) {
 		animation->Render(x, y, alpha, scale);
 	}
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void Goomba::Update(DWORD dt, int scaleTime)
 {
-	//DebugOut(L"GOOMBA NE \n");
-
 	if (state == ENEMY_STATE_DIE) {
 		if (GetTickCount64() - timeDie >= 200) {
 			stillAlive = false;
@@ -130,6 +128,7 @@ void Goomba::Update(DWORD dt, int scaleTime)
 	//vector<LPGAMEOBJECT> coEnemies = scene->enemies;
 	vector<LPGAMEOBJECT> coCollisionMapObjects = scene->collisionMapObjects;
 	vector<LPGAMEOBJECT> coObjects = scene->objects;
+	vector<LPGAMEOBJECT> coEnemies = scene->enemies;
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
@@ -137,7 +136,7 @@ void Goomba::Update(DWORD dt, int scaleTime)
 	if (!isUpsideDown) {
 		CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
 		CalcPotentialCollisions(&coObjects, coEvents);
-		//CalcPotentialCollisions(&coEnemies, coEvents);
+		CalcPotentialCollisions(&coEnemies, coEvents);
 		//CalcPotentialCollisions(Mario::GetInstance(), coEvents);
 	}
 	if (coEvents.size() == 0 || isUpsideDown)
@@ -179,8 +178,15 @@ void Goomba::Update(DWORD dt, int scaleTime)
 				isUpsideDown = true;
 			}
 			else if (LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
-				vx = -vx;
-				enemy->vx = -enemy->vx;
+				if (enemy->state != ENEMY_STATE_SPIN_DIE_KICK) {
+					if (e->nx != 0) {
+						vx = -vx;
+						enemy->vx = -enemy->vx;
+					}
+					if (e->ny != 0) {
+						vy = 0;
+					}
+				}
 			}
 			else if (QuestionBrick* brick = dynamic_cast<QuestionBrick*> (e->obj)) {
 				if (e->ny != 0) vy = 0;
@@ -323,7 +329,10 @@ void Goomba::SetStartPosition()
     x = this->startPositionX;
 	y = this->startPositionY; 
 	isUpsideDown = false;
-	vx = -GOOMBA_WALKING_SPEED;
+	if (Mario::GetInstance()->x > this->startPositionX)
+		vx = GOOMBA_WALKING_SPEED;
+	else
+		vx = -GOOMBA_WALKING_SPEED;
 	if (type == 1)
 		SetState(ENEMY_STATE_WALKING);
 	else if (type == 2) {

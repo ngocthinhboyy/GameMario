@@ -49,7 +49,7 @@ void Coin::Update(DWORD dt, int scaleTime)
 		if (!isBonused) {
 			vy += ITEM_GRAVITY * dt;
 			GameObject::Update(dt, scaleTime);
-			if (y + dy >= startPositionY) {
+			if (y + dy + 10 >= startPositionY) {
 				mario->SetPoint(mario->GetPoint() + MARIO_BONUS_POINT_COIN);
 				this->isBonused = true;
 				this->stillAlive = false;

@@ -132,7 +132,7 @@ void Fireball::Update(DWORD dt, int scaleTime)
 				else if (LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
 					isDie = true;
 					if (Koopa* koopa = dynamic_cast<Koopa*> (enemy)) {
-						enemy->SetState(ENEMY_STATE_DIE);
+						koopa->SetState(ENEMY_STATE_DIE);
 						koopa->SetIsDiedByFireball();
 					}
 					if (enemy->x > Mario::GetInstance()->x) {
@@ -143,6 +143,7 @@ void Fireball::Update(DWORD dt, int scaleTime)
 					}
 					enemy->vy = -ENEMY_DIE_SPEED_Y;
 					enemy->SetIsUpsideDown(true);
+					enemy->noCollisionConsideration = true;
 				}
 				else {
 					if (e->nx != 0) {
@@ -216,8 +217,10 @@ bool Fireball::IsOverlapWithEnemy(vector<LPGAMEOBJECT> enemies)
 				LPENEMY enemy = dynamic_cast<LPENEMY> (x);
 				if (enemy != NULL) {
 					isDie = true;
-					if (dynamic_cast<Koopa*> (enemy))
-						enemy->SetState(ENEMY_STATE_DIE);
+					if (Koopa * koopa = dynamic_cast<Koopa*> (enemy)) {
+						koopa->SetState(ENEMY_STATE_DIE);
+						koopa->SetIsDiedByFireball();
+					}
 					if (enemy->x > Mario::GetInstance()->x) {
 						enemy->vx = ENEMY_DIE_SPEED_X;
 					}
@@ -226,6 +229,7 @@ bool Fireball::IsOverlapWithEnemy(vector<LPGAMEOBJECT> enemies)
 					}
 					enemy->vy = -ENEMY_DIE_SPEED_Y;
 					enemy->SetIsUpsideDown(true);
+					enemy->noCollisionConsideration = true;
 					return true;
 				}
 			}

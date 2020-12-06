@@ -159,7 +159,7 @@ void Grid::GetListObjectInCamera()
 	}
 	if (bottom > 4)
 		bottom = 4;
-
+	vector<LPGAMEOBJECT> itemsInGame;
 	for (int i = top; i <= bottom + 1; i++)
 		for (int j = left - 3 ; j <= right + 3; j++) {
 			for (int k = 0; k < cells[i][j].size(); k++) {
@@ -172,6 +172,12 @@ void Grid::GetListObjectInCamera()
 								enemies.push_back(enemy);
 							}
 						}
+						else if (LPITEM item = dynamic_cast<LPITEM> (cells[i][j].at(k))) {
+							if (!item->GetInGrid()) {
+								item->SetInGrid(true);
+								itemsInGame.push_back(item);
+							}
+						}
 						else if (!cells[i][j].at(k)->GetInGrid()) {
 							cells[i][j].at(k)->SetInGrid(true);
 							objects.push_back(cells[i][j].at(k));
@@ -180,6 +186,9 @@ void Grid::GetListObjectInCamera()
 				}
 			}
 		}
+	for (auto x : itemsInGame)
+		objects.push_back(x);
+	itemsInGame.clear();
 	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 	scene->enemies = enemies;
 	scene->objects = objects;

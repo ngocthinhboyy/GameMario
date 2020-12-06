@@ -149,6 +149,7 @@ void PlayerHoldingState::KeyState(BYTE* states)
 			koopa->x += KOOPA_KICKING_AFTER_HOLDING_DISTANCE_X * (mario->nx);
 			koopa->y += KOOPA_KICKING_AFTER_HOLDING_DISTANCE_Y;
 			koopa->SetIsHold(false);
+			koopa->noCollisionConsideration = false;
 			isMaxSpeed = false;
 			increaseSpeed = true;
 			mario->ChangeState(PlayerKickingState::GetInstance());

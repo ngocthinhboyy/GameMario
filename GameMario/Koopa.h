@@ -24,6 +24,7 @@ public:
 	void CollisionWithEspecialBrick(LPCOLLISIONEVENT collisionEvent, EspecialBrick* especialBrick);
 	void CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent);
 	void SetStartPosition();
+	void CheckOverlapWithEnemy(vector<LPGAMEOBJECT> enemies);
 	//void CollisionWithAnotherEnemy(DWORD dt, vector<LPENEMY>* enemies = NULL);
 };
 

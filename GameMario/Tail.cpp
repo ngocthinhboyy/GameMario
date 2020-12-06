@@ -102,6 +102,7 @@ void Tail::CheckOverlapBoundingBox(vector<LPGAMEOBJECT> objects)
 							}
 							enemy->vy = -ENEMY_DIE_SPEED_Y;
 							enemy->SetIsUpsideDown(true);
+							enemy->noCollisionConsideration = true;
 						}
 						Point* point = new Point(enemy->x, enemy->y, 39, 30);
 						Grid* grid = Grid::GetInstance();

@@ -6,6 +6,8 @@
 #include "Fireball.h"
 #include "Grid.h"
 #include "DynamicObjectDefine.h"
+#include "PlayerLevelDownTransformState.h"
+#include "PlayScene.h"
 
 Flower::Flower()
 {
@@ -74,7 +76,7 @@ void Flower::Render()
 		animation = animationDatabase->Get(2601);
 		animation->Render(5376, 1152, 255, scalePipe);
 	}
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void Flower::Update(DWORD dt, int scaleTime)
@@ -183,4 +185,22 @@ void Flower::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LP
 
 void Flower::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 {
+	if (collisionEvent->nx != 0) {
+		Mario::GetInstance()->vx = 0;
+		if (Mario::GetInstance()->GetLevel() >= 2) {
+			Mario::GetInstance()->StartUntouchable();
+			Mario::GetInstance()->ChangeState(PlayerLevelDownTransformState::GetInstance());
+			PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+			scene->StopGame(1000);
+		}
+	}
+	if (collisionEvent->ny != 0) {
+		Mario::GetInstance()->vy = 0;
+		if (Mario::GetInstance()->GetLevel() >= 2) {
+			Mario::GetInstance()->StartUntouchable();
+			Mario::GetInstance()->ChangeState(PlayerLevelDownTransformState::GetInstance());
+			PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+			scene->StopGame(1000);
+		}
+	}
 }

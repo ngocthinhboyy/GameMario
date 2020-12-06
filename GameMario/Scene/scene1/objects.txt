@@ -2,7 +2,7 @@
 # type	x	y	w	h	ani_set_id	extra_settings per object type
 # type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas
 # MARIO
-0	5750	1100	0	0	1
+0	0	0	0	0	1
 #object_type_id	x	y	w	h	animation_sets	collisionX	collisionY
 # COLLISION MAP
 2	1056	1104	96	144	0	2	2
@@ -87,8 +87,8 @@
 5	4416	1104	48	48	2	2
 #flowerrrrrr
 6	1080	1106	48	96	10	1
-#6	5592	1106	48	72	10	2
-#6	5400	1154	48	67	10	3
+6	5592	1106	48	72	10	2
+6	5400	1154	48	67	10	3
 # static coin
 #id	x	y	w	h
 7	3216	955	14	16	7	2

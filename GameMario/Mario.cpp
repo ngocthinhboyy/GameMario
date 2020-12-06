@@ -202,16 +202,16 @@ void Mario::Update(DWORD dt, int scaleTime)
 			else if (Fireball* fireball = dynamic_cast<Fireball*> (e->obj)) {
 				if (untouchable) {
 					if (e->nx != 0)
-						x -= min_tx * dx + nx * 0.4f;
+						x += dx;
 					if (e->ny != 0)
-						y -= min_ty * dy + ny * 0.4f;
+						y += dy;
 				}
 				else
 				{
 					if (e->nx != 0)
-						x -= min_tx * dx + nx * 0.4f;
+						x += dx;
 					if (e->ny != 0)
-						y -= min_ty * dy + ny * 0.4f;
+						y += dy;
 					if (level >= 2) {
 						StartUntouchable();
 						ChangeState(PlayerLevelDownTransformState::GetInstance());
@@ -270,8 +270,12 @@ void Mario::Render()
 		scale = D3DXVECTOR2(RATIO_X_FLIP_SCALE, RATIO_Y_SCALE);
 	else
 		scale = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_SCALE);
-	if(ani != NULL)
-		ani->Render(x, y, alpha, scale,offset);
+	if (ani != NULL) {
+		if (isCrouching)
+			ani->Render(x, y - 5, alpha, scale, offset);
+		else
+			ani->Render(x, y, alpha, scale, offset);
+	}
 	//RenderBoundingBox();
 }
 

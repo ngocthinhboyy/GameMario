@@ -12,6 +12,7 @@ Point::Point(float x, float y, float w, float h)
 	this->vy = -0.5f;
 	this->gameObjectID = idGenerate++;
 	timeAppearance = GetTickCount64();
+	this->noCollisionConsideration = true;
 }
 
 void Point::Update(DWORD dt, int scaleTime)

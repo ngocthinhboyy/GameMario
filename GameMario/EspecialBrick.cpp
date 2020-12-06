@@ -48,7 +48,7 @@ void EspecialBrick::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 
 void EspecialBrick::Render()
 {
-	int alpha = 255;
+	int alpha = 200;
 	D3DXVECTOR2 scale;
 	scale = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_SCALE);
 	animation = AnimationDatabase::GetInstance()->Get(ESPECIAL_BRICK_ANI);
