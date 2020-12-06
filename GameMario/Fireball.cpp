@@ -135,6 +135,12 @@ void Fireball::Update(DWORD dt, int scaleTime)
 						koopa->SetState(ENEMY_STATE_DIE);
 						koopa->SetIsDiedByFireball();
 					}
+					else if (Goomba * goomba = dynamic_cast<Goomba*> (enemy)) {
+						if (goomba->GetType() == 2)
+							goomba->SetState(ENEMY_STATE_WALKING);
+					}
+					else
+						enemy->stillAlive = false;
 					if (enemy->x > Mario::GetInstance()->x) {
 						enemy->vx = ENEMY_DIE_SPEED_X;
 					}
@@ -221,6 +227,12 @@ bool Fireball::IsOverlapWithEnemy(vector<LPGAMEOBJECT> enemies)
 						koopa->SetState(ENEMY_STATE_DIE);
 						koopa->SetIsDiedByFireball();
 					}
+					else if (Goomba * goomba = dynamic_cast<Goomba*> (enemy)) {
+						if (goomba->GetType() == 2)
+							goomba->SetState(ENEMY_STATE_DIE);
+					}
+					else
+						enemy->stillAlive = false;
 					if (enemy->x > Mario::GetInstance()->x) {
 						enemy->vx = ENEMY_DIE_SPEED_X;
 					}

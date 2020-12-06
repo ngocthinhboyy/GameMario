@@ -20,6 +20,7 @@ public:
 	void CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent);
 	void SetStartPosition();
 	void ChangeStateRedGoomba();
+	int GetType() { return this->type; };
 	//void CollisionWithAnotherEnemy(DWORD dt, vector<LPENEMY>* enemies = NULL);
 };
 

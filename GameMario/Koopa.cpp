@@ -436,15 +436,25 @@ void Koopa::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 	if (collisionEvent->ny != 0) {
 		if (collisionEvent->ny < 0) {
 			if (state != ENEMY_STATE_DIE) {
-				Game* game = Game::GetInstance();
-				Point* point = new Point(x, y, 39, 30);
-				Grid* grid = Grid::GetInstance();
-				grid->DeterminedGridToObtainObject(point);
-				mario->SetPoint(mario->GetPoint() + 100);
-				state = ENEMY_STATE_DIE;
-				mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
-				vx = 0;
-				SetTimeDie();
+				if (state == ENEMY_STATE_WALKING) {
+					Point* point = new Point(x, y, 39, 30);
+					Grid* grid = Grid::GetInstance();
+					grid->DeterminedGridToObtainObject(point);
+					mario->SetPoint(mario->GetPoint() + 100);
+					state = ENEMY_STATE_DIE;
+					mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
+					vx = 0;
+					SetTimeDie();
+				}
+				else if (state == ENEMY_STATE_WALKING_WITH_SWINGS) {
+					Point* point = new Point(x, y, 39, 30);
+					Grid* grid = Grid::GetInstance();
+					grid->DeterminedGridToObtainObject(point);
+					state = ENEMY_STATE_WALKING;
+					mario->SetPoint(mario->GetPoint() + 100);
+					vy = 0;
+					mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
+				}
 			}
 			else if (state == ENEMY_STATE_DIE) {
 				mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
@@ -502,8 +512,10 @@ void Koopa::CheckOverlapWithEnemy(vector<LPGAMEOBJECT> enemies)
 			if ((leftBB + widthBB >= leftBBEnemy) && (leftBBEnemy + widthEnemy >= leftBB) && (topBB + heightBB >= topBBEnemy) && (topBBEnemy + heightEnemy >= topBB)) {
 				if (LPENEMY enemy = dynamic_cast<LPENEMY> (x)) {
 					if (enemy != NULL) {
-						if (dynamic_cast<Koopa*> (enemy))
-							enemy->SetState(ENEMY_STATE_DIE);
+						if (Koopa * koopa = dynamic_cast<Koopa*> (enemy)) {
+							koopa->SetState(ENEMY_STATE_DIE);
+							koopa->SetIsDiedByFireball();
+						}
 						if (enemy->x > Mario::GetInstance()->x) {
 							enemy->vx = ENEMY_DIE_SPEED_X;
 							vx = ENEMY_DIE_SPEED_X;

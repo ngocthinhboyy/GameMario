@@ -95,7 +95,9 @@ void Tail::CheckOverlapBoundingBox(vector<LPGAMEOBJECT> objects)
 								koopa->vx = ENEMY_DIE_SPEED_X;
 							}
 						}
-						else {
+						else if (Goomba * goomba = dynamic_cast<Goomba*> (enemy)) {
+							if (goomba->GetType() == 2)
+								goomba->SetState(ENEMY_STATE_WALKING);
 							enemy->vx = ENEMY_DIE_SPEED_X;
 							if (enemy->x < mario->x) {
 								enemy->vx = -ENEMY_DIE_SPEED_X;
