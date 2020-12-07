@@ -69,6 +69,7 @@
     <ClCompile Include="PlaySceneKeyHandler.cpp" />
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="QuestionBrick.cpp" />
+    <ClCompile Include="RandomGift.cpp" />
     <ClCompile Include="ResourcesSharedLoad.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -136,6 +137,7 @@
     <ClInclude Include="PlaySceneKeyHandler.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="QuestionBrick.h" />
+    <ClInclude Include="RandomGift.h" />
     <ClInclude Include="ResourcesSharedLoad.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneKeyHandler.h" />

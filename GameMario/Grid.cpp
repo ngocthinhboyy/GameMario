@@ -12,6 +12,7 @@
 #include "Flower.h"
 #include "Coin.h"
 #include "Gate.h"
+#include "RandomGift.h"
 
 Grid* Grid::__instance = NULL;
 void Grid::LoadObjectInSceneAddToGrid(string line)
@@ -114,6 +115,15 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 	case OBJECT_TYPE_ESPECIAL_BRICK: {
 		int type = atoi(tokens[6].c_str());
 		obj = new EspecialBrick(x, y, w, h, type);
+		obj->SetPosition(x, y);
+		ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
+		DeterminedGridToObtainObject(obj);
+		break;
+	}
+	case OBJECT_TYPE_RANDOM_GIFT: {
+		obj = new RandomGift(x, y, w, h);
 		obj->SetPosition(x, y);
 		ani_set = animation_sets->Get(ani_set_id);
 

@@ -27,6 +27,7 @@
 #include "PlayerMovingDownAndUpState.h"
 #include "EspecialBrick.h"
 #include "ButtonP.h"
+#include "RandomGift.h"
 
 Mario* Mario::Mario::__instance = NULL;
 Mario* Mario::GetInstance() {
@@ -190,7 +191,7 @@ void Mario::Update(DWORD dt, int scaleTime)
 				else
 					questionBrick->CollisionWithPlayer(e);
 			}
-			else if (EspecialBrick * especialBrick = dynamic_cast<EspecialBrick*> (e->obj)) {
+			else if (EspecialBrick* especialBrick = dynamic_cast<EspecialBrick*> (e->obj)) {
 				if (e->nx != 0) {
 					PlayerRunningState::lastStateIsSkidding = true;
 					Mario* mario = Mario::GetInstance();
@@ -219,8 +220,11 @@ void Mario::Update(DWORD dt, int scaleTime)
 					}
 				}
 			}
-			else if (ButtonP * buttonP = dynamic_cast<ButtonP*> (e->obj)) {
+			else if (ButtonP* buttonP = dynamic_cast<ButtonP*> (e->obj)) {
 				buttonP->CollisionWithPlayer(e);
+			}
+			else if (RandomGift* randomGift = dynamic_cast<RandomGift*> (e->obj)) {
+				randomGift->CollisionWithPlayer(e);
 			}
 			/*else {
 				if (e->nx != 0) vx = 0;

@@ -11,6 +11,7 @@
 9	textures\fragment.png	163	73	164
 10	textures\ongcong_den.png	255	255	255
 11	textures\ongcong2.png	255	255	255
+12	textures\roulette.png	0	183	239
 # id	left	top	width	height	texture_id
 [SPRITES]
 # SMALL MARIO
@@ -302,6 +303,29 @@
 29002	178	144	16	16	2
 29003	200	153	16	7	2
 
+#MUSHROOM
+30001	156	121	16	16	2
+# random bonus (white star)
+31001	201	121	16	16	2
+# (fire flower)
+32001	309	121	16	16	2
+# random bonus (mushroom which mario got)
+33001	257	373	16	16	12
+33002	449	377	16	16	12
+33003	470	401	16	16	12
+
+# random bonus (star which mario got)
+34001	297	373	16	16	12
+34002	491	377	16	16	12
+34003	470	401	16	16	12
+
+# random bonus (flower which mario got)
+35001	277	374	16	16	12
+35002	470	377	16	16	12
+35003	470	401	16	16	12
+#RANDOM_BOX
+36001	119	88	26	26	12
+
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
 # ==== MARIO =========
@@ -535,6 +559,14 @@
 
 #ONGCONGDEN
 2401	24001	50
+#
+3001	30001	50
+3101	31001	50
+3201	32001	50
+3301	33001	50	33002	50	33003	50
+3401	34001	50	34002	50	34003	50
+3501	35001	50	35002	50	35003	50
+3601	36001	50
 
 #ESPECIALBRICK
 2701	27001	50	27002	50	27003	50	27004	50
@@ -578,4 +610,5 @@
 15	2801
 #CHU P
 16	2901	2902
-
+#CARD
+17	3001	3101	3201	3301	3401	3501	3601

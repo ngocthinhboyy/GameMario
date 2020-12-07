@@ -22,7 +22,7 @@ void Animation::Add(int spriteId, DWORD time)
 //bool Animation::isLastFrame = false;
 void Animation::Render(float x, float y, int alpha, D3DXVECTOR2 scale, int offset)
 {
-	DWORD now = GetTickCount();
+	DWORD now = GetTickCount64();
 	if (currentFrame == -1)
 	{
 		currentFrame = 0;
