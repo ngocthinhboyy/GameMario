@@ -101,7 +101,9 @@ void Mushroom::Update(DWORD dt, int scaleTime)
 				mario->ChangeState(PlayerBonusTransformState::GetInstance());
 				mario->vx = 0;
 				mario->vy = 0;
-				mario->y -= 50;
+				//mario->y -= 5;
+				PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+				scene->StopGame(1000);
 				mario->SetPoint(mario->GetPoint() + MARIO_BONUS_POINT_LEAF);
 				this->stillAlive = false;
 			}
@@ -126,7 +128,9 @@ void Mushroom::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 	mario->ChangeState(PlayerBonusTransformState::GetInstance());
 	mario->vx = 0;
 	mario->vy = 0;
-	mario->y -= 50;
+	//mario->y -= 5;
+	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+	scene->StopGame(1000);
 	mario->SetPoint(mario->GetPoint() + MARIO_BONUS_POINT_LEAF);
 	this->stillAlive = false;
 }

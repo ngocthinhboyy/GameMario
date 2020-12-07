@@ -102,7 +102,7 @@ void Leaf::Update(DWORD dt, int scaleTime)
 		{
 			mario->ChangeState(PlayerBonusTransformState::GetInstance());
 			PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
-			scene->StopGame(700);
+			scene->StopGame(1000);
 			mario->vx = 0;
 			mario->vy = 0;
 		}
@@ -133,7 +133,7 @@ void Leaf::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 	{
 		mario->ChangeState(PlayerBonusTransformState::GetInstance());
 		PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
-		scene->StopGame(700);
+		scene->StopGame(1000);
 		mario->vx = 0;
 		mario->vy = 0;
 	}

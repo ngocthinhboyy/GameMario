@@ -124,6 +124,8 @@ void PlayerRunningState::KeyState(BYTE* states)
 		return;
 	}
 	if (game->IsKeyDown(DIK_A)) {
+		if (isCrouching)
+			return;
 		if (abs(mario->vx) >= MARIO_RUNNING_MAX_SPEED) {
 			SetAnimation();
 			isMaxSpeed = true;
@@ -276,14 +278,16 @@ void PlayerRunningState::OnKeyDown(int KeyCode)
 	}
 	case DIK_A: {
 		if (mario->GetLevel() == MARIO_LEVEL_RACCOON) {
-			isMaxSpeed = false;
-			increaseSpeed = true;
-			prevKeyIsLeft = false;
-			isCrouching = false;
-			prevKeyIsRight = false;
-			isSkidding = false;
-			mario->SetIsRunning(false);
-			mario->ChangeState(PlayerSpinningState::GetInstance());
+			if (!isCrouching) {
+				isMaxSpeed = false;
+				increaseSpeed = true;
+				prevKeyIsLeft = false;
+				isCrouching = false;
+				prevKeyIsRight = false;
+				isSkidding = false;
+				mario->SetIsRunning(false);
+				mario->ChangeState(PlayerSpinningState::GetInstance());
+			}
 		}
 		break;
 	default:

@@ -135,22 +135,24 @@ void PlayerWalkingState::KeyState(BYTE* states) {
 		return;
 	}
 	if (game->IsKeyDown(DIK_A)) {
-		if (mario->GetLevel() == MARIO_LEVEL_RACCOON) {
+		if (!mario->GetIsCrouChing()) {
+			if (mario->GetLevel() == MARIO_LEVEL_RACCOON) {
+				isSlow = false;
+				mario->SetIsCrouching(false);
+				mario->ChangeState(PlayerSpinningState::GetInstance());
+				return;
+			}
+			else if (mario->GetLevel() == MARIO_LEVEL_FIRE) {
+				isSlow = false;
+				mario->SetIsCrouching(false);
+				mario->ChangeState(PlayerThrowingFireballState::GetInstance());
+				return;
+			}
 			isSlow = false;
 			mario->SetIsCrouching(false);
-			mario->ChangeState(PlayerSpinningState::GetInstance());
+			mario->ChangeState(PlayerRunningState::GetInstance());
 			return;
 		}
-		else if (mario->GetLevel() == MARIO_LEVEL_FIRE) {
-			isSlow = false;
-			mario->SetIsCrouching(false);
-			mario->ChangeState(PlayerThrowingFireballState::GetInstance());
-			return;
-		}
-		isSlow = false;
-		mario->SetIsCrouching(false);
-		mario->ChangeState(PlayerRunningState::GetInstance());
-		return;
 	}
 	if (game->IsKeyDown(DIK_RIGHT) && game->IsKeyDown(DIK_LEFT)) {
 		isSlow = true;

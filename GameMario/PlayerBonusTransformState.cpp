@@ -49,6 +49,7 @@ void PlayerBonusTransformState::KeyState(BYTE* states)
 	if (isLastFrame) {
 		animation->ResetAnimation();
 		mario->SetLevel(mario->GetLevel() + 1);
+		countTransform = 0;
 		stateWhenGrowingUp = STATE_MARIO_SMALL;
 		Mario::GetInstance()->SetIsGrowingUp(false);
 		mario->ChangeState(PlayerStandingState::GetInstance());
