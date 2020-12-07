@@ -23,6 +23,7 @@ class Mario : public GameObject
 	bool isOnGround = true;
 	bool isSpinning = false;
 	bool isFlying = false;
+	bool isGrowingUp = false;
 	int heart = 4;
 	int point = 0;
 	int coin = 0;
@@ -46,6 +47,8 @@ public:
 
 	bool GetIsMovingIntoGate() { return this->isMovingIntoGate; };
 	void SetIsMovingIntoGate(bool isMovingIntoGate) { this->isMovingIntoGate = isMovingIntoGate; };
+
+	void SetIsGrowingUp(bool isGrowingUp) { this->isGrowingUp = isGrowingUp; };
 
 
 	//void SetState(int state);

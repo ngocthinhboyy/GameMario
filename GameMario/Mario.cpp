@@ -28,6 +28,7 @@
 #include "EspecialBrick.h"
 #include "ButtonP.h"
 #include "RandomGift.h"
+#include "PlayerBonusTransformState.h"
 
 Mario* Mario::Mario::__instance = NULL;
 Mario* Mario::GetInstance() {
@@ -270,17 +271,26 @@ void Mario::Render()
 	else {
 		offset = 0;
 	}
-	if (nx < 1)
-		scale = D3DXVECTOR2(RATIO_X_FLIP_SCALE, RATIO_Y_SCALE);
-	else
-		scale = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_SCALE);
+	if (isGrowingUp) {
+		offset = 0;
+		if (nx < 1)
+			scale = D3DXVECTOR2(-1, 1);
+		else
+			scale = D3DXVECTOR2(1, 1);
+	}
+	else {
+		if (nx < 1)
+			scale = D3DXVECTOR2(RATIO_X_FLIP_SCALE, RATIO_Y_SCALE);
+		else
+			scale = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_SCALE);
+	}
 	if (ani != NULL) {
 		if (isCrouching)
 			ani->Render(x, y - 5, alpha, scale, offset);
 		else
 			ani->Render(x, y, alpha, scale, offset);
 	}
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 //void Mario::SetState(int state)
@@ -292,7 +302,6 @@ void Mario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 
 	if (level == MARIO_LEVEL_BIG || level == MARIO_LEVEL_FIRE)
 	{
-
 		if (isCrouching) {
 			left = x;
 			top = y;
@@ -326,10 +335,28 @@ void Mario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 	}
 	else if(level == MARIO_LEVEL_SMALL)
 	{
-		left = x;
-		top = y;
-		right = left + MARIO_SMALL_BBOX_WIDTH;
-		bottom = top + MARIO_SMALL_BBOX_HEIGHT;
+		if (isGrowingUp) {
+			left = x;
+			top = y;
+			if (PlayerBonusTransformState::stateWhenGrowingUp == STATE_MARIO_SMALL) {
+				right = left + 36;
+				bottom = top + 45;
+			}
+			else if (PlayerBonusTransformState::stateWhenGrowingUp == STATE_MARIO_MIDDLE) {
+				right = left + 42;
+				bottom = top + 57;
+			}
+			else if (PlayerBonusTransformState::stateWhenGrowingUp == STATE_MARIO_BIG) {
+				right = left + 42;
+				bottom = top + 81;
+			}
+		}
+		else {
+			left = x;
+			top = y;
+			right = left + MARIO_SMALL_BBOX_WIDTH;
+			bottom = top + MARIO_SMALL_BBOX_HEIGHT;
+		}
 	}
 }
 

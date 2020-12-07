@@ -49,14 +49,57 @@ void PlayerBonusTransformState::KeyState(BYTE* states)
 	if (isLastFrame) {
 		animation->ResetAnimation();
 		mario->SetLevel(mario->GetLevel() + 1);
+		stateWhenGrowingUp = STATE_MARIO_SMALL;
+		Mario::GetInstance()->SetIsGrowingUp(false);
 		mario->ChangeState(PlayerStandingState::GetInstance());
+	} else if(mario->GetLevel() == MARIO_LEVEL_SMALL) {
+		DWORD now = GetTickCount64();
+		if (now - startTransform >= 80) {
+			if (stateWhenGrowingUp == STATE_MARIO_SMALL) {
+				stateWhenGrowingUp = STATE_MARIO_MIDDLE;
+				mario->y -= 12;
+				mario->h = 57;
+				startTransform = now;
+				countTransform++;
+			}
+			else if(stateWhenGrowingUp == STATE_MARIO_MIDDLE) {
+				if (countTransform < 5) {
+					stateWhenGrowingUp = STATE_MARIO_SMALL;
+					mario->y += 12;
+					mario->h = 45;
+					startTransform = now;
+					countTransform++;
+				}
+				else {
+					stateWhenGrowingUp = STATE_MARIO_BIG;
+					mario->y -= 24;
+					mario->h = 81;
+					startTransform = now;
+					countTransform++;
+				}
+			}
+			else if (stateWhenGrowingUp == STATE_MARIO_BIG) {
+				if (countTransform < 8) {
+					mario->y += 24;
+					mario->h = 57;
+					stateWhenGrowingUp = STATE_MARIO_MIDDLE;
+					startTransform = now;
+					countTransform++;
+				}
+			}
+		}
 	}
 }
 
 DWORD PlayerBonusTransformState::startTransform = 0;
+int PlayerBonusTransformState::stateWhenGrowingUp = STATE_MARIO_SMALL;
 PlayerState* PlayerBonusTransformState::GetInstance()
 {
 	if (__instance == NULL) __instance = new PlayerBonusTransformState();
+	if (Mario::GetInstance()->GetLevel() == MARIO_LEVEL_SMALL) {
+		stateWhenGrowingUp = STATE_MARIO_SMALL;
+		Mario::GetInstance()->SetIsGrowingUp(true);
+	}
 	SetAnimation();
 	startTransform = GetTickCount64();
 	return __instance;

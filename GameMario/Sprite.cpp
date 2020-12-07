@@ -19,8 +19,8 @@ void Sprite::Draw(float x, float y, int alpha, D3DXVECTOR2 scale,int offset)
 
 	float cam_x, cam_y;
 	camera->GetCamPos(cam_x, cam_y);
-	x = x + (right*3 - left*3) / 2;
-	y = y + (bottom*3 - top*3) / 2;
+	x = x + (right * abs(scale.x) - left * abs(scale.x)) / 2;
+	y = y + (bottom * abs(scale.y) -top * abs(scale.y)) / 2;
 	D3DXVECTOR3 p(x - cam_x, y - cam_y, 0);
 
 	RECT r;
@@ -28,10 +28,7 @@ void Sprite::Draw(float x, float y, int alpha, D3DXVECTOR2 scale,int offset)
 	r.top = this->top;
 	r.right = this->right;
 	r.bottom = this->bottom;
-	if(scale.x >= 0)
-		D3DXMatrixTransformation2D(&newMatrix, &D3DXVECTOR2(p.x, p.y), 0, &scale, NULL, NULL, NULL);
-	else
-		D3DXMatrixTransformation2D(&newMatrix, &D3DXVECTOR2(p.x, p.y), 0, &scale, NULL, NULL, NULL);
+	D3DXMatrixTransformation2D(&newMatrix, &D3DXVECTOR2(p.x, p.y), 0, &scale, NULL, NULL, NULL);
 
 	D3DXVECTOR3 center = D3DXVECTOR3((float)(right - left) / 2 + offset, (float)(bottom - top) / 2, 0);
 	D3DXMATRIX oldMatrix;

@@ -5,8 +5,10 @@ class PlayerBonusTransformState : PlayerState
 	static PlayerState* __instance;
 	bool isSlow = false;
 	static DWORD startTransform;
+	int countTransform = 0;
 public:
 	PlayerBonusTransformState();
+	static int stateWhenGrowingUp;
 	static void SetAnimation();
 	void Update(int dt);
 	void KeyState(BYTE* states);
