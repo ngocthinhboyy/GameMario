@@ -88,7 +88,8 @@ void PlayerFallingState::KeyState(BYTE* states)
 	Mario* mario = Mario::GetInstance();
 	Game* game = Game::GetInstance();
 	if (game->IsKeyDown(DIK_DOWN)) {
-		mario->SetIsCrouching(true);
+		if(mario->GetLevel() != MARIO_LEVEL_SMALL)
+			mario->SetIsCrouching(true);
 	}
 	else {
 		mario->SetIsCrouching(false);

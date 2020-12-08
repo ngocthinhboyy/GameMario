@@ -23,6 +23,7 @@ class BoardGame
 	vector<LPSPRITE> fonts;
 	vector<LPSPRITE> cards;
 	vector<ComponentPositionInBoard*> componentPositionInBoards;
+	ComponentPositionInBoard* componentCardInBoards;
 	Panel panelBoardGame;
 public:
 	void LoadBoardGameItems(LPCWSTR filePath);
@@ -34,6 +35,8 @@ public:
 
 	void UpdateBoardGame();
 	void RenderBoardGame();
+
+	void SetIdCardForCardInBoard(int idCard) { componentCardInBoards->idFontRender = idCard; };
 
 	void SetWorldInBoardGame(int world);
 	void SetSpeedInBoardGame(float speed);

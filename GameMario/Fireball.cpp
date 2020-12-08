@@ -91,13 +91,15 @@ void Fireball::Update(DWORD dt, int scaleTime)
 	
 	if (type == 1 && IsOverlapWithEnemy(coEnemies))
 		return;
+	if (type == 1) {
+		CalcPotentialCollisions(&coObjects, coEvents);
+		CalcPotentialCollisions(&coEnemies, coEvents);
+		CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
+	}
 
 	coEvents.clear();
-	CalcPotentialCollisions(&coObjects, coEvents);
-	CalcPotentialCollisions(&coEnemies, coEvents);
-	CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
 
-	if (coEvents.size() == 0)
+	if (coEvents.size() == 0 || type == 2)
 	{
 		x += dx;
 		y += dy;
@@ -115,65 +117,53 @@ void Fireball::Update(DWORD dt, int scaleTime)
 		float rdx = 0;
 		float rdy = 0;
 
-
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
 
 		int coEventsSize = coEventsResult.size();
-		if (type == 1) {
-			for (UINT i = 0; i < coEventsSize; i++)
-			{
-				LPCOLLISIONEVENT e = coEventsResult[i];
-				if (CollisionMapObject * collMapObj = dynamic_cast<CollisionMapObject*> (e->obj)) {
-					CollisionWithOneCollisionMapObject(e, collMapObj);
+		for (UINT i = 0; i < coEventsSize; i++)
+		{
+			LPCOLLISIONEVENT e = coEventsResult[i];
+			if (CollisionMapObject * collMapObj = dynamic_cast<CollisionMapObject*> (e->obj)) {
+				CollisionWithOneCollisionMapObject(e, collMapObj);
+			}
+			else if (LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
+				isDie = true;
+				if (Koopa * koopa = dynamic_cast<Koopa*> (enemy)) {
+					koopa->SetState(ENEMY_STATE_DIE);
+					koopa->SetIsDiedByFireball();
 				}
-				else if (LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
-					isDie = true;
-					if (Koopa* koopa = dynamic_cast<Koopa*> (enemy)) {
-						koopa->SetState(ENEMY_STATE_DIE);
-						koopa->SetIsDiedByFireball();
-					}
-					else if (Goomba * goomba = dynamic_cast<Goomba*> (enemy)) {
-						if (goomba->GetType() == 2)
-							goomba->SetState(ENEMY_STATE_WALKING);
-					}
-					else
-						enemy->stillAlive = false;
-					if (enemy->x > Mario::GetInstance()->x) {
-						enemy->vx = ENEMY_DIE_SPEED_X;
-					}
-					else {
-						enemy->vx = -ENEMY_DIE_SPEED_X;
-					}
-					enemy->vy = -ENEMY_DIE_SPEED_Y;
-					enemy->SetIsUpsideDown(true);
-					enemy->noCollisionConsideration = true;
+				else if (Goomba * goomba = dynamic_cast<Goomba*> (enemy)) {
+					if (goomba->GetType() == 2)
+						goomba->SetState(ENEMY_STATE_WALKING);
+				}
+				else
+					enemy->stillAlive = false;
+				if (enemy->x > Mario::GetInstance()->x) {
+					enemy->vx = ENEMY_DIE_SPEED_X;
 				}
 				else {
-					if (e->nx != 0) {
-						vx = 0;
-						isDie = true;
-					}
-					if (e->ny != 0 && e->nx == 0) {
-						vy = -FIREBALL_ROLLING_SPEED_Y;
-					}
-					else if (e->ny != 0 && e->nx != 0) {
-						vy = 0;
-					}
+					enemy->vx = -ENEMY_DIE_SPEED_X;
 				}
-
+				enemy->vy = -ENEMY_DIE_SPEED_Y;
+				enemy->SetIsUpsideDown(true);
+				enemy->noCollisionConsideration = true;
 			}
-		}
-		else if (type == 2) {
-			x += dx;
-			y += dy;
-			Camera* camera = Camera::GetInstance();
-			float cam_x, cam_y;
-			camera->GetCamPos(cam_x, cam_y);
-			if (x < cam_x || x > cam_x + SCREEN_WIDTH || y < cam_y || y > cam_y + SCREEN_HEIGHT)
-				stillAlive = false;
+			else {
+				if (e->nx != 0) {
+					vx = 0;
+					isDie = true;
+				}
+				if (e->ny != 0 && e->nx == 0) {
+					vy = -FIREBALL_ROLLING_SPEED_Y;
+				}
+				else if (e->ny != 0 && e->nx != 0) {
+					vy = 0;
+				}
+			}
+
 		}
 	}
 

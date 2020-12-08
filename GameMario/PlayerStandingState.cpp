@@ -20,7 +20,7 @@ PlayerState* PlayerStandingState::GetInstance() {
 	if (__instance == NULL) __instance = new PlayerStandingState();
 	Mario* mario = Mario::GetInstance();
 	mario->vx = 0;
-	mario->SetIsOnGround(true);
+	//mario->SetIsOnGround(true);
 	SetAnimation();
 	return __instance;
 }

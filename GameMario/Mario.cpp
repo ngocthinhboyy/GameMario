@@ -218,14 +218,12 @@ void Mario::Update(DWORD dt, int scaleTime)
 				}
 				else
 				{
-					if (e->nx != 0)
-						x += dx;
-					if (e->ny != 0)
-						y += dy;
+					y -= 2;
 					if (level >= 2) {
 						StartUntouchable();
+						fireball->noCollisionConsideration = true;
 						ChangeState(PlayerLevelDownTransformState::GetInstance());
-						vy = 0;
+						scene->StopGame(1000);
 					}
 				}
 			}
@@ -306,7 +304,7 @@ void Mario::Render()
 		else
 			ani->Render(x, y, alpha, scale, offset);
 	}
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 //void Mario::SetState(int state)

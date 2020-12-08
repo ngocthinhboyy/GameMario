@@ -5,6 +5,7 @@
 #include "PlayScene.h"
 #include "Grid.h"
 #include "Coin.h"
+#include "debug.h"
 
 ButtonP::ButtonP(float x, float y, float w, float h)
 {
@@ -26,11 +27,11 @@ void ButtonP::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 		Mario::GetInstance()->vx = 0;
 		Mario::GetInstance()->vy = 0;
 		if (collisionEvent->ny < 0) {
+			Mario::GetInstance()->SetIsOnGround(true);
 			if (!alreadyPress) {
 				alreadyPress = true;
 				h = 21;
 				y += 27;
-				Mario::GetInstance()->SetIsOnGround(true);
 				PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 				for (auto x : scene->objects) {
 					if (EspecialBrick* especialBrick = dynamic_cast<EspecialBrick*> (x)) {

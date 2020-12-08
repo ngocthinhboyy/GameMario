@@ -6,6 +6,7 @@
 #include "PlayerGoingAutoState.h"
 #include "Camera.h"
 #include "EndTitle.h"
+#include "BoardGame.h"
 
 RandomGift::RandomGift(float x, float y, float w, float h)
 {
@@ -91,12 +92,19 @@ void RandomGift::Update(DWORD dt, int scaleTime)
 		Camera::GetInstance()->GetCamPos(cx, cy);
 
 		if (y < cy) {
-			if(itemCurrent == 0)
+			if (itemCurrent == 0)
+			{
 				EndTitle::GetInstance()->SetCard(3);
-			else if(itemCurrent == 1)
+				BoardGame::GetInstance()->SetIdCardForCardInBoard(3);
+			}
+			else if (itemCurrent == 1) {
 				EndTitle::GetInstance()->SetCard(2);
-			else if (itemCurrent == 2)
+				BoardGame::GetInstance()->SetIdCardForCardInBoard(2);
+			}
+			else if (itemCurrent == 2) {
 				EndTitle::GetInstance()->SetCard(4);
+				BoardGame::GetInstance()->SetIdCardForCardInBoard(4);
+			}
 			PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 			scene->SetIsEndScene(true);
 			this->stillAlive = false;
@@ -122,6 +130,7 @@ void RandomGift::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 			state = STATE_ALREADY_BONUS_GIFT;
 			noCollisionConsideration = true;
 			Mario::GetInstance()->ChangeState(PlayerGoingAutoState::GetInstance());
+
 		}
 	}
 }

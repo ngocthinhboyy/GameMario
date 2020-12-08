@@ -140,6 +140,15 @@ void BoardGame::ParsePositionInBoardGame(string line)
 	float y = atoi(tokens[2].c_str());
 	int idFontRender = atoi(tokens[3].c_str());
 
+	if (idPosition == 22) {
+		componentCardInBoards = new ComponentPositionInBoard();
+		componentCardInBoards->x = x;
+		componentCardInBoards->y = y;
+		componentCardInBoards->idFontRender = idFontRender;
+		componentCardInBoards->idPosition = idPosition;
+		return;
+	}
+
 	ComponentPositionInBoard* componentPosition = new ComponentPositionInBoard();
 	componentPosition->x = x;
 	componentPosition->y = y;
@@ -195,9 +204,13 @@ void BoardGame::RenderBoardGame()
 	for (auto component : componentPositionInBoards) {
 		for (auto font : fonts) {
 			if (font->GetId() == component->idFontRender) {
-				
 				font->Draw(panelBoardGame.x + component->x +20, panelBoardGame.y + component->y +10, 255);
 			}
+		}
+	}
+	for (auto card : cards) {
+		if (card->GetId() == componentCardInBoards->idFontRender) {
+			card->Draw(panelBoardGame.x + componentCardInBoards->x + 20, panelBoardGame.y + componentCardInBoards->y + 10, 255);
 		}
 	}
 }
