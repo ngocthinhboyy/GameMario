@@ -10,6 +10,7 @@
 #include "Camera.h"
 #include "ResourcesSharedLoad.h"
 #include "BoardGame.h"
+#include "EndTitle.h"
 
 Game* Game::__instance = NULL;
 
@@ -359,6 +360,20 @@ void Game::_ParseSection_POSITION_IN_BOARDGAME(string line)
 	LoadPositionInBoardGame(path.c_str());
 }
 
+void Game::_ParseSection_ENDTITLE_ITEMS(string line)
+{
+	vector<string> tokens = split(line);
+	wstring path = ToWSTR(tokens[0]);
+	LoadEndTitleItems(path.c_str());
+}
+
+void Game::_ParseSection_POSITION_IN_ENDTITLE(string line)
+{
+	vector<string> tokens = split(line);
+	wstring path = ToWSTR(tokens[0]);
+	LoadPositionInEndTitle(path.c_str());
+}
+
 void Game::_ParseSection_BOARDGAME_ITEMS(string line)
 {
 	vector<string> tokens = split(line);
@@ -391,6 +406,8 @@ void Game::Load(LPCWSTR gameFile)
 		if (line == "[SCENES]") { section = GAME_FILE_SECTION_SCENES; continue; }
 		if (line == "[BOARDGAME_ITEMS]") { section = GAME_FILE_SECTION_BOARDGAME_ITEMS; continue; }
 		if (line == "[POSITION_IN_BOARDGAME]") { section = GAME_FILE_SECTION_POSITION_IN_BOARDGAME; continue; }
+		if (line == "[ENDTITLE_ITEMS]") { section = GAME_FILE_SECTION_ENDTITLE_ITEMS; continue; }
+		if (line == "[POSITION_IN_ENDTITLE]") { section = GAME_FILE_SECTION_POSITION_IN_ENDTITLE; continue; }
 
 		//
 		// data section
@@ -399,6 +416,8 @@ void Game::Load(LPCWSTR gameFile)
 		{
 		case GAME_FILE_SECTION_BOARDGAME_ITEMS: _ParseSection_BOARDGAME_ITEMS(line); break;
 		case GAME_FILE_SECTION_POSITION_IN_BOARDGAME: _ParseSection_POSITION_IN_BOARDGAME(line); break;
+		case GAME_FILE_SECTION_ENDTITLE_ITEMS: _ParseSection_ENDTITLE_ITEMS(line); break;
+		case GAME_FILE_SECTION_POSITION_IN_ENDTITLE: _ParseSection_POSITION_IN_ENDTITLE(line); break;
 		case GAME_FILE_SECTION_RESOURCES: _ParseSection_RESOURCES(line); break;
 		case GAME_FILE_SECTION_SETTINGS: _ParseSection_SETTINGS(line); break;
 		case GAME_FILE_SECTION_SCENES: _ParseSection_SCENES(line); break;
@@ -428,6 +447,18 @@ void Game::LoadPositionInBoardGame(LPCWSTR positionInBoardgameFile)
 {
 	BoardGame* boardGame = BoardGame::GetInstance();
 	boardGame->LoadPositionInBoardGame(positionInBoardgameFile);
+}
+
+void Game::LoadEndTitleItems(LPCWSTR endTitleItemsFile)
+{
+	EndTitle* endTitle = EndTitle::GetInstance();
+	endTitle->LoadEndTitleItem(endTitleItemsFile);
+}
+
+void Game::LoadPositionInEndTitle(LPCWSTR positionInEndTitleFile)
+{
+	EndTitle* endTitle = EndTitle::GetInstance();
+	endTitle->LoadEndTitle(positionInEndTitleFile);
 }
 
 void Game::SwitchScene(int scene_id)

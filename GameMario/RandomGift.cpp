@@ -3,6 +3,9 @@
 #include "AnimationDatabase.h"
 #include "debug.h"
 #include "Mario.h"
+#include "PlayerGoingAutoState.h"
+#include "Camera.h"
+#include "EndTitle.h"
 
 RandomGift::RandomGift(float x, float y, float w, float h)
 {
@@ -54,14 +57,14 @@ void RandomGift::Render()
 		AnimationDatabase::GetInstance()->Get(3601)->Render(startPositionX - 15, startPositionY - 15, alpha, scale);
 		animation->Render(x, y, alpha, scale);
 	}
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void RandomGift::Update(DWORD dt, int scaleTime)
 {
 	DWORD now = GetTickCount64();
 	if (state != STATE_ALREADY_BONUS_GIFT) {
-		if (now - timeStartRandom >= 1000) {
+		if (now - timeStartRandom >= 100) {
 			if (this->state == STATE_ITEM_CURRENT_FIRE_FLOWER) {
 				this->state = STATE_ITEM_CURRENT_MUSHROOM;
 				itemCurrent = 1;
@@ -84,6 +87,20 @@ void RandomGift::Update(DWORD dt, int scaleTime)
 		GameObject::Update(dt,scaleTime);
 		x += dx;
 		y += dy;
+		float cx, cy;
+		Camera::GetInstance()->GetCamPos(cx, cy);
+
+		if (y < cy) {
+			if(itemCurrent == 0)
+				EndTitle::GetInstance()->SetCard(3);
+			else if(itemCurrent == 1)
+				EndTitle::GetInstance()->SetCard(2);
+			else if (itemCurrent == 2)
+				EndTitle::GetInstance()->SetCard(4);
+			PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+			scene->SetIsEndScene(true);
+			this->stillAlive = false;
+		}
 	}
 }
 
@@ -104,6 +121,7 @@ void RandomGift::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 		if (collisionEvent > 0) {
 			state = STATE_ALREADY_BONUS_GIFT;
 			noCollisionConsideration = true;
+			Mario::GetInstance()->ChangeState(PlayerGoingAutoState::GetInstance());
 		}
 	}
 }

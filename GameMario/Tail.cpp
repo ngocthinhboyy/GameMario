@@ -38,6 +38,7 @@ void Tail::Render()
 		D3DXVECTOR2 scale = D3DXVECTOR2(3, 3);
 		animation = animationDatabase->Get(2201);
 		animation->Render(x + 10, y, 255, scale);
+		noCollisionConsideration = true;
 	}
 }
 

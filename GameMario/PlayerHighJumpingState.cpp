@@ -168,6 +168,7 @@ PlayerState* PlayerHighJumpingState::GetInstance()
 {
 	if (__instance == NULL) __instance = new PlayerHighJumpingState();
 	SetAnimation();
+	Mario::GetInstance()->SetIsOnGround(false);
 	return __instance;
 }
 

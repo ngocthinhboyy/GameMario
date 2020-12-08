@@ -82,6 +82,9 @@
     <Filter Include="game\Object\Player\PlayerState\EffectState">
       <UniqueIdentifier>{e0adbf22-a74e-470a-8857-bc79bb6250ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\EndTitle">
+      <UniqueIdentifier>{753f1992-2280-4a85-af56-fa77a7ba3462}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sprite.cpp">
@@ -260,6 +263,12 @@
     </ClCompile>
     <ClCompile Include="RandomGift.cpp">
       <Filter>game\Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerGoingAutoState.cpp">
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
+    </ClCompile>
+    <ClCompile Include="EndTitle.cpp">
+      <Filter>Framework\EndTitle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -466,6 +475,12 @@
     </ClInclude>
     <ClInclude Include="RandomGift.h">
       <Filter>game\Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerGoingAutoState.h">
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
+    </ClInclude>
+    <ClInclude Include="EndTitle.h">
+      <Filter>Framework\EndTitle</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

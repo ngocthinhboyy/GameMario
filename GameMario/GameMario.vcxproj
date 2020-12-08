@@ -29,6 +29,7 @@
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="CollisionMapObject.cpp" />
     <ClCompile Include="debug.cpp" />
+    <ClCompile Include="EndTitle.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EspecialBrick.cpp" />
     <ClCompile Include="Fireball.cpp" />
@@ -51,6 +52,7 @@
     <ClCompile Include="PlayerFallingSlowlyState.cpp" />
     <ClCompile Include="PlayerFallingState.cpp" />
     <ClCompile Include="PlayerFlyingState.cpp" />
+    <ClCompile Include="PlayerGoingAutoState.cpp" />
     <ClCompile Include="PlayerHighJumpingState.cpp" />
     <ClCompile Include="PlayerHoldingState.cpp" />
     <ClCompile Include="PlayerJumpingState.cpp" />
@@ -92,6 +94,7 @@
     <ClInclude Include="CollisionMapObject.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="DynamicObjectDefine.h" />
+    <ClInclude Include="EndTitle.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyDefine.h" />
     <ClInclude Include="EspecialBrick.h" />
@@ -119,6 +122,7 @@
     <ClInclude Include="PlayerFallingSlowlyState.h" />
     <ClInclude Include="PlayerFallingState.h" />
     <ClInclude Include="PlayerFlyingState.h" />
+    <ClInclude Include="PlayerGoingAutoState.h" />
     <ClInclude Include="PlayerHighJumpingState.h" />
     <ClInclude Include="PlayerHoldingState.h" />
     <ClInclude Include="PlayerJumpingState.h" />

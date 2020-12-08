@@ -5,9 +5,13 @@ SharedResources\resource-shared.txt
 #----BOARD GAME----
 [BOARDGAME_ITEMS]
 #board-game
-SharedResources\Boardgame\boardgame.txt
+SharedResources\Boardgame\boardgameItems.txt
 [POSITION_IN_BOARDGAME]
 SharedResources\Boardgame\positionInBoardGame.txt
+[ENDTITLE_ITEMS]
+SharedResources\EndTitle\endTitleItems.txt
+[POSITION_IN_ENDTITLE]
+SharedResources\EndTitle\positionInEndTitle.txt
 #----------SETTING------------
 [SETTINGS]
 start	1

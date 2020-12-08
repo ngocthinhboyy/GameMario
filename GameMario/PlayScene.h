@@ -26,6 +26,7 @@ protected:
 	DWORD timeStartStoppingGame = 0;
 	DWORD timeStop = 0;
 	bool isStopGame = false;
+	bool isEndScene = false;
 
 public:
 	vector<LPGAMEOBJECT> objects;
@@ -41,6 +42,8 @@ public:
 	int GetTimeOfPreviousSecond() { return this->timeOfPreviousSecond; };
 	void SetTimeOfPreviousSecond(int timeOfPreviousSecond) { this->timeOfPreviousSecond = timeOfPreviousSecond; };
 
+	void SetIsEndScene(bool isEndScene) { this->isEndScene = isEndScene; };
+	bool GetIsEndScene() { return this->isEndScene; };
 	virtual void Load();
 	virtual void Update(DWORD dt);
 	virtual void Render();

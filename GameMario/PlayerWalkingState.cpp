@@ -26,7 +26,7 @@ PlayerState* PlayerWalkingState::GetInstance() {
 PlayerWalkingState::PlayerWalkingState() {}
 void PlayerWalkingState::SetAnimation()
 {
-	Mario* mario = Mario::GetInstance();
+		Mario* mario = Mario::GetInstance();
 		switch (mario->GetLevel()) {
 		case MARIO_LEVEL_BIG:
 		{

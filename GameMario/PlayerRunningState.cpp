@@ -191,11 +191,18 @@ void PlayerRunningState::KeyState(BYTE* states)
 			}
 		}
 		else if (game->IsKeyDown(DIK_DOWN) && !game->IsKeyDown(DIK_LEFT) && !game->IsKeyDown(DIK_RIGHT)) {
-			if (!isCrouching) {
-				isCrouching = true;
-				mario->SetIsCrouching(true);
-				mario->y += MARIO_DEVIATION_CROUCHING_Y;
-				SetAnimation();
+			if (mario->GetLevel() >= MARIO_LEVEL_BIG) {
+				if (!isCrouching) {
+					isCrouching = true;
+					mario->SetIsCrouching(true);
+					mario->y += MARIO_DEVIATION_CROUCHING_Y;
+					SetAnimation();
+				}
+			}
+			else {
+				if (mario->vx != 0) {
+					increaseSpeed = false;
+				}
 			}
 		}
 		else {
@@ -206,37 +213,96 @@ void PlayerRunningState::KeyState(BYTE* states)
 	}
 	else {
 		increaseSpeed = false;
-		if (game->IsKeyDown(DIK_DOWN)) {
-			if (!isCrouching) {
-				isCrouching = true;
-				mario->SetIsCrouching(true);
-				mario->y += MARIO_DEVIATION_CROUCHING_Y;
-				SetAnimation();
+		if (game->IsKeyDown(DIK_RIGHT) && game->IsKeyDown(DIK_LEFT)) {
+			if (mario->vx != 0) {
+				increaseSpeed = false;
 			}
 		}
-		if (game->IsKeyDown(DIK_DOWN) && abs(mario->vx) <= MARIO_WALKING_SPEED) {
-			isMaxSpeed = false;
-			increaseSpeed = true;
-			isCrouching = false;
-			prevKeyIsLeft = false;
-			prevKeyIsRight = false;
-			isSkidding = false;
-			isCrouching = false;
-			lastStateIsSkidding = false;
-			mario->SetIsRunning(false);
-			mario->vx = 0;
-			mario->ChangeState(PlayerCrouchingState::GetInstance());
-			return;
+		else if (game->IsKeyDown(DIK_RIGHT)) {
+			if (!prevKeyIsLeft && !isSkidding) {
+				increaseSpeed = false;
+				mario->nx = 1;
+				prevKeyIsRight = true;
+				prevKeyIsLeft = false;
+			}
+			else {
+				if (game->IsKeyDown(DIK_DOWN)) {
+					mario->y -= MARIO_DEVIATION_CROUCHING_Y;
+					isCrouching = false;
+					mario->SetIsCrouching(false);
+					SetAnimation();
+				}
+				mario->speedLast = abs(mario->vx);
+				isSkidding = true;
+				prevKeyIsLeft = false;
+				prevKeyIsRight = true;
+			}
 		}
-		if (abs(mario->vx) <= MARIO_WALKING_SPEED) {
-			isMaxSpeed = false;
-			increaseSpeed = true;
-			isCrouching = false;
-			prevKeyIsLeft = false;
-			prevKeyIsRight = false;
-			isSkidding = false;
-			mario->SetIsRunning(false);
-			mario->ChangeState(PlayerWalkingState::GetInstance());
+		else if (game->IsKeyDown(DIK_LEFT)) {
+			if (!prevKeyIsRight && !isSkidding) {
+				increaseSpeed = false;
+				mario->nx = -1;
+				prevKeyIsLeft = true;
+				prevKeyIsRight = false;
+			}
+			else {
+				if (game->IsKeyDown(DIK_DOWN)) {
+					mario->y -= MARIO_DEVIATION_CROUCHING_Y;
+					isCrouching = false;
+					mario->SetIsCrouching(false);
+					SetAnimation();
+				}
+				mario->speedLast = abs(mario->vx);
+				isSkidding = true;
+				prevKeyIsRight = false;
+				prevKeyIsLeft = true;
+			}
+		}
+		if (mario->GetLevel() >= MARIO_LEVEL_BIG) {
+			if (game->IsKeyDown(DIK_DOWN)) {
+				if (!isCrouching) {
+					isCrouching = true;
+					mario->SetIsCrouching(true);
+					mario->y += MARIO_DEVIATION_CROUCHING_Y;
+					SetAnimation();
+				}
+			}
+			if (game->IsKeyDown(DIK_DOWN) && abs(mario->vx) <= MARIO_WALKING_SPEED) {
+				isMaxSpeed = false;
+				increaseSpeed = true;
+				isCrouching = false;
+				prevKeyIsLeft = false;
+				prevKeyIsRight = false;
+				isSkidding = false;
+				isCrouching = false;
+				lastStateIsSkidding = false;
+				mario->SetIsRunning(false);
+				mario->vx = 0;
+				mario->ChangeState(PlayerCrouchingState::GetInstance());
+				return;
+			}
+			if (abs(mario->vx) <= MARIO_RUNNING_MAX_SPEED * 0.4) {
+				isMaxSpeed = false;
+				increaseSpeed = true;
+				isCrouching = false;
+				prevKeyIsLeft = false;
+				prevKeyIsRight = false;
+				isSkidding = false;
+				mario->SetIsRunning(false);
+				mario->ChangeState(PlayerWalkingState::GetInstance());
+			}
+		}
+		else {
+			if (abs(mario->vx) <= MARIO_RUNNING_MAX_SPEED * 0.4) {
+				isMaxSpeed = false;
+				increaseSpeed = true;
+				isCrouching = false;
+				prevKeyIsLeft = false;
+				prevKeyIsRight = false;
+				isSkidding = false;
+				mario->SetIsRunning(false);
+				mario->ChangeState(PlayerWalkingState::GetInstance());
+			}
 		}
 	}
 }

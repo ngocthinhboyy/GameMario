@@ -18,6 +18,7 @@
 #include "QuestionBrick.h"
 #include "Grid.h"
 #include "BoardGame.h"
+#include "EndTitle.h"
 
 using namespace std;
 
@@ -117,7 +118,7 @@ void PlayScene::_ParseSection_OBJECTS_NOT_IN_GRID(string line)
 			return;
 		}
 		Mario* mario = Mario::GetInstance();
-		mario->SetLevel(MARIO_LEVEL_RACCOON);
+		mario->SetLevel(MARIO_LEVEL_SMALL);
 		mario->ChangeState(PlayerStandingState::GetInstance());
 		ani_set = AnimationManager::GetInstance()->Get(ani_set_id);
 
@@ -239,10 +240,19 @@ void PlayScene::Update(DWORD dt)
 	if (isStopGame)
 		RestartGame();
 	else {
-		DWORD now = GetTickCount64();
-		if (now - timeOfPreviousSecond >= 1000) {
-			timeOfPreviousSecond = now;
-			remainingTime--;
+		if (!isEndScene) {
+			DWORD now = GetTickCount64();
+			if (now - timeOfPreviousSecond >= 1000) {
+				timeOfPreviousSecond = now;
+				remainingTime--;
+			}
+		}
+		else {
+			DWORD now = GetTickCount64();
+			if (now - timeOfPreviousSecond >= 10) {
+				timeOfPreviousSecond = now;
+				remainingTime--;
+			}
 		}
 	}
 	Grid* grid = Grid::GetInstance();
@@ -305,6 +315,10 @@ void PlayScene::Render()
 	}
 	BoardGame* board = BoardGame::GetInstance();
 	board->RenderBoardGame();
+	if (isEndScene) {
+		EndTitle* endTitle = EndTitle::GetInstance();
+		endTitle->RenderEndTitle();
+	}
 }
 
 /*

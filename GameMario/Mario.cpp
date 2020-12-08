@@ -142,8 +142,16 @@ void Mario::Update(DWORD dt, int scaleTime)
 		y += dy;
 		if (x <= 0)
 			x = 0;
-		if (x >= 8415)
-			x = 8415;
+		if (!isGoingAuto) {
+			if (x >= 8350) {
+				x = 8350;
+				vx = 0;
+			}
+		}
+		else {
+			if (x > 8500)
+				vx = 0;
+		}
 	}
 	else
 	{
@@ -237,8 +245,16 @@ void Mario::Update(DWORD dt, int scaleTime)
 		}
 		if (x <= 0)
 			x = 0;
-		if (x >= 8415)
-			x = 8415;
+		if (!isGoingAuto) {
+			if (x >= 8350) {
+				x = 8350;
+				vx = 0;
+			}
+		}
+		else {
+			if (x > 8500)
+				vx = 0;
+		}
 	}
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];

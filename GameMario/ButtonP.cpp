@@ -30,6 +30,7 @@ void ButtonP::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 				alreadyPress = true;
 				h = 21;
 				y += 27;
+				Mario::GetInstance()->SetIsOnGround(true);
 				PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 				for (auto x : scene->objects) {
 					if (EspecialBrick* especialBrick = dynamic_cast<EspecialBrick*> (x)) {

@@ -7,7 +7,6 @@
 5	textures\enemy.png	190	65	171
 6	textures\boardgame.png	163	73	164
 7	textures\effect.png	0	0	0
-8	textures\mario_2.png	255	255	255
 9	textures\fragment.png	163	73	164
 10	textures\ongcong_den.png	255	255	255
 11	textures\ongcong2.png	255	255	255

@@ -47,7 +47,8 @@ class Game
 	void _ParseSection_RESOURCES(string line);
 	void _ParseSection_BOARDGAME_ITEMS(string line);
 	void _ParseSection_POSITION_IN_BOARDGAME(string line);
-
+	void _ParseSection_ENDTITLE_ITEMS(string line);
+	void _ParseSection_POSITION_IN_ENDTITLE(string line);
 public:
 	void InitKeyboard();
 	void SetKeyHandler(LPKEYEVENTHANDLER handler) { keyHandler = handler; }
@@ -60,6 +61,8 @@ public:
 	void LoadSharedResource(LPCWSTR sharedResourceFile);
 	void LoadBoardGameItems(LPCWSTR boardGameItemsFile);
 	void LoadPositionInBoardGame(LPCWSTR positionInBoardgameFile);
+	void LoadEndTitleItems(LPCWSTR endTitleItemsFile);
+	void LoadPositionInEndTitle(LPCWSTR positionInEndTitleFile);
 	LPSCENE GetCurrentScene() { return scenes[current_scene]; }
 	void SwitchScene(int scene_id);
 

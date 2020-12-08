@@ -24,6 +24,7 @@ class Mario : public GameObject
 	bool isSpinning = false;
 	bool isFlying = false;
 	bool isGrowingUp = false;
+	bool isGoingAuto = false;
 	int heart = 4;
 	int point = 0;
 	int coin = 0;
@@ -59,6 +60,8 @@ public:
 
 	void SetIsSpinning(bool isSpinning) { this->isSpinning = isSpinning; };
 	void SetOffset(int offset) { this->offset = offset; };
+
+	void SetIsGoingAuto(bool isGoingAuto) { this->isGoingAuto = isGoingAuto; };
 
 
 	void Reset();
