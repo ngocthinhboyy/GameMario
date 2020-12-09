@@ -10,6 +10,7 @@
 #include "PlayerLevelDownTransformState.h"
 #include "Point.h"
 #include "Grid.h"
+#include "PlayerDieState.h"
 
 Goomba::Goomba()
 {
@@ -283,11 +284,18 @@ void Goomba::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 	Mario* mario = Mario::GetInstance();
 	if (collisionEvent->nx != 0) {
 		mario->vx = 0;
-		if (mario->GetLevel() >= 2) {
+		if (mario->GetLevel() >= MARIO_LEVEL_BIG) {
 			mario->StartUntouchable();
+			mario->y -= 5;
 			mario->ChangeState(PlayerLevelDownTransformState::GetInstance());
 			PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 			scene->StopGame(1000);
+		}
+		else if (mario->GetLevel() == MARIO_LEVEL_SMALL) {
+			mario->ChangeState(PlayerDieState::GetInstance());
+			PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+			mario->noCollisionConsideration = true;
+			scene->StopGame(5000);
 		}
 	}
 	if (collisionEvent->ny == -1) {
@@ -333,14 +341,15 @@ void Goomba::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 
 void Goomba::SetStartPosition()
 {
-	nx = startNx;
-    x = this->startPositionX;
-	y = this->startPositionY; 
-	isUpsideDown = false;
-	if (Mario::GetInstance()->x > this->startPositionX)
-		vx = GOOMBA_WALKING_SPEED;
+	this->nx = startNx;
+    this->x = this->startPositionX;
+	this->y = this->startPositionY; 
+	this->isUpsideDown = false;
+	this->vx = -GOOMBA_WALKING_SPEED;
+	/*if (Mario::GetInstance()->x > this->startPositionX)
+		this->vx = GOOMBA_WALKING_SPEED;
 	else
-		vx = -GOOMBA_WALKING_SPEED;
+		this->vx = -GOOMBA_WALKING_SPEED;*/
 	if (type == 1)
 		SetState(ENEMY_STATE_WALKING);
 	else if (type == 2) {

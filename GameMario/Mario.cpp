@@ -29,6 +29,7 @@
 #include "ButtonP.h"
 #include "RandomGift.h"
 #include "PlayerBonusTransformState.h"
+#include "PlayerDieState.h"
 
 Mario* Mario::Mario::__instance = NULL;
 Mario* Mario::GetInstance() {
@@ -126,17 +127,22 @@ void Mario::Update(DWORD dt, int scaleTime)
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
 	coEvents.clear();
-		CalcPotentialCollisions(&coEnemies, coEvents);
-		CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
-		CalcPotentialCollisions(&coObjects, coEvents);
 
 	if (GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME)
 	{
 		untouchable_start = 0;
 		untouchable = false;
 	}
+	if (untouchable) {
+		CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
+	}
+	else {
+		CalcPotentialCollisions(&coEnemies, coEvents);
+		CalcPotentialCollisions(&coObjects, coEvents);
+		CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
+	}
 
-	if (coEvents.size() == 0)
+	if (coEvents.size() == 0 || noCollisionConsideration)
 	{
 		x += dx;
 		y += dy;
@@ -219,11 +225,18 @@ void Mario::Update(DWORD dt, int scaleTime)
 				else
 				{
 					y -= 2;
-					if (level >= 2) {
+					if (level >= MARIO_LEVEL_BIG) {
 						StartUntouchable();
 						fireball->noCollisionConsideration = true;
 						ChangeState(PlayerLevelDownTransformState::GetInstance());
 						scene->StopGame(1000);
+					}
+					else if (level == MARIO_LEVEL_SMALL) {
+						ChangeState(PlayerDieState::GetInstance());
+						PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+						noCollisionConsideration = true;
+						vx = 0;
+						scene->StopGame(5000);
 					}
 				}
 			}

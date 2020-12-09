@@ -270,6 +270,9 @@
     <ClCompile Include="EndTitle.cpp">
       <Filter>Framework\EndTitle</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerDieState.cpp">
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -481,6 +484,9 @@
     </ClInclude>
     <ClInclude Include="EndTitle.h">
       <Filter>Framework\EndTitle</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerDieState.h">
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

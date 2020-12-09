@@ -8,6 +8,7 @@
 #include "DynamicObjectDefine.h"
 #include "PlayerLevelDownTransformState.h"
 #include "PlayScene.h"
+#include "PlayerDieState.h"
 
 Flower::Flower()
 {
@@ -193,6 +194,12 @@ void Flower::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 			PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 			scene->StopGame(1000);
 		}
+		else if (Mario::GetInstance()->GetLevel() == MARIO_LEVEL_SMALL) {
+			Mario::GetInstance()->ChangeState(PlayerDieState::GetInstance());
+			PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+			Mario::GetInstance()->noCollisionConsideration = true;
+			scene->StopGame(5000);
+		}
 	}
 	if (collisionEvent->ny != 0) {
 		Mario::GetInstance()->vy = 0;
@@ -201,6 +208,12 @@ void Flower::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 			Mario::GetInstance()->ChangeState(PlayerLevelDownTransformState::GetInstance());
 			PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 			scene->StopGame(1000);
+		}
+		else if (Mario::GetInstance()->GetLevel() == MARIO_LEVEL_SMALL) {
+			Mario::GetInstance()->ChangeState(PlayerDieState::GetInstance());
+			PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+			Mario::GetInstance()->noCollisionConsideration = true;
+			scene->StopGame(5000);
 		}
 	}
 }

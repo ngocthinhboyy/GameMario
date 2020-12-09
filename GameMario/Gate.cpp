@@ -148,6 +148,7 @@ void Gate::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 	if (e->ny != 0) {
 		mario->vx = 0;
 		mario->vy = 0;
+		Mario::GetInstance()->SetIsOnGround(true);
 		if (e->ny < 0 && wayDirectionY < 0) {
 			mario->SetCanGoDownIntoGate(true);
 		}

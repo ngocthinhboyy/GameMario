@@ -19,6 +19,7 @@
 #include "Point.h"
 #include "EspecialBrick.h"
 #include "FragmentOfEspecialBrick.h"
+#include "PlayerDieState.h"
 
 Koopa::Koopa()
 {
@@ -130,13 +131,14 @@ void Koopa::SetAnimation()
 void Koopa::Update(DWORD dt, int scaleTime)
 {
 	if (state == ENEMY_STATE_DIE && !isDiedByFireball) {
-		if (GetTickCount64() - timeDie >= 50000) {
-			this->nx = -1;
-			this->vx = -KOOPA_WALKING_SPEED_X;
+		if (GetTickCount64() - timeDie >= 5000) {
+			this->vx = -KOOPA_WALKING_SPEED_X * Mario::GetInstance()->nx;
+			this->nx = -Mario::GetInstance()->nx;
 			this->isUpsideDown = false;
 			this->isDiedByFireball = false;
+			this->noCollisionConsideration = false;
 			y -= 30;
-			if (isHold) {
+			if (isHold){
 				isHold = false;
 				this->vx = KOOPA_WALKING_SPEED_X * Mario::GetInstance()->nx;
 				this->nx = Mario::GetInstance()->nx;
@@ -429,7 +431,13 @@ void Koopa::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 					scene->StopGame(1000);
 					mario->vx = 0;
 					mario->vy = 0;
-			}
+				}
+				else if (Mario::GetInstance()->GetLevel() == MARIO_LEVEL_SMALL) {
+					Mario::GetInstance()->ChangeState(PlayerDieState::GetInstance());
+					PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+					Mario::GetInstance()->noCollisionConsideration = true;
+					scene->StopGame(5000);
+				}
 			}
 		}
 	}
@@ -472,6 +480,12 @@ void Koopa::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 				scene->StopGame(1000);
 				mario->vx = 0;
 				mario->vy = 0;
+			}
+			else if (Mario::GetInstance()->GetLevel() == MARIO_LEVEL_SMALL) {
+				Mario::GetInstance()->ChangeState(PlayerDieState::GetInstance());
+				PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+				Mario::GetInstance()->noCollisionConsideration = true;
+				scene->StopGame(5000);
 			}
 		}
 	}
