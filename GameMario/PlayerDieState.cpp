@@ -35,9 +35,19 @@ void PlayerDieState::SetAnimation()
 
 void PlayerDieState::Update(int dt)
 {
-	if (GetTickCount64() - startTimeDie <= 200) {
-		Mario::GetInstance()->vy = -0.5f;
+	Mario* mario = Mario::GetInstance();
+	if (GetTickCount64() - startTimeDie <= 600) {
+		mario->vy = 0;
 	}
+	else if (GetTickCount64() - startTimeDie <= 1000) {
+		mario->vy = -0.35f;
+	}
+	else {
+		mario->vy = 0.55f;
+	}
+	mario->dy = mario->vy * dt;
+	mario->y += mario->dy;
+	mario->noCollisionConsideration = true;
 }
 
 void PlayerDieState::KeyState(BYTE* states)

@@ -2,6 +2,7 @@
 #include "Sprite.h"
 #include "SpriteManager.h"
 #include "debug.h"
+#include "PlayScene.h"
 
 void Animation::Add(int spriteId, DWORD time)
 {

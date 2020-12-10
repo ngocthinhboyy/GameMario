@@ -116,6 +116,8 @@ void Mario::Update(DWORD dt, int scaleTime)
 	playerState->Update(dt);
 	vy += MARIO_GRAVITY * dt;
 	GameObject::Update(dt, scaleTime);
+	if (noCollisionConsideration)
+		return;
 
 	PlayScene * scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 
@@ -135,6 +137,7 @@ void Mario::Update(DWORD dt, int scaleTime)
 	}
 	if (untouchable) {
 		CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
+		CalcPotentialCollisions(&coObjects, coEvents);
 	}
 	else {
 		CalcPotentialCollisions(&coEnemies, coEvents);

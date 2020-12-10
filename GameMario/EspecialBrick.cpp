@@ -4,6 +4,7 @@
 #include "Mario.h"
 #include "FragmentOfEspecialBrick.h"
 #include "Grid.h"
+#include "ButtonP.h"
 
 EspecialBrick::EspecialBrick(float x, float y, float w, float h, int type)
 {
@@ -36,6 +37,8 @@ void EspecialBrick::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 			else if (type == 2) {
 				if (!isEmptyBrick) {
 					isEmptyBrick = true;
+					ButtonP* buttonP = new ButtonP(x, y, 48, 48);
+					Grid::GetInstance()->DeterminedGridToObtainObject(buttonP);
 				}
 			}
 		}
