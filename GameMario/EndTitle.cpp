@@ -14,7 +14,7 @@ void EndTitle::LoadEndTitleItem(LPCWSTR filePath)
 	while (f.getline(str, MAX_SHARED_RESOURCE_LINE))
 	{
 		string line(str);
-		if (line[0] == '#') continue;	// skip comment lines	
+		if (line[0] == '#') continue;
 		ParseEndTitleItem(line);
 	}
 
@@ -75,7 +75,7 @@ void EndTitle::LoadEndTitle(LPCWSTR filePath)
 	while (f.getline(str, MAX_SHARED_RESOURCE_LINE))
 	{
 		string line(str);
-		if (line[0] == '#') continue;	// skip comment lines	
+		if (line[0] == '#') continue;
 		ParsePositionInEndTitle(line);
 	}
 

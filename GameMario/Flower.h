@@ -10,6 +10,8 @@ class Flower : public Enemy
 	bool alreadyAttacked = false;
 	int state = 0;
 	int lastMoving = 0;
+	bool explosiveDied = false;
+	DWORD timeDie = 0;
 public:
 
 	Flower();
@@ -19,6 +21,8 @@ public:
 	void Update(DWORD dt, int scaleTime);
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	void Attack();
+	void SetExplosiveDied(bool explosiveDied) { this->explosiveDied = explosiveDied; };
+	void SetTimeDie() { this->timeDie = GetTickCount64(); };
 	void CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPCOLLISIONMAPOBJECT collisionMapObject);
 	void CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent);
 };

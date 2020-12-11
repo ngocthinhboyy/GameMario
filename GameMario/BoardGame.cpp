@@ -13,15 +13,13 @@ void BoardGame::LoadBoardGameItems(LPCWSTR filePath)
 	ifstream f;
 	f.open(filePath);
 
-
-	// current resource section flag
 	int section = BOARDGAME_SECTION_UNKNOWN;
 
 	char str[MAX_SHARED_RESOURCE_LINE];
 	while (f.getline(str, MAX_SHARED_RESOURCE_LINE))
 	{
 		string line(str);
-		if (line[0] == '#') continue;	// skip comment lines	
+		if (line[0] == '#') continue;
 		if (line == "[INBOARD]") { section = BOARDGAME_SECTION_INBOARD; continue; }
 		if (line == "[FONT]") { section = BOARDGAME_SECTION_FONT; continue; }
 		if (line[0] == '[') { section = BOARDGAME_SECTION_UNKNOWN; continue; }
@@ -44,15 +42,13 @@ void BoardGame::LoadPositionInBoardGame(LPCWSTR filePath)
 	ifstream f;
 	f.open(filePath);
 
-
-	// current resource section flag
 	int section = BOARDGAME_SECTION_UNKNOWN;
 
 	char str[MAX_SHARED_RESOURCE_LINE];
 	while (f.getline(str, MAX_SHARED_RESOURCE_LINE))
 	{
 		string line(str);
-		if (line[0] == '#') continue;	// skip comment lines	
+		if (line[0] == '#') continue;
 		ParsePositionInBoardGame(line);
 	}
 
@@ -62,7 +58,7 @@ void BoardGame::ParseInBoardBoardGame(string line)
 {
 	vector<string> tokens = split(line);
 
-	if (tokens.size() < 5) return; // skip invalid lines
+	if (tokens.size() < 5) return;
 
 	int id = atoi(tokens[0].c_str());
 	int l = atoi(tokens[1].c_str());
@@ -111,7 +107,7 @@ void BoardGame::ParseFontBoardGame(string line)
 {
 	vector<string> tokens = split(line);
 
-	if (tokens.size() < 5) return; // skip invalid lines
+	if (tokens.size() < 5) return;
 
 	int id = atoi(tokens[0].c_str());
 	int l = atoi(tokens[1].c_str());
@@ -133,7 +129,7 @@ void BoardGame::ParsePositionInBoardGame(string line)
 {
 	vector<string> tokens = split(line);
 
-	if (tokens.size() < 4) return; // skip invalid lines
+	if (tokens.size() < 4) return;
 
 	int idPosition = atoi(tokens[0].c_str());
 	float x = atoi(tokens[1].c_str());

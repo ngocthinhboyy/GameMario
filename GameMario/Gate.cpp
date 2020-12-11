@@ -146,7 +146,8 @@ void Gate::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 		mario->y += mario->dy;
 	}
 	if (e->ny != 0) {
-		mario->vx = 0;
+		if(!mario->GetIsRunning())
+			mario->vx = 0;
 		mario->vy = 0;
 		Mario::GetInstance()->SetIsOnGround(true);
 		if (e->ny < 0 && wayDirectionY < 0) {

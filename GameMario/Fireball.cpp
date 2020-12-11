@@ -14,6 +14,7 @@
 #include <algorithm>
 #include "PlayerThrowingFireballState.h"
 #include "PlayerLevelDownTransformState.h"
+#include "Flower.h"
 
 Fireball::Fireball()
 {
@@ -29,6 +30,7 @@ Fireball::Fireball(float x, float y, float w, float h, int type)
 	this->h = h;
 	this->type = type;
 	this->gameObjectID = idGenerate++;
+	this->isDie = false;
 	this->vx = Mario::GetInstance()->nx * FIREBALL_ROLLING_SPEED_X;
 }
 
@@ -54,7 +56,7 @@ void Fireball::Render()
 		if(!isDie || type == 2)
 			animation->Render(x, y, alpha, scale);
 		else {
-			scale = D3DXVECTOR2(1, 1);
+			scale = D3DXVECTOR2(2.5, 2.5);
 			animation->Render(x - 20, y, alpha, scale, -6);
 			bool isLastFrame = animation->GetIsLastFrame();
 			if (isLastFrame) {
@@ -65,8 +67,6 @@ void Fireball::Render()
 			}
 		}
 	}
-
-//	RenderBoundingBox();
 }
 
 void Fireball::Update(DWORD dt, int scaleTime)
@@ -88,16 +88,17 @@ void Fireball::Update(DWORD dt, int scaleTime)
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
+
+	coEvents.clear();
 	
 	if (type == 1 && IsOverlapWithEnemy(coEnemies))
 		return;
 	if (type == 1) {
+		CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
 		CalcPotentialCollisions(&coObjects, coEvents);
 		CalcPotentialCollisions(&coEnemies, coEvents);
-		CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
 	}
 
-	coEvents.clear();
 
 	if (coEvents.size() == 0 || type == 2)
 	{
@@ -138,6 +139,11 @@ void Fireball::Update(DWORD dt, int scaleTime)
 				else if (Goomba * goomba = dynamic_cast<Goomba*> (enemy)) {
 					if (goomba->GetType() == 2)
 						goomba->SetState(ENEMY_STATE_WALKING);
+				}
+				else if (Flower * flower = dynamic_cast<Flower*> (enemy)) {
+					flower->SetExplosiveDied(true);
+					flower->SetTimeDie();
+					flower->noCollisionConsideration = true;
 				}
 				else
 					enemy->stillAlive = false;

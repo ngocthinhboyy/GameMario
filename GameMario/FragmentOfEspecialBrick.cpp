@@ -19,7 +19,7 @@ void FragmentOfEspecialBrick::Render()
 {
 	int alpha = 255;
 	D3DXVECTOR2 scale;
-	scale = D3DXVECTOR2(0.5, 0.5);
+	scale = D3DXVECTOR2(0.75, 0.75);
 	animation = AnimationDatabase::GetInstance()->Get(FRAGMENT_ESPECIAL_BRICK_ANI);
 	if (animation != NULL) {
 		animation->Render(x, y, alpha, scale);

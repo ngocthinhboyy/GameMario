@@ -46,6 +46,7 @@ void PlayerLevelDownTransformState::KeyState(BYTE* states)
 	if (isLastFrame) {
 		animation->ResetAnimation();
 		mario->SetLevel(mario->GetLevel() - 1);
+		countTransform = 0;
 		mario->StartHideAndUnhide();
 		stateWhenGrowingUp = STATE_MARIO_BIG;
 		Mario::GetInstance()->SetIsGrowingUp(false);
@@ -93,6 +94,8 @@ void PlayerLevelDownTransformState::KeyState(BYTE* states)
 PlayerState* PlayerLevelDownTransformState::GetInstance()
 {
 	if (__instance == NULL) __instance = new PlayerLevelDownTransformState();
+	if (Mario::GetInstance()->GetIsCrouChing())
+		Mario::GetInstance()->y -= MARIO_DEVIATION_CROUCHING_Y;
 	if (Mario::GetInstance()->GetLevel() == MARIO_LEVEL_BIG) {
 		stateWhenGrowingUp = STATE_MARIO_BIG;
 		Mario::GetInstance()->SetIsGrowingUp(true);

@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "PlayerCrouchingState.h"
 #include "debug.h"
+#include "PlayerRunningState.h"
 
 PlayerState* PlayerFallingSlowlyState::__instance = NULL;
 PlayerFallingSlowlyState::PlayerFallingSlowlyState()
@@ -36,6 +37,10 @@ void PlayerFallingSlowlyState::Update(int dt)
 		if (mario->GetIsCrouChing()) {
 			mario->ChangeState(PlayerCrouchingState::GetInstance());
 		}
+		else if (abs(mario->vx) > MARIO_WALKING_SPEED)
+		{
+			mario->ChangeState(PlayerRunningState::GetInstance());
+		}
 		else
 			mario->ChangeState(PlayerStandingState::GetInstance());
 		return;
@@ -65,12 +70,12 @@ void PlayerFallingSlowlyState::KeyState(BYTE* states)
 	}*/
 	if (game->IsKeyDown(DIK_RIGHT)) {
 		if (mario->vx <= 0)
-			mario->vx = -mario->vx;
+			mario->vx = MARIO_WALKING_SPEED;
 		mario->nx = 1;
 	}
 	else if (game->IsKeyDown(DIK_LEFT)) {
 		if (mario->vx >= 0)
-			mario->vx = -mario->vx;
+			mario->vx = -MARIO_WALKING_SPEED;
 		mario->nx = -1;
 	}
 }

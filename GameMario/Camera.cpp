@@ -28,26 +28,26 @@ void Camera::UpdateCamPos()
 	player->GetPosition(cx, cy);
 
 	if (cx < (game->GetScreenWidth() / 2)) {
-		cx = 0.0f;
+		cx = CAM_X_MIN;
 	}
 	else
 	{
-		if (cx + game->GetScreenWidth() / 2 < 8448) {
+		if (cx + game->GetScreenWidth() / 2 < CAM_X_MAX) {
 			cx -= game->GetScreenWidth() / 2;
 		}
 		else {
-			cx = 8448 - game->GetScreenWidth();
+			cx = CAM_X_MAX - game->GetScreenWidth();
 		}
 	}
 	this->cam_x = cx;
 	if (player->GetLevel() == MARIO_LEVEL_RACCOON && player->GetIsFlying()) {
 		canChangeCamY = true;
-		if (cy - game->GetScreenHeight()/2 < 720.0f) {
-			if ((cy - game->GetScreenHeight() / 2) > 145) {
+		if (cy - game->GetScreenHeight()/2 < CAM_Y_MAX) {
+			if ((cy - game->GetScreenHeight() / 2) > CAM_Y_MIN) {
 				cy -= game->GetScreenHeight() / 2;
 			}
 			else
-				cy = 145;
+				cy = CAM_Y_MIN;
 			this->cam_y = cy;
 		}
 		else {
@@ -59,12 +59,12 @@ void Camera::UpdateCamPos()
 		}
 	}
 	else if (canChangeCamY) {
-		if (cy - game->GetScreenHeight() / 2 < 720.0f) {
-			if ((cy - game->GetScreenHeight() / 2) > 145) {
+		if (cy - game->GetScreenHeight() / 2 < CAM_Y_MAX) {
+			if ((cy - game->GetScreenHeight() / 2) > CAM_Y_MIN) {
 				cy -= game->GetScreenHeight() / 2;
 			}
 			else
-				cy = 145;
+				cy = CAM_Y_MIN;
 			this->cam_y = cy;
 		}
 		else {

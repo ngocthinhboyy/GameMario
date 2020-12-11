@@ -12,7 +12,6 @@ public:
 	virtual void SetAnimation() = 0;
 	virtual void CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent) = 0;
 	virtual void CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPCOLLISIONMAPOBJECT collisionMapObject) = 0;
-	//virtual void CollisionWithAnotherEnemy(DWORD dt, vector<LPENEMY>* enemies = NULL) = 0;
 	void SetIsUpsideDown(bool isUpsideDown) { this->isUpsideDown = isUpsideDown; };
 	bool GetIsUpsideDown() { return this->isUpsideDown; };
 	~Enemy();

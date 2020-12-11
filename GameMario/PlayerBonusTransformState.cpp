@@ -97,6 +97,8 @@ int PlayerBonusTransformState::stateWhenGrowingUp = STATE_MARIO_SMALL;
 PlayerState* PlayerBonusTransformState::GetInstance()
 {
 	if (__instance == NULL) __instance = new PlayerBonusTransformState();
+	if (Mario::GetInstance()->GetIsCrouChing())
+		Mario::GetInstance()->y -= MARIO_DEVIATION_CROUCHING_Y;
 	if (Mario::GetInstance()->GetLevel() == MARIO_LEVEL_SMALL) {
 		stateWhenGrowingUp = STATE_MARIO_SMALL;
 		Mario::GetInstance()->SetIsGrowingUp(true);

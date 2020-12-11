@@ -32,10 +32,14 @@ Flower::Flower(float x, float y, float w, float h, int type)
 void Flower::SetAnimation()
 {
 	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
-	switch (this->type)
-	{
+	if (explosiveDied) {
+		this->animation = animationDatabase->Get(2301);
+	}
+	else {
+		switch (this->type)
+		{
 		case RED_FIRE_FLOWER_TYPE: {
-			if(Mario::GetInstance()->y < y)
+			if (Mario::GetInstance()->y < y)
 				this->animation = animationDatabase->Get(RED_FIRE_FLOWER_ANI_LOOK_DOWN);
 			else
 				this->animation = animationDatabase->Get(RED_FIRE_FLOWER_ANI_LOOK_UP);
@@ -49,11 +53,12 @@ void Flower::SetAnimation()
 			break;
 		}
 		case GREEN_FLOWER_TYPE: {
-				this->animation = animationDatabase->Get(GREEN_FLOWER_ANI_MOVE);
+			this->animation = animationDatabase->Get(GREEN_FLOWER_ANI_MOVE);
 			break;
 		}
-	default:
-		break;
+		default:
+			break;
+		}
 	}
 }
 
@@ -67,6 +72,8 @@ void Flower::Render()
 	else
 		scale = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_SCALE);
 	if (animation != NULL) {
+		if(explosiveDied)
+			scale = D3DXVECTOR2(4, 4);
 		animation->Render(x, y, alpha, scale);
 		D3DXVECTOR2 scalePipe;
 		scalePipe = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_SCALE);
@@ -82,6 +89,11 @@ void Flower::Render()
 
 void Flower::Update(DWORD dt, int scaleTime)
 {
+	if (explosiveDied) {
+		if (GetTickCount64() - timeDie >= 150)
+			stillAlive = false;
+		return;
+	}
 	Mario* mario = Mario::GetInstance();
 	if (mario->x > x)
 		nx = 1;

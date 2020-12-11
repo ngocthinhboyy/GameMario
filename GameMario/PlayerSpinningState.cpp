@@ -121,6 +121,8 @@ PlayerState* PlayerSpinningState::GetInstance()
 		tailBack->SetPosition(mario->x - 27, mario->y + MARIO_BIG_BBOX_HEIGHT / 2);
 		tailFront->SetHasEffect(false);
 		tailBack->SetHasEffect(false);
+		tailFront->noCollisionConsideration = false;
+		tailBack->noCollisionConsideration = false;
 
 		tailFront->stillAlive = false;
 		tailBack->stillAlive = false;

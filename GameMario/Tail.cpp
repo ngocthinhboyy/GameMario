@@ -16,6 +16,7 @@
 #include "EspecialBrick.h"
 #include "FragmentOfEspecialBrick.h"
 #include "ButtonP.h"
+#include "Flower.h"
 
 Tail::Tail()
 {
@@ -33,7 +34,7 @@ Tail::Tail(float x, float y, float w, float h)
 void Tail::Render()
 {
 	//RenderBoundingBox();
-	if (hasEffect) {
+	 if (hasEffect) {
 		AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
 		D3DXVECTOR2 scale = D3DXVECTOR2(3, 3);
 		animation = animationDatabase->Get(2201);
@@ -83,7 +84,12 @@ void Tail::CheckOverlapBoundingBox(vector<LPGAMEOBJECT> objects)
 			if (LPENEMY enemy = dynamic_cast<LPENEMY> (x)) {
 				if (enemy != NULL) {
 					hasEffect = true;
-					if (!enemy->GetIsUpsideDown()) {
+					if (Flower * flower = dynamic_cast<Flower*>(enemy)) {
+						flower->SetExplosiveDied(true);
+						flower->SetTimeDie();
+						flower->noCollisionConsideration = true;
+					}
+					else if (!enemy->GetIsUpsideDown()) {
 						if (Koopa * koopa = dynamic_cast<Koopa*> (enemy)) {
 							koopa->SetTimeDie();
 							koopa->SetState(ENEMY_STATE_DIE);
@@ -121,7 +127,7 @@ void Tail::CheckOverlapBoundingBox(vector<LPGAMEOBJECT> objects)
 					}
 				}
 			}
-			else if (QuestionBrick* questionBrick = dynamic_cast<QuestionBrick*> (x)) {
+			else if (QuestionBrick * questionBrick = dynamic_cast<QuestionBrick*> (x)) {
 				if (!questionBrick->isEmptyBrick) {
 					if (questionBrick->GetType() == QUESTION_BRICK_TYPE_HAS_ESPECIAL_ITEM) {
 						if (Mario::GetInstance()->GetLevel() != MARIO_LEVEL_SMALL) {

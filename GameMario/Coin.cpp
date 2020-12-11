@@ -26,8 +26,10 @@ void Coin::SetAnimation()
 	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
 	if(type == 1 )
 		this->animation = animationDatabase->Get(COIN_ANI);
-	else if(type == 2 || type == 3)
+	else if(type == 2)
 		this->animation = animationDatabase->Get(STATIC_COIN_ANI);
+	else if (type == 3)
+		this->animation = animationDatabase->Get(COIN_INTO_ESPECIAL_BRICK_ANI);
 }
 
 void Coin::Render()

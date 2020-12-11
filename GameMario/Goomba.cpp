@@ -172,6 +172,8 @@ void Goomba::Update(DWORD dt, int scaleTime)
 			}
 			else if (Tail * tail = dynamic_cast<Tail*> (e->obj)) {
 				isUpsideDown = true;
+				tail->SetHasEffect(true);
+				tail->noCollisionConsideration = true;
 				if (type == 2)
 					state = ENEMY_STATE_WALKING;
 				if (x < Mario::GetInstance()->x) {

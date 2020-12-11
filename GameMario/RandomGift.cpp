@@ -122,11 +122,16 @@ void RandomGift::GetBoundingBox(float& l, float& t, float& r, float& b)
 
 void RandomGift::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 {
-	if (collisionEvent->nx != 0)
+	if (collisionEvent->nx != 0) {
 		Mario::GetInstance()->vx = 0;
+		Mario::GetInstance()->vy = 0;
+		state = STATE_ALREADY_BONUS_GIFT;
+		noCollisionConsideration = true;
+		Mario::GetInstance()->ChangeState(PlayerGoingAutoState::GetInstance());
+	};
 	if (collisionEvent->ny != 0) {
 		Mario::GetInstance()->vy = 0;
-		if (collisionEvent > 0) {
+		if (collisionEvent->ny > 0) {
 			state = STATE_ALREADY_BONUS_GIFT;
 			noCollisionConsideration = true;
 			Mario::GetInstance()->ChangeState(PlayerGoingAutoState::GetInstance());
