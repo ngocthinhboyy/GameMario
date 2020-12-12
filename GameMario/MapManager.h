@@ -11,6 +11,7 @@ public:
 	LPMAP GetMap(int id);
 	void ReadMap(int id);
 	void RenderMap(int id);
+	void ClearMapById(int id);
 	static MapManager* GetInstance();
 	~MapManager();
 };

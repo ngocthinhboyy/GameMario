@@ -62,4 +62,16 @@ void TileManager::ReadTileset(LPCWSTR fileTexturePath, LPCWSTR fileTileSetPositi
 	}
 }
 
+void TileManager::ClearTileset()
+{
+	for (auto tile : tiles) {
+		delete tile;
+	}
+
+	tiles.clear();
+	if (tileset != NULL) {
+		tileset->Release();
+	}
+}
+
 TileManager::~TileManager() {};

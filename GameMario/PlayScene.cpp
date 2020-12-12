@@ -118,7 +118,7 @@ void PlayScene::_ParseSection_OBJECTS_NOT_IN_GRID(string line)
 			return;
 		}
 		Mario* mario = Mario::GetInstance();
-		mario->SetLevel(MARIO_LEVEL_FIRE);
+		mario->SetLevel(MARIO_LEVEL_RACCOON);
 		mario->ChangeState(PlayerStandingState::GetInstance());
 		ani_set = AnimationManager::GetInstance()->Get(ani_set_id);
 
@@ -237,6 +237,7 @@ void PlayScene::Load()
 
 void PlayScene::Update(DWORD dt)
 {
+
 	if (isStopGame)
 		RestartGame();
 	else {
@@ -256,6 +257,8 @@ void PlayScene::Update(DWORD dt)
 		}
 		if (remainingTime <= 0) {
 			remainingTime = 0;
+			Game::GetInstance()->SwitchScene(1);
+			return;
 		}
 	}
 	Grid* grid = Grid::GetInstance();
@@ -270,7 +273,8 @@ void PlayScene::Update(DWORD dt)
 	{
 		objects[i]->Update(dt, this->timeScale);
 	}
-	player->Update(dt, this->timeScale);
+	if(player != NULL)
+		player->Update(dt, this->timeScale);
 
 	for (size_t i = 0; i < enemies.size(); i++)
 	{
@@ -323,11 +327,32 @@ void PlayScene::Render()
 */
 void PlayScene::Unload()
 {
-	for (int i = 0; i < objects.size(); i++)
-		delete objects[i];
+	
+	for (auto object : objects)
+		delete object;
+	for (auto enemy : enemies)
+		delete enemy;
+	for (auto object : collisionMapObjects)
+		delete object;
 
 	objects.clear();
+	enemies.clear();
+	collisionMapObjects.clear();
+	
 	player = NULL;
+
+	if(Grid::GetInstance() != NULL)
+		Grid::GetInstance()->ClearGrid();
+
+	MapManager* mapManager = MapManager::GetInstance();
+	if (mapManager->GetMap(this->mapID) != NULL) {
+		mapManager->ClearMapById(this->mapID);
+		delete mapManager->GetMap(this->mapID);
+	}
+	if(Textures::GetInstance()->GetTexture(ID_TEX_BBOX) != NULL)
+		Textures::GetInstance()->GetTexture(ID_TEX_BBOX)->Release();
+	if(Textures::GetInstance()->GetTexture(ID_TEX_BOARDGAME) != NULL)
+		Textures::GetInstance()->GetTexture(ID_TEX_BOARDGAME)->Release();
 
 	DebugOut(L"[INFO] Scen unloaded! %s\n", sceneFilePath);
 }

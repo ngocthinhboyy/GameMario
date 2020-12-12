@@ -20,6 +20,7 @@ public:
 	void DeterminedGridToObtainObject(LPGAMEOBJECT object);
 	void SetNewGrid(LPGAMEOBJECT object);
 	void SetStartPosition();
+	void ClearGrid();
 	static Grid* GetInstance();
 
 

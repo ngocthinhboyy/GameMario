@@ -1,0 +1,8 @@
+#map
+#maptxt
+[MAP]
+1	Scene\worldmap\map.txt	Resources\worldmap_tileset.png	Scene\worldmap\tilesetcoordinates.txt	255	255	255
+[OBJECTS]
+1	Scene\worldmap\objects.txt
+[REMAINING TIME]
+300

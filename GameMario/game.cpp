@@ -5,6 +5,7 @@
 #include "debug.h"
 
 #include "PlayScene.h"
+#include "WorldMap.h"
 #include "SpriteManager.h"
 #include "AnimationDatabase.h"
 #include "Camera.h"
@@ -342,8 +343,16 @@ void Game::_ParseSection_SCENES(string line)
 	int id = atoi(tokens[0].c_str());
 	//wstring path = ToWSTR(tokens[1]);
 	LPCWSTR path = ToLPCWSTR(tokens[1]);
-	LPSCENE scene = new PlayScene(id, path);
-	scenes[id] = scene;
+	int typeScene = atoi(tokens[2].c_str());
+	LPSCENE scene;
+	if (typeScene == 1) {
+		scene = new WorldMap(id, path);
+		scenes[id] = scene;
+	}
+	else if (typeScene == 2) {
+		scene = new PlayScene(id, path);
+		scenes[id] = scene;
+	}
 }
 
 void Game::_ParseSection_RESOURCES(string line)

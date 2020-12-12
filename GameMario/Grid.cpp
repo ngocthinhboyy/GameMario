@@ -284,6 +284,20 @@ void Grid::SetStartPosition()
 	}
 
 }
+void Grid::ClearGrid()
+{
+	enemies.clear();
+	objects.clear();
+	objectsWaitingToSetStartPosition.clear();
+	for (int i = 0; i < MAX_ROW; i++)
+		for (int j = 0; j < MAX_COLUMN; j++) {
+			for (int k = 0; k < cells[i][j].size(); k++) {
+				//cells[i][j].erase(cells[i][j].begin() + k);
+				cells[i][j].clear();
+			//delete cells[i][j].at(k);
+		}
+	}
+}
 Grid* Grid::GetInstance()
 {
 	if (__instance == NULL) __instance = new Grid();

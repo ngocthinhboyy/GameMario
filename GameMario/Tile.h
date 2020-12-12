@@ -13,6 +13,7 @@ public:
 	void Draw(float x, float y);
 	int GetHeight() { return this->height; };
 	int GetWidth() { return this->width; };
+	void ClearTextture();
 	~Tile();
 };
 typedef Tile* LPTILE;

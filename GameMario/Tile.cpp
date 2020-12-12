@@ -14,4 +14,10 @@ void Tile::Draw(float x, float y) {
 	game->Draw(x, y, texture, left, top, left+this->width, top+this->height);
 }
 
+void Tile::ClearTextture()
+{
+	if (texture != NULL)
+		texture->Release();
+}
+
 Tile::~Tile() {}

@@ -273,6 +273,9 @@
     <ClCompile Include="PlayerDieState.cpp">
       <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClCompile>
+    <ClCompile Include="WorldMap.cpp">
+      <Filter>Framework\Game_Scene\PlayScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -487,6 +490,9 @@
     </ClInclude>
     <ClInclude Include="PlayerDieState.h">
       <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldMap.h">
+      <Filter>Framework\Game_Scene\PlayScene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

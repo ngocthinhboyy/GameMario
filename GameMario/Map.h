@@ -16,6 +16,7 @@ public:
 	LPTILEMANAGER GetTileManager();
 	void ReadMap();
 	void DrawMap();
+	void ClearMap();
 	~Map();
 };
 

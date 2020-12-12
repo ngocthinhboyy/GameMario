@@ -14,6 +14,11 @@ LPMAP MapManager::GetMap(int id) {
 void MapManager::RenderMap(int id) {
 	maps[id]->DrawMap();
 }
+void MapManager::ClearMapById(int id)
+{
+	maps[id]->ClearMap();
+	maps[id]->GetTileManager()->ClearTileset();
+}
 void MapManager::ReadMap(int id) {
 	maps[id]->ReadMap();
 }
