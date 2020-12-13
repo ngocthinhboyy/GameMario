@@ -120,6 +120,7 @@ void PlayScene::_ParseSection_OBJECTS_NOT_IN_GRID(string line)
 		Mario* mario = Mario::GetInstance();
 		mario->SetLevel(MARIO_LEVEL_RACCOON);
 		mario->ChangeState(PlayerStandingState::GetInstance());
+		mario->noCollisionConsideration = false;
 		ani_set = AnimationManager::GetInstance()->Get(ani_set_id);
 
 		mario->SetPosition(x, y);

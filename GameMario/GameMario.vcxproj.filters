@@ -85,6 +85,9 @@
     <Filter Include="Framework\EndTitle">
       <UniqueIdentifier>{753f1992-2280-4a85-af56-fa77a7ba3462}</UniqueIdentifier>
     </Filter>
+    <Filter Include="game\Object\WorldMapObject">
+      <UniqueIdentifier>{d785da21-020e-496f-a8d0-88ecd2c23878}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sprite.cpp">
@@ -275,6 +278,15 @@
     </ClCompile>
     <ClCompile Include="WorldMap.cpp">
       <Filter>Framework\Game_Scene\PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldMapObject.cpp">
+      <Filter>game\Object\WorldMapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GateInWorldMap.cpp">
+      <Filter>game\Object\WorldMapObject</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerInWorldMapState.cpp">
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -493,6 +505,18 @@
     </ClInclude>
     <ClInclude Include="WorldMap.h">
       <Filter>Framework\Game_Scene\PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldMapObject.h">
+      <Filter>game\Object\WorldMapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldMapDefine.h">
+      <Filter>game\Define</Filter>
+    </ClInclude>
+    <ClInclude Include="GateInWorldMap.h">
+      <Filter>game\Object\WorldMapObject</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerInWorldMapState.h">
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

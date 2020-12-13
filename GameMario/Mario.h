@@ -35,10 +35,15 @@ class Mario : public GameObject
 	bool canGoDownIntoGate = false;
 	bool canGoUpIntoGate = false;
 	bool isMovingIntoGate = false;
+
+
+	bool isMovingInWorldMap = false;
+	bool isAlreadyStandingOnGateInWorldMap = false;
 public:
 	float speedLast;
 	Mario(float x = 0.0f, float y = 0.0f);
 	void Update(DWORD dt, int scaleTime);
+	void UpdateInWorldMap(DWORD dt);
 	virtual void Render();
 
 	bool GetCanGoDownIntoGate() { return this->canGoDownIntoGate; };
@@ -50,6 +55,9 @@ public:
 	void SetIsMovingIntoGate(bool isMovingIntoGate) { this->isMovingIntoGate = isMovingIntoGate; };
 
 	void SetIsGrowingUp(bool isGrowingUp) { this->isGrowingUp = isGrowingUp; };
+
+	void SetIsMovingInWorldMap(bool isMovingInWorldMap) { this->isMovingInWorldMap = isMovingInWorldMap; };
+	bool GetIsMovingInWorldMap() { return isMovingInWorldMap; };
 
 
 	//void SetState(int state);
@@ -95,5 +103,7 @@ public:
 	//void CalcPotentialCollisionsWithEnemy(vector<LPENEMY>* coEnemies, vector<LPCOLLISIONEVENT>& coEvents);
 
 	void CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPCOLLISIONMAPOBJECT collisionMapObject);
+
+	//void CheckStandingOn
 
 };

@@ -38,6 +38,7 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Gate.cpp" />
+    <ClCompile Include="GateInWorldMap.cpp" />
     <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="Item.cpp" />
@@ -56,6 +57,7 @@
     <ClCompile Include="PlayerGoingAutoState.cpp" />
     <ClCompile Include="PlayerHighJumpingState.cpp" />
     <ClCompile Include="PlayerHoldingState.cpp" />
+    <ClCompile Include="PlayerInWorldMapState.cpp" />
     <ClCompile Include="PlayerJumpingState.cpp" />
     <ClCompile Include="PlayerKickingState.cpp" />
     <ClCompile Include="PlayerLevelDownTransformState.cpp" />
@@ -82,6 +84,7 @@
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileManager.cpp" />
     <ClCompile Include="WorldMap.cpp" />
+    <ClCompile Include="WorldMapObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -106,6 +109,7 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Gate.h" />
+    <ClInclude Include="GateInWorldMap.h" />
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="GraphicsDefine.h" />
     <ClInclude Include="Grid.h" />
@@ -128,6 +132,7 @@
     <ClInclude Include="PlayerGoingAutoState.h" />
     <ClInclude Include="PlayerHighJumpingState.h" />
     <ClInclude Include="PlayerHoldingState.h" />
+    <ClInclude Include="PlayerInWorldMapState.h" />
     <ClInclude Include="PlayerJumpingState.h" />
     <ClInclude Include="PlayerKickingState.h" />
     <ClInclude Include="PlayerLevelDownTransformState.h" />
@@ -156,6 +161,8 @@
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileManager.h" />
     <ClInclude Include="WorldMap.h" />
+    <ClInclude Include="WorldMapDefine.h" />
+    <ClInclude Include="WorldMapObject.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

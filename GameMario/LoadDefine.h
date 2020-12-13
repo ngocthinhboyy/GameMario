@@ -49,3 +49,5 @@
 #define OBJECT_TYPE_RANDOM_GIFT									10
 #define OBJECT_TYPE_FLOWER										6
 #define OBJECT_TYPE_COIN										7
+
+#define WORLDMAP_SECTION_OBJECT									1

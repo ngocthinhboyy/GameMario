@@ -1,16 +1,102 @@
 #include "WorldMap.h"
-#include "PlaySceneKeyHandler.h"
-#include "debug.h"
-#include "MapManager.h"
-#include "Textures.h"
-#include <iostream>
-#include <fstream>
-#include "LoadDefine.h"
-#include "Camera.h"
-#include "BoardGame.h"
 
 void WorldMap::_ParseSection_OBJECTS(string line)
 {
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 2) return; // skip invalid lines
+
+	int objectSourceId = atoi(tokens[0].c_str());
+	LPCWSTR filePathObject = ToLPCWSTR(tokens[1]);
+	ifstream f;
+
+	f.open(filePathObject);
+
+	int section = SCENE_SECTION_UNKNOWN;
+
+	char str[MAX_SCENE_LINE];
+	while (f.getline(str, MAX_SCENE_LINE))
+	{
+		string line(str);
+
+		if (line[0] == '#') continue;
+
+		if (line == "[OBJECTS WORLD MAP]") {
+			section = WORLDMAP_SECTION_OBJECT; continue;
+		}
+
+		switch (section)
+		{
+		case WORLDMAP_SECTION_OBJECT: ReadLineObject(line); break;
+		}
+	}
+	Mario::GetInstance()->ChangeState(PlayerInWorldMapState::GetInstance());
+	Mario::GetInstance()->SetPosition(115, 130);
+	player = Mario::GetInstance();
+
+	f.close();
+}
+
+void WorldMap::ReadLineObject(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 5) return;
+
+	int object_type = atoi(tokens[0].c_str());
+	float x = atof(tokens[1].c_str());
+	float y = atof(tokens[2].c_str());
+
+	float w = atof(tokens[3].c_str());
+	float h = atof(tokens[4].c_str());
+
+	int ani_set_id = atoi(tokens[5].c_str());
+
+	AnimationManager* animation_sets = AnimationManager::GetInstance();
+
+	GameObject* obj = NULL;
+	GateInWorldMap* gate = NULL;
+	LPANIMATION_SET ani_set = NULL;
+	switch (object_type)
+	{
+		case 11: {
+			obj = new WorldMapObject(x, y, w, h, WORLDMAP_OBJECT_TYPE_CACTUS);
+			ani_set = AnimationManager::GetInstance()->Get(ani_set_id);
+			obj->SetAnimationSet(ani_set);
+			objects.push_back(obj);
+			break;
+		}
+		case 12: {
+			obj = new WorldMapObject(x, y, w, h, WORLDMAP_OBJECT_TYPE_HELP_TAGS);
+			ani_set = AnimationManager::GetInstance()->Get(ani_set_id);
+			obj->SetAnimationSet(ani_set);
+			objects.push_back(obj);
+			break;
+		}
+		case 13: {
+			obj = new WorldMapObject(x, y, w, h, WORLDMAP_OBJECT_TYPE_GUARD);
+			ani_set = AnimationManager::GetInstance()->Get(ani_set_id);
+			obj->SetAnimationSet(ani_set);
+			objects.push_back(obj);
+			break;
+		}
+		case 14: {
+			int isInvisibleGate = atoi(tokens[6].c_str());
+			int type = atoi(tokens[7].c_str());
+			int directionX = atoi(tokens[8].c_str());
+			int directionY = atoi(tokens[9].c_str());
+			if (isInvisibleGate == 1)
+				gate = new GateInWorldMap(x, y, w, h, type, false, directionX, directionY);
+			else
+				gate = new GateInWorldMap(x, y, w, h, type, true, directionX, directionY);
+			ani_set = AnimationManager::GetInstance()->Get(ani_set_id);
+			gate->SetAnimationSet(ani_set);
+			gatesInWorldMap.push_back(gate);
+			break;
+		}
+	default:
+		break;
+	}
 }
 
 void WorldMap::_ParseSection_MAP(string line)
@@ -86,6 +172,7 @@ void WorldMap::Load()
 void WorldMap::Update(DWORD dt)
 {
 	Camera::GetInstance()->SetCamPos(0, 0);
+	player->UpdateInWorldMap(dt);
 }
 
 void WorldMap::Render()
@@ -94,6 +181,13 @@ void WorldMap::Render()
 	mapManager->RenderMap(mapID);
 	BoardGame* board = BoardGame::GetInstance();
 	board->RenderBoardGame();
+
+	for (auto object : objects)
+		object->Render();
+	for (auto gate : gatesInWorldMap)
+		gate->Render();
+
+	player->Render();
 }
 
 void WorldMap::Unload()

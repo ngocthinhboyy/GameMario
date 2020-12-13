@@ -30,6 +30,7 @@
 #include "RandomGift.h"
 #include "PlayerBonusTransformState.h"
 #include "PlayerDieState.h"
+#include "WorldMap.h"
 
 Mario* Mario::Mario::__instance = NULL;
 Mario* Mario::GetInstance() {
@@ -273,6 +274,42 @@ void Mario::Update(DWORD dt, int scaleTime)
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 
+}
+
+void Mario::UpdateInWorldMap(DWORD dt)
+{
+
+	WorldMap* worldMap = dynamic_cast<WorldMap*> (Game::GetInstance()->GetCurrentScene());
+	vector<GateInWorldMap*> gatesInWorldMap = worldMap->gatesInWorldMap;
+	GateInWorldMap* gateStandingOn = NULL;
+	bool alreadyHasGate = false;
+
+	for (auto gate : gatesInWorldMap) {
+		if (gate->CheckMarioIsStandingOn() != -1 && !alreadyHasGate) {
+			gateStandingOn = gate;
+			alreadyHasGate = true;
+			if (gateStandingOn->gameObjectID != PlayerInWorldMapState::idGateMarioStandingOn)
+				isAlreadyStandingOnGateInWorldMap = false;
+		}
+	}
+	if (gateStandingOn != NULL && !isAlreadyStandingOnGateInWorldMap) {
+		PlayerInWorldMapState::directionX = gateStandingOn->GetDirectionX();
+		PlayerInWorldMapState::directionY = gateStandingOn->GetDirectionY();
+		PlayerInWorldMapState::idGateMarioStandingOn = gateStandingOn->gameObjectID;
+		x = gateStandingOn->x;
+		y = gateStandingOn->y;
+		vx = 0;
+		vy = 0;
+		isAlreadyStandingOnGateInWorldMap = true;
+	}
+	else if (gateStandingOn == NULL && isAlreadyStandingOnGateInWorldMap) {
+		isAlreadyStandingOnGateInWorldMap = false;
+	}
+	playerState->Update(dt);
+	dx = vx * dt;
+	dy = vy * dt;
+	x += dx;
+	y += dy;
 }
 
 void Mario::Render()
