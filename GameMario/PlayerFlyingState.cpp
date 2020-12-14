@@ -107,7 +107,7 @@ void PlayerFlyingState::OnKeyDown(int KeyCode)
 			stopIncreasingSpeed = true;
 			DWORD now = GetTickCount64();
 			if (now - timeStartFlying < 10000) {
-				mario->vy += -0.4f;
+				mario->vy = -0.4f;
 			}
 		}
 		break;

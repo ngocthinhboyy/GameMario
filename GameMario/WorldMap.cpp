@@ -62,13 +62,12 @@ void WorldMap::ReadLineObject(string line)
 			if (player != NULL)
 			{
 				player->nx = -1;
-				DebugOut(L"TTTTTTTTt \n");
 				player->ChangeState(PlayerInWorldMapState::GetInstance());
 				player->SetPosition(115, 130);
 				return;
 			}
 			Mario* mario = Mario::GetInstance();
-			mario->SetLevel(MARIO_LEVEL_SMALL);
+			mario->SetLevel(MARIO_LEVEL_RACCOON);
 			mario->ChangeState(PlayerInWorldMapState::GetInstance());
 			mario->noCollisionConsideration = false;
 			ani_set = AnimationManager::GetInstance()->Get(ani_set_id);

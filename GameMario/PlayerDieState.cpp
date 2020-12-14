@@ -1,5 +1,6 @@
 #include "PlayerDieState.h"
 #include "Mario.h"
+#include "game.h"
 
 PlayerDieState::PlayerDieState()
 {
@@ -41,6 +42,10 @@ void PlayerDieState::Update(int dt)
 	}
 	else if (GetTickCount64() - startTimeDie <= 1000) {
 		mario->vy = -0.35f;
+	}
+	else if (GetTickCount64() - startTimeDie >= 4000) {
+		mario->SetHeart(mario->GetHeart() - 1);
+		Game::GetInstance()->SwitchScene(1);
 	}
 	else {
 		mario->vy = 0.55f;

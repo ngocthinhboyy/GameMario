@@ -69,6 +69,7 @@ void PlayerInWorldMapState::OnKeyDown(int KeyCode)
 			DWORD timeStart = GetTickCount64();
 			Game::GetInstance()->SwitchScene(2);
 			Mario::GetInstance()->nx = 1;
+			Mario::GetInstance()->noCollisionConsideration = false;
 			PlayScene* playScene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 			playScene->SetTimeOfPreviousSecond(timeStart);
 			break;

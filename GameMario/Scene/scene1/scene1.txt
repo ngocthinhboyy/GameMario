@@ -5,4 +5,4 @@
 [OBJECTS]
 1	Scene\scene1\objects.txt
 [REMAINING TIME]
-20
+300
