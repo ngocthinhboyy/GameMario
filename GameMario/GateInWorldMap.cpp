@@ -15,6 +15,7 @@ GateInWorldMap::GateInWorldMap(float x, float y, int w, int h, int type, bool is
 	this->w = w;
 	this->h = h;
 	this->isInvisibleGate = isInvisibleGate;
+	this->noCollisionConsideration = true;
 	this->type = type;
 	this->directionX = directionX;
 	this->directionY = directionY;

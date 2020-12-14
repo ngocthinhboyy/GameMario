@@ -78,7 +78,7 @@
 12	624	288	48	48	18
 
 # guard
-13	250	432	48	48	18
+13	270	432	48	48	18
 
 # id	x	y	w	h	ani	invi	type	directionX	directionY
 14	96	144	48	48	18	1	0	1	0

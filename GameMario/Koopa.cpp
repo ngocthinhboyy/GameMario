@@ -131,7 +131,7 @@ void Koopa::SetAnimation()
 void Koopa::Update(DWORD dt, int scaleTime)
 {
 	if (state == ENEMY_STATE_DIE && !isDiedByFireball) {
-		if (GetTickCount64() - timeDie >= 5000) {
+		if (GetTickCount64() - timeDie >= 8000) {
 			this->vx = -KOOPA_WALKING_SPEED_X * Mario::GetInstance()->nx;
 			this->nx = -Mario::GetInstance()->nx;
 			this->isUpsideDown = false;
@@ -445,7 +445,7 @@ void Koopa::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 		if (collisionEvent->ny < 0) {
 			if (state != ENEMY_STATE_DIE) {
 				if (state != ENEMY_STATE_WALKING_WITH_SWINGS) {
-					Point* point = new Point(x, y, 39, 30);
+					Point* point = new Point(x, y, 39, 30, 100);
 					Grid* grid = Grid::GetInstance();
 					grid->DeterminedGridToObtainObject(point);
 					mario->SetPoint(mario->GetPoint() + 100);
@@ -455,7 +455,7 @@ void Koopa::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 					SetTimeDie();
 				}
 				else if (state == ENEMY_STATE_WALKING_WITH_SWINGS) {
-					Point* point = new Point(x, y, 39, 30);
+					Point* point = new Point(x, y, 39, 30, 100);
 					Grid* grid = Grid::GetInstance();
 					grid->DeterminedGridToObtainObject(point);
 					state = ENEMY_STATE_WALKING;

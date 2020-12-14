@@ -194,6 +194,8 @@ void WorldMap::Update(DWORD dt)
 	Camera::GetInstance()->SetCamPos(0, 0);
 	player->UpdateInWorldMap(dt);
 	BoardGame* board = BoardGame::GetInstance();
+	for (auto object : objects)
+		object->Update(dt, 1);
 	board->UpdateBoardGame();
 }
 

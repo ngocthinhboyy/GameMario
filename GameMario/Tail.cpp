@@ -108,7 +108,7 @@ void Tail::CheckOverlapBoundingBox(vector<LPGAMEOBJECT> objects)
 							enemy->vx = ENEMY_DIE_SPEED_X;
 						enemy->vy = -ENEMY_DIE_SPEED_Y;
 						enemy->SetIsUpsideDown(true);
-						Point* point = new Point(enemy->x, enemy->y, 39, 30);
+						Point* point = new Point(enemy->x, enemy->y, 39, 30, 100);
 						Grid* grid = Grid::GetInstance();
 						grid->DeterminedGridToObtainObject(point);
 						Mario::GetInstance()->SetPoint(Mario::GetInstance()->GetPoint() + 100);

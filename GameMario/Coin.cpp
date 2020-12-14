@@ -55,10 +55,8 @@ void Coin::Update(DWORD dt, int scaleTime)
 				mario->SetPoint(mario->GetPoint() + MARIO_BONUS_POINT_COIN);
 				this->isBonused = true;
 				this->stillAlive = false;
-				Game* game = Game::GetInstance();
-				PlayScene* scene = dynamic_cast<PlayScene*> (game->GetCurrentScene());
-				Point* point = new Point(x, y, 39, 30);
-				Grid* grid = Grid::GetInstance();
+			    Point* point = new Point(x, y, 39, 30, 100);
+				Grid* grid = Grid::GetInstance(); 
 				grid->DeterminedGridToObtainObject(point);
 			}
 			else {

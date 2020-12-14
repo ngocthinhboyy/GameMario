@@ -42,6 +42,8 @@ void PlayerInWorldMapState::Update(int dt)
 
 void PlayerInWorldMapState::OnKeyDown(int KeyCode)
 {
+	if (Mario::GetInstance()->vx != 0 || Mario::GetInstance()->vy != 0)
+		return;
 	switch (KeyCode)
 	{
 		case DIK_RIGHT: {

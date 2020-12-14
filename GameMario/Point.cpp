@@ -2,7 +2,7 @@
 #include "AnimationDatabase.h"
 #include "debug.h"
 
-Point::Point(float x, float y, float w, float h)
+Point::Point(float x, float y, float w, float h, int typePoint)
 {
 	this->x = x;
 	this->y = y;
@@ -10,6 +10,7 @@ Point::Point(float x, float y, float w, float h)
 	this->h = h;
 	this->vx = 0;
 	this->vy = -0.5f;
+	this->typePoint = typePoint;
 	this->gameObjectID = idGenerate++;
 	timeAppearance = GetTickCount64();
 	this->noCollisionConsideration = true;
@@ -17,7 +18,7 @@ Point::Point(float x, float y, float w, float h)
 
 void Point::Update(DWORD dt, int scaleTime)
 {
-	GameObject::Update(dt, scaleTime);
+	GameObject::Update(dt, 1);
 
 	if (GetTickCount64() - timeAppearance >= 250) {
 		this->stillAlive = false;
@@ -32,7 +33,12 @@ void Point::Render()
 {
 	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
 	D3DXVECTOR2 scale = D3DXVECTOR2(3, 3);
-	LPANIMATION animation = animationDatabase->Get(2501);
+	LPANIMATION animation = NULL;
+	if(typePoint == 100)
+		animation = animationDatabase->Get(2501);
+	else if (typePoint == 1000) {
+		animation = animationDatabase->Get(4401);
+	}
 	animation->Render(x, y, 255, scale);
 }
 

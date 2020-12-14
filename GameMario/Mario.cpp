@@ -150,18 +150,6 @@ void Mario::Update(DWORD dt, int scaleTime)
 	{
 		x += dx;
 		y += dy;
-		if (x <= 0)
-			x = 0;
-		if (!isGoingAuto) {
-			if (x >= 8350) {
-				x = 8350;
-				vx = 0;
-			}
-		}
-		else {
-			if (x > 8500)
-				vx = 0;
-		}
 	}
 	else
 	{
@@ -258,20 +246,28 @@ void Mario::Update(DWORD dt, int scaleTime)
 				}
 			}*/
 		}
-		if (x <= 0)
-			x = 0;
-		if (!isGoingAuto) {
-			if (x >= 8350) {
-				x = 8350;
-				vx = 0;
-			}
-		}
-		else {
-			if (x > 8500)
-				vx = 0;
-		}
 	}
 	// clean up collision events
+	
+	if (x <= 0)
+		x = 0;
+	if (!isGoingAuto) {
+		if (x >= 8350) {
+			x = 8350;
+			vx = 0;
+		}
+	}
+	else {
+		if (x > 8500)
+			vx = 0;
+	}
+	float camx, camy;
+	Camera::GetInstance()->GetCamPos(camx, camy);
+	//DebugOut(L"TTTTT %d\n", Game::GetInstance()->GetScreenHeight());
+	if (y > camy + 580) {
+		ChangeState(PlayerDieState::GetInstance());
+
+	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 
 }

@@ -1,6 +1,7 @@
 #include "PlayerDieState.h"
 #include "Mario.h"
 #include "game.h"
+#include "PlayScene.h"
 
 PlayerDieState::PlayerDieState()
 {
@@ -37,18 +38,30 @@ void PlayerDieState::SetAnimation()
 void PlayerDieState::Update(int dt)
 {
 	Mario* mario = Mario::GetInstance();
-	if (GetTickCount64() - startTimeDie <= 600) {
-		mario->vy = 0;
-	}
-	else if (GetTickCount64() - startTimeDie <= 1000) {
-		mario->vy = -0.35f;
-	}
-	else if (GetTickCount64() - startTimeDie >= 4000) {
-		mario->SetHeart(mario->GetHeart() - 1);
-		Game::GetInstance()->SwitchScene(1);
+	if (mario->GetLevel() == MARIO_LEVEL_SMALL) {
+		if (GetTickCount64() - startTimeDie <= 600) {
+			mario->vy = 0;
+		}
+		else if (GetTickCount64() - startTimeDie <= 1000) {
+			mario->vy = -0.35f;
+		}
+		else if (GetTickCount64() - startTimeDie >= 4000) {
+			mario->vy = 0;
+			mario->vx = 0;
+			mario->SetHeart(mario->GetHeart() - 1);
+			Game::GetInstance()->SwitchScene(1);
+		}
+		else {
+			mario->vy = 0.55f;
+		}
 	}
 	else {
-		mario->vy = 0.55f;
+		if (GetTickCount64() - startTimeDie >= 3000) {
+			mario->vy = 0;
+			mario->vx = 0;
+			mario->SetHeart(mario->GetHeart() - 1);
+			Game::GetInstance()->SwitchScene(1);
+		}
 	}
 	mario->dy = mario->vy * dt;
 	mario->y += mario->dy;
@@ -67,6 +80,8 @@ PlayerState* PlayerDieState::GetInstance()
     if (__instance == NULL) __instance = new PlayerDieState();
 	SetAnimation();
 	startTimeDie = GetTickCount64();
+	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+	scene->StopGame(5000);
     return __instance;
 }
 

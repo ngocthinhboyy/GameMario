@@ -6,6 +6,8 @@
 #include "QuestionBrick.h"
 #include "Leaf.h"
 #include "PlayerBonusTransformState.h"
+#include "Point.h"
+#include "Grid.h"
 
 Mushroom::Mushroom(float x, float y, float w, float h)
 {
@@ -104,6 +106,9 @@ void Mushroom::Update(DWORD dt, int scaleTime)
 				mario->y -= 2;
 				PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 				scene->StopGame(1000);
+				Point* point = new Point(x, y, 45, 24, 1000);
+				Grid* grid = Grid::GetInstance();
+				grid->DeterminedGridToObtainObject(point);
 				mario->SetPoint(mario->GetPoint() + MARIO_BONUS_POINT_LEAF);
 				this->stillAlive = false;
 			}
@@ -131,6 +136,9 @@ void Mushroom::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 	mario->y -= 2;
 	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 	scene->StopGame(1000);
+	Point* point = new Point(x, y, 45, 24, 1000);
+	Grid* grid = Grid::GetInstance();
+	grid->DeterminedGridToObtainObject(point);
 	mario->SetPoint(mario->GetPoint() + MARIO_BONUS_POINT_LEAF);
 	this->stillAlive = false;
 }
