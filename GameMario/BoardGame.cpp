@@ -155,14 +155,14 @@ void BoardGame::ParsePositionInBoardGame(string line)
 void BoardGame::UpdateBoardGame()
 {
 	Mario* mario = Mario::GetInstance();
-	PlayScene* playScene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+	Scene* scene = Game::GetInstance()->GetCurrentScene();
 
 	int world = 1;
 	float speed = abs(mario->vx);
 	int coin = mario->GetCoin();
 	int heart = mario->GetHeart();
 	int point = mario->GetPoint();
-	int remainingTime = playScene->GetRemainingTime();
+	int remainingTime = scene->GetRemainingTime();
 
 	SetWorldInBoardGame(world);
 	SetSpeedInBoardGame(speed);

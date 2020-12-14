@@ -120,9 +120,9 @@ int Run()
 	int done = 0;
 	DWORD frameStart = GetTickCount64();
 	DWORD tickPerFrame = 1000 / MAX_FRAME_RATE;
-	DWORD timeStart = GetTickCount64();
+	/*DWORD timeStart = GetTickCount64();
 	PlayScene* playScene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
-	playScene->SetTimeOfPreviousSecond(timeStart);
+	playScene->SetTimeOfPreviousSecond(timeStart);*/
 
 	while (!done)
 	{

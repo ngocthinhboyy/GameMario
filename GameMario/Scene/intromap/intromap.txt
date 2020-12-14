@@ -1,0 +1,8 @@
+#map
+#maptxt
+[MAP]
+1	Scene\intromap\map.xml	Resources\intromap_tileset.png	Scene\intromap\tilesetcoordinates.txt	2	2	2
+[OBJECTS]
+1	Scene\intromap\objects.txt
+[REMAINING TIME]
+0

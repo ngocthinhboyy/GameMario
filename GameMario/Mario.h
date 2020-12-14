@@ -36,8 +36,6 @@ class Mario : public GameObject
 	bool canGoUpIntoGate = false;
 	bool isMovingIntoGate = false;
 
-
-	bool isMovingInWorldMap = false;
 	bool isAlreadyStandingOnGateInWorldMap = false;
 public:
 	float speedLast;
@@ -55,10 +53,6 @@ public:
 	void SetIsMovingIntoGate(bool isMovingIntoGate) { this->isMovingIntoGate = isMovingIntoGate; };
 
 	void SetIsGrowingUp(bool isGrowingUp) { this->isGrowingUp = isGrowingUp; };
-
-	void SetIsMovingInWorldMap(bool isMovingInWorldMap) { this->isMovingInWorldMap = isMovingInWorldMap; };
-	bool GetIsMovingInWorldMap() { return isMovingInWorldMap; };
-
 
 	//void SetState(int state);
 	void SetLevel(int level) { this->level = level; }

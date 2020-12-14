@@ -57,7 +57,7 @@ void Map::DrawMap() {
 }
 void Map::ClearMap()
 {
-	//memset(mapArr, 0, sizeof(mapArr[0][0]) * 500 * 500);
+	memset(mapArr, 0, sizeof(mapArr[0][0]) * 500 * 500);
 }
 Map::Map() {}
 Map::Map(LPCWSTR filePath) {

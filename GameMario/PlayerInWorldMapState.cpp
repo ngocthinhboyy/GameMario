@@ -1,6 +1,7 @@
 #include "PlayerInWorldMapState.h"
 #include "Mario.h"
 #include "PlayerSpinningState.h"
+#include "PlayScene.h"
 
 PlayerInWorldMapState::PlayerInWorldMapState()
 {
@@ -46,7 +47,6 @@ void PlayerInWorldMapState::OnKeyDown(int KeyCode)
 		case DIK_RIGHT: {
 			if (directionX == 2 || directionX == 1) {
 				Mario::GetInstance()->vx = 0.3f;
-				Mario::GetInstance()->SetIsMovingInWorldMap(true);
 			}
 			break;
 		}
@@ -63,6 +63,18 @@ void PlayerInWorldMapState::OnKeyDown(int KeyCode)
 		case DIK_DOWN: {
 			if (directionY == 2 || directionY == 1)
 				Mario::GetInstance()->vy = 0.3f;
+			break;
+		}
+		case DIK_S: {
+			DWORD timeStart = GetTickCount64();
+			Game::GetInstance()->SwitchScene(2);
+			Mario::GetInstance()->nx = 1;
+			PlayScene* playScene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+			playScene->SetTimeOfPreviousSecond(timeStart);
+			break;
+		}
+		case DIK_ESCAPE: {
+			Game::GetInstance()->SwitchScene(3);
 			break;
 		}
 		default:

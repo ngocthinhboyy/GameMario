@@ -30,9 +30,6 @@ void WorldMap::_ParseSection_OBJECTS(string line)
 		case WORLDMAP_SECTION_OBJECT: ReadLineObject(line); break;
 		}
 	}
-	Mario::GetInstance()->ChangeState(PlayerInWorldMapState::GetInstance());
-	Mario::GetInstance()->SetPosition(115, 130);
-	player = Mario::GetInstance();
 
 	f.close();
 }
@@ -57,8 +54,34 @@ void WorldMap::ReadLineObject(string line)
 	GameObject* obj = NULL;
 	GateInWorldMap* gate = NULL;
 	LPANIMATION_SET ani_set = NULL;
+	ani_set = animation_sets->Get(ani_set_id);
 	switch (object_type)
 	{
+		case OBJECT_TYPE_MARIO:
+		{
+			if (player != NULL)
+			{
+				player->nx = -1;
+				DebugOut(L"TTTTTTTTt \n");
+				player->ChangeState(PlayerInWorldMapState::GetInstance());
+				player->SetPosition(115, 130);
+				return;
+			}
+			Mario* mario = Mario::GetInstance();
+			mario->SetLevel(MARIO_LEVEL_SMALL);
+			mario->ChangeState(PlayerInWorldMapState::GetInstance());
+			mario->noCollisionConsideration = false;
+			ani_set = AnimationManager::GetInstance()->Get(ani_set_id);
+
+			mario->SetPosition(x, y);
+
+			mario->SetAnimationSet(ani_set);
+			mario->nx = -1;
+			player = mario;
+
+			DebugOut(L"[INFO] Player object created!\n");
+			break;
+		}
 		case 11: {
 			obj = new WorldMapObject(x, y, w, h, WORLDMAP_OBJECT_TYPE_CACTUS);
 			ani_set = AnimationManager::GetInstance()->Get(ani_set_id);
@@ -162,8 +185,6 @@ void WorldMap::Load()
 	}
 
 	f.close();
-
-
 	Textures::GetInstance()->AddTexture(ID_TEX_BOARDGAME, L"textures\\boardgame_panel.png", D3DCOLOR_XRGB(255, 255, 255));
 
 	DebugOut(L"[INFO] Done loading world map resources %s\n", sceneFilePath);
@@ -173,6 +194,8 @@ void WorldMap::Update(DWORD dt)
 {
 	Camera::GetInstance()->SetCamPos(0, 0);
 	player->UpdateInWorldMap(dt);
+	BoardGame* board = BoardGame::GetInstance();
+	board->UpdateBoardGame();
 }
 
 void WorldMap::Render()
@@ -192,4 +215,20 @@ void WorldMap::Render()
 
 void WorldMap::Unload()
 {
+	for (auto object : objects)
+		delete object;
+	for (auto gate : gatesInWorldMap)
+		delete gate;
+	objects.clear();
+	gatesInWorldMap.clear();
+
+	MapManager* mapManager = MapManager::GetInstance();
+	if (mapManager->GetMap(this->mapID) != NULL) {
+		mapManager->ClearMapById(this->mapID);
+		delete mapManager->GetMap(this->mapID);
+	}
+	if (Textures::GetInstance()->GetTexture(ID_TEX_BOARDGAME) != NULL)
+		Textures::GetInstance()->GetTexture(ID_TEX_BOARDGAME)->Release();
+
+	DebugOut(L"[INFO] Scen unloaded! %s\n", sceneFilePath);
 }

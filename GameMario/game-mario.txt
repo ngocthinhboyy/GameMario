@@ -14,8 +14,9 @@ SharedResources\EndTitle\endTitleItems.txt
 SharedResources\EndTitle\positionInEndTitle.txt
 #----------SETTING------------
 [SETTINGS]
-start	2
+start	3
 #scene list
 [SCENES]
+3	Scene\intromap\intromap.txt	3
 1	Scene\worldmap\worldmap.txt	1
 2	Scene\scene1\scene1.txt	2

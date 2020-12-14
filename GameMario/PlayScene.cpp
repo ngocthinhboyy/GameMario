@@ -83,7 +83,9 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 			case SCENE_SECTION_OBJECTS_IN_GRID: _ParseSection_OBJECTS_IN_GRID(line); break;
 		}
 	}
-
+	player = Mario::GetInstance();
+	player->SetPosition(10, 0);
+	player->ChangeState(PlayerStandingState::GetInstance());
 	f.close();
 	
 }
@@ -111,26 +113,6 @@ void PlayScene::_ParseSection_OBJECTS_NOT_IN_GRID(string line)
 
 	switch (object_type)
 	{
-	case OBJECT_TYPE_MARIO:
-	{
-		if (player != NULL)
-		{
-			return;
-		}
-		Mario* mario = Mario::GetInstance();
-		mario->SetLevel(MARIO_LEVEL_RACCOON);
-		mario->ChangeState(PlayerStandingState::GetInstance());
-		mario->noCollisionConsideration = false;
-		ani_set = AnimationManager::GetInstance()->Get(ani_set_id);
-
-		mario->SetPosition(x, y);
-
-		mario->SetAnimationSet(ani_set);
-		player = mario;
-		
-		DebugOut(L"[INFO] Player object created!\n");
-		break;
-	}
 	case OBJECT_TYPE_COLLISION_MAP: {
 		int collisionDirectionX = atoi(tokens[6].c_str());
 		int collisionDirectionY = atoi(tokens[7].c_str());
@@ -238,7 +220,6 @@ void PlayScene::Load()
 
 void PlayScene::Update(DWORD dt)
 {
-
 	if (isStopGame)
 		RestartGame();
 	else {
@@ -350,9 +331,9 @@ void PlayScene::Unload()
 		mapManager->ClearMapById(this->mapID);
 		delete mapManager->GetMap(this->mapID);
 	}
-	if(Textures::GetInstance()->GetTexture(ID_TEX_BBOX) != NULL)
+	if (Textures::GetInstance()->GetTexture(ID_TEX_BBOX) != NULL)
 		Textures::GetInstance()->GetTexture(ID_TEX_BBOX)->Release();
-	if(Textures::GetInstance()->GetTexture(ID_TEX_BOARDGAME) != NULL)
+	if (Textures::GetInstance()->GetTexture(ID_TEX_BOARDGAME) != NULL)
 		Textures::GetInstance()->GetTexture(ID_TEX_BOARDGAME)->Release();
 
 	DebugOut(L"[INFO] Scen unloaded! %s\n", sceneFilePath);

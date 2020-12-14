@@ -12,6 +12,7 @@
 #include "ResourcesSharedLoad.h"
 #include "BoardGame.h"
 #include "EndTitle.h"
+#include "IntroMap.h"
 
 Game* Game::__instance = NULL;
 
@@ -351,6 +352,10 @@ void Game::_ParseSection_SCENES(string line)
 	}
 	else if (typeScene == 2) {
 		scene = new PlayScene(id, path);
+		scenes[id] = scene;
+	}
+	else if (typeScene == 3) {
+		scene = new IntroMap(id, path);
 		scenes[id] = scene;
 	}
 }

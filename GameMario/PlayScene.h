@@ -14,7 +14,6 @@ class PlayScene : public Scene
 protected:
 	Mario* player;					// A play scene has to have player, right? 
 	int mapID;
-	int remainingTime = 0;
 	int timeOfPreviousSecond = 0;
 
 	void _ParseSection_OBJECTS(string line);
@@ -37,8 +36,6 @@ public:
 	void StopGame(DWORD time);
 
 	void RestartGame();
-
-	int GetRemainingTime() { return this->remainingTime; };
 	int GetTimeOfPreviousSecond() { return this->timeOfPreviousSecond; };
 	void SetTimeOfPreviousSecond(int timeOfPreviousSecond) { this->timeOfPreviousSecond = timeOfPreviousSecond; };
 

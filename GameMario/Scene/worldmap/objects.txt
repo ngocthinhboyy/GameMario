@@ -1,6 +1,8 @@
 # loai	x	y	w	h	ani_set	state	type_obj
 # state: cactus = 1, help_tag = 2, guard = 3
 [OBJECTS WORLD MAP]
+# MARIO
+0	115	130	0	0	1
 # cactus
 11	48	48	48	48	18
 11	96	48	48	48	18

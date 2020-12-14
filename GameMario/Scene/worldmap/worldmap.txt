@@ -5,4 +5,4 @@
 [OBJECTS]
 1	Scene\worldmap\objects.txt
 [REMAINING TIME]
-300
+0

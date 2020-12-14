@@ -1,0 +1,5 @@
+# loai	x	y	w	h	ani_set	state	type_obj
+# state: cactus = 1, help_tag = 2, guard = 3
+[OBJECTS INTRO MAP]
+15	336	336	126	123	18
+16	192	508	18	21	18

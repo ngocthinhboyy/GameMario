@@ -23,6 +23,7 @@
     <ClCompile Include="AnimationDatabase.cpp" />
     <ClCompile Include="AnimationFrame.cpp" />
     <ClCompile Include="AnimationManager.cpp" />
+    <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="BoardGame.cpp" />
     <ClCompile Include="ButtonP.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -41,6 +42,8 @@
     <ClCompile Include="GateInWorldMap.cpp" />
     <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="IntroMap.cpp" />
+    <ClCompile Include="IntroMapKeyHandler.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Koopa.cpp" />
     <ClCompile Include="Leaf.cpp" />
@@ -81,6 +84,7 @@
     <ClCompile Include="SpriteManager.cpp" />
     <ClCompile Include="Tail.cpp" />
     <ClCompile Include="Textures.cpp" />
+    <ClCompile Include="ThreeObject.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileManager.cpp" />
     <ClCompile Include="WorldMap.cpp" />
@@ -91,6 +95,7 @@
     <ClInclude Include="AnimationDatabase.h" />
     <ClInclude Include="AnimationFrame.h" />
     <ClInclude Include="AnimationManager.h" />
+    <ClInclude Include="Arrow.h" />
     <ClInclude Include="BoardGame.h" />
     <ClInclude Include="BoardGameDefine.h" />
     <ClInclude Include="ButtonP.h" />
@@ -113,6 +118,8 @@
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="GraphicsDefine.h" />
     <ClInclude Include="Grid.h" />
+    <ClInclude Include="IntroMap.h" />
+    <ClInclude Include="IntroMapKeyHandler.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemDefine.h" />
     <ClInclude Include="KeyEventHandler.h" />
@@ -158,6 +165,7 @@
     <ClInclude Include="StaticObjectDefine.h" />
     <ClInclude Include="Tail.h" />
     <ClInclude Include="Textures.h" />
+    <ClInclude Include="ThreeObject.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileManager.h" />
     <ClInclude Include="WorldMap.h" />
