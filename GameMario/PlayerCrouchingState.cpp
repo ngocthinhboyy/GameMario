@@ -38,6 +38,7 @@ void PlayerCrouchingState::SetAnimation()
 
 void PlayerCrouchingState::Update(int dt)
 {
+
 }
 
 void PlayerCrouchingState::KeyState(BYTE* states)

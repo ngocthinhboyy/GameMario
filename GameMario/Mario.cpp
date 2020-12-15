@@ -368,7 +368,7 @@ void Mario::Render()
 		else
 			ani->Render(x, y, alpha, scale, offset);
 	}
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 //void Mario::SetState(int state)
