@@ -139,13 +139,13 @@ void Leaf::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 		mario->ChangeState(PlayerBonusTransformState::GetInstance());
 		PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 		scene->StopGame(1000);
-		Point* point = new Point(x, y, 45, 24, 1000);
-		Grid* grid = Grid::GetInstance();
-		grid->DeterminedGridToObtainObject(point);
 		mario->vx = 0;
 		mario->vy = 0;
 	}
 	mario->y -= 5;
+	Point* point = new Point(x, y, 45, 24, 1000);
+	Grid* grid = Grid::GetInstance();
+	grid->DeterminedGridToObtainObject(point);
 	mario->SetPoint(mario->GetPoint() + MARIO_BONUS_POINT_LEAF);
 	this->stillAlive = false;
 

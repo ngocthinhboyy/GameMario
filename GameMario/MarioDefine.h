@@ -101,10 +101,10 @@
 
 #define MARIO_WALKING_SPEED					0.2f 
 
-#define MARIO_JUMP_SPEED_Y					0.5f
+#define MARIO_JUMP_SPEED_Y					0.64f
 
 
-#define MARIO_JUMP_MAX_SPEED_Y				0.7f
+#define MARIO_JUMP_MAX_SPEED_Y				0.75f
 #define MARIO_ACCELERATION_JUMP_Y		    0.0030666666f
 
 #define MARIO_JUMP_DEFLECT_SPEED			0.2f

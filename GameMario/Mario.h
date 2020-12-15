@@ -18,13 +18,6 @@ class Mario : public GameObject
 
 	static Mario* __instance;
 	PlayerState* playerState;
-	bool isCrouching = false;
-	bool isRunning = false;
-	bool isOnGround = true;
-	bool isSpinning = false;
-	bool isFlying = false;
-	bool isGrowingUp = false;
-	bool isGoingAuto = false;
 	int heart = 4;
 	int point = 0;
 	int coin = 0;
@@ -32,6 +25,13 @@ class Mario : public GameObject
 	int offset = 0;
 	DWORD startHideAndUnhide = 0;
 
+	bool isCrouching = false;
+	bool isRunning = false;
+	bool isOnGround = true;
+	bool isSpinning = false;
+	bool isFlying = false;
+	bool isGrowingUp = false;
+	bool isGoingAuto = false;
 	bool canGoDownIntoGate = false;
 	bool canGoUpIntoGate = false;
 	bool isMovingIntoGate = false;

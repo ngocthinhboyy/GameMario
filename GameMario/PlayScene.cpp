@@ -19,6 +19,7 @@
 #include "Grid.h"
 #include "BoardGame.h"
 #include "EndTitle.h"
+#include "PlayerDieState.h"
 
 using namespace std;
 
@@ -223,6 +224,8 @@ void PlayScene::Update(DWORD dt)
 	if (isStopGame)
 		RestartGame();
 	else {
+		if (isTimeUp)
+			return;
 		if (!isEndScene) {
 			DWORD now = GetTickCount64();
 			if (now - timeOfPreviousSecond >= 1000) {
@@ -239,7 +242,8 @@ void PlayScene::Update(DWORD dt)
 		}
 		if (remainingTime <= 0) {
 			remainingTime = 0;
-			Game::GetInstance()->SwitchScene(1);
+			isTimeUp = true;
+			player->ChangeState(PlayerDieState::GetInstance());
 			return;
 		}
 	}
@@ -283,7 +287,6 @@ void PlayScene::Render()
 	MapManager* mapManager = MapManager::GetInstance();
 	mapManager->RenderMap(mapID);
 
-
 	for (int i = 0; i < enemies.size(); i++) {
 		enemies[i]->Render();
 	}
@@ -297,6 +300,8 @@ void PlayScene::Render()
 		objects[i]->Render();
 	}
 	BoardGame* board = BoardGame::GetInstance();
+	if (isTimeUp && !isEndScene)
+		board->RenderTimeUp();
 	board->RenderBoardGame();
 	if (isEndScene) {
 		EndTitle* endTitle = EndTitle::GetInstance();
@@ -309,7 +314,8 @@ void PlayScene::Render()
 */
 void PlayScene::Unload()
 {
-	
+	isEndScene = false;
+	isTimeUp = false;
 	for (auto object : objects)
 		delete object;
 	for (auto enemy : enemies)

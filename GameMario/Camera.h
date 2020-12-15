@@ -16,7 +16,6 @@ public:
 	void SetLockCamY(bool canChange) { this->canChangeCamY = canChange; };
 	void SetCamPos(float x, float y);
 	void GetCamPos(float& x, float& y);
-
 	void UpdateCamPos();
 
 	static Camera* GetInstance();

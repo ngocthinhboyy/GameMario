@@ -137,19 +137,19 @@ void Koopa::Update(DWORD dt, int scaleTime)
 			this->isUpsideDown = false;
 			this->isDiedByFireball = false;
 			this->noCollisionConsideration = false;
-			y -= 30;
-			if (isHold){
-				isHold = false;
-				this->vx = KOOPA_WALKING_SPEED_X * Mario::GetInstance()->nx;
-				this->nx = Mario::GetInstance()->nx;
-				Mario::GetInstance()->ChangeState(PlayerStandingState::GetInstance());
-			}
+			y -= 40;
 			if (startTypeMove == 1) {
 				SetState(ENEMY_STATE_WALKING);
 			}
 			else if (startTypeMove == 2) {
 
 				SetState(ENEMY_STATE_WALKING_WITH_SWINGS);
+			}
+			if (isHold){
+				isHold = false;
+				this->vx = KOOPA_WALKING_SPEED_X * Mario::GetInstance()->nx;
+				this->nx = Mario::GetInstance()->nx;
+				Mario::GetInstance()->ChangeState(PlayerStandingState::GetInstance());
 			}
 		}
 	}

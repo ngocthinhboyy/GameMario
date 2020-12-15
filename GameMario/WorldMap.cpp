@@ -211,7 +211,8 @@ void WorldMap::Render()
 	for (auto gate : gatesInWorldMap)
 		gate->Render();
 
-	player->Render();
+	if(player!=NULL)
+		player->Render();
 }
 
 void WorldMap::Unload()

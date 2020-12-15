@@ -26,6 +26,7 @@ protected:
 	DWORD timeStop = 0;
 	bool isStopGame = false;
 	bool isEndScene = false;
+	bool isTimeUp = false;
 
 public:
 	vector<LPGAMEOBJECT> objects;

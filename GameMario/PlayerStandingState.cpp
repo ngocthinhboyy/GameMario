@@ -12,6 +12,8 @@
 #include "PlayerThrowingFireballState.h"
 #include "PlayerBonusTransformState.h"
 #include "PlayerMovingDownAndUpState.h"
+#include "Camera.h"
+#include "PlayerFallingSlowlyState.h"
 
 
 PlayerState* PlayerStandingState::__instance = NULL;
@@ -66,7 +68,7 @@ void PlayerStandingState::Update(int dt)
 	Mario* mario = Mario::GetInstance();
 	if (mario->vy > 0) {
 		if (mario->GetLevel() == MARIO_LEVEL_RACCOON) {
-			mario->ChangeState(PlayerFallingState::GetInstance());
+			mario->ChangeState(PlayerFallingSlowlyState::GetInstance());
 			return;
 		}
 		mario->ChangeState(PlayerFallingState::GetInstance());
@@ -76,9 +78,37 @@ void PlayerStandingState::OnKeyDown(int KeyCode) {
 	Mario* mario = Mario::GetInstance();
 	switch (KeyCode)
 	{
-	case DIK_1:
+	case DIK_1: {
+		mario->SetLevel(MARIO_LEVEL_SMALL);
+		SetAnimation();
+		break;
+	}
+	case DIK_2: {
+		mario->SetLevel(MARIO_LEVEL_SMALL);
 		mario->ChangeState(PlayerBonusTransformState::GetInstance());
 		break;
+	}
+	case DIK_3: {
+		if (mario->GetLevel() == MARIO_LEVEL_SMALL)
+			mario->y -= 40;
+		mario->SetLevel(MARIO_LEVEL_BIG);
+		mario->ChangeState(PlayerBonusTransformState::GetInstance());
+		break;
+	}
+	case DIK_4: {
+		if (mario->GetLevel() == MARIO_LEVEL_SMALL)
+			mario->y -= 40;
+		mario->SetLevel(MARIO_LEVEL_FIRE);
+		SetAnimation();
+		break;
+	}
+	case DIK_5: {
+		mario->x = 6792;
+		mario->y = 250;
+		Camera::GetInstance()->SetLockCamY(true);
+		SetAnimation();
+		break;
+	}
 	case DIK_X:
 			mario->vy = -MARIO_JUMP_SPEED_Y;
 			mario->ChangeState(PlayerJumpingState::GetInstance());
@@ -122,10 +152,10 @@ void PlayerStandingState::KeyState(BYTE* states) {
 		return;
 	}
 	else if (game->IsKeyDown(DIK_A) && (game->IsKeyDown(DIK_RIGHT) || game->IsKeyDown(DIK_LEFT))) {
-		if (mario->GetLevel() == MARIO_LEVEL_RACCOON) {
+		/*if (mario->GetLevel() == MARIO_LEVEL_RACCOON) {
 			mario->ChangeState(PlayerSpinningState::GetInstance());
 			return;
-		}
+		}*/
 		mario->ChangeState(PlayerRunningState::GetInstance());
 		return;
 	}

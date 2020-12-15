@@ -7,6 +7,7 @@
 #include "Camera.h"
 #include "PlayerStandingState.h"
 #include "AnimationDatabase.h"
+#include "PlayerFallingState.h"
 
 Gate::Gate(float x, float y, float w, float h, int type, float cam_x, float cam_y, float newPositionXMario, float newPositionYMario, int wayDirectionY)
 {
@@ -70,7 +71,10 @@ void Gate::Update(DWORD dt, int scaleTime)
 			mario->SetCanGoDownIntoGate(false);
 			mario->SetIsMovingIntoGate(false);
 			mario->SetCanGoUpIntoGate(false);
-			mario->ChangeState(PlayerFallingSlowlyState::GetInstance());
+			if(mario->GetLevel() == MARIO_LEVEL_RACCOON)
+				mario->ChangeState(PlayerFallingSlowlyState::GetInstance());
+			else
+				mario->ChangeState(PlayerFallingState::GetInstance());
 			isUsingThisGate = false;
 		}
 	}

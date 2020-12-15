@@ -14,6 +14,7 @@ EspecialBrick::EspecialBrick(float x, float y, float w, float h, int type)
 	this->h = h;
 	this->type = type;
 	this->gameObjectID = idGenerate++;
+	this->noCollisionConsideration = false;
 }
 
 void EspecialBrick::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)

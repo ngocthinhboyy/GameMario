@@ -51,7 +51,42 @@ void BoardGame::LoadPositionInBoardGame(LPCWSTR filePath)
 		if (line[0] == '#') continue;
 		ParsePositionInBoardGame(line);
 	}
-
+	LPCOMPONENTFONT component = new ComponentPositionInBoard();
+	component->x = 288;
+	component->y = 303;
+	component->idFontRender = 34;
+	component->idPosition = -1;
+	componentTimeUp.push_back(component);
+	component = new ComponentPositionInBoard();
+	component->x = 313;
+	component->y = 306;
+	component->idFontRender = 23;
+	component->idPosition = -1;
+	componentTimeUp.push_back(component);
+	component = new ComponentPositionInBoard();
+	component->x = 338;
+	component->y = 306;
+	component->idFontRender = 27;
+	component->idPosition = -1;
+	componentTimeUp.push_back(component);
+	component = new ComponentPositionInBoard();
+	component->x = 363;
+	component->y = 306;
+	component->idFontRender = 19;
+	component->idPosition = -1;
+	componentTimeUp.push_back(component);
+	component = new ComponentPositionInBoard();
+	component->x = 413;
+	component->y = 306;
+	component->idFontRender = 35;
+	component->idPosition = -1;
+	componentTimeUp.push_back(component);
+	component = new ComponentPositionInBoard();
+	component->x = 438;
+	component->y = 306;
+	component->idFontRender = 30;
+	component->idPosition = -1;
+	componentTimeUp.push_back(component);
 	f.close();
 }
 void BoardGame::ParseInBoardBoardGame(string line)
@@ -152,6 +187,14 @@ void BoardGame::ParsePositionInBoardGame(string line)
 	componentPosition->idFontRender = idFontRender;
 	componentPositionInBoards.push_back(componentPosition);
 }
+LPSPRITE BoardGame::GetFontById(int id)
+{
+	for (auto x : fonts)
+	{
+		if (x->GetId() == id)
+			return x;
+	}
+}
 void BoardGame::UpdateBoardGame()
 {
 	Mario* mario = Mario::GetInstance();
@@ -207,6 +250,18 @@ void BoardGame::RenderBoardGame()
 	for (auto card : cards) {
 		if (card->GetId() == componentCardInBoards->idFontRender) {
 			card->Draw(panelBoardGame.x + componentCardInBoards->x + 20, panelBoardGame.y + componentCardInBoards->y + 10, 255);
+		}
+	}
+}
+void BoardGame::RenderTimeUp()
+{
+	float cam_x, cam_y;
+	Camera::GetInstance()->GetCamPos(cam_x,cam_y);
+	for (auto x : componentTimeUp) {
+		for (auto font : fonts) {
+			if (font->GetId() == x->idFontRender) {
+				font->Draw(cam_x + x->x, cam_y+ x->y, 255);
+			}
 		}
 	}
 }

@@ -428,8 +428,16 @@ void Mario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 */
 void Mario::Reset()
 {
-	SetPosition(x, 0);
-	SetSpeed(0, 0);
+	isCrouching = false;
+	isRunning = false;
+	isOnGround = true;
+	isSpinning = false;
+	isFlying = false;
+	isGrowingUp = false;
+	isGoingAuto = false;
+	canGoDownIntoGate = false;
+	canGoUpIntoGate = false;
+	isMovingIntoGate = false;
 	ChangeState(PlayerStandingState::GetInstance());
 }
 

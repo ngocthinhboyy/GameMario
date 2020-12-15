@@ -2,6 +2,7 @@
 #include "Mario.h"
 #include "game.h"
 #include "PlayScene.h"
+#include "debug.h"
 
 PlayerDieState::PlayerDieState()
 {
@@ -48,7 +49,11 @@ void PlayerDieState::Update(int dt)
 		else if (GetTickCount64() - startTimeDie >= 4000) {
 			mario->vy = 0;
 			mario->vx = 0;
-			mario->SetHeart(mario->GetHeart() - 1);
+			if (mario->GetHeart() == 1) {
+				mario->SetHeart(4);
+			}
+			else
+				mario->SetHeart(mario->GetHeart() - 1);
 			Game::GetInstance()->SwitchScene(1);
 		}
 		else {
@@ -59,7 +64,10 @@ void PlayerDieState::Update(int dt)
 		if (GetTickCount64() - startTimeDie >= 3000) {
 			mario->vy = 0;
 			mario->vx = 0;
-			mario->SetHeart(mario->GetHeart() - 1);
+			if (mario->GetHeart() == 1)
+				mario->SetHeart(4);
+			else
+				mario->SetHeart(mario->GetHeart() - 1);
 			Game::GetInstance()->SwitchScene(1);
 		}
 	}
@@ -78,9 +86,10 @@ DWORD PlayerDieState::startTimeDie = 0;
 PlayerState* PlayerDieState::GetInstance()
 {
     if (__instance == NULL) __instance = new PlayerDieState();
-	SetAnimation();
 	startTimeDie = GetTickCount64();
 	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+	Mario::GetInstance()->SetLevel(MARIO_LEVEL_SMALL);
+	SetAnimation();
 	scene->StopGame(5000);
     return __instance;
 }

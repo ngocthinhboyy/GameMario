@@ -17,12 +17,14 @@ struct ComponentPositionInBoard {
 	int idPosition;
 	int idFontRender;
 };
+typedef ComponentPositionInBoard* LPCOMPONENTFONT;
 class BoardGame
 {
 	static BoardGame* __instance;
 	vector<LPSPRITE> fonts;
 	vector<LPSPRITE> cards;
 	vector<ComponentPositionInBoard*> componentPositionInBoards;
+	vector<LPCOMPONENTFONT> componentTimeUp;
 	ComponentPositionInBoard* componentCardInBoards;
 	Panel panelBoardGame;
 public:
@@ -33,8 +35,12 @@ public:
 	void ParseFontBoardGame(string line);
 	void ParsePositionInBoardGame(string line);
 
+	LPSPRITE GetFontById(int id);
+
 	void UpdateBoardGame();
 	void RenderBoardGame();
+
+	void RenderTimeUp();
 
 	void SetIdCardForCardInBoard(int idCard) { componentCardInBoards->idFontRender = idCard; };
 

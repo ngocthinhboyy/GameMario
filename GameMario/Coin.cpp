@@ -84,6 +84,7 @@ void Coin::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 {
 	Mario* mario = Mario::GetInstance();
 	mario->SetPoint(mario->GetPoint() + MARIO_BONUS_POINT_STATIC_COIN);
+	mario->SetCoin(mario->GetCoin() + 1);
 	this->isBonused = true;
 	this->stillAlive = false;
 }

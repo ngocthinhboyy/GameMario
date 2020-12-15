@@ -56,9 +56,9 @@ void PlayerFallingState::SetAnimation()
 		}
 		else {
 			if (mario->nx == 1)
-				animationID = MARIO_ANI_FIRE_IDLE_RIGHT;
+				animationID = MARIO_ANI_FIRE_JUMP_RIGHT;
 			else
-				animationID = MARIO_ANI_FIRE_IDLE_LEFT;
+				animationID = MARIO_ANI_FIRE_JUMP_RIGHT;
 		}
 		break;
 	default:

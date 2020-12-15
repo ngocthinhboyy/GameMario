@@ -4,15 +4,7 @@
 void PlaySceneKeyHandler::OnKeyDown(int KeyCode)
 {
 	Mario* mario = Mario::GetInstance();
-	switch (KeyCode)
-	{
-	case DIK_R:
-		mario->Reset();
-		break;
-	default:
-		mario->GetPlayerState()->OnKeyDown(KeyCode);
-		break;
-	}
+	mario->GetPlayerState()->OnKeyDown(KeyCode);
 }
 
 void PlaySceneKeyHandler::KeyState(BYTE* states)
