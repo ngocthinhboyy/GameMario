@@ -39,6 +39,9 @@ void Point::Render()
 	else if (typePoint == 1000) {
 		animation = animationDatabase->Get(4401);
 	}
+	else if (typePoint == 1) {
+		animation = animationDatabase->Get(4402);
+	}
 	animation->Render(x, y, 255, scale);
 }
 

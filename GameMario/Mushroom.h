@@ -4,8 +4,9 @@
 class Mushroom : public Item
 {
 	bool alreadyAppear = false;
+	int typeMushroom = 1;
 public:
-	Mushroom(float x, float y, float w, float h);
+	Mushroom(float x, float y, float w, float h, int typeMushroom);
 	void SetAnimation();
 	void Render();
 	void Update(DWORD dt, int scaleTime);

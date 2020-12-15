@@ -272,26 +272,63 @@ void BoardGame::SetWorldInBoardGame(int world)
 void BoardGame::SetSpeedInBoardGame(float speed)
 {
 	if (Mario::GetInstance()->GetIsFlying()) {
+		if (firstTimeTurnOnMaxSpeed) {
+			firstTimeTurnOnMaxSpeed = false;
+			renderWhiteP = true;
+			timeRenderWhite = GetTickCount64();
+		}
 		componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_1)->idFontRender = GetFontNumber(42);
 		componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_2)->idFontRender = GetFontNumber(42);
 		componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_3)->idFontRender = GetFontNumber(42);
 		componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_4)->idFontRender = GetFontNumber(42);
 		componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_5)->idFontRender = GetFontNumber(42);
 		componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_6)->idFontRender = GetFontNumber(42);
-		componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_MAX)->idFontRender = GetFontNumber(44);
+		if (renderWhiteP) {
+			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_MAX)->idFontRender = GetFontNumber(44);
+			if (GetTickCount64() - timeRenderWhite >= 150) {
+				renderWhiteP = false;
+				timeRenderWhite = GetTickCount64();
+			}
+		}
+		else {
+			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_MAX)->idFontRender = GetFontNumber(45);
+			if (GetTickCount64() - timeRenderWhite >= 150) {
+				renderWhiteP = true;
+				timeRenderWhite = GetTickCount64();
+			}
+		}
 		return;
 	}
 	if (Mario::GetInstance()->GetIsRunning()) {
 		if (speed >= SPEED_LEVEL_MAX) {
+			if (firstTimeTurnOnMaxSpeed) {
+				firstTimeTurnOnMaxSpeed = false;
+				renderWhiteP = true;
+				timeRenderWhite = GetTickCount64();
+			}
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_1)->idFontRender = GetFontNumber(42);
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_2)->idFontRender = GetFontNumber(42);
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_3)->idFontRender = GetFontNumber(42);
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_4)->idFontRender = GetFontNumber(42);
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_5)->idFontRender = GetFontNumber(42);
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_6)->idFontRender = GetFontNumber(42);
-			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_MAX)->idFontRender = GetFontNumber(44);
+			if (renderWhiteP) {
+				componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_MAX)->idFontRender = GetFontNumber(44);
+				if (GetTickCount64() - timeRenderWhite >= 150) {
+					renderWhiteP = false;
+					timeRenderWhite = GetTickCount64();
+				}
+			}
+			else {
+				componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_MAX)->idFontRender = GetFontNumber(45);
+				if (GetTickCount64() - timeRenderWhite >= 150) {
+					renderWhiteP = true;
+					timeRenderWhite = GetTickCount64();
+				}
+			}
 		}
 		else if (speed >= SPEED_LEVEL_6) {
+			firstTimeTurnOnMaxSpeed = true;
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_1)->idFontRender = GetFontNumber(42);
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_2)->idFontRender = GetFontNumber(42);
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_3)->idFontRender = GetFontNumber(42);
@@ -301,6 +338,7 @@ void BoardGame::SetSpeedInBoardGame(float speed)
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_MAX)->idFontRender = GetFontNumber(45);
 		}
 		else if (speed >= SPEED_LEVEL_5) {
+			firstTimeTurnOnMaxSpeed = true;
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_1)->idFontRender = GetFontNumber(42);
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_2)->idFontRender = GetFontNumber(42);
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_3)->idFontRender = GetFontNumber(42);
@@ -310,6 +348,7 @@ void BoardGame::SetSpeedInBoardGame(float speed)
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_MAX)->idFontRender = GetFontNumber(45);
 		}
 		else if (speed >= SPEED_LEVEL_4) {
+			firstTimeTurnOnMaxSpeed = true;
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_1)->idFontRender = GetFontNumber(42);
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_2)->idFontRender = GetFontNumber(42);
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_3)->idFontRender = GetFontNumber(42);
@@ -319,6 +358,7 @@ void BoardGame::SetSpeedInBoardGame(float speed)
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_MAX)->idFontRender = GetFontNumber(45);
 		}
 		else if (speed >= SPEED_LEVEL_3) {
+			firstTimeTurnOnMaxSpeed = true;
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_1)->idFontRender = GetFontNumber(42);
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_2)->idFontRender = GetFontNumber(42);
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_3)->idFontRender = GetFontNumber(42);
@@ -328,6 +368,7 @@ void BoardGame::SetSpeedInBoardGame(float speed)
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_MAX)->idFontRender = GetFontNumber(45);
 		}
 		else if (speed >= SPEED_LEVEL_2) {
+			firstTimeTurnOnMaxSpeed = true;
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_1)->idFontRender = GetFontNumber(42);
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_2)->idFontRender = GetFontNumber(42);
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_3)->idFontRender = GetFontNumber(43);
@@ -337,6 +378,7 @@ void BoardGame::SetSpeedInBoardGame(float speed)
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_MAX)->idFontRender = GetFontNumber(45);
 		}
 		else if (speed >= SPEED_LEVEL_1) {
+			firstTimeTurnOnMaxSpeed = true;
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_1)->idFontRender = GetFontNumber(42);
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_2)->idFontRender = GetFontNumber(43);
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_3)->idFontRender = GetFontNumber(43);
@@ -346,6 +388,7 @@ void BoardGame::SetSpeedInBoardGame(float speed)
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_MAX)->idFontRender = GetFontNumber(45);
 		}
 		else {
+			firstTimeTurnOnMaxSpeed = true;
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_1)->idFontRender = GetFontNumber(43);
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_2)->idFontRender = GetFontNumber(43);
 			componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_3)->idFontRender = GetFontNumber(43);
@@ -356,6 +399,7 @@ void BoardGame::SetSpeedInBoardGame(float speed)
 		}
 	}
 	else {
+		firstTimeTurnOnMaxSpeed = true;
 		componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_1)->idFontRender = GetFontNumber(43);
 		componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_2)->idFontRender = GetFontNumber(43);
 		componentPositionInBoards.at(ID_POSITION_OF_SPEED_LEVEL_3)->idFontRender = GetFontNumber(43);

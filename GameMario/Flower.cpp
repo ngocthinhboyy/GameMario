@@ -200,32 +200,64 @@ void Flower::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 {
 	if (collisionEvent->nx != 0) {
 		Mario::GetInstance()->vx = 0;
+		PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 		if (Mario::GetInstance()->GetLevel() >= 2) {
 			Mario::GetInstance()->StartUntouchable();
 			Mario::GetInstance()->ChangeState(PlayerLevelDownTransformState::GetInstance());
-			PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 			scene->StopGame(1000);
 		}
 		else if (Mario::GetInstance()->GetLevel() == MARIO_LEVEL_SMALL) {
 			Mario::GetInstance()->ChangeState(PlayerDieState::GetInstance());
-			PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 			Mario::GetInstance()->noCollisionConsideration = true;
 			scene->StopGame(5000);
+		}
+		if (Mario::GetInstance()->GetIsHolding()) {
+			vector<LPGAMEOBJECT> enemies = scene->enemies;
+			for (auto enemy : enemies) {
+				if (Koopa * koopa = dynamic_cast<Koopa*> (enemy)) {
+					if (koopa->GetIsHold()) {
+						koopa->SetIsUpsideDown(false);
+						koopa->noCollisionConsideration = false;
+						koopa->y -= 40;
+						koopa->SetState(ENEMY_STATE_WALKING);
+						koopa->SetIsHold(false);
+						koopa->vx = KOOPA_WALKING_SPEED_X * Mario::GetInstance()->nx;
+						koopa->nx = Mario::GetInstance()->nx;
+						Mario::GetInstance()->SetIsHolding(false);
+					}
+				}
+			}
 		}
 	}
 	if (collisionEvent->ny != 0) {
 		Mario::GetInstance()->vy = 0;
+		PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 		if (Mario::GetInstance()->GetLevel() >= 2) {
 			Mario::GetInstance()->StartUntouchable();
 			Mario::GetInstance()->ChangeState(PlayerLevelDownTransformState::GetInstance());
-			PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 			scene->StopGame(1000);
 		}
 		else if (Mario::GetInstance()->GetLevel() == MARIO_LEVEL_SMALL) {
 			Mario::GetInstance()->ChangeState(PlayerDieState::GetInstance());
-			PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 			Mario::GetInstance()->noCollisionConsideration = true;
 			scene->StopGame(5000);
+		}
+		if (Mario::GetInstance()->GetIsHolding()) {
+			vector<LPGAMEOBJECT> enemies = scene->enemies;
+			for (auto enemy : enemies) {
+				if (Koopa * koopa = dynamic_cast<Koopa*> (enemy)) {
+					if (koopa->GetIsHold()) {
+						koopa->SetIsUpsideDown(false);
+						koopa->noCollisionConsideration = false;
+						koopa->y -= 40;
+						koopa->SetState(ENEMY_STATE_WALKING);
+						koopa->SetIsHold(false);
+						koopa->vx = KOOPA_WALKING_SPEED_X * Mario::GetInstance()->nx;
+						koopa->nx = Mario::GetInstance()->nx;
+						Mario::GetInstance()->SetIsHolding(false);
+					}
+				}
+			}
 		}
 	}
 }

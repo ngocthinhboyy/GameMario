@@ -69,7 +69,7 @@ void PlayerRunningState::Update(int dt)
 {
 	Mario* mario = Mario::GetInstance();
 	if ((abs(mario->vx) < MARIO_RUNNING_MAX_SPEED) && !isMaxSpeed && increaseSpeed && !isSkidding && !isCrouching) {
-		mario->vx += (dt * MARIO_SPEED_ACCELERATION * 1.25 * (mario->nx));
+		mario->vx += (dt * MARIO_SPEED_ACCELERATION * 1.4 * (mario->nx));
 	}
 	if (isCrouching) {
 		mario->vx += (dt * MARIO_SPEED_ACCELERATION * 1.5 * -(mario->nx));

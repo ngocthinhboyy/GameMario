@@ -65,14 +65,14 @@ void PlayerStandingState::SetAnimation()
 }
 void PlayerStandingState::Update(int dt)
 {
-	Mario* mario = Mario::GetInstance();
+	/*Mario* mario = Mario::GetInstance();
 	if (mario->vy > 0) {
 		if (mario->GetLevel() == MARIO_LEVEL_RACCOON) {
 			mario->ChangeState(PlayerFallingSlowlyState::GetInstance());
 			return;
 		}
 		mario->ChangeState(PlayerFallingState::GetInstance());
-	}
+	}*/
 }
 void PlayerStandingState::OnKeyDown(int KeyCode) {
 	Mario* mario = Mario::GetInstance();
@@ -106,6 +106,22 @@ void PlayerStandingState::OnKeyDown(int KeyCode) {
 		mario->x = 6792;
 		mario->y = 250;
 		Camera::GetInstance()->SetLockCamY(true);
+		SetAnimation();
+		break;
+	}
+	case DIK_6: {
+		mario->x = 4250;
+		mario->y = 250;
+		Camera::GetInstance()->SetLockCamY(true);
+		SetAnimation();
+		break;
+	}
+	case DIK_7: {
+		mario->x = 5690;
+		mario->y = 1100;
+		float camx  = mario->x - (Game::GetInstance()->GetScreenWidth() / 2);
+		Camera::GetInstance()->SetCamPos(camx, CAM_Y_DRAW_MAP);
+		Camera::GetInstance()->SetLockCamY(false);
 		SetAnimation();
 		break;
 	}

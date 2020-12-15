@@ -65,7 +65,7 @@ void Coin::Update(DWORD dt, int scaleTime)
 		}
 	}
 	else if (type == 3) {
-		if (GetTickCount64() - timeStartTransform >= 8000) {
+		if (GetTickCount64() - timeStartTransform >= 7500) {
 			Grid::GetInstance()->DeterminedGridToObtainObject(new EspecialBrick(x, y, 48, 48, 1));
 			stillAlive = false;
 		}

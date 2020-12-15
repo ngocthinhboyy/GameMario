@@ -13,6 +13,7 @@
 #include "Coin.h"
 #include "Gate.h"
 #include "RandomGift.h"
+#include "Mushroom.h"
 
 Grid* Grid::__instance = NULL;
 void Grid::LoadObjectInSceneAddToGrid(string line)
@@ -170,6 +171,7 @@ void Grid::GetListObjectInCamera()
 	if (bottom > 4)
 		bottom = 4;
 	vector<LPGAMEOBJECT> itemsInGame;
+	LPGAMEOBJECT mushroom =  NULL;
 	for (int i = top; i <= bottom + 1; i++)
 		for (int j = left - 3 ; j <= right + 3; j++) {
 			for (int k = 0; k < cells[i][j].size(); k++) {
@@ -183,9 +185,17 @@ void Grid::GetListObjectInCamera()
 							}
 						}
 						else if (LPITEM item = dynamic_cast<LPITEM> (cells[i][j].at(k))) {
-							if (!item->GetInGrid()) {
-								item->SetInGrid(true);
-								itemsInGame.push_back(item);
+							if (dynamic_cast<Mushroom*>(item)) {
+								if (!item->GetInGrid()) {
+									item->SetInGrid(true);
+									mushroom = item;
+								}
+							}
+							else {
+								if (!item->GetInGrid()) {
+									item->SetInGrid(true);
+									itemsInGame.push_back(item);
+								}
 							}
 						}
 						else if (!cells[i][j].at(k)->GetInGrid()) {
@@ -198,6 +208,8 @@ void Grid::GetListObjectInCamera()
 		}
 	for (auto x : itemsInGame)
 		objects.push_back(x);
+	if (mushroom != NULL)
+		objects.insert(objects.begin(), mushroom);
 	itemsInGame.clear();
 	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 	scene->enemies = enemies;

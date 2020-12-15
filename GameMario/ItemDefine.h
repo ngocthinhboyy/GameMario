@@ -16,7 +16,8 @@
 #define LEAF_SPEED										0.004f
 #define LEAF_SPEED_Y_APPEAR								0.88f
 
-#define MUSHROOM_ANI									1201
+#define MUSHROOM_RED_ANI								1201
+#define MUSHROOM_GREEN_ANI								4403
 #define MUSHROOM_BBOX_WIDTH								47
 #define MUSHROOM_BBOX_HEIGHT							48
 #define MUSHROOM_SPEED									0.15f

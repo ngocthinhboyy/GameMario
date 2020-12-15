@@ -5,6 +5,8 @@
 #include "FragmentOfEspecialBrick.h"
 #include "Grid.h"
 #include "ButtonP.h"
+#include "Mushroom.h"
+#include "ItemDefine.h"
 
 EspecialBrick::EspecialBrick(float x, float y, float w, float h, int type)
 {
@@ -42,6 +44,14 @@ void EspecialBrick::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 					Grid::GetInstance()->DeterminedGridToObtainObject(buttonP);
 				}
 			}
+			else if (type == 3) {
+				if (!isEmptyBrick) {
+					isEmptyBrick = true;
+					Mushroom* mushroom = new Mushroom(x, y, MUSHROOM_BBOX_WIDTH, MUSHROOM_BBOX_HEIGHT, 2);
+					mushroom->vy = -MUSHROOM_SPEED_Y_APPEAR;
+					Grid::GetInstance()->DeterminedGridToObtainObject(mushroom);
+				}
+			}
 		}
 		else if (collisionEvent->ny < 0) {
 			mario->SetIsOnGround(true);
@@ -56,7 +66,7 @@ void EspecialBrick::Render()
 	D3DXVECTOR2 scale;
 	scale = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_SCALE);
 	animation = AnimationDatabase::GetInstance()->Get(ESPECIAL_BRICK_ANI);
-	if (type == 2 && isEmptyBrick) {
+	if ((type == 2 || type == 3) && isEmptyBrick) {
 		animation = AnimationDatabase::GetInstance()->Get(QUESTION_BRICK_DIE_ANI);
 	}
 	if (animation != NULL) {

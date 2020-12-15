@@ -8,8 +8,10 @@
 #include "PlayerBonusTransformState.h"
 #include "Point.h"
 #include "Grid.h"
+#include "Coin.h"
+#include "PlayerStandingState.h"
 
-Mushroom::Mushroom(float x, float y, float w, float h)
+Mushroom::Mushroom(float x, float y, float w, float h, int typeMushroom)
 {
 	this->x = x;
 	this->y = y;
@@ -17,12 +19,18 @@ Mushroom::Mushroom(float x, float y, float w, float h)
 	this->h = h;
 	this->gameObjectID = idGenerate++;
 	this->startPositionY = y;
+	this->typeMushroom = typeMushroom;
 }
 
 void Mushroom::SetAnimation()
 {
 	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
-	this->animation = animationDatabase->Get(MUSHROOM_ANI);
+	if (typeMushroom == 1) {
+		this->animation = animationDatabase->Get(MUSHROOM_RED_ANI);
+	}
+	else if (typeMushroom == 2) {
+		this->animation = animationDatabase->Get(MUSHROOM_GREEN_ANI);
+	}
 }
 
 void Mushroom::Render()
@@ -99,17 +107,29 @@ void Mushroom::Update(DWORD dt, int scaleTime)
 				if (e->ny != 0) vy = 0;
 				if (e->nx != 0) vx = - vx;
 			}
+			else if (Coin * coin = dynamic_cast<Coin*> (e->obj)) {
+				if (e->ny != 0) y += dy;
+				if (e->nx != 0) x += dx;
+			}
 			else if (Mario * mario = dynamic_cast<Mario*> (e->obj)) {
-				mario->ChangeState(PlayerBonusTransformState::GetInstance());
+				Point* point = NULL;
 				mario->vx = 0;
 				mario->vy = 0;
 				mario->y -= 2;
-				PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
-				scene->StopGame(1000);
-				Point* point = new Point(x, y, 45, 24, 1000);
+				if (typeMushroom == 1) {
+					mario->ChangeState(PlayerBonusTransformState::GetInstance());
+					point = new Point(x, y, 45, 24, 1000);
+					mario->SetPoint(mario->GetPoint() + MARIO_BONUS_POINT_LEAF);
+					PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+					scene->StopGame(1000);
+				}
+				else if (typeMushroom == 2) {
+					point = new Point(x, y, 45, 24, 1);
+					mario->SetPoint(mario->GetPoint() + 100);
+				}
 				Grid* grid = Grid::GetInstance();
-				grid->DeterminedGridToObtainObject(point);
-				mario->SetPoint(mario->GetPoint() + MARIO_BONUS_POINT_LEAF);
+				if (point != NULL)
+					grid->DeterminedGridToObtainObject(point);
 				this->stillAlive = false;
 			}
 		}
@@ -130,16 +150,25 @@ void Mushroom::GetBoundingBox(float& l, float& t, float& r, float& b)
 void Mushroom::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 {
 	Mario* mario = Mario::GetInstance();
-	mario->ChangeState(PlayerBonusTransformState::GetInstance());
+	Point* point = NULL;
 	mario->vx = 0;
 	mario->vy = 0;
 	mario->y -= 2;
-	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
-	scene->StopGame(1000);
-	Point* point = new Point(x, y, 45, 24, 1000);
+	if (typeMushroom == 1) {
+		mario->ChangeState(PlayerBonusTransformState::GetInstance());
+		point = new Point(x, y, 45, 24, 1000);
+		mario->SetPoint(mario->GetPoint() + MARIO_BONUS_POINT_LEAF);
+		PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+		scene->StopGame(1000);
+	}
+	else if (typeMushroom == 2) {
+		point = new Point(x, y, 45, 24, 1);
+		mario->SetPoint(mario->GetPoint() + 100);
+		mario->SetHeart(mario->GetHeart() + 1);
+	}
 	Grid* grid = Grid::GetInstance();
-	grid->DeterminedGridToObtainObject(point);
-	mario->SetPoint(mario->GetPoint() + MARIO_BONUS_POINT_LEAF);
+	if (point != NULL)
+		grid->DeterminedGridToObtainObject(point);
 	this->stillAlive = false;
 }
 

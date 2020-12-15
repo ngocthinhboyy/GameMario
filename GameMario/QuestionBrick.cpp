@@ -102,7 +102,7 @@ void QuestionBrick::Update(DWORD dt, int scaleTime)
 				y = start_Y_position;
 				if (Mario::GetInstance()->GetLevel() == MARIO_LEVEL_SMALL && type == QUESTION_BRICK_TYPE_HAS_ESPECIAL_ITEM)
 				{
-					Mushroom* mushroom = new Mushroom(x + QUESTION_BRICK_BBOX_WIDTH / 2 - MUSHROOM_BBOX_WIDTH / 2, y, MUSHROOM_BBOX_WIDTH, MUSHROOM_BBOX_HEIGHT);
+					Mushroom* mushroom = new Mushroom(x, y, MUSHROOM_BBOX_WIDTH, MUSHROOM_BBOX_HEIGHT, 1);
 					mushroom->vy = -MUSHROOM_SPEED_Y_APPEAR;
 					Grid::GetInstance()->DeterminedGridToObtainObject(mushroom);
 				}

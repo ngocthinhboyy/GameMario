@@ -108,7 +108,9 @@ void Fireball::Update(DWORD dt, int scaleTime)
 		float cam_x, cam_y;
 		camera->GetCamPos(cam_x, cam_y);
 		if (x < cam_x || x > cam_x + SCREEN_WIDTH || y < cam_y || y > cam_y + SCREEN_HEIGHT) {
-			PlayerThrowingFireballState::decreaseQuantityOneValue();
+			if (type == 1) {
+				PlayerThrowingFireballState::decreaseQuantityOneValue();
+			}
 			stillAlive = false;
 		}
 	}

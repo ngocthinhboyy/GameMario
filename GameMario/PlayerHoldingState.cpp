@@ -153,6 +153,7 @@ void PlayerHoldingState::KeyState(BYTE* states)
 			isMaxSpeed = false;
 			increaseSpeed = true;
 			mario->ChangeState(PlayerKickingState::GetInstance());
+			mario->SetIsHolding(false);
 			if (mario->nx > 0) {
 				koopa->vx = KOOPA_SPEED_TORTOISESHELL;
 				koopa->SetState(ENEMY_STATE_SPIN_DIE_KICK);
@@ -174,6 +175,7 @@ PlayerState* PlayerHoldingState::GetInstance()
 	if (__instance == NULL) __instance = new PlayerHoldingState();
 	Mario* mario = Mario::GetInstance();
 	mario->SetIsRunning(false);
+	mario->SetIsHolding(true);
 	SetAnimation();
 	return __instance;
 }

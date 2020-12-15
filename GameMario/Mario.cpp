@@ -31,6 +31,7 @@
 #include "PlayerBonusTransformState.h"
 #include "PlayerDieState.h"
 #include "WorldMap.h"
+#include "EnemyDefine.h"
 
 Mario* Mario::Mario::__instance = NULL;
 Mario* Mario::GetInstance() {
@@ -192,7 +193,6 @@ void Mario::Update(DWORD dt, int scaleTime)
 			else if (QuestionBrick* questionBrick = dynamic_cast<QuestionBrick*> (e->obj)) {
 				if (e->nx != 0) {
 					PlayerRunningState::lastStateIsSkidding = true;
-					Mario* mario = Mario::GetInstance();
 					vx += (dt * MARIO_SPEED_ACCELERATION * 3.5 * -this->nx);
 				}
 				else
@@ -201,7 +201,6 @@ void Mario::Update(DWORD dt, int scaleTime)
 			else if (EspecialBrick* especialBrick = dynamic_cast<EspecialBrick*> (e->obj)) {
 				if (e->nx != 0) {
 					PlayerRunningState::lastStateIsSkidding = true;
-					Mario* mario = Mario::GetInstance();
 					vx += (dt * MARIO_SPEED_ACCELERATION * 3.5 * -this->nx);
 				}
 				else
@@ -217,6 +216,23 @@ void Mario::Update(DWORD dt, int scaleTime)
 				else
 				{
 					y -= 2;
+					if (isHolding) {
+						vector<LPGAMEOBJECT> enemies = scene->enemies;
+						for (auto enemy : enemies) {
+							if (Koopa * koopa = dynamic_cast<Koopa*> (enemy)) {
+								if (koopa->GetIsHold()) {
+									koopa->SetIsUpsideDown(false);
+									koopa->noCollisionConsideration = false;
+									koopa->y -= 40;
+									koopa->SetState(ENEMY_STATE_WALKING);
+									koopa->SetIsHold(false);
+									koopa->vx = KOOPA_WALKING_SPEED_X * this->nx;
+									koopa->nx = this->nx;
+									isHolding = false;
+								}
+							}
+						}
+					}
 					if (level >= MARIO_LEVEL_BIG) {
 						StartUntouchable();
 						fireball->noCollisionConsideration = true;
@@ -225,7 +241,6 @@ void Mario::Update(DWORD dt, int scaleTime)
 					}
 					else if (level == MARIO_LEVEL_SMALL) {
 						ChangeState(PlayerDieState::GetInstance());
-						PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 						noCollisionConsideration = true;
 						vx = 0;
 						scene->StopGame(5000);
@@ -435,6 +450,7 @@ void Mario::Reset()
 	isFlying = false;
 	isGrowingUp = false;
 	isGoingAuto = false;
+	isHolding = false;
 	canGoDownIntoGate = false;
 	canGoUpIntoGate = false;
 	isMovingIntoGate = false;

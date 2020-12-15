@@ -27,6 +27,9 @@ class BoardGame
 	vector<LPCOMPONENTFONT> componentTimeUp;
 	ComponentPositionInBoard* componentCardInBoards;
 	Panel panelBoardGame;
+	DWORD timeRenderWhite = 0;
+	bool renderWhiteP = true;
+	bool firstTimeTurnOnMaxSpeed = false;
 public:
 	void LoadBoardGameItems(LPCWSTR filePath);
 	void LoadPositionInBoardGame(LPCWSTR filePath);

@@ -11,6 +11,7 @@
 #include "Point.h"
 #include "Grid.h"
 #include "PlayerDieState.h"
+#include "Fireball.h"
 
 Goomba::Goomba()
 {
@@ -196,6 +197,8 @@ void Goomba::Update(DWORD dt, int scaleTime)
 					}
 					if (e->ny != 0) {
 						vy = 0;
+						if (e->ny < 0)
+							enemy->y -= 0.4f;
 					}
 				}
 			}
@@ -203,6 +206,13 @@ void Goomba::Update(DWORD dt, int scaleTime)
 				if (e->ny != 0) vy = 0;
 				if (e->nx != 0) {
 					vx = -vx;
+				}
+			}
+			else if (dynamic_cast<Fireball*> (e->obj)) {
+				if (e->ny != 0) {
+					if (e->ny > 0) {
+						y -= dy;
+					}
 				}
 			}
 		}
@@ -286,46 +296,39 @@ void Goomba::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 	Mario* mario = Mario::GetInstance();
 	if (collisionEvent->nx != 0) {
 		mario->vx = 0;
+		PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+		if (mario->GetIsHolding()) {
+			vector<LPGAMEOBJECT> enemies = scene->enemies;
+			for (auto enemy : enemies) {
+				if (Koopa * koopa = dynamic_cast<Koopa*> (enemy)) {
+					if (koopa->GetIsHold()) {
+						koopa->SetIsUpsideDown(false);
+						koopa->noCollisionConsideration = false;
+						koopa->y -= 40;
+						koopa->SetState(ENEMY_STATE_WALKING);
+						koopa->SetIsHold(false);
+						koopa->vx = KOOPA_WALKING_SPEED_X * Mario::GetInstance()->nx;
+						koopa->nx = Mario::GetInstance()->nx;
+						Mario::GetInstance()->SetIsHolding(false);
+					}
+				}
+			}
+		}
 		if (mario->GetLevel() >= MARIO_LEVEL_BIG) {
 			mario->StartUntouchable();
 			mario->y -= 5;
 			mario->ChangeState(PlayerLevelDownTransformState::GetInstance());
-			PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 			scene->StopGame(1000);
 		}
 		else if (mario->GetLevel() == MARIO_LEVEL_SMALL) {
 			mario->ChangeState(PlayerDieState::GetInstance());
-			PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 			mario->noCollisionConsideration = true;
 			scene->StopGame(5000);
 		}
 	}
-	if (collisionEvent->ny == -1) {
-		if (type == 1) {
-			state = ENEMY_STATE_DIE;
-			mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
-			Point* point = new Point(x, y, 39, 30, 100);
-			Grid* grid = Grid::GetInstance();
-			grid->DeterminedGridToObtainObject(point);
-			mario->SetPoint(mario->GetPoint() + 100);
-			h = 24;
-			vx = 0;
-			y += 24;
-			timeDie = GetTickCount64();
-		}
-		else if (type == 2) {
-			if (state != ENEMY_STATE_WALKING) {
-				state = ENEMY_STATE_WALKING;
-				mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
-				Point* point = new Point(x, y, 39, 30, 100);
-				Grid* grid = Grid::GetInstance();
-				grid->DeterminedGridToObtainObject(point);
-				mario->SetPoint(mario->GetPoint() + 100);
-				y -= 2;
-				w = 48;
-				h = 48;
-			}
-			else if (state == ENEMY_STATE_WALKING) {
+	if (collisionEvent->ny != 0) {
+		if (collisionEvent->ny < 0) {
+			if (type == 1) {
 				state = ENEMY_STATE_DIE;
 				mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
 				Point* point = new Point(x, y, 39, 30, 100);
@@ -337,6 +340,34 @@ void Goomba::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 				y += 24;
 				timeDie = GetTickCount64();
 			}
+			else if (type == 2) {
+				if (state != ENEMY_STATE_WALKING) {
+					state = ENEMY_STATE_WALKING;
+					mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
+					Point* point = new Point(x, y, 39, 30, 100);
+					Grid* grid = Grid::GetInstance();
+					grid->DeterminedGridToObtainObject(point);
+					mario->SetPoint(mario->GetPoint() + 100);
+					y -= 2;
+					w = 48;
+					h = 48;
+				}
+				else if (state == ENEMY_STATE_WALKING) {
+					state = ENEMY_STATE_DIE;
+					mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
+					Point* point = new Point(x, y, 39, 30, 100);
+					Grid* grid = Grid::GetInstance();
+					grid->DeterminedGridToObtainObject(point);
+					mario->SetPoint(mario->GetPoint() + 100);
+					h = 24;
+					vx = 0;
+					y += 24;
+					timeDie = GetTickCount64();
+				}
+			}
+		}
+		if (collisionEvent->ny > 0) {
+			Mario::GetInstance()->y -= Mario::GetInstance()->dy;
 		}
 	}
 }
