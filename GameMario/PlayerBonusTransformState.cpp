@@ -44,6 +44,11 @@ void PlayerBonusTransformState::KeyState(BYTE* states)
 		countTransform = 0;
 		stateWhenGrowingUp = STATE_MARIO_SMALL;
 		Mario::GetInstance()->SetIsGrowingUp(false);
+		if (changeCrouching) {
+			mario->SetIsCrouching(false);
+			mario->y -= MARIO_DEVIATION_CROUCHING_Y;
+		}
+		changeCrouching = false;
 		if (mario->GetIsOnGround())
 			mario->ChangeState(PlayerStandingState::GetInstance());
 		else {
@@ -89,6 +94,25 @@ void PlayerBonusTransformState::KeyState(BYTE* states)
 				}
 			}
 		}
+	}
+}
+
+void PlayerBonusTransformState::OnKeyUp(int KeyCode)
+{
+	Mario* mario = Mario::GetInstance();
+	switch (KeyCode)
+	{
+
+	case DIK_DOWN: {
+		if (mario->GetLevel() >= MARIO_LEVEL_BIG) {
+			if (mario->GetIsCrouChing()) {
+				changeCrouching = true;
+			}
+		}
+		break;
+	}
+	default:
+		break;
 	}
 }
 

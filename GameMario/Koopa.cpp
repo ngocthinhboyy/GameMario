@@ -22,6 +22,7 @@
 #include "PlayerDieState.h"
 #include "Flower.h"
 #include "Fireball.h"
+#include "Mushroom.h"
 
 Koopa::Koopa()
 {
@@ -283,8 +284,33 @@ void Koopa::Update(DWORD dt, int scaleTime)
 							noCollisionConsideration = true;
 						}
 						else {
-							vx = -vx;
-							enemy->vx = -enemy->vx;
+							if (isHold) {
+								if (Koopa* koopa = dynamic_cast<Koopa*> (enemy)) {
+									koopa->SetState(ENEMY_STATE_DIE);
+									koopa->SetIsDiedByFireball();
+								}
+								if (enemy->x > Mario::GetInstance()->x) {
+									enemy->vx = ENEMY_DIE_SPEED_X;
+									vx = ENEMY_DIE_SPEED_X;
+								}
+								else {
+									enemy->vx = -ENEMY_DIE_SPEED_X;
+									vx = -ENEMY_DIE_SPEED_X;
+								}
+								enemy->vy = -ENEMY_DIE_SPEED_Y;
+								enemy->SetIsUpsideDown(true);
+								enemy->noCollisionConsideration = true;
+								noCollisionConsideration = true;
+								vy = -ENEMY_DIE_SPEED_Y * 1.2f;
+								isHold = false;
+								isUpsideDown = true;
+								isDiedByFireball = true;
+								Mario::GetInstance()->ChangeState(PlayerStandingState::GetInstance());
+							}
+							else {
+								vx = -vx;
+								enemy->vx = -enemy->vx;
+							}
 						}
 					}
 				}
@@ -336,6 +362,10 @@ void Koopa::Update(DWORD dt, int scaleTime)
 						y -= dy;
 					}
 				}
+			}
+			else if (dynamic_cast<Mushroom*>(e->obj)) {
+				if (e->ny != 0) y += dy;
+				if (e->nx != 0) x += dx;
 			}
 			/*else {
 				if (e->nx != 0) vx = -vx;
@@ -639,7 +669,7 @@ void Koopa::CheckOverlapWithEnemy(vector<LPGAMEOBJECT> enemies)
 						enemy->SetIsUpsideDown(true);
 						enemy->noCollisionConsideration = true;
 						noCollisionConsideration = true;
-						vy = -ENEMY_DIE_SPEED_Y;
+						vy = -ENEMY_DIE_SPEED_Y*1.2f;
 						isHold = false;
 						isUpsideDown = true;
 						isDiedByFireball = true;

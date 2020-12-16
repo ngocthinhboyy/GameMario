@@ -52,6 +52,11 @@ void PlayerLevelDownTransformState::KeyState(BYTE* states)
 		mario->StartHideAndUnhide();
 		stateWhenGrowingUp = STATE_MARIO_BIG;
 		Mario::GetInstance()->SetIsGrowingUp(false);
+		if (changeCrouching) {
+			mario->SetIsCrouching(false);
+			mario->y -= MARIO_DEVIATION_CROUCHING_Y;
+		}
+		changeCrouching = false;
 		mario->ChangeState(PlayerStandingState::GetInstance());
 
 	} else if (mario->GetLevel() == MARIO_LEVEL_BIG) {
@@ -90,6 +95,25 @@ void PlayerLevelDownTransformState::KeyState(BYTE* states)
 				}
 			}
 		}
+	}
+}
+
+void PlayerLevelDownTransformState::OnKeyUp(int KeyCode)
+{
+	Mario* mario = Mario::GetInstance();
+	switch (KeyCode)
+	{
+
+		case DIK_DOWN: {
+			if (mario->GetLevel() >= MARIO_LEVEL_BIG) {
+				if (mario->GetIsCrouChing()) {
+					changeCrouching = true;
+				}
+			}
+			break;
+	}
+	default:
+		break;
 	}
 }
 

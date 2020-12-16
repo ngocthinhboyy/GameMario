@@ -132,6 +132,10 @@ void Mushroom::Update(DWORD dt, int scaleTime)
 					grid->DeterminedGridToObtainObject(point);
 				this->stillAlive = false;
 			}
+			else if (LPENEMY enemy = dynamic_cast<LPENEMY>(e->obj)) {
+				if (e->ny != 0) y += dy;
+				if (e->nx != 0) x += dx;
+			}
 		}
 	}
 

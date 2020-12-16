@@ -12,6 +12,7 @@
 #include "Grid.h"
 #include "PlayerDieState.h"
 #include "Fireball.h"
+#include "Mushroom.h"
 
 Goomba::Goomba()
 {
@@ -214,6 +215,10 @@ void Goomba::Update(DWORD dt, int scaleTime)
 						y -= dy;
 					}
 				}
+			}
+			else if (dynamic_cast<Mushroom*>(e->obj)) {
+				if (e->ny != 0) y += dy;
+				if (e->nx != 0) x += dx;
 			}
 		}
 	}
