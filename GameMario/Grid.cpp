@@ -31,8 +31,12 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 
 	float w = atof(tokens[3].c_str());
 	float h = atof(tokens[4].c_str());
+	int top = atoi(tokens[5].c_str());
+	int bottom = atoi(tokens[6].c_str());
+	int left= atoi(tokens[7].c_str());
+	int right = atoi(tokens[8].c_str());
 
-	int ani_set_id = atoi(tokens[5].c_str());
+	int ani_set_id = atoi(tokens[9].c_str());
 
 	AnimationManager* animation_sets = AnimationManager::GetInstance();
 
@@ -42,7 +46,7 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 	switch (object_type)
 	{
 	case OBJECT_TYPE_GOOMBA: {
-		int typeGoomba = atoi(tokens[6].c_str());
+		int typeGoomba = atoi(tokens[10].c_str());
 		obj = new Goomba(x, y, w, h, typeGoomba);
 		//obj->gameObjectID = id;
 		obj->SetPosition(x, y);
@@ -50,23 +54,23 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 		ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		DeterminedGridToObtainObject(obj);
+		AddObjectInFileToGrid(top, bottom, left, right, obj);
 		break;
 	}
 	case OBJECT_TYPE_QUESTION_BRICK: {
-		int type = atoi(tokens[6].c_str());
+		int type = atoi(tokens[10].c_str());
 		obj = new QuestionBrick(x, y, w, h, type);
 		//obj->gameObjectID = id;
 		obj->SetPosition(x, y);
 		ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		DeterminedGridToObtainObject(obj);
+		AddObjectInFileToGrid(top, bottom, left, right, obj);
 		break;
 	}
 	case OBJECT_TYPE_KOOPA: {
-		int typeKoopa = atoi(tokens[6].c_str());
-		int typeMove = atoi(tokens[7].c_str());
+		int typeKoopa = atoi(tokens[10].c_str());
+		int typeMove = atoi(tokens[11].c_str());
 		obj = new Koopa(x, y, w, h, typeKoopa,typeMove);
 		//obj->gameObjectID = id;
 		obj->SetPosition(x, y);
@@ -74,53 +78,53 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 		ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		DeterminedGridToObtainObject(obj);
+		AddObjectInFileToGrid(top, bottom, left, right, obj);
 		break;
 	}
 	case OBJECT_TYPE_FLOWER: {
-		int type = atoi(tokens[6].c_str());
+		int type = atoi(tokens[10].c_str());
 		obj = new Flower(x, y, w, h, type);
 		//obj->gameObjectID = id;
 		obj->SetPosition(x, y);
 		ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		DeterminedGridToObtainObject(obj);
+		AddObjectInFileToGrid(top, bottom, left, right, obj);
 		break;
 	}
 	case OBJECT_TYPE_COIN: {
-		int type = atoi(tokens[6].c_str());
+		int type = atoi(tokens[10].c_str());
 		obj = new Coin(x, y, w, h, type);
 
 		obj->SetPosition(x, y);
 		ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		DeterminedGridToObtainObject(obj);
+		AddObjectInFileToGrid(top, bottom, left, right, obj);
 		break;
 	}
 	case OBJECT_TYPE_GATE: {
-		int type = atoi(tokens[6].c_str());
-		float cam_x = atof(tokens[7].c_str());
-		float cam_y = atof(tokens[8].c_str());
-		float newPositionXMario = atof(tokens[9].c_str());
-		float newPositionYMario = atof(tokens[10].c_str());
-		int wayDirectionY = atoi(tokens[11].c_str());
+		int type = atoi(tokens[10].c_str());
+		float cam_x = atof(tokens[11].c_str());
+		float cam_y = atof(tokens[12].c_str());
+		float newPositionXMario = atof(tokens[13].c_str());
+		float newPositionYMario = atof(tokens[14].c_str());
+		int wayDirectionY = atoi(tokens[15].c_str());
 		obj = new Gate(x, y, w, h, type, cam_x, cam_y, newPositionXMario, newPositionYMario, wayDirectionY);
 		obj->SetPosition(x, y);
 
 		obj->SetAnimationSet(ani_set);
-		DeterminedGridToObtainObject(obj);
+		AddObjectInFileToGrid(top, bottom, left, right, obj);
 		break;
 	}
 	case OBJECT_TYPE_ESPECIAL_BRICK: {
-		int type = atoi(tokens[6].c_str());
+		int type = atoi(tokens[10].c_str());
 		obj = new EspecialBrick(x, y, w, h, type);
 		obj->SetPosition(x, y);
 		ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		DeterminedGridToObtainObject(obj);
+		AddObjectInFileToGrid(top, bottom, left, right, obj);
 		break;
 	}
 	case OBJECT_TYPE_RANDOM_GIFT: {
@@ -129,7 +133,7 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 		ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		DeterminedGridToObtainObject(obj);
+		AddObjectInFileToGrid(top, bottom, left, right, obj);
 		break;
 	}
 	default:
@@ -225,6 +229,13 @@ void Grid::DeterminedGridToObtainObject(LPGAMEOBJECT object)
 	int bottom = (int)((object->y + object->h) / CELL_HEIGHT);
 	int left = (int)(object->x / CELL_WIDTH);
 	int right = (int)((object->x + object->w) / CELL_WIDTH);
+	for (int i = top; i <= bottom; i++)
+		for (int j = left; j <= right; j++) {
+			cells[i][j].push_back(object);
+		}
+}
+void Grid::AddObjectInFileToGrid(int top, int bottom, int left, int right, LPGAMEOBJECT object)
+{
 	for (int i = top; i <= bottom; i++)
 		for (int j = left; j <= right; j++) {
 			cells[i][j].push_back(object);

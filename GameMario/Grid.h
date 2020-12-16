@@ -18,6 +18,7 @@ public:
 	void LoadObjectInSceneAddToGrid(string line);
 	void GetListObjectInCamera();
 	void DeterminedGridToObtainObject(LPGAMEOBJECT object);
+	void AddObjectInFileToGrid(int top, int bottom, int left, int right, LPGAMEOBJECT object);
 	void SetNewGrid(LPGAMEOBJECT object);
 	void SetStartPosition();
 	void ClearGrid();
