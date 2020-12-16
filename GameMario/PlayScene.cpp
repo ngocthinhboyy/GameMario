@@ -243,6 +243,7 @@ void PlayScene::Update(DWORD dt)
 		if (remainingTime <= 0) {
 			remainingTime = 0;
 			isTimeUp = true;
+			Mario::GetInstance()->SetLevel(MARIO_LEVEL_SMALL);
 			player->ChangeState(PlayerDieState::GetInstance());
 			return;
 		}
