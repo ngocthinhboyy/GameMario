@@ -15,6 +15,7 @@ class PlayerSpinningState : PlayerState
 	static PlayerState* __instance;
 	static Tail* tailFront; 
 	static Tail* tailBack;
+	static DWORD timeStartSpinning;
 
 public:
 	static int offset;

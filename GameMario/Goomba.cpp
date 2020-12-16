@@ -294,37 +294,42 @@ void Goomba::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LP
 void Goomba::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 {
 	Mario* mario = Mario::GetInstance();
-	if (collisionEvent->nx != 0) {
-		mario->vx = 0;
-		PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
-		if (mario->GetIsHolding()) {
-			vector<LPGAMEOBJECT> enemies = scene->enemies;
-			for (auto enemy : enemies) {
-				if (Koopa * koopa = dynamic_cast<Koopa*> (enemy)) {
-					if (koopa->GetIsHold()) {
-						koopa->SetIsUpsideDown(false);
-						koopa->noCollisionConsideration = false;
-						koopa->y -= 40;
-						koopa->SetState(ENEMY_STATE_WALKING);
-						koopa->SetIsHold(false);
-						koopa->vx = KOOPA_WALKING_SPEED_X * Mario::GetInstance()->nx;
-						koopa->nx = Mario::GetInstance()->nx;
-						Mario::GetInstance()->SetIsHolding(false);
+	if (!mario->GetUntouchable()) {
+		if (collisionEvent->nx != 0) {
+			mario->vx = 0;
+			PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+			if (mario->GetIsHolding()) {
+				vector<LPGAMEOBJECT> enemies = scene->enemies;
+				for (auto enemy : enemies) {
+					if (Koopa* koopa = dynamic_cast<Koopa*> (enemy)) {
+						if (koopa->GetIsHold()) {
+							koopa->SetIsUpsideDown(false);
+							koopa->noCollisionConsideration = false;
+							koopa->y -= 40;
+							koopa->SetState(ENEMY_STATE_WALKING);
+							koopa->SetIsHold(false);
+							koopa->vx = KOOPA_WALKING_SPEED_X * Mario::GetInstance()->nx;
+							koopa->nx = Mario::GetInstance()->nx;
+							Mario::GetInstance()->SetIsHolding(false);
+						}
 					}
 				}
 			}
+			if (mario->GetLevel() >= MARIO_LEVEL_BIG) {
+				mario->StartUntouchable();
+				mario->y -= 5;
+				mario->ChangeState(PlayerLevelDownTransformState::GetInstance());
+				scene->StopGame(1000);
+			}
+			else if (mario->GetLevel() == MARIO_LEVEL_SMALL) {
+				mario->ChangeState(PlayerDieState::GetInstance());
+				mario->noCollisionConsideration = true;
+				scene->StopGame(5000);
+			}
 		}
-		if (mario->GetLevel() >= MARIO_LEVEL_BIG) {
-			mario->StartUntouchable();
-			mario->y -= 5;
-			mario->ChangeState(PlayerLevelDownTransformState::GetInstance());
-			scene->StopGame(1000);
-		}
-		else if (mario->GetLevel() == MARIO_LEVEL_SMALL) {
-			mario->ChangeState(PlayerDieState::GetInstance());
-			mario->noCollisionConsideration = true;
-			scene->StopGame(5000);
-		}
+	}
+	else {
+		mario->x += mario->dx;
 	}
 	if (collisionEvent->ny != 0) {
 		if (collisionEvent->ny < 0) {
@@ -416,7 +421,7 @@ void Goomba::ChangeStateRedGoomba()
 	}
 	else if (state == RED_GOOMBA_STATE_HIGH_JUMP) {
 		h = 72;
-		vy = -0.2f;
+		vy = -0.3f;
 		if (now - timeJumpType2 >= 600) {
 			vy = 0.17f;
 		}

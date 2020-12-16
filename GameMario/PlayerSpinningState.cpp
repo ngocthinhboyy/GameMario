@@ -2,6 +2,7 @@
 #include "PlayerFallingSlowlyState.h"
 
 PlayerState* PlayerSpinningState::__instance = NULL;
+DWORD PlayerSpinningState::timeStartSpinning = 0;
 Tail* PlayerSpinningState::tailFront = NULL;
 Tail* PlayerSpinningState::tailBack = NULL;
 int PlayerSpinningState::offset = 0;
@@ -30,12 +31,9 @@ void PlayerSpinningState::KeyState(BYTE* states)
 {
 	Mario* mario = Mario::GetInstance();
 	Game* game = Game::GetInstance();
-	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
-	LPANIMATION animation = animationDatabase->Get(animationID);
-	bool isLastFrame = animation->GetIsLastFrame();
-	int currentFrame = animation->GetCurrentFrame();
+	DWORD now = GetTickCount64();
 	if (mario->nx > 0) {
-		if (currentFrame == 1 || currentFrame == 2 || currentFrame == 3) {
+		if (now-timeStartSpinning >= 100 && now - timeStartSpinning < 200) {
 			offset = 0;
 		}
 		else {
@@ -43,14 +41,14 @@ void PlayerSpinningState::KeyState(BYTE* states)
 		}
 	}
 	else if (mario->nx < 0) {
-		if (currentFrame == 2) {
+		if (now - timeStartSpinning >= 150 && now - timeStartSpinning < 200) {
 			offset = -6;
 		}
 		else {
 			offset = 0;
 		}
 	}
-	if (currentFrame == 0 || currentFrame == 4) {
+	if ((now - timeStartSpinning >= 0 && now - timeStartSpinning < 50 )||  now - timeStartSpinning >= 250) {
 		if (mario->nx > 0) {
 			offset = 7;
 			tailBack->stillAlive = true;
@@ -61,7 +59,7 @@ void PlayerSpinningState::KeyState(BYTE* states)
 			tailFront->stillAlive = true;
 		}
 	}
-	else if (currentFrame == 2) {
+	else if (now - timeStartSpinning >= 150 && now - timeStartSpinning < 200) {
 		if (mario->nx > 0) {
 			tailFront->stillAlive = true;
 			tailBack->stillAlive = false;
@@ -75,17 +73,11 @@ void PlayerSpinningState::KeyState(BYTE* states)
 		tailFront->stillAlive = false;
 		tailBack->stillAlive = false;
 	}
-	/*else {
-		tailFront->stillAlive = false;
-		tailBack->stillAlive = false;
-	}*/
-	//else if(currentFrame == 4){}
-	if (isLastFrame) {
-		animation->ResetAnimation();
+	if (now - timeStartSpinning >= 250) {
 		tailFront->stillAlive = false;
 		tailBack->stillAlive = false;
 		mario->SetIsSpinning(false);
-		if(game->IsKeyDown(DIK_A))
+		if (game->IsKeyDown(DIK_A))
 			mario->ChangeState(PlayerRunningState::GetInstance());
 		else if (mario->vy > 0) {
 			if (mario->GetLevel() == MARIO_LEVEL_RACCOON) {
@@ -102,6 +94,7 @@ void PlayerSpinningState::KeyState(BYTE* states)
 PlayerState* PlayerSpinningState::GetInstance()
 {
 	if (__instance == NULL) __instance = new PlayerSpinningState();
+	AnimationDatabase::GetInstance()->Get(animationID)->ResetAnimation();
 	SetAnimation();
 	Mario* mario = Mario::GetInstance();
 	mario->SetIsSpinning(true);
@@ -130,7 +123,8 @@ PlayerState* PlayerSpinningState::GetInstance()
 		Grid::GetInstance()->DeterminedGridToObtainObject(tailFront);
 		Grid::GetInstance()->DeterminedGridToObtainObject(tailBack);
 	}
-		return __instance;
+	timeStartSpinning = GetTickCount64();
+	return __instance;
 }
 
 PlayerSpinningState::~PlayerSpinningState()

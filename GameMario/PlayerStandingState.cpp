@@ -14,6 +14,7 @@
 #include "PlayerMovingDownAndUpState.h"
 #include "Camera.h"
 #include "PlayerFallingSlowlyState.h"
+#include "PlayerLevelDownTransformState.h"
 
 
 PlayerState* PlayerStandingState::__instance = NULL;
@@ -80,11 +81,13 @@ void PlayerStandingState::OnKeyDown(int KeyCode) {
 	{
 	case DIK_1: {
 		mario->SetLevel(MARIO_LEVEL_SMALL);
+		mario->y -= 40;
 		SetAnimation();
 		break;
 	}
 	case DIK_2: {
 		mario->SetLevel(MARIO_LEVEL_SMALL);
+		SetAnimation();
 		mario->ChangeState(PlayerBonusTransformState::GetInstance());
 		break;
 	}

@@ -47,7 +47,7 @@ void PlayerDieState::Update(int dt)
 			mario->vy = -0.35f;
 		}
 		else if (GetTickCount64() - startTimeDie >= 4000) {
-			mario->vy = 0;
+			mario->vy = 0.8f;
 			mario->vx = 0;
 			if (mario->GetHeart() == 1) {
 				mario->SetHeart(4);
@@ -57,7 +57,7 @@ void PlayerDieState::Update(int dt)
 			Game::GetInstance()->SwitchScene(1);
 		}
 		else {
-			mario->vy = 0.55f;
+			mario->vy = 0.8f;
 		}
 	}
 	else {
@@ -68,6 +68,7 @@ void PlayerDieState::Update(int dt)
 				mario->SetHeart(4);
 			else
 				mario->SetHeart(mario->GetHeart() - 1);
+			mario->SetLevel(MARIO_LEVEL_SMALL);
 			Game::GetInstance()->SwitchScene(1);
 		}
 	}
@@ -88,7 +89,6 @@ PlayerState* PlayerDieState::GetInstance()
     if (__instance == NULL) __instance = new PlayerDieState();
 	startTimeDie = GetTickCount64();
 	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
-	Mario::GetInstance()->SetLevel(MARIO_LEVEL_SMALL);
 	SetAnimation();
 	scene->StopGame(5000);
     return __instance;

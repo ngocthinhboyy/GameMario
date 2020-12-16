@@ -13,6 +13,7 @@ class PlayerThrowingFireballState : PlayerState
 {
 	static PlayerState* __instance;
 	DWORD lastThrowingTime;
+	static DWORD timeStartThrowing;
 public:
 	PlayerThrowingFireballState();
 	static void SetAnimation();

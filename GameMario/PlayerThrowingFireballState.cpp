@@ -37,18 +37,14 @@ void PlayerThrowingFireballState::KeyState(BYTE* states)
 {
 	Mario* mario = Mario::GetInstance();
 	Game* game = Game::GetInstance();
-	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
-	LPANIMATION animation = animationDatabase->Get(animationID);
 	DWORD now = GetTickCount64();
 	if (now - lastThrowingTime < FIREBALL_TIME_LIMIT_TO_THROWING && quantityFireball == FIREBALL_MAX_QUANTITY) {
 		lastThrowingTime = now;
-		animation->ResetAnimation();
 		mario->ChangeState(PlayerStandingState::GetInstance());
 		return;
 	};
 	lastThrowingTime = now;
-	bool isLastFrame = animation->GetIsLastFrame();
-	if (isLastFrame) {
+	if (now - timeStartThrowing >= 160) {
 		if (now - lastThrowingTime < FIREBALL_TIME_LIMIT_TO_THROWING && quantityFireball < FIREBALL_MAX_QUANTITY) {
 			PlayScene* scene = dynamic_cast<PlayScene*> (game->GetCurrentScene());
 			Fireball* fireball = new Fireball(mario->x + MARIO_BIG_BBOX_WIDTH / 2, mario->y - 10, FIREBALL_WIDTH, FIREBALL_HEIGHT, FIREBALL_TYPE_WEAPON);
@@ -56,15 +52,17 @@ void PlayerThrowingFireballState::KeyState(BYTE* states)
 			grid->DeterminedGridToObtainObject(fireball);
 			quantityFireball++;
 		}
-		animation->ResetAnimation();
 		mario->ChangeState(PlayerStandingState::GetInstance());
 	}
 }
 
+DWORD PlayerThrowingFireballState::timeStartThrowing = 0;
 PlayerState* PlayerThrowingFireballState::GetInstance()
 {
 	if (__instance == NULL) __instance = new PlayerThrowingFireballState();
 	SetAnimation();
+	AnimationDatabase::GetInstance()->Get(animationID)->ResetAnimation();
+	timeStartThrowing = GetTickCount64();
 	return __instance;
 }
 

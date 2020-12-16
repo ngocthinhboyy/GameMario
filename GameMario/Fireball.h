@@ -7,6 +7,7 @@ class Fireball : public GameObject
 	LPANIMATION animation;
 	int type = 0;
 	bool isDie = false;
+	DWORD timeDie = 0;
 public:
 
 	Fireball();

@@ -7,6 +7,7 @@
 #include "PlayerWalkingState.h"
 
 PlayerState* PlayerSkiddingState::__instance = NULL;
+DWORD PlayerSkiddingState::timeStartSkidding = 0;
 PlayerSkiddingState::PlayerSkiddingState()
 {
 }
@@ -50,11 +51,7 @@ void PlayerSkiddingState::Update(int dt)
 	}
 	else {
 		Game* game = Game::GetInstance();
-		AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
-		LPANIMATION animation = animationDatabase->Get(animationID);
-		bool isLastFrame = animation->GetIsLastFrame();
-		if (isLastFrame) {
-			animation->ResetAnimation();
+		if (GetTickCount64() - timeStartSkidding >= 150) {
 			mario->nx = -mario->nx;
 			mario->ChangeState(PlayerWalkingState::GetInstance());
 		}
@@ -75,7 +72,9 @@ PlayerState* PlayerSkiddingState::GetInstance()
 	if (__instance == NULL) __instance = new PlayerSkiddingState();
 	//Mario::GetInstance()->speedLast = abs(Mario::GetInstance()->vx);
 	Mario* mario = Mario::GetInstance();
+	AnimationDatabase::GetInstance()->Get(animationID)->ResetAnimation();
 	SetAnimation();
+	timeStartSkidding =  GetTickCount64();
 	if (PlayerRunningState::isCrouching)
 		mario->y -= MARIO_DEVIATION_CROUCHING_Y;
 	return __instance;

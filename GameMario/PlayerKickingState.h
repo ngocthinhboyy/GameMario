@@ -4,6 +4,7 @@
 class PlayerKickingState : PlayerState
 {
 	static PlayerState* __instance;
+	static DWORD timeStartKicking;
 public:
 	PlayerKickingState();
 	static void SetAnimation();

@@ -58,8 +58,7 @@ void Fireball::Render()
 		else {
 			scale = D3DXVECTOR2(2.5, 2.5);
 			animation->Render(x - 20, y, alpha, scale, -6);
-			bool isLastFrame = animation->GetIsLastFrame();
-			if (isLastFrame) {
+			if (GetTickCount64() - timeDie >= 150) {
 				animation->ResetAnimation();
 				isDie = true;
 				stillAlive = false;
@@ -134,6 +133,7 @@ void Fireball::Update(DWORD dt, int scaleTime)
 			}
 			else if (LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
 				isDie = true;
+				timeDie = GetTickCount64();
 				if (Koopa * koopa = dynamic_cast<Koopa*> (enemy)) {
 					koopa->SetState(ENEMY_STATE_DIE);
 					koopa->SetIsDiedByFireball();
@@ -163,6 +163,7 @@ void Fireball::Update(DWORD dt, int scaleTime)
 				if (e->nx != 0) {
 					vx = 0;
 					isDie = true;
+					timeDie = GetTickCount64();
 				}
 				if (e->ny != 0 && e->nx == 0) {
 					vy = -FIREBALL_ROLLING_SPEED_Y;
@@ -221,6 +222,7 @@ bool Fireball::IsOverlapWithEnemy(vector<LPGAMEOBJECT> enemies)
 				LPENEMY enemy = dynamic_cast<LPENEMY> (x);
 				if (enemy != NULL) {
 					isDie = true;
+					timeDie = GetTickCount64();
 					if (Koopa * koopa = dynamic_cast<Koopa*> (enemy)) {
 						koopa->SetState(ENEMY_STATE_DIE);
 						koopa->SetIsDiedByFireball();
@@ -261,6 +263,7 @@ void Fireball::CollisionWithOneCollisionMapObject(LPCOLLISIONEVENT collisionEven
 			x += dx;
 		else {
 			isDie = true;
+			timeDie = GetTickCount64();
 			vx = 0;
 		}
 	}

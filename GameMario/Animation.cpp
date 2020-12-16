@@ -37,11 +37,8 @@ void Animation::Render(float x, float y, int alpha, D3DXVECTOR2 scale, int offse
 			currentFrame++;
 			lastFrameTime = now;
 			if (currentFrame == frames.size()) {
-				isLastFrame = true;
 				currentFrame = 0;
 			}
-			else
-				isLastFrame = false;
 		}
 	}
 
@@ -50,7 +47,6 @@ void Animation::Render(float x, float y, int alpha, D3DXVECTOR2 scale, int offse
 
 void Animation::ResetAnimation()
 {
-	isLastFrame = false;
 	currentFrame = -1;
 
 }

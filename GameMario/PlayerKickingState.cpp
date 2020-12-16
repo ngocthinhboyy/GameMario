@@ -6,6 +6,7 @@
 #include "Debug.h"
 
 PlayerState* PlayerKickingState::__instance = NULL;
+DWORD PlayerKickingState::timeStartKicking = 0;
 PlayerKickingState::PlayerKickingState()
 {
 }
@@ -48,11 +49,7 @@ void PlayerKickingState::KeyState(BYTE* states)
 {
 	Mario* mario = Mario::GetInstance();
 	Game* game = Game::GetInstance();
-	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
-	LPANIMATION animation = animationDatabase->Get(animationID);
-	bool isLastFrame = animation->GetIsLastFrame();
-	if (isLastFrame) {
-		animation->ResetAnimation();
+	if (GetTickCount64() - timeStartKicking >= 140) {
 		mario->ChangeState(PlayerStandingState::GetInstance());
 	}
 }
@@ -60,7 +57,9 @@ void PlayerKickingState::KeyState(BYTE* states)
 PlayerState* PlayerKickingState::GetInstance()
 {
 	if (__instance == NULL) __instance = new PlayerKickingState();
+	AnimationDatabase::GetInstance()->Get(animationID)->ResetAnimation();
 	SetAnimation();
+	timeStartKicking = GetTickCount64();
 	return __instance;
 }
 

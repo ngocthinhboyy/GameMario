@@ -34,17 +34,14 @@ void PlayerLevelDownTransformState::Update(int dt)
 {
 }
 DWORD PlayerLevelDownTransformState::startTransform = 0;
+DWORD PlayerLevelDownTransformState::timeStartTransform = 0;
 int PlayerLevelDownTransformState::stateWhenGrowingUp = STATE_MARIO_BIG;
 void PlayerLevelDownTransformState::KeyState(BYTE* states)
 {
 	Mario* mario = Mario::GetInstance();
 	Game* game = Game::GetInstance();
-	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
-	LPANIMATION animation = animationDatabase->Get(animationID);
-	bool isLastFrame = animation->GetIsLastFrame();
 
-	if (isLastFrame) {
-		animation->ResetAnimation();
+	if ((animationID == MARIO_EFFECT_LEVEL_DOWN_FROM_LEVEL_BIG && GetTickCount64() - timeStartTransform >= 810) || (animationID == MARIO_EFFECT_HAVE_BONUS && GetTickCount64() - timeStartTransform >= 610)) {
 		mario->SetLevel(mario->GetLevel() - 1);
 		countTransform = 0;
 		mario->StartHideAndUnhide();
@@ -100,7 +97,9 @@ PlayerState* PlayerLevelDownTransformState::GetInstance()
 		stateWhenGrowingUp = STATE_MARIO_BIG;
 		Mario::GetInstance()->SetIsGrowingUp(true);
 	}
+	AnimationDatabase::GetInstance()->Get(animationID)->ResetAnimation();
 	startTransform = GetTickCount64();
+	timeStartTransform = GetTickCount64();
 	SetAnimation();
 	return __instance;
 }

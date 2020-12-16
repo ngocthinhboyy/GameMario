@@ -5,6 +5,7 @@ class PlayerLevelDownTransformState : PlayerState
 	static PlayerState* __instance;
 	bool isSlow = false;
 	static DWORD startTransform;
+	static DWORD timeStartTransform;
 	int countTransform = 0;
 public:
 	PlayerLevelDownTransformState();

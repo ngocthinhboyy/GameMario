@@ -138,6 +138,7 @@ void Mario::Update(DWORD dt, int scaleTime)
 		untouchable = false;
 	}
 	if (untouchable) {
+		CalcPotentialCollisions(&coEnemies, coEvents);
 		CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
 		CalcPotentialCollisions(&coObjects, coEvents);
 	}
@@ -175,15 +176,7 @@ void Mario::Update(DWORD dt, int scaleTime)
 				gate->CollisionWithPlayer(e);
 			}
 			else if (LPENEMY enemy = dynamic_cast<LPENEMY> (e->obj)) {
-				if (untouchable) {
-					if (e->nx != 0)
-						x += dx;
-					if (e->ny != 0)
-						y += dy;
-				}
-				else {
-					enemy->CollisionWithPlayer(e);
-				}
+				enemy->CollisionWithPlayer(e);
 			}
 			else if (LPITEM item = dynamic_cast<LPITEM> (e->obj)) {
 				if (item->stillAlive) {
@@ -280,6 +273,7 @@ void Mario::Update(DWORD dt, int scaleTime)
 	Camera::GetInstance()->GetCamPos(camx, camy);
 	//DebugOut(L"TTTTT %d\n", Game::GetInstance()->GetScreenHeight());
 	if (y > camy + 580) {
+		level = MARIO_LEVEL_BIG;
 		ChangeState(PlayerDieState::GetInstance());
 
 	}
@@ -368,7 +362,7 @@ void Mario::Render()
 		else
 			ani->Render(x, y, alpha, scale, offset);
 	}
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 //void Mario::SetState(int state)
