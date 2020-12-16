@@ -58,6 +58,7 @@ public:
 	//void SetState(int state);
 	void SetLevel(int level) { this->level = level; }
 	void StartUntouchable() { untouchable = true; untouchable_start = GetTickCount64(); }
+	void SetUntouchable(bool untouchable) { this->untouchable = untouchable; untouchable_start = 0; };
 
 	bool GetUntouchable() { return this->untouchable; };
 

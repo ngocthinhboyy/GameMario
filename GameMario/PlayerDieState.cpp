@@ -89,6 +89,7 @@ PlayerState* PlayerDieState::GetInstance()
     if (__instance == NULL) __instance = new PlayerDieState();
 	startTimeDie = GetTickCount64();
 	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+	Mario::GetInstance()->SetUntouchable(false);
 	SetAnimation();
 	scene->StopGame(5000);
     return __instance;
