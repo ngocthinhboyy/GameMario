@@ -546,36 +546,42 @@ void Koopa::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 			}
 		}
 		if (collisionEvent->ny > 0) {
-			Mario::GetInstance()->y -= Mario::GetInstance()->dy;
-			if (mario->GetIsHolding()) {
-				vector<LPGAMEOBJECT> enemies = scene->enemies;
-				for (auto enemy : enemies) {
-					if (Koopa * koopa = dynamic_cast<Koopa*> (enemy)) {
-						if (koopa->GetIsHold()) {
-							koopa->SetIsUpsideDown(false);
-							koopa->noCollisionConsideration = false;
-							koopa->y -= 40;
-							koopa->SetState(ENEMY_STATE_WALKING);
-							koopa->SetIsHold(false);
-							koopa->vx = KOOPA_WALKING_SPEED_X * Mario::GetInstance()->nx;
-							koopa->nx = Mario::GetInstance()->nx;
-							Mario::GetInstance()->SetIsHolding(false);
+			if (!mario->GetUntouchable()) {
+				if (mario->GetIsHolding()) {
+					vector<LPGAMEOBJECT> enemies = scene->enemies;
+					for (auto enemy : enemies) {
+						if (Koopa* koopa = dynamic_cast<Koopa*> (enemy)) {
+							if (koopa->GetIsHold()) {
+								koopa->SetIsUpsideDown(false);
+								koopa->noCollisionConsideration = false;
+								koopa->y -= 40;
+								koopa->SetState(ENEMY_STATE_WALKING);
+								koopa->SetIsHold(false);
+								koopa->vx = KOOPA_WALKING_SPEED_X * Mario::GetInstance()->nx;
+								koopa->nx = Mario::GetInstance()->nx;
+								Mario::GetInstance()->SetIsHolding(false);
+							}
 						}
 					}
 				}
+				if (mario->GetLevel() >= MARIO_LEVEL_BIG) {
+					mario->StartUntouchable();
+					mario->y -= 5;
+					mario->ChangeState(PlayerLevelDownTransformState::GetInstance());
+					scene->StopGame(2000);
+					mario->vx = 0;
+					mario->vy = 0;
+				}
+				else if (Mario::GetInstance()->GetLevel() == MARIO_LEVEL_SMALL) {
+					mario->y -= 5;
+					Mario::GetInstance()->ChangeState(PlayerDieState::GetInstance());
+					PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+					Mario::GetInstance()->noCollisionConsideration = true;
+					scene->StopGame(5000);
+				}
 			}
-			if (mario->GetLevel() >= MARIO_LEVEL_BIG) {
-				mario->StartUntouchable();
-				mario->ChangeState(PlayerLevelDownTransformState::GetInstance());
-				scene->StopGame(1000);
-				mario->vx = 0;
-				mario->vy = 0;
-			}
-			else if (Mario::GetInstance()->GetLevel() == MARIO_LEVEL_SMALL) {
-				Mario::GetInstance()->ChangeState(PlayerDieState::GetInstance());
-				PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
-				Mario::GetInstance()->noCollisionConsideration = true;
-				scene->StopGame(5000);
+			else {
+				mario->y -= 0.4f;
 			}
 		}
 	}

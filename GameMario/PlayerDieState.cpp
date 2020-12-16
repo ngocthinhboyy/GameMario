@@ -54,6 +54,8 @@ void PlayerDieState::Update(int dt)
 			}
 			else
 				mario->SetHeart(mario->GetHeart() - 1);
+			Mario::GetInstance()->SetUntouchable(false);
+			Mario::GetInstance()->SetIsGrowingUp(false);
 			Game::GetInstance()->SwitchScene(1);
 		}
 		else {
@@ -69,6 +71,8 @@ void PlayerDieState::Update(int dt)
 			else
 				mario->SetHeart(mario->GetHeart() - 1);
 			mario->SetLevel(MARIO_LEVEL_SMALL);
+			Mario::GetInstance()->SetUntouchable(false);
+			Mario::GetInstance()->SetIsGrowingUp(false);
 			Game::GetInstance()->SwitchScene(1);
 		}
 	}
@@ -89,7 +93,6 @@ PlayerState* PlayerDieState::GetInstance()
     if (__instance == NULL) __instance = new PlayerDieState();
 	startTimeDie = GetTickCount64();
 	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
-	Mario::GetInstance()->SetUntouchable(false);
 	SetAnimation();
 	scene->StopGame(5000);
     return __instance;

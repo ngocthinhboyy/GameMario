@@ -25,6 +25,11 @@ void PlayerLevelDownTransformState::SetAnimation()
 		animationID = MARIO_EFFECT_HAVE_BONUS;
 		break;
 	}
+	case MARIO_LEVEL_FIRE:
+	{
+		animationID = MARIO_EFFECT_HAVE_BONUS;
+		break;
+	}
 	default:
 		break;
 	}
