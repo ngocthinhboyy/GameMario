@@ -75,3 +75,11 @@
 #define RED_FIRE_FLOWER_BBOX_HEIGHT						96
 #define FLOWER_BBOX_HEIGHT								72
 
+#define GOOMBA_TYPE_BROWN								1
+#define GOOMBA_TYPE_RED									2
+
+#define KOOPA_TYPE_RED									1
+#define KOOPA_TYPE_GREEN								2
+
+#define TIME_LIMIT_KOOPA_REVIVAL						9000
+

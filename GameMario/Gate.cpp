@@ -78,23 +78,6 @@ void Gate::Update(DWORD dt, int scaleTime)
 			isUsingThisGate = false;
 		}
 	}
-	//if (isUsingThisGate) {
-	//	if (wayDirectionY < 0) {
-	//		if (mario->y > y) {
-	//		}
-	//	}
-	//	else if (wayDirectionY > 0) {
-	//		if (mario->y + MARIO_BIG_BBOX_HEIGHT < y) {
-	//			mario->SetCanGoUpIntoGate(false);
-	//			mario->SetIsMovingIntoGate(false);
-	//			Camera::GetInstance()->SetCamPos(cam_x, cam_y);
-	//			//mario->x = newPostitionXMario;
-	//			//mario->y = newPostitionYMario;
-	//			mario->y = y - 5 - MARIO_BIG_BBOX_HEIGHT;
-	//			isUsingThisGate = false;
-	//		}
-	//	}
-	//}
 
 }
 

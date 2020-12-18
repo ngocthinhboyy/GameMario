@@ -1,0 +1,9 @@
+#pragma once
+
+#define INTROMAP_OBJECT_TYPE_THREEOBJECT			15
+#define INTROMAP_OBJECT_TYPE_ARROW					16
+
+#define DISTANCE_TWO_ARROW							48
+
+#define ARROW_ANI									4302
+#define THREEOBJECT_ANI								4301

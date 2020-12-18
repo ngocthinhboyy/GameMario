@@ -25,9 +25,9 @@ QuestionBrick::QuestionBrick(float x, float y, float w, float h, int type)
 	this->y = y;
 	this->w = w;
 	this->h = h;
-	if (type == 1)
+	if (type == QUESTION_BRICK_TYPE_HAS_COIN)
 		this->type = QUESTION_BRICK_TYPE_HAS_COIN;
-	else if (type == 2)
+	else if (type == QUESTION_BRICK_TYPE_HAS_ESPECIAL_ITEM)
 		this->type = QUESTION_BRICK_TYPE_HAS_ESPECIAL_ITEM;
 
 	animation = AnimationDatabase::GetInstance()->Get(QUESTION_BRICK_ANI);
@@ -36,13 +36,7 @@ QuestionBrick::QuestionBrick(float x, float y, float w, float h, int type)
 void QuestionBrick::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 {
 	Mario* mario = Mario::GetInstance();
-	//if (collisionEvent->nx != 0) {
-	//	DebugOut(L"AAA %d\n", mario->nx);
-	//	DebugOut(L"BBB %f\n", mario->vx);
-	//	PlayerRunningState::lastStateIsSkidding = true;
-	//	Mario* mario = Mario::GetInstance();
-	//	mario->vx += (dt * MARIO_SPEED_ACCELERATION * 3.5 * -(mario->nx));
-	//}
+
 	if (collisionEvent->ny != 0) {
 		if (collisionEvent->ny > 0)
 		{
@@ -50,7 +44,7 @@ void QuestionBrick::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 			if (!isEmptyBrick) {
 				if (type == QUESTION_BRICK_TYPE_HAS_COIN)
 				{
-					Coin* coin = new Coin(x + QUESTION_BRICK_BBOX_WIDTH / 2 - COIN_BBOX_WIDTH / 2, y - 3, COIN_BBOX_WIDTH, COIN_BBOX_HEIGHT, 1);
+					Coin* coin = new Coin(x + QUESTION_BRICK_BBOX_WIDTH / 2 - COIN_BBOX_WIDTH / 2, y - 3, COIN_BBOX_WIDTH, COIN_BBOX_HEIGHT, COIN_TYPE_FROM_QUESTION_BRICK);
 					coin->vy = -COIN_SPEED_Y;
 					mario->SetCoin(mario->GetCoin()+1);
 					Grid::GetInstance()->DeterminedGridToObtainObject(coin);
@@ -102,7 +96,7 @@ void QuestionBrick::Update(DWORD dt, int scaleTime)
 				y = start_Y_position;
 				if (Mario::GetInstance()->GetLevel() == MARIO_LEVEL_SMALL && type == QUESTION_BRICK_TYPE_HAS_ESPECIAL_ITEM)
 				{
-					Mushroom* mushroom = new Mushroom(x, y, MUSHROOM_BBOX_WIDTH, MUSHROOM_BBOX_HEIGHT, 1);
+					Mushroom* mushroom = new Mushroom(x, y, MUSHROOM_BBOX_WIDTH, MUSHROOM_BBOX_HEIGHT, MUSHROOM_TYPE_RED);
 					mushroom->vy = -MUSHROOM_SPEED_Y_APPEAR;
 					Grid::GetInstance()->DeterminedGridToObtainObject(mushroom);
 				}

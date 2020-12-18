@@ -53,7 +53,7 @@ void Fireball::Render()
 	else
 		scale = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_SCALE);
 	if (animation != NULL) {
-		if(!isDie || type == 2)
+		if(!isDie || type == FIREBALL_TYPE_OF_FLOWER)
 			animation->Render(x, y, alpha, scale);
 		else {
 			scale = D3DXVECTOR2(2.5, 2.5);
@@ -90,16 +90,16 @@ void Fireball::Update(DWORD dt, int scaleTime)
 
 	coEvents.clear();
 	
-	if (type == 1 && IsOverlapWithEnemy(coEnemies))
+	if (type == FIREBALL_TYPE_WEAPON && IsOverlapWithEnemy(coEnemies))
 		return;
-	if (type == 1) {
+	if (type == FIREBALL_TYPE_WEAPON) {
 		CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
 		CalcPotentialCollisions(&coObjects, coEvents);
 		CalcPotentialCollisions(&coEnemies, coEvents);
 	}
 
 
-	if (coEvents.size() == 0 || type == 2)
+	if (coEvents.size() == 0 || type == FIREBALL_TYPE_OF_FLOWER)
 	{
 		x += dx;
 		y += dy;
@@ -107,7 +107,7 @@ void Fireball::Update(DWORD dt, int scaleTime)
 		float cam_x, cam_y;
 		camera->GetCamPos(cam_x, cam_y);
 		if (x < cam_x || x > cam_x + SCREEN_WIDTH || y < cam_y || y > cam_y + SCREEN_HEIGHT) {
-			if (type == 1) {
+			if (type == FIREBALL_TYPE_WEAPON) {
 				PlayerThrowingFireballState::decreaseQuantityOneValue();
 			}
 			stillAlive = false;

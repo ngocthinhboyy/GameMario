@@ -32,9 +32,9 @@ Goomba::Goomba(float x, float y, float w, float h, int type)
 	this->startPositionY = y;
 	this->vx = -GOOMBA_WALKING_SPEED;
 	this->type = type;
-	if (type == 1)
+	if (type == GOOMBA_TYPE_BROWN)
 		SetState(ENEMY_STATE_WALKING);
-	else if (type == 2) {
+	else if (type == GOOMBA_TYPE_RED) {
 		timeWalkingType2 = GetTickCount64();
 		SetState(ENEMY_STATE_WALKING_WITH_SWINGS);
 	}
@@ -44,7 +44,7 @@ Goomba::Goomba(float x, float y, float w, float h, int type)
 void Goomba::SetAnimation()
 {
 	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
-	if (type == 1) {
+	if (type == GOOMBA_TYPE_BROWN) {
 		switch (state)
 		{
 		case ENEMY_STATE_WALKING:
@@ -61,7 +61,7 @@ void Goomba::SetAnimation()
 			break;
 		}
 	}
-	else if (type == 2) {
+	else if (type == GOOMBA_TYPE_RED) {
 		switch (state)
 		{
 			case ENEMY_STATE_WALKING:
@@ -120,7 +120,7 @@ void Goomba::Update(DWORD dt, int scaleTime)
 		}
 		return;
 	}
-	if (type == 2) {
+	if (type == GOOMBA_TYPE_RED) {
 		ChangeStateRedGoomba();
 	}
 	vy += ENEMY_GRAVITY * dt;
@@ -338,7 +338,7 @@ void Goomba::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 	}
 	if (collisionEvent->ny != 0) {
 		if (collisionEvent->ny < 0) {
-			if (type == 1) {
+			if (type == GOOMBA_TYPE_BROWN) {
 				state = ENEMY_STATE_DIE;
 				mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
 				Point* point = new Point(x, y, 39, 30, 100);
@@ -350,7 +350,7 @@ void Goomba::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 				y += 24;
 				timeDie = GetTickCount64();
 			}
-			else if (type == 2) {
+			else if (type == GOOMBA_TYPE_RED) {
 				if (state != ENEMY_STATE_WALKING) {
 					state = ENEMY_STATE_WALKING;
 					mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
@@ -389,13 +389,10 @@ void Goomba::SetStartPosition()
 	this->y = this->startPositionY; 
 	this->isUpsideDown = false;
 	this->vx = -GOOMBA_WALKING_SPEED;
-	/*if (Mario::GetInstance()->x > this->startPositionX)
-		this->vx = GOOMBA_WALKING_SPEED;
-	else
-		this->vx = -GOOMBA_WALKING_SPEED;*/
-	if (type == 1)
+
+	if (type == GOOMBA_TYPE_BROWN)
 		SetState(ENEMY_STATE_WALKING);
-	else if (type == 2) {
+	else if (type == GOOMBA_TYPE_RED) {
 		timeWalkingType2 = GetTickCount64();
 		SetState(ENEMY_STATE_WALKING_WITH_SWINGS);
 		w = 60;
@@ -426,7 +423,7 @@ void Goomba::ChangeStateRedGoomba()
 	}
 	else if (state == RED_GOOMBA_STATE_HIGH_JUMP) {
 		h = 72;
-		vy = -0.3f;
+		vy = -0.2f;
 		if (now - timeJumpType2 >= 600) {
 			vy = 0.17f;
 		}

@@ -81,28 +81,28 @@ void WorldMap::ReadLineObject(string line)
 			DebugOut(L"[INFO] Player object created!\n");
 			break;
 		}
-		case 11: {
+		case OBJECT_PARSE_TYPE_CACTUS: {
 			obj = new WorldMapObject(x, y, w, h, WORLDMAP_OBJECT_TYPE_CACTUS);
 			ani_set = AnimationManager::GetInstance()->Get(ani_set_id);
 			obj->SetAnimationSet(ani_set);
 			objects.push_back(obj);
 			break;
 		}
-		case 12: {
+		case OBJECT_PARSE_TYPE_HELP_TAGS: {
 			obj = new WorldMapObject(x, y, w, h, WORLDMAP_OBJECT_TYPE_HELP_TAGS);
 			ani_set = AnimationManager::GetInstance()->Get(ani_set_id);
 			obj->SetAnimationSet(ani_set);
 			objects.push_back(obj);
 			break;
 		}
-		case 13: {
+		case OBJECT_PARSE_TYPE_GUARD: {
 			obj = new WorldMapObject(x, y, w, h, WORLDMAP_OBJECT_TYPE_GUARD);
 			ani_set = AnimationManager::GetInstance()->Get(ani_set_id);
 			obj->SetAnimationSet(ani_set);
 			objects.push_back(obj);
 			break;
 		}
-		case 14: {
+		case OBJECT_PARSE_TYPE_GATE_WORLDMAP: {
 			int isInvisibleGate = atoi(tokens[6].c_str());
 			int type = atoi(tokens[7].c_str());
 			int directionX = atoi(tokens[8].c_str());

@@ -2,6 +2,7 @@
 #include "game.h"
 #include "IntroMap.h"
 #include "Arrow.h"
+#include "IntroMapDefine.h"
 
 void IntroMapKeyHandler::KeyState(BYTE* states)
 {
@@ -23,7 +24,7 @@ void IntroMapKeyHandler::OnKeyDown(int KeyCode)
 				if (arrow->y != arrow->startPositionY)
 					arrow->y = arrow->startPositionY;
 				else
-					arrow->y = arrow->startPositionY + 48;
+					arrow->y = arrow->startPositionY + DISTANCE_TWO_ARROW;
 			}
 			break;
 		}
@@ -32,7 +33,7 @@ void IntroMapKeyHandler::OnKeyDown(int KeyCode)
 				if (arrow->y != arrow->startPositionY)
 					arrow->y = arrow->startPositionY;
 				else
-					arrow->y = arrow->startPositionY + 48;
+					arrow->y = arrow->startPositionY + DISTANCE_TWO_ARROW;
 			}
 			break;
 		}

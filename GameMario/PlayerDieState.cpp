@@ -56,6 +56,7 @@ void PlayerDieState::Update(int dt)
 				mario->SetHeart(mario->GetHeart() - 1);
 			Mario::GetInstance()->SetUntouchable(false);
 			Mario::GetInstance()->SetIsGrowingUp(false);
+			Mario::GetInstance()->Reset();
 			Game::GetInstance()->SwitchScene(1);
 		}
 		else {
@@ -73,6 +74,7 @@ void PlayerDieState::Update(int dt)
 			mario->SetLevel(MARIO_LEVEL_SMALL);
 			Mario::GetInstance()->SetUntouchable(false);
 			Mario::GetInstance()->SetIsGrowingUp(false);
+			Mario::GetInstance()->Reset();
 			Game::GetInstance()->SwitchScene(1);
 		}
 	}

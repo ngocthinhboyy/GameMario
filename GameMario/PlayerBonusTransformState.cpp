@@ -128,6 +128,8 @@ PlayerState* PlayerBonusTransformState::GetInstance()
 		stateWhenGrowingUp = STATE_MARIO_SMALL;
 		Mario::GetInstance()->SetIsGrowingUp(true);
 	}
+	Mario::GetInstance()->SetIsRunning(false);
+	Mario::GetInstance()->SetIsFlying(false);
 	AnimationDatabase::GetInstance()->Get(animationID)->ResetAnimation();
 	SetAnimation();
 	startTransform = GetTickCount64();

@@ -1,6 +1,7 @@
 #include "EndTitle.h"
 #include "debug.h"
 #include "Textures.h"
+#include "BoardGameAndEndTitleDefine.h"
 
 void EndTitle::LoadEndTitleItem(LPCWSTR filePath)
 {
@@ -90,7 +91,7 @@ void EndTitle::ParsePositionInEndTitle(string line)
 	int type = atoi(tokens[0].c_str());
 	float x = atof(tokens[1].c_str());
 	float y = atof(tokens[2].c_str());
-	if (type == 1) {
+	if (type == ENDTITLE_TYPE_FONT) {
 		int idFont = atoi(tokens[3].c_str());
 		int lineNumber = atoi(tokens[4].c_str());
 		ComponentInEndTitle* componentEndTitle = new ComponentInEndTitle();
@@ -100,7 +101,7 @@ void EndTitle::ParsePositionInEndTitle(string line)
 		componentEndTitle->line = lineNumber;
 		endTitleFontComponents.push_back(componentEndTitle);
 	}
-	else if (type == 2) {
+	else if (type == ENDTITLE_TYPE_CARD) {
 		int lineNumberX = atoi(tokens[3].c_str());
 		endTitleCardComponent = new ComponentInEndTitle();
 		endTitleCardComponent->x = x;

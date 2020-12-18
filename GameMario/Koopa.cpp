@@ -42,9 +42,9 @@ Koopa::Koopa(float x, float y, float w, float h, int typeKoopa, int typeMove)
 	this->startPositionY = y;
 	this->startTypeMove = typeMove;
 	this->vx = -KOOPA_WALKING_SPEED_X;
-	if(typeMove == 1)
+	if(typeMove == KOOPA_TYPE_RED)
 		SetState(ENEMY_STATE_WALKING);
-	else if (typeMove == 2) {
+	else if (typeMove == KOOPA_TYPE_GREEN) {
 
 		SetState(ENEMY_STATE_WALKING_WITH_SWINGS);
 	}
@@ -75,7 +75,7 @@ void Koopa::Render()
 void Koopa::SetAnimation()
 {
 	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
-	if (type == 1) {
+	if (type == KOOPA_TYPE_RED) {
 		switch (state)
 		{
 		case ENEMY_STATE_WALKING:
@@ -102,7 +102,7 @@ void Koopa::SetAnimation()
 			break;
 		}
 	}
-	else if (type == 2) {
+	else if (type == KOOPA_TYPE_GREEN) {
 		switch (state)
 		{
 		case ENEMY_STATE_WALKING:
@@ -134,7 +134,7 @@ void Koopa::SetAnimation()
 void Koopa::Update(DWORD dt, int scaleTime)
 {
 	if (state == ENEMY_STATE_DIE && !isDiedByFireball) {
-		if (GetTickCount64() - timeDie >= 9000) {
+		if (GetTickCount64() - timeDie >= TIME_LIMIT_KOOPA_REVIVAL) {
 			this->vx = -KOOPA_WALKING_SPEED_X * Mario::GetInstance()->nx;
 			this->nx = -Mario::GetInstance()->nx;
 			this->isUpsideDown = false;
@@ -185,10 +185,8 @@ void Koopa::Update(DWORD dt, int scaleTime)
 	vector<LPGAMEOBJECT> coCollisionMapObjects = scene->collisionMapObjects;
 	vector<LPGAMEOBJECT> coObjs = scene->objects;
 	vector<LPGAMEOBJECT> coEnemies = scene->enemies;
-	//for (LPGAMEOBJECT x : scene->enemies) {
-	//	if (x->GetState() != ENEMY_STATE_DIE)
-	//		coEnemies.push_back(x);
-	//}
+
+
 	if (isHold)
 		CheckOverlapWithEnemy(coEnemies);
 
@@ -197,10 +195,6 @@ void Koopa::Update(DWORD dt, int scaleTime)
 
 	coEvents.clear();
 	if (stillAlive && !isDiedByFireball) {
-		/*if (state == ENEMY_STATE_SPIN_DIE_KICK || isHold)
-		{
-			CalcPotentialCollisions(&coEnemies, coEvents);
-		}*/
 		CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
 		CalcPotentialCollisions(&coObjs, coEvents);
 		CalcPotentialCollisions(&coEnemies, coEvents);
@@ -249,7 +243,7 @@ void Koopa::Update(DWORD dt, int scaleTime)
 							koopa->SetIsDiedByFireball();
 						}
 						else if (Goomba * goomba = dynamic_cast<Goomba*> (enemy)) {
-							if (goomba->GetType() == 2)
+							if (goomba->GetType() == GOOMBA_TYPE_BROWN)
 								goomba->SetState(ENEMY_STATE_WALKING);
 						}
 						else if (Flower * flower = dynamic_cast<Flower*> (enemy)) {
@@ -335,7 +329,7 @@ void Koopa::Update(DWORD dt, int scaleTime)
 								}
 							}
 							else if (questionBrick->GetType() == QUESTION_BRICK_TYPE_HAS_COIN) {
-								Coin* coin = new Coin(questionBrick->x + QUESTION_BRICK_BBOX_WIDTH / 2 - COIN_BBOX_WIDTH / 2, questionBrick->y - 3, COIN_BBOX_WIDTH, COIN_BBOX_HEIGHT,1);
+								Coin* coin = new Coin(questionBrick->x + QUESTION_BRICK_BBOX_WIDTH / 2 - COIN_BBOX_WIDTH / 2, questionBrick->y - 3, COIN_BBOX_WIDTH, COIN_BBOX_HEIGHT,COIN_TYPE_FROM_QUESTION_BRICK);
 								coin->vy = -COIN_SPEED_Y;
 								Grid::GetInstance()->DeterminedGridToObtainObject(coin);
 							}
@@ -381,16 +375,12 @@ void Koopa::Update(DWORD dt, int scaleTime)
 void Koopa::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 	if (state == ENEMY_STATE_DIE || state == ENEMY_STATE_SPIN_DIE_KICK) {
-		/*l = x - KOOPA_BBOX_WIDTH / 2;
-		t = y - KOOPA_DIE_BBOX_HEIGHT / 2;*/
 		l = x;
 		t = y;
 		r = l + KOOPA_BBOX_WIDTH + 10;
 		b = t + KOOPA_DIE_BBOX_HEIGHT;
 	}
 	else {
-		/*l = x - KOOPA_BBOX_WIDTH / 2;
-		t = y - KOOPA_BBOX_HEIGHT / 2;*/
 		l = x;
 		t = y;
 		r = l + KOOPA_BBOX_WIDTH;

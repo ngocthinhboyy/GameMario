@@ -38,11 +38,11 @@ void RandomGift::SetAnimation()
 			break;
 		}
 		case STATE_ALREADY_BONUS_GIFT:
-			if(itemCurrent == 0)
+			if(itemCurrent == ITEM_FIRE_FLOWER)
 				this->animation = animationDatabase->Get(ITEM_CURRENT_FIRE_FLOWER_ALREADY_BONUS_ANI);
-			else if(itemCurrent == 1)
+			else if(itemCurrent == ITEM_MUSHROOM)
 				this->animation = animationDatabase->Get(ITEM_CURRENT_MUSHROOM_ALREADY_BONUS_ANI);
-			else if(itemCurrent == 2)
+			else if(itemCurrent == ITEM_WHITE_STAR)
 				this->animation = animationDatabase->Get(ITEM_CURRENT_WHITE_STAR_ALREADY_BONUS_ANI);
 	}
 }
@@ -51,11 +51,11 @@ void RandomGift::Render()
 {
 	int alpha = 255;
 	D3DXVECTOR2 scale;
-	scale = D3DXVECTOR2(3,3);
+	scale = D3DXVECTOR2(RATIO_X_SCALE,RATIO_Y_SCALE);
 	//this->animation->Render(7971, 915, alpha, scale);
 	SetAnimation();
 	if (animation != NULL) {
-		AnimationDatabase::GetInstance()->Get(3601)->Render(startPositionX - 15, startPositionY - 15, alpha, scale);
+		AnimationDatabase::GetInstance()->Get(RANDOM_GIFT_ANI)->Render(startPositionX - 15, startPositionY - 15, alpha, scale);
 		animation->Render(x, y, alpha, scale);
 	}
 	//RenderBoundingBox();
@@ -65,26 +65,26 @@ void RandomGift::Update(DWORD dt, int scaleTime)
 {
 	DWORD now = GetTickCount64();
 	if (state != STATE_ALREADY_BONUS_GIFT) {
-		if (now - timeStartRandom >= 100) {
+		if (now - timeStartRandom >= TIME_CHANGE_RANDOM_GIFT) {
 			if (this->state == STATE_ITEM_CURRENT_FIRE_FLOWER) {
 				this->state = STATE_ITEM_CURRENT_MUSHROOM;
-				itemCurrent = 1;
+				itemCurrent = ITEM_MUSHROOM;
 				timeStartRandom = now;
 			}
 			else if (this->state == STATE_ITEM_CURRENT_MUSHROOM) {
 				this->state = STATE_ITEM_CURRENT_WHITE_STAR;
-				itemCurrent = 2;
+				itemCurrent = ITEM_WHITE_STAR;
 				timeStartRandom = now;
 			}
 			else if (this->state == STATE_ITEM_CURRENT_WHITE_STAR) {
 				this->state = STATE_ITEM_CURRENT_FIRE_FLOWER;
-				itemCurrent = 0;
+				itemCurrent = ITEM_FIRE_FLOWER;
 				timeStartRandom = now;
 			}
 		}
 	}
 	else {
-		vy = -0.2f;
+		vy = -RANDOM_GIFT_SPEED_Y;
 		GameObject::Update(dt,scaleTime);
 		x += dx;
 		y += dy;
@@ -92,18 +92,18 @@ void RandomGift::Update(DWORD dt, int scaleTime)
 		Camera::GetInstance()->GetCamPos(cx, cy);
 
 		if (y < cy) {
-			if (itemCurrent == 0)
+			if (itemCurrent == ITEM_FIRE_FLOWER)
 			{
-				EndTitle::GetInstance()->SetCard(3);
-				BoardGame::GetInstance()->SetIdCardForCardInBoard(3);
+				EndTitle::GetInstance()->SetCard(ID_CARD_FIRE_FLOWER);
+				BoardGame::GetInstance()->SetIdCardForCardInBoard(ID_CARD_FIRE_FLOWER);
 			}
-			else if (itemCurrent == 1) {
-				EndTitle::GetInstance()->SetCard(2);
-				BoardGame::GetInstance()->SetIdCardForCardInBoard(2);
+			else if (itemCurrent == ITEM_MUSHROOM) {
+				EndTitle::GetInstance()->SetCard(ID_CARD_MUSHROOM);
+				BoardGame::GetInstance()->SetIdCardForCardInBoard(ID_CARD_MUSHROOM);
 			}
-			else if (itemCurrent == 2) {
-				EndTitle::GetInstance()->SetCard(4);
-				BoardGame::GetInstance()->SetIdCardForCardInBoard(4);
+			else if (itemCurrent == ITEM_WHITE_STAR) {
+				EndTitle::GetInstance()->SetCard(ID_CARD_WHITE_STAR);
+				BoardGame::GetInstance()->SetIdCardForCardInBoard(ID_CARD_WHITE_STAR);
 			}
 			PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 			scene->SetIsEndScene(true);

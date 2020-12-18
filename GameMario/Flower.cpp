@@ -268,7 +268,7 @@ void Flower::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 		}
 	}
 	else {
-		if (collisionEvent->nx != 0) {
+		if (collisionEvent->ny != 0) {
 			Mario::GetInstance()->y += Mario::GetInstance()->dy;
 		}
 	}

@@ -209,6 +209,8 @@ void Mario::Update(DWORD dt, int scaleTime)
 				else
 				{
 					y -= 2;
+					if (e->ny > 0)
+						y -= dy;
 					if (isHolding) {
 						vector<LPGAMEOBJECT> enemies = scene->enemies;
 						for (auto enemy : enemies) {
@@ -246,13 +248,6 @@ void Mario::Update(DWORD dt, int scaleTime)
 			else if (RandomGift* randomGift = dynamic_cast<RandomGift*> (e->obj)) {
 				randomGift->CollisionWithPlayer(e);
 			}
-			/*else {
-				if (e->nx != 0) vx = 0;
-				if (e->ny != 0) {
-					vy = 0;
-					isOnGround = true;
-				}
-			}*/
 		}
 	}
 	// clean up collision events
@@ -271,7 +266,6 @@ void Mario::Update(DWORD dt, int scaleTime)
 	}
 	float camx, camy;
 	Camera::GetInstance()->GetCamPos(camx, camy);
-	//DebugOut(L"TTTTT %d\n", Game::GetInstance()->GetScreenHeight());
 	if (y > camy + 580) {
 		level = MARIO_LEVEL_BIG;
 		ChangeState(PlayerDieState::GetInstance());
@@ -411,16 +405,16 @@ void Mario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 			left = x;
 			top = y;
 			if (PlayerBonusTransformState::stateWhenGrowingUp == STATE_MARIO_SMALL) {
-				right = left + 36;
-				bottom = top + 45;
+				right = left + WIDTH_STATE_MARIO_SMALL_GROW_UP;
+				bottom = top + HEIGHT_STATE_MARIO_SMALL_GROW_UP;
 			}
 			else if (PlayerBonusTransformState::stateWhenGrowingUp == STATE_MARIO_MIDDLE) {
-				right = left + 42;
-				bottom = top + 57;
+				right = left + WIDTH_STATE_MARIO_MIDDLE_GROW_UP;
+				bottom = top + HEIGHT_STATE_MARIO_MIDDLE_GROW_UP;
 			}
 			else if (PlayerBonusTransformState::stateWhenGrowingUp == STATE_MARIO_BIG) {
-				right = left + 42;
-				bottom = top + 81;
+				right = left + WIDTH_STATE_MARIO_BIG_GROW_UP;
+				bottom = top + HEIGHT_STATE_MARIO_BIG_GROW_UP;
 			}
 		}
 		else {

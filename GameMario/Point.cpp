@@ -1,6 +1,7 @@
 #include "Point.h"
 #include "AnimationDatabase.h"
 #include "debug.h"
+#include "StaticObjectDefine.h"
 
 Point::Point(float x, float y, float w, float h, int typePoint)
 {
@@ -32,15 +33,15 @@ void Point::Update(DWORD dt, int scaleTime)
 void Point::Render()
 {
 	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
-	D3DXVECTOR2 scale = D3DXVECTOR2(3, 3);
+	D3DXVECTOR2 scale = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_SCALE);
 	LPANIMATION animation = NULL;
-	if(typePoint == 100)
-		animation = animationDatabase->Get(2501);
-	else if (typePoint == 1000) {
-		animation = animationDatabase->Get(4401);
+	if(typePoint == POINT_TYPE_100)
+		animation = animationDatabase->Get(POINT_100_ANI);
+	else if (typePoint == POINT_TYPE_1000) {
+		animation = animationDatabase->Get(POINT_1000_ANI);
 	}
-	else if (typePoint == 1) {
-		animation = animationDatabase->Get(4402);
+	else if (typePoint == POINT_TYPE_1UP) {
+		animation = animationDatabase->Get(POINT_1UP_ANI);
 	}
 	animation->Render(x, y, 255, scale);
 }
@@ -49,6 +50,6 @@ void Point::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	left = x;
 	top = y;
-	right = left + 39;
-	bottom = top + 30;
+	right = left + WIDTH_POINT;
+	bottom = top + HEIGHT_POINT;
 }

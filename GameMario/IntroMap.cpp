@@ -7,6 +7,7 @@
 #include "AnimationManager.h"
 #include "ThreeObject.h"
 #include "Arrow.h"
+#include "IntroMapDefine.h"
 
 void IntroMap::_ParseSection_OBJECTS(string line)
 {
@@ -64,13 +65,13 @@ void IntroMap::ReadLineObject(string line)
 	ani_set = animation_sets->Get(ani_set_id);
 	switch (object_type)
 	{
-	case 15: {
+	case INTROMAP_OBJECT_TYPE_THREEOBJECT: {
 		obj = new ThreeObject(x, y, w, h);
 		obj->SetAnimationSet(ani_set);
 		objects.push_back(obj);
 		break;
 	}
-	case 16: {
+	case INTROMAP_OBJECT_TYPE_ARROW: {
 		obj = new Arrow(x, y, w, h);
 		obj->SetAnimationSet(ani_set);
 		objects.push_back(obj);

@@ -39,3 +39,26 @@
 #define ITEM_CURRENT_FIRE_FLOWER_ALREADY_BONUS_ANI		3501
 #define ITEM_CURRENT_MUSHROOM_ALREADY_BONUS_ANI			3301
 #define ITEM_CURRENT_WHITE_STAR_ALREADY_BONUS_ANI		3401
+
+
+#define TIME_COIN_DIE									7500
+
+#define COIN_TYPE_FROM_QUESTION_BRICK					1
+#define COIN_TYPE_STATIC								2
+#define COIN_TYPE_FROM_ESPECIAL_BRICK					3
+
+#define MUSHROOM_TYPE_RED								1
+#define MUSHROOM_TYPE_GREEN								2
+
+#define LEAF_SPEED_X									0.14f
+
+#define ITEM_FIRE_FLOWER								0
+#define ITEM_MUSHROOM									1
+#define ITEM_WHITE_STAR									2
+#define RANDOM_GIFT_ANI									3601
+#define TIME_CHANGE_RANDOM_GIFT							100
+#define RANDOM_GIFT_SPEED_Y								0.2f
+
+#define ID_CARD_FIRE_FLOWER								3
+#define ID_CARD_MUSHROOM								2
+#define ID_CARD_WHITE_STAR								4

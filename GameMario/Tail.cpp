@@ -96,7 +96,7 @@ void Tail::CheckOverlapBoundingBox(vector<LPGAMEOBJECT> objects)
 							koopa->vy = -ENEMY_DIE_SPEED_Y - 0.2f;
 						}
 						else if (Goomba * goomba = dynamic_cast<Goomba*> (enemy)) {
-							if (goomba->GetType() == 2)
+							if (goomba->GetType() == GOOMBA_TYPE_BROWN)
 								goomba->SetState(ENEMY_STATE_WALKING);
 							goomba->noCollisionConsideration = true;
 						}

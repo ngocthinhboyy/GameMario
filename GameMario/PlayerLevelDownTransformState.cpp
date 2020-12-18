@@ -126,6 +126,8 @@ PlayerState* PlayerLevelDownTransformState::GetInstance()
 		stateWhenGrowingUp = STATE_MARIO_BIG;
 		Mario::GetInstance()->SetIsGrowingUp(true);
 	}
+	Mario::GetInstance()->SetIsRunning(false);
+	Mario::GetInstance()->SetIsFlying(false);
 	AnimationDatabase::GetInstance()->Get(animationID)->ResetAnimation();
 	startTransform = GetTickCount64();
 	timeStartTransform = GetTickCount64();

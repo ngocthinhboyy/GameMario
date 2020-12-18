@@ -25,11 +25,16 @@ class BoardGame
 	vector<LPSPRITE> cards;
 	vector<ComponentPositionInBoard*> componentPositionInBoards;
 	vector<LPCOMPONENTFONT> componentTimeUp;
-	ComponentPositionInBoard* componentCardInBoards;
+	vector <ComponentPositionInBoard*> componentCardInBoard;
 	Panel panelBoardGame;
 	DWORD timeRenderWhite = 0;
 	bool renderWhiteP = true;
 	bool firstTimeTurnOnMaxSpeed = false;
+
+	int idCardRenderFirstTime = 0;
+	bool firstTimeRenderCard = false;
+	DWORD timeRenderCard = 0;
+	bool renderCardInWhenFirstTime = true;
 public:
 	void LoadBoardGameItems(LPCWSTR filePath);
 	void LoadPositionInBoardGame(LPCWSTR filePath);
@@ -38,6 +43,8 @@ public:
 	void ParseFontBoardGame(string line);
 	void ParsePositionInBoardGame(string line);
 
+	void SetFirstTimeRenderCard(bool firstTimeRenderCard) { this->firstTimeRenderCard = firstTimeRenderCard; };
+
 	LPSPRITE GetFontById(int id);
 
 	void UpdateBoardGame();
@@ -45,7 +52,7 @@ public:
 
 	void RenderTimeUp();
 
-	void SetIdCardForCardInBoard(int idCard) { componentCardInBoards->idFontRender = idCard; };
+	void SetIdCardForCardInBoard(int idCard);
 
 	void SetWorldInBoardGame(int world);
 	void SetSpeedInBoardGame(float speed);

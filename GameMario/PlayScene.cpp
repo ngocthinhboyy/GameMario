@@ -243,8 +243,15 @@ void PlayScene::Update(DWORD dt)
 		if (remainingTime <= 0) {
 			remainingTime = 0;
 			isTimeUp = true;
-			Mario::GetInstance()->SetLevel(MARIO_LEVEL_SMALL);
-			player->ChangeState(PlayerDieState::GetInstance());
+			if (!isEndScene) {
+				Mario::GetInstance()->SetLevel(MARIO_LEVEL_SMALL);
+				player->ChangeState(PlayerDieState::GetInstance());
+			}
+			else {
+				Mario::GetInstance()->Reset();
+				BoardGame::GetInstance()->SetFirstTimeRenderCard(false);
+				Game::GetInstance()->SwitchScene(1);
+			}
 			return;
 		}
 	}

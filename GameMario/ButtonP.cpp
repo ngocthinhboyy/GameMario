@@ -6,6 +6,7 @@
 #include "Grid.h"
 #include "Coin.h"
 #include "debug.h"
+#include "ItemDefine.h"
 
 ButtonP::ButtonP(float x, float y, float w, float h)
 {
@@ -36,7 +37,7 @@ void ButtonP::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 				for (auto x : scene->objects) {
 					if (EspecialBrick* especialBrick = dynamic_cast<EspecialBrick*> (x)) {
 						if (especialBrick->GetType() == 1) {
-							Grid::GetInstance()->DeterminedGridToObtainObject(new Coin(especialBrick->x, especialBrick->y, 48, 48, 3));
+							Grid::GetInstance()->DeterminedGridToObtainObject(new Coin(especialBrick->x, especialBrick->y, 48, 48, COIN_TYPE_FROM_ESPECIAL_BRICK));
 							x->stillAlive = false;
 						}
 					}

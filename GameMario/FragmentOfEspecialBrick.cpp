@@ -28,7 +28,7 @@ void FragmentOfEspecialBrick::Render()
 
 void FragmentOfEspecialBrick::Update(DWORD dt, int scaleTime)
 {
-	if (GetTickCount64() - timeStart >= 5000) {
+	if (GetTickCount64() - timeStart >= TIME_LIMIT_FRAGMENT_DISAPEAR) {
 		stillAlive = false;
 		return;
 	}

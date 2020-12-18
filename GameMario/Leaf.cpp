@@ -56,14 +56,14 @@ void Leaf::Update(DWORD dt, int scaleTime)
 			vy = ITEM_GRAVITY * dt * 2.5;
 		}
 		if (isCapVDau) {
-			vx = 0.14f;
+			vx = LEAF_SPEED_X;
 			isCapVDau = false;
 		}
 		if (x >= startPositionX + 50) {
-			vx = -0.14f;
+			vx = -LEAF_SPEED_X;
 		}
 		else if (x <= startPositionX - 50) {
-			vx = 0.14f;
+			vx = LEAF_SPEED_X;
 		}
 	}
 	GameObject::Update(dt, scaleTime);
@@ -84,10 +84,10 @@ void Leaf::Update(DWORD dt, int scaleTime)
 	{
 		x += dx;
 		y += dy;
-		if (x >= startPositionX + 48) {
+		if (x >= startPositionX + LEAF_BBOX_WIDTH) {
 			nx = -1;
 		}
-		else if (x <= startPositionX - 48) {
+		else if (x <= startPositionX - LEAF_BBOX_WIDTH) {
 			nx = 1;
 		}
 		Camera* cam = Camera::GetInstance();

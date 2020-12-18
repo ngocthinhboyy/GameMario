@@ -25,10 +25,10 @@ Mushroom::Mushroom(float x, float y, float w, float h, int typeMushroom)
 void Mushroom::SetAnimation()
 {
 	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
-	if (typeMushroom == 1) {
+	if (typeMushroom == MUSHROOM_TYPE_RED) {
 		this->animation = animationDatabase->Get(MUSHROOM_RED_ANI);
 	}
-	else if (typeMushroom == 2) {
+	else if (typeMushroom == MUSHROOM_TYPE_GREEN) {
 		this->animation = animationDatabase->Get(MUSHROOM_GREEN_ANI);
 	}
 }
@@ -116,14 +116,14 @@ void Mushroom::Update(DWORD dt, int scaleTime)
 				mario->vx = 0;
 				mario->vy = 0;
 				mario->y -= 2;
-				if (typeMushroom == 1) {
+				if (typeMushroom == MUSHROOM_TYPE_RED) {
 					mario->ChangeState(PlayerBonusTransformState::GetInstance());
 					point = new Point(x, y, 45, 24, 1000);
 					mario->SetPoint(mario->GetPoint() + MARIO_BONUS_POINT_LEAF);
 					PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 					scene->StopGame(1000);
 				}
-				else if (typeMushroom == 2) {
+				else if (typeMushroom == MUSHROOM_TYPE_GREEN) {
 					point = new Point(x, y, 45, 24, 1);
 					mario->SetPoint(mario->GetPoint() + 100);
 				}
@@ -158,14 +158,14 @@ void Mushroom::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 	mario->vx = 0;
 	mario->vy = 0;
 	mario->y -= 2;
-	if (typeMushroom == 1) {
+	if (typeMushroom == MUSHROOM_TYPE_RED) {
 		mario->ChangeState(PlayerBonusTransformState::GetInstance());
 		point = new Point(x, y, 45, 24, 1000);
 		mario->SetPoint(mario->GetPoint() + MARIO_BONUS_POINT_LEAF);
 		PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 		scene->StopGame(1000);
 	}
-	else if (typeMushroom == 2) {
+	else if (typeMushroom == MUSHROOM_TYPE_GREEN) {
 		point = new Point(x, y, 45, 24, 1);
 		mario->SetPoint(mario->GetPoint() + 100);
 		mario->SetHeart(mario->GetHeart() + 1);

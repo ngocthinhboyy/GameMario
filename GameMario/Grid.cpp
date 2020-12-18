@@ -48,7 +48,6 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 	case OBJECT_TYPE_GOOMBA: {
 		int typeGoomba = atoi(tokens[10].c_str());
 		obj = new Goomba(x, y, w, h, typeGoomba);
-		//obj->gameObjectID = id;
 		obj->SetPosition(x, y);
 
 		ani_set = animation_sets->Get(ani_set_id);
@@ -60,7 +59,6 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 	case OBJECT_TYPE_QUESTION_BRICK: {
 		int type = atoi(tokens[10].c_str());
 		obj = new QuestionBrick(x, y, w, h, type);
-		//obj->gameObjectID = id;
 		obj->SetPosition(x, y);
 		ani_set = animation_sets->Get(ani_set_id);
 
@@ -72,7 +70,6 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 		int typeKoopa = atoi(tokens[10].c_str());
 		int typeMove = atoi(tokens[11].c_str());
 		obj = new Koopa(x, y, w, h, typeKoopa,typeMove);
-		//obj->gameObjectID = id;
 		obj->SetPosition(x, y);
 
 		ani_set = animation_sets->Get(ani_set_id);
@@ -84,7 +81,6 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 	case OBJECT_TYPE_FLOWER: {
 		int type = atoi(tokens[10].c_str());
 		obj = new Flower(x, y, w, h, type);
-		//obj->gameObjectID = id;
 		obj->SetPosition(x, y);
 		ani_set = animation_sets->Get(ani_set_id);
 

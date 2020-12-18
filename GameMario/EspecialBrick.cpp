@@ -26,7 +26,7 @@ void EspecialBrick::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 		if (collisionEvent->ny > 0)
 		{
 			mario->SetIsOnGround(false);
-			if (type == 1) {
+			if (type == ESPECIAL_BRICK_TYPE_HAS_EMPTY) {
 				stillAlive = false;
 				FragmentOfEspecialBrick* fragment1 = new FragmentOfEspecialBrick(x, y, 39, 39, -0.15, -1.1);
 				FragmentOfEspecialBrick* fragment2 = new FragmentOfEspecialBrick(x, y, 39, 39, 0.15, -1.1);
@@ -37,17 +37,17 @@ void EspecialBrick::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 				Grid::GetInstance()->DeterminedGridToObtainObject(fragment3);
 				Grid::GetInstance()->DeterminedGridToObtainObject(fragment4);
 			}
-			else if (type == 2) {
+			else if (type == ESPECIAL_BRICK_TYPE_HAS_BUTTON_P) {
 				if (!isEmptyBrick) {
 					isEmptyBrick = true;
-					ButtonP* buttonP = new ButtonP(x, y, 48, 48);
+					ButtonP* buttonP = new ButtonP(x, y, w, h);
 					Grid::GetInstance()->DeterminedGridToObtainObject(buttonP);
 				}
 			}
-			else if (type == 3) {
+			else if (type == ESPECIAL_BRICK_TYPE_HAS_1UP) {
 				if (!isEmptyBrick) {
 					isEmptyBrick = true;
-					Mushroom* mushroom = new Mushroom(x, y, MUSHROOM_BBOX_WIDTH, MUSHROOM_BBOX_HEIGHT, 2);
+					Mushroom* mushroom = new Mushroom(x, y, MUSHROOM_BBOX_WIDTH, MUSHROOM_BBOX_HEIGHT, MUSHROOM_TYPE_GREEN);
 					mushroom->vy = -MUSHROOM_SPEED_Y_APPEAR;
 					Grid::GetInstance()->DeterminedGridToObtainObject(mushroom);
 				}
@@ -66,7 +66,7 @@ void EspecialBrick::Render()
 	D3DXVECTOR2 scale;
 	scale = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_SCALE);
 	animation = AnimationDatabase::GetInstance()->Get(ESPECIAL_BRICK_ANI);
-	if ((type == 2 || type == 3) && isEmptyBrick) {
+	if ((type == ESPECIAL_BRICK_TYPE_HAS_BUTTON_P || type == ESPECIAL_BRICK_TYPE_HAS_1UP) && isEmptyBrick) {
 		animation = AnimationDatabase::GetInstance()->Get(QUESTION_BRICK_DIE_ANI);
 	}
 	if (animation != NULL) {

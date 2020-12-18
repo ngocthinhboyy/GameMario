@@ -91,6 +91,12 @@
     <Filter Include="game\Object\IntroObject">
       <UniqueIdentifier>{77a4a7ad-c16c-4d0e-a0ef-7a03d5fab8ad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Game_Scene\WorldMapScene">
+      <UniqueIdentifier>{3a34cef0-6b80-4cbd-a1ac-84d5dead7de9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Game_Scene\IntroScene">
+      <UniqueIdentifier>{494e1aab-8c1f-4458-a491-2542f3bdfea6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sprite.cpp">
@@ -279,9 +285,6 @@
     <ClCompile Include="PlayerDieState.cpp">
       <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClCompile>
-    <ClCompile Include="WorldMap.cpp">
-      <Filter>Framework\Game_Scene\PlayScene</Filter>
-    </ClCompile>
     <ClCompile Include="WorldMapObject.cpp">
       <Filter>game\Object\WorldMapObject</Filter>
     </ClCompile>
@@ -291,17 +294,20 @@
     <ClCompile Include="PlayerInWorldMapState.cpp">
       <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClCompile>
-    <ClCompile Include="IntroMap.cpp">
-      <Filter>Framework\Game_Scene\PlayScene</Filter>
-    </ClCompile>
-    <ClCompile Include="IntroMapKeyHandler.cpp">
-      <Filter>Framework\Game_Scene\PlayScene</Filter>
-    </ClCompile>
     <ClCompile Include="ThreeObject.cpp">
       <Filter>game\Object\IntroObject</Filter>
     </ClCompile>
     <ClCompile Include="Arrow.cpp">
       <Filter>game\Object\IntroObject</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldMap.cpp">
+      <Filter>Framework\Game_Scene\WorldMapScene</Filter>
+    </ClCompile>
+    <ClCompile Include="IntroMap.cpp">
+      <Filter>Framework\Game_Scene\IntroScene</Filter>
+    </ClCompile>
+    <ClCompile Include="IntroMapKeyHandler.cpp">
+      <Filter>Framework\Game_Scene\IntroScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -467,9 +473,6 @@
     <ClInclude Include="BoardGame.h">
       <Filter>Framework\BoardGame</Filter>
     </ClInclude>
-    <ClInclude Include="BoardGameDefine.h">
-      <Filter>game\Define</Filter>
-    </ClInclude>
     <ClInclude Include="game.h">
       <Filter>game</Filter>
     </ClInclude>
@@ -518,9 +521,6 @@
     <ClInclude Include="PlayerDieState.h">
       <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClInclude>
-    <ClInclude Include="WorldMap.h">
-      <Filter>Framework\Game_Scene\PlayScene</Filter>
-    </ClInclude>
     <ClInclude Include="WorldMapObject.h">
       <Filter>game\Object\WorldMapObject</Filter>
     </ClInclude>
@@ -533,17 +533,26 @@
     <ClInclude Include="PlayerInWorldMapState.h">
       <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClInclude>
-    <ClInclude Include="IntroMap.h">
-      <Filter>Framework\Game_Scene\PlayScene</Filter>
-    </ClInclude>
-    <ClInclude Include="IntroMapKeyHandler.h">
-      <Filter>Framework\Game_Scene\PlayScene</Filter>
-    </ClInclude>
     <ClInclude Include="ThreeObject.h">
       <Filter>game\Object\IntroObject</Filter>
     </ClInclude>
     <ClInclude Include="Arrow.h">
       <Filter>game\Object\IntroObject</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldMap.h">
+      <Filter>Framework\Game_Scene\WorldMapScene</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroMap.h">
+      <Filter>Framework\Game_Scene\IntroScene</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroMapKeyHandler.h">
+      <Filter>Framework\Game_Scene\IntroScene</Filter>
+    </ClInclude>
+    <ClInclude Include="BoardGameAndEndTitleDefine.h">
+      <Filter>game\Define</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroMapDefine.h">
+      <Filter>game\Define</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
