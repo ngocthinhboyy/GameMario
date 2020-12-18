@@ -176,7 +176,7 @@ void Goomba::Update(DWORD dt, int scaleTime)
 				isUpsideDown = true;
 				tail->SetHasEffect(true);
 				tail->noCollisionConsideration = true;
-				if (type == 2)
+				if (type == GOOMBA_TYPE_RED)
 					state = ENEMY_STATE_WALKING;
 				if (x < Mario::GetInstance()->x) {
 					vx = -ENEMY_DIE_SPEED_X;

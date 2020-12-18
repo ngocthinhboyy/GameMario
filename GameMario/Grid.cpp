@@ -158,10 +158,7 @@ void Grid::GetListObjectInCamera()
 
 	int left = (int)((cam_x) / CELL_WIDTH);
 	int right = (int)((cam_x + 745) / CELL_WIDTH);
-	/*DebugOut(L"TOPPP %d\n", top);
-	DebugOut(L"BOTTOMMM %d\n", bottom);
-	DebugOut(L"LEFFFTTT %d\n", left);
-	DebugOut(L"RIGHTTTT %d\n", right);*/
+
 	if (left < 3) {
 		left = 3;
 	}
@@ -214,8 +211,6 @@ void Grid::GetListObjectInCamera()
 	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 	scene->enemies = enemies;
 	scene->objects = objects;
-//	DebugOut(L"SIZEEEEEEEE %d\n", objects.size());
-	//DebugOut(L"OBJECT %d\n", objects.size());
 	
 }
 
@@ -311,9 +306,7 @@ void Grid::ClearGrid()
 	for (int i = 0; i < MAX_ROW; i++)
 		for (int j = 0; j < MAX_COLUMN; j++) {
 			for (int k = 0; k < cells[i][j].size(); k++) {
-				//cells[i][j].erase(cells[i][j].begin() + k);
 				cells[i][j].clear();
-			//delete cells[i][j].at(k);
 		}
 	}
 }
