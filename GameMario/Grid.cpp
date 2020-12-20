@@ -153,11 +153,16 @@ void Grid::GetListObjectInCamera()
 	float cam_x, cam_y;
 	Camera* camera = Camera::GetInstance();
 	camera->GetCamPos(cam_x, cam_y);
+
+	int screenHeight = Game::GetInstance()->GetScreenHeight();
+	int screenWidth = Game::GetInstance()->GetScreenWidth();
+
+
 	int top = (int)((cam_y) / CELL_HEIGHT);
-	int bottom = (int)((cam_y + 692) / CELL_HEIGHT);
+	int bottom = (int)((cam_y + screenHeight) / CELL_HEIGHT);
 
 	int left = (int)((cam_x) / CELL_WIDTH);
-	int right = (int)((cam_x + 745) / CELL_WIDTH);
+	int right = (int)((cam_x + screenWidth) / CELL_WIDTH);
 
 	if (left < 3) {
 		left = 3;
@@ -172,7 +177,7 @@ void Grid::GetListObjectInCamera()
 	for (int i = top; i <= bottom + 1; i++)
 		for (int j = left - 3 ; j <= right + 3; j++) {
 			for (int k = 0; k < cells[i][j].size(); k++) {
-				if ((cells[i][j].at(k)->x + cells[i][j].at(k)->w >= cam_x && cells[i][j].at(k)->x <= cam_x + 745) || cells[i][j].at(k)->GetIsAlreadyAppeared()) {
+				if ((cells[i][j].at(k)->x + cells[i][j].at(k)->w >= cam_x && cells[i][j].at(k)->x <= cam_x + screenWidth) || cells[i][j].at(k)->GetIsAlreadyAppeared()) {
 					if (cells[i][j].at(k)->stillAlive) {
 						cells[i][j].at(k)->SetIsAlreadyAppeared(true);
 						if (LPENEMY enemy = dynamic_cast<LPENEMY> (cells[i][j].at(k))) {
@@ -238,11 +243,14 @@ void Grid::SetNewGrid(LPGAMEOBJECT object)
 	Camera* camera = Camera::GetInstance();
 	camera->GetCamPos(cam_x, cam_y);
 
+	int screenHeight = Game::GetInstance()->GetScreenHeight();
+	int screenWidth = Game::GetInstance()->GetScreenWidth();
+
 	int topFocusCam = (int)((cam_y) / CELL_HEIGHT);
-	int bottomFocusCam = (int)((cam_y + 692) / CELL_HEIGHT);
+	int bottomFocusCam = (int)((cam_y + screenHeight) / CELL_HEIGHT);
 
 	int leftFocusCam = (int)((cam_x) / CELL_WIDTH);
-	int rightFocusCam = (int)((cam_x + 745) / CELL_WIDTH);
+	int rightFocusCam = (int)((cam_x + screenWidth) / CELL_WIDTH);
 	if (leftFocusCam > 1)
 		leftFocusCam = leftFocusCam - 2;
 	else if (leftFocusCam > 0)
@@ -288,10 +296,11 @@ void Grid::SetStartPosition()
 	Camera* camera = Camera::GetInstance();
 	camera->GetCamPos(cam_x, cam_y);
 
+	int screenWidth = Game::GetInstance()->GetScreenWidth();
 
 	for (int i = 0; i < objectsWaitingToSetStartPosition.size(); i++) {
 		LPGAMEOBJECT object = objectsWaitingToSetStartPosition.at(i);
-		if (object->x + object->w < cam_x || object->x > cam_x + 745) {
+		if (object->x + object->w < cam_x || object->x > cam_x + screenWidth) {
 			DeterminedGridToObtainObject(object);
 			objectsWaitingToSetStartPosition.erase(objectsWaitingToSetStartPosition.begin() + i);
 		}
