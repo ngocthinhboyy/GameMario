@@ -204,7 +204,12 @@ void Mario::Update(DWORD dt, int scaleTime)
 					if (e->nx != 0)
 						x += dx;
 					if (e->ny != 0)
-						y += dy;
+					{
+						if (e->ny > 0)
+							y -= dy;
+						if (e->ny < 0)
+							y += dy;
+					}
 				}
 				else
 				{
