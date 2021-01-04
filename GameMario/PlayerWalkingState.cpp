@@ -11,6 +11,7 @@
 #include "PlayerCrouchingState.h"
 #include "PlayerSkiddingState.h"
 #include "PlayerFallingSlowlyState.h"
+#include "Camera.h"
 
 
 PlayerState* PlayerWalkingState::__instance = NULL;

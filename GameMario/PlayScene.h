@@ -27,6 +27,7 @@ protected:
 	bool isStopGame = false;
 	bool isEndScene = false;
 	bool isTimeUp = false;
+	bool isAutoMovingCamera = true;
 
 public:
 	vector<LPGAMEOBJECT> objects;
@@ -42,6 +43,8 @@ public:
 
 	void SetIsEndScene(bool isEndScene) { this->isEndScene = isEndScene; };
 	bool GetIsEndScene() { return this->isEndScene; };
+	bool GetIsAutoMovingCamera() { return this->isAutoMovingCamera; };
+	void SetIsAutoMovingCamera(bool isAutoMovingCamera) { this->isAutoMovingCamera = isAutoMovingCamera; };
 	virtual void Load();
 	virtual void Update(DWORD dt);
 	virtual void Render();

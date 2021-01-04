@@ -66,14 +66,7 @@ void PlayerStandingState::SetAnimation()
 }
 void PlayerStandingState::Update(int dt)
 {
-	/*Mario* mario = Mario::GetInstance();
-	if (mario->vy > 0) {
-		if (mario->GetLevel() == MARIO_LEVEL_RACCOON) {
-			mario->ChangeState(PlayerFallingSlowlyState::GetInstance());
-			return;
-		}
-		mario->ChangeState(PlayerFallingState::GetInstance());
-	}*/
+	Mario* mario = Mario::GetInstance();
 }
 void PlayerStandingState::OnKeyDown(int KeyCode) {
 	Mario* mario = Mario::GetInstance();

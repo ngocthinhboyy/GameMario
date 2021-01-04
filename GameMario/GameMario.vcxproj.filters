@@ -312,6 +312,9 @@
     <ClCompile Include="MovingBrick.cpp">
       <Filter>game\Object\DynamicObject</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerGoingByCameraState.cpp">
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -559,6 +562,9 @@
     </ClInclude>
     <ClInclude Include="MovingBrick.h">
       <Filter>game\Object\DynamicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerGoingByCameraState.h">
+      <Filter>game\Object\Player\PlayerState\ActivityState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

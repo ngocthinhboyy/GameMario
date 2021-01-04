@@ -59,6 +59,7 @@
     <ClCompile Include="PlayerFallingState.cpp" />
     <ClCompile Include="PlayerFlyingState.cpp" />
     <ClCompile Include="PlayerGoingAutoState.cpp" />
+    <ClCompile Include="PlayerGoingByCameraState.cpp" />
     <ClCompile Include="PlayerHighJumpingState.cpp" />
     <ClCompile Include="PlayerHoldingState.cpp" />
     <ClCompile Include="PlayerInWorldMapState.cpp" />
@@ -140,6 +141,7 @@
     <ClInclude Include="PlayerFallingState.h" />
     <ClInclude Include="PlayerFlyingState.h" />
     <ClInclude Include="PlayerGoingAutoState.h" />
+    <ClInclude Include="PlayerGoingByCameraState.h" />
     <ClInclude Include="PlayerHighJumpingState.h" />
     <ClInclude Include="PlayerHoldingState.h" />
     <ClInclude Include="PlayerInWorldMapState.h" />

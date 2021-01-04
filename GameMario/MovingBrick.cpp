@@ -28,7 +28,6 @@ void MovingBrick::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 		else if (collisionEvent->ny < 0) {
 			isStanded = true;
 			vx = 0;
-			Mario::GetInstance()->SetIsStandingOnMovingBrick(true);
 			Mario::GetInstance()->SetIsOnGround(true);
 		}
 		Mario::GetInstance()->vy = 0;

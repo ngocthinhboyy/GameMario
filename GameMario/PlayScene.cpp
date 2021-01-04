@@ -285,7 +285,7 @@ void PlayScene::Update(DWORD dt)
 
 
 	float cx, cy;
-	Camera::GetInstance()->UpdateCamPos();
+	Camera::GetInstance()->UpdateCamPos(dt);
 	Camera::GetInstance()->GetCamPos(cx, cy);
 	Camera::GetInstance()->SetCamPos(cx, cy);
 }

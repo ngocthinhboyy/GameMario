@@ -5,6 +5,7 @@
 #include "PlayerCrouchingState.h"
 #include "debug.h"
 #include "PlayerRunningState.h"
+#include "Camera.h"
 
 PlayerState* PlayerFallingSlowlyState::__instance = NULL;
 PlayerFallingSlowlyState::PlayerFallingSlowlyState()
@@ -32,6 +33,12 @@ void PlayerFallingSlowlyState::SetAnimation()
 void PlayerFallingSlowlyState::Update(int dt)
 {
 	Mario* mario = Mario::GetInstance();
+	//float cam_x, cam_y;
+	//Camera::GetInstance()->GetCamPos(cam_x, cam_y);
+	//if (mario->x <= cam_x) {
+	//	mario->vx = 0;
+	//	mario->ChangeState(PlayerStandingState::GetInstance());
+	//}
 	if (mario->vy == 0 && mario->GetIsOnGround()) {
 		timePress = 0;
 		if (mario->GetIsCrouChing()) {

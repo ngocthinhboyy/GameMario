@@ -33,6 +33,8 @@
 #include "WorldMap.h"
 #include "EnemyDefine.h"
 #include "MovingBrick.h"
+#include "PlayerGoingAutoState.h"
+#include "PlayerGoingByCameraState.h"
 
 Mario* Mario::Mario::__instance = NULL;
 Mario* Mario::GetInstance() {
@@ -283,6 +285,10 @@ void Mario::Update(DWORD dt, int scaleTime)
 	}
 	float camx, camy;
 	Camera::GetInstance()->GetCamPos(camx, camy);
+	if (x < camx && !isGoingByCamera) {
+		isGoingByCamera = true;
+		ChangeState(PlayerGoingByCameraState::GetInstance());
+	}
 	if (y > camy + 580) {
 		level = MARIO_LEVEL_BIG;
 		ChangeState(PlayerDieState::GetInstance());

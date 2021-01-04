@@ -7,8 +7,8 @@
 #include "debug.h"
 class Camera
 {
-	float cam_x;
-	float cam_y;
+	float cam_x = .0f;
+	float cam_y = .0f;
 	static Camera* __instance;
 	bool canChangeCamY = false;
 public:
@@ -16,7 +16,7 @@ public:
 	void SetLockCamY(bool canChange) { this->canChangeCamY = canChange; };
 	void SetCamPos(float x, float y);
 	void GetCamPos(float& x, float& y);
-	void UpdateCamPos();
+	void UpdateCamPos(DWORD dt);
 
 	static Camera* GetInstance();
 	~Camera();
