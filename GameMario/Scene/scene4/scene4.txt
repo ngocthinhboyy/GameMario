@@ -4,6 +4,10 @@
 1	Scene\scene4\map.xml	Resources\tileset.png	Scene\scene4\tilesetcoordinates.txt	255	255	255
 [OBJECTS]
 1	Scene\scene4\objects.txt
+[TYPE CAMERA]
+# 1 is camera default
+# 2 is camera auto moving
+2
 [REMAINING TIME]
 300
 [STATIC_OBJECTS]

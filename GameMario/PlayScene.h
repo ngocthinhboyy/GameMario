@@ -21,13 +21,14 @@ protected:
 	void _ParseSection_OBJECTS_IN_GRID(string line);
 	void _ParseSection_MAP(string line);
 	void _ParseSection_REMAINING_TIME(string line);
+	void _ParseSection_TYPE_CAMERA(string line);
 	int timeScale = 1;
 	DWORD timeStartStoppingGame = 0;
 	DWORD timeStop = 0;
 	bool isStopGame = false;
 	bool isEndScene = false;
 	bool isTimeUp = false;
-	bool isAutoMovingCamera = true;
+	bool isAutoMovingCamera = false;
 
 public:
 	vector<LPGAMEOBJECT> objects;

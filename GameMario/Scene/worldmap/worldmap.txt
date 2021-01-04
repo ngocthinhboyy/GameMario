@@ -4,5 +4,9 @@
 1	Scene\worldmap\map.txt	Resources\worldmap_tileset.png	Scene\worldmap\tilesetcoordinates.txt	255	255	255
 [OBJECTS]
 1	Scene\worldmap\objects.txt
+[TYPE CAMERA]
+# 1 is camera default
+# 2 is camera auto moving
+1
 [REMAINING TIME]
 0

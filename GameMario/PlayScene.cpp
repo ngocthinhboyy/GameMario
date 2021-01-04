@@ -175,6 +175,21 @@ void PlayScene::_ParseSection_REMAINING_TIME(string line)
 
 }
 
+void PlayScene::_ParseSection_TYPE_CAMERA(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 1) return;
+	int typeCamera = 1;
+	typeCamera= atoi(tokens[0].c_str());
+	if (typeCamera == 1)
+		this->isAutoMovingCamera = false;
+	else if (typeCamera == 2)
+		this->isAutoMovingCamera = true;
+	else
+		this->isAutoMovingCamera = false;
+}
+
 void PlayScene::Load()
 {
 	DebugOut(L"[INFO] Start loading scene resources from : %s \n", sceneFilePath);
@@ -200,6 +215,9 @@ void PlayScene::Load()
 		if (line == "[REMAINING TIME]") {
 			section = SCENE_SECTION_REMAINING_TIME; continue;
 		}
+		if (line == "[TYPE CAMERA]") {
+			section = SCENE_SECTION_TYPE_CAMERA; continue;
+		}
 		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }
 
 		switch (section)
@@ -207,6 +225,7 @@ void PlayScene::Load()
 		case SCENE_SECTION_MAP: _ParseSection_MAP(line); break;
 		case SCENE_SECTION_OBJECTS: _ParseSection_OBJECTS(line); break;
 		case SCENE_SECTION_REMAINING_TIME: _ParseSection_REMAINING_TIME(line); break;
+		case SCENE_SECTION_TYPE_CAMERA: _ParseSection_TYPE_CAMERA(line); break;
 		}
 	}
 

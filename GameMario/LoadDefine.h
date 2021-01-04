@@ -37,6 +37,7 @@
 #define SCENE_SECTION_OBJECTS_IN_GRID							9
 #define SCENE_SECTION_MAP										7
 #define SCENE_SECTION_REMAINING_TIME							10
+#define SCENE_SECTION_TYPE_CAMERA								11
 #define MAX_SCENE_LINE											1024
 
 #define OBJECT_TYPE_MARIO										0

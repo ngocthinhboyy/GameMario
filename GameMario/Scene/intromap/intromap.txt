@@ -4,5 +4,9 @@
 1	Scene\intromap\map.xml	Resources\intromap_tileset.png	Scene\intromap\tilesetcoordinates.txt	2	2	2
 [OBJECTS]
 1	Scene\intromap\objects.txt
+[TYPE CAMERA]
+# 1 is camera default
+# 2 is camera auto moving
+1
 [REMAINING TIME]
 0
