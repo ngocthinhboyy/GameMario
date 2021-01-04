@@ -309,6 +309,9 @@
     <ClCompile Include="IntroMapKeyHandler.cpp">
       <Filter>Framework\Game_Scene\IntroScene</Filter>
     </ClCompile>
+    <ClCompile Include="MovingBrick.cpp">
+      <Filter>game\Object\DynamicObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -553,6 +556,9 @@
     </ClInclude>
     <ClInclude Include="IntroMapDefine.h">
       <Filter>game\Define</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingBrick.h">
+      <Filter>game\Object\DynamicObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

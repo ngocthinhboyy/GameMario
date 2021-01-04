@@ -36,6 +36,7 @@ class Mario : public GameObject
 	bool canGoUpIntoGate = false;
 	bool isMovingIntoGate = false;
 	bool isHolding = false;
+	bool isStandingOnMovingBrick = false;
 
 	bool isAlreadyStandingOnGateInWorldMap = false;
 public:
@@ -49,6 +50,9 @@ public:
 	void SetCanGoDownIntoGate(bool canGoDownIntoGate) { this->canGoDownIntoGate = canGoDownIntoGate; };
 	bool GetCanGoUpIntoGate() { return this->canGoUpIntoGate; };
 	void SetCanGoUpIntoGate(bool canGoUpIntoGate) { this->canGoUpIntoGate = canGoUpIntoGate; };
+
+	bool GetIsStandingOnMovingBrick() { return this->isStandingOnMovingBrick; };
+	void SetIsStandingOnMovingBrick(bool isStandingOnMovingBrick) { this->isStandingOnMovingBrick = isStandingOnMovingBrick; };
 
 	bool GetIsMovingIntoGate() { return this->isMovingIntoGate; };
 	void SetIsMovingIntoGate(bool isMovingIntoGate) { this->isMovingIntoGate = isMovingIntoGate; };

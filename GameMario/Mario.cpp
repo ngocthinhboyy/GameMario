@@ -32,6 +32,7 @@
 #include "PlayerDieState.h"
 #include "WorldMap.h"
 #include "EnemyDefine.h"
+#include "MovingBrick.h"
 
 Mario* Mario::Mario::__instance = NULL;
 Mario* Mario::GetInstance() {
@@ -198,6 +199,17 @@ void Mario::Update(DWORD dt, int scaleTime)
 				}
 				else
 					especialBrick->CollisionWithPlayer(e);
+			}
+			else if (MovingBrick* movingBrick = dynamic_cast<MovingBrick*> (e->obj)) {
+				if (e->nx != 0) {
+					/*PlayerRunningState::lastStateIsSkidding = true;
+					vx += (dt * MARIO_SPEED_ACCELERATION * 3.5 * -this->nx);*/
+					if (e->nx < 0) {
+						this->vx = movingBrick->vx;
+					}
+				}
+				else
+					movingBrick->CollisionWithPlayer(e);
 			}
 			else if (Fireball* fireball = dynamic_cast<Fireball*> (e->obj)) {
 				if (untouchable) {

@@ -47,6 +47,7 @@
 #define OBJECT_TYPE_QUESTION_BRICK								5
 #define OBJECT_TYPE_ESPECIAL_BRICK								9
 #define OBJECT_TYPE_RANDOM_GIFT									10
+#define OBJECT_TYPE_MOVING_BRICK								11
 #define OBJECT_TYPE_FLOWER										6
 #define OBJECT_TYPE_COIN										7
 

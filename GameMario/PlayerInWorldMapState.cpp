@@ -76,6 +76,15 @@ void PlayerInWorldMapState::OnKeyDown(int KeyCode)
 			playScene->SetTimeOfPreviousSecond(timeStart);
 			break;
 		}
+		case DIK_T: {
+			DWORD timeStart = GetTickCount64();
+			Game::GetInstance()->SwitchScene(4);
+			Mario::GetInstance()->nx = 1;
+			Mario::GetInstance()->noCollisionConsideration = false;
+			PlayScene* playScene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+			playScene->SetTimeOfPreviousSecond(timeStart);
+			break;
+		}
 		case DIK_ESCAPE: {
 			Game::GetInstance()->SwitchScene(3);
 			break;

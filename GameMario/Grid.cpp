@@ -14,6 +14,7 @@
 #include "Gate.h"
 #include "RandomGift.h"
 #include "Mushroom.h"
+#include "MovingBrick.h"
 
 Grid* Grid::__instance = NULL;
 void Grid::LoadObjectInSceneAddToGrid(string line)
@@ -53,7 +54,8 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 		ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		AddObjectInFileToGrid(top, bottom, left, right, obj);
+		//AddObjectInFileToGrid(top, bottom, left, right, obj);
+		DeterminedGridToObtainObject(obj);
 		break;
 	}
 	case OBJECT_TYPE_QUESTION_BRICK: {
@@ -63,7 +65,8 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 		ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		AddObjectInFileToGrid(top, bottom, left, right, obj);
+		//AddObjectInFileToGrid(top, bottom, left, right, obj);
+		DeterminedGridToObtainObject(obj);
 		break;
 	}
 	case OBJECT_TYPE_KOOPA: {
@@ -75,7 +78,8 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 		ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		AddObjectInFileToGrid(top, bottom, left, right, obj);
+		//AddObjectInFileToGrid(top, bottom, left, right, obj);
+		DeterminedGridToObtainObject(obj);
 		break;
 	}
 	case OBJECT_TYPE_FLOWER: {
@@ -85,7 +89,8 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 		ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		AddObjectInFileToGrid(top, bottom, left, right, obj);
+		//AddObjectInFileToGrid(top, bottom, left, right, obj);
+		DeterminedGridToObtainObject(obj);
 		break;
 	}
 	case OBJECT_TYPE_COIN: {
@@ -96,7 +101,8 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 		ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		AddObjectInFileToGrid(top, bottom, left, right, obj);
+		//AddObjectInFileToGrid(top, bottom, left, right, obj);
+		DeterminedGridToObtainObject(obj);
 		break;
 	}
 	case OBJECT_TYPE_GATE: {
@@ -110,7 +116,8 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 		obj->SetPosition(x, y);
 
 		obj->SetAnimationSet(ani_set);
-		AddObjectInFileToGrid(top, bottom, left, right, obj);
+		//AddObjectInFileToGrid(top, bottom, left, right, obj);
+		DeterminedGridToObtainObject(obj);
 		break;
 	}
 	case OBJECT_TYPE_ESPECIAL_BRICK: {
@@ -120,7 +127,8 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 		ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		AddObjectInFileToGrid(top, bottom, left, right, obj);
+		//AddObjectInFileToGrid(top, bottom, left, right, obj);
+		DeterminedGridToObtainObject(obj);
 		break;
 	}
 	case OBJECT_TYPE_RANDOM_GIFT: {
@@ -129,7 +137,18 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 		ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		AddObjectInFileToGrid(top, bottom, left, right, obj);
+		//AddObjectInFileToGrid(top, bottom, left, right, obj);
+		DeterminedGridToObtainObject(obj);
+		break;
+	}
+	case OBJECT_TYPE_MOVING_BRICK: {
+		obj = new MovingBrick(x, y, w, h);
+		obj->SetPosition(x, y);
+		ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
+		//AddObjectInFileToGrid(top, bottom, left, right, obj);
+		DeterminedGridToObtainObject(obj);
 		break;
 	}
 	default:
