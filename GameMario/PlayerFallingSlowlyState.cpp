@@ -6,6 +6,7 @@
 #include "debug.h"
 #include "PlayerRunningState.h"
 #include "Camera.h"
+#include "PlayerHighJumpingState.h"
 
 PlayerState* PlayerFallingSlowlyState::__instance = NULL;
 PlayerFallingSlowlyState::PlayerFallingSlowlyState()

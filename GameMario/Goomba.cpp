@@ -128,7 +128,6 @@ void Goomba::Update(DWORD dt, int scaleTime)
 
 	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 
-	//vector<LPGAMEOBJECT> coEnemies = scene->enemies;
 	vector<LPGAMEOBJECT> coCollisionMapObjects = scene->collisionMapObjects;
 	vector<LPGAMEOBJECT> coObjects = scene->objects;
 	vector<LPGAMEOBJECT> coEnemies = scene->enemies;

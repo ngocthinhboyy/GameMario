@@ -393,6 +393,20 @@
 #MOVING BRICK IN SCENE 4
 43001	352	167	48	16	2
 
+####################################################
+# Boomerang Brothers
+44001	33	171	16	24	5
+44002	57	171	16	24	5
+44003	80	171	16	24	5
+44004	103	171	16	24	5
+
+####################################################
+# Boomerang Brother weapon
+44005	124	166	15	16	5
+44006	144	166	16	15	5
+44007	124	188	15	16	5
+44008	145	186	16	15	5
+
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
 # ==== MARIO =========
@@ -676,6 +690,12 @@
 #MUSHROOM GREEN
 4403	42003	50
 4501	43001	50
+# Boomerang Brothers Moving
+4601	44001	100	44002	100
+# Boomerang Brothers Attack
+4603	44003	50
+# Boomerang Brother weapon
+4602	44005	80	44006	80	44007	80	44008	80
 
 # id	ani1	ani2	ani3
 [ANIMATION_SETS]
@@ -716,3 +736,5 @@
 18	3901	4001	4101	4201	4202	4203	4204	4205	4206	4207	4208	4301	4302
 #SCENE 4
 19	4501
+#BOOMERANG BROTHERS
+20	4601	4602

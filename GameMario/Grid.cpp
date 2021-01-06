@@ -15,6 +15,7 @@
 #include "RandomGift.h"
 #include "Mushroom.h"
 #include "MovingBrick.h"
+#include "BoomerangBrother.h"
 
 Grid* Grid::__instance = NULL;
 void Grid::LoadObjectInSceneAddToGrid(string line)
@@ -143,6 +144,16 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 	}
 	case OBJECT_TYPE_MOVING_BRICK: {
 		obj = new MovingBrick(x, y, w, h);
+		obj->SetPosition(x, y);
+		ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
+		//AddObjectInFileToGrid(top, bottom, left, right, obj);
+		DeterminedGridToObtainObject(obj);
+		break;
+	}
+	case OBJECT_TYPE_BOOMERANG_BROTHERS: {
+		obj = new BoomerangBrother(x, y, w, h);
 		obj->SetPosition(x, y);
 		ani_set = animation_sets->Get(ani_set_id);
 

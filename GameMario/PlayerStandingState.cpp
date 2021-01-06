@@ -121,6 +121,16 @@ void PlayerStandingState::OnKeyDown(int KeyCode) {
 		SetAnimation();
 		break;
 	}
+	case DIK_8: {
+		mario->x = 5600;
+		mario->y = 1100;
+		Game* game = Game::GetInstance();
+		PlayScene* playScene = dynamic_cast<PlayScene*> (game->GetCurrentScene());
+		Camera::GetInstance()->SetLockCamY(true);
+		Camera::GetInstance()->SetCamPos( 6160 - game->GetScreenWidth(), 720.0f);
+		SetAnimation();
+		break;
+	}
 	case DIK_X:
 			mario->vy = -MARIO_JUMP_SPEED_Y;
 			mario->ChangeState(PlayerJumpingState::GetInstance());

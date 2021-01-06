@@ -22,31 +22,51 @@ void Camera::GetCamPos(float& x, float& y)
 void Camera::UpdateCamPos(DWORD dt)
 {
 	Game* game = Game::GetInstance();
-	PlayScene* playScene = dynamic_cast<PlayScene*> (game->GetCurrentScene());
-
-	if (playScene->GetIsAutoMovingCamera()) {
+	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+	if (scene->GetIsAutoMovingCamera()) {
 		this->cam_y = CAM_Y_DRAW_MAP;
-		if (this->cam_x + game->GetScreenWidth() >= 6160) {
-			this->cam_x = 6160 - game->GetScreenWidth();
+		if (isAutoMovingCamera) {
+			if (this->cam_x + game->GetScreenWidth() >= 6160) {
+				this->cam_x = 6160 - game->GetScreenWidth();
+			}
+			else {
+				this->cam_x = this->cam_x + 0.09f * dt;
+			}
 		}
 		else {
-			this->cam_x = this->cam_x + 0.09f * dt;
+			float cx, cy;
+			Mario* player = Mario::GetInstance();
+			player->GetPosition(cx, cy);
+			if (cx - (game->GetScreenWidth() / 2) <= 6192.0f) {
+				cx = 6192.0f;
+			}
+			else
+			{
+				if (cx + game->GetScreenWidth() / 2 < CAM_X_END_SCENE) {
+					cx -= game->GetScreenWidth() / 2;
+				}
+				else {
+					cx = CAM_X_END_SCENE - game->GetScreenWidth();
+				}
+			}
+			this->cam_x = cx;
 		}
 	}
 	else {
+		//DebugOut(L"CAMMM X %f\n", CAM_X_END_SCENE);
 		float cx, cy;
-		Mario* player = playScene->GetPlayer();
+		Mario* player = Mario::GetInstance();
 		player->GetPosition(cx, cy);
 		if (cx < (game->GetScreenWidth() / 2)) {
 			cx = CAM_X_MIN;
 		}
 		else
 		{
-			if (cx + game->GetScreenWidth() / 2 < CAM_X_MAX) {
+			if (cx + game->GetScreenWidth() / 2 < CAM_X_END_SCENE) {
 				cx -= game->GetScreenWidth() / 2;
 			}
 			else {
-				cx = CAM_X_MAX - game->GetScreenWidth();
+				cx = CAM_X_END_SCENE - game->GetScreenWidth();
 			}
 		}
 		this->cam_x = cx;

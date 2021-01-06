@@ -274,13 +274,15 @@ void Mario::Update(DWORD dt, int scaleTime)
 	if (x <= 0)
 		x = 0;
 	if (!isGoingAuto) {
-		if (x >= 8350) {
-			x = 8350;
+		float maxX = Camera::GetInstance()->GetCamXEndScene() - 98;
+		if (x >= maxX) {
+			x = maxX;
 			vx = 0;
 		}
 	}
 	else {
-		if (x > 8500)
+		float maxXAutoGo = Camera::GetInstance()->GetCamXEndScene() + 60;
+		if (x > maxXAutoGo)
 			vx = 0;
 	}
 	float camx, camy;

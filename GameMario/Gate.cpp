@@ -32,8 +32,12 @@ void Gate::Render()
 	if (type == 2) {
 		animation->Render(x, y, 255, scale);
 	}
-	else if (type == 1) {
+	else if (type == 1 || type == 4) {
 		animation = animationDatabase->Get(2601);
+		animation->Render(x, y, 255, scale);
+	}
+	else if (type == 3) {
+		animation = animationDatabase->Get(2101);
 		animation->Render(x, y, 255, scale);
 	}
 	
@@ -51,9 +55,12 @@ void Gate::Update(DWORD dt, int scaleTime)
 				if (mario->y > y) {
 					Camera::GetInstance()->SetCamPos(cam_x, cam_y);
 					Camera::GetInstance()->SetLockCamY(false);
+					/*Game* game = Game::GetInstance();
+					PlayScene* playScene = dynamic_cast<PlayScene*> (game->GetCurrentScene());
+					playScene->SetIsAutoMovingCamera(false);*/
+					Camera::GetInstance()->SetIsAutoMovingCamera(false);
 					mario->x = newPostitionXMario;
 					mario->y = newPostitionYMario;
-
 					isUsingThisGate = false;
 				}
 			}
@@ -64,6 +71,17 @@ void Gate::Update(DWORD dt, int scaleTime)
 					mario->x = newPostitionXMario;
 					mario->y = newPostitionYMario;
 					isUsingThisGate = false;
+				}
+			}
+			else if (type == 4) {
+				if (mario->vy >= 0) {
+					Camera::GetInstance()->SetCamPos(cam_x, cam_y);
+					Camera::GetInstance()->SetLockCamY(false);
+					mario->x = newPostitionXMario;
+					mario->y = newPostitionYMario;
+					isUsingThisGate = false;
+					mario->SetCanGoDownIntoGate(false);
+					mario->SetCanGoUpIntoGate(true);
 				}
 			}
 		}

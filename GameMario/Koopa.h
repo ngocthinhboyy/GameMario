@@ -8,6 +8,7 @@ class Koopa : public Enemy
 	bool isDiedByFireball = false;
 	int startTypeMove;
 	DWORD timeDie = 0;
+	DWORD timeFly = 0;
 public:
 
 	Koopa();

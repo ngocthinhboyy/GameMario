@@ -17,6 +17,7 @@ public:
 	void ReadMap();
 	void DrawMap();
 	void ClearMap();
+	int GetColumn() { return this->column; };
 	~Map();
 };
 

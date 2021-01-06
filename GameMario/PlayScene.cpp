@@ -163,6 +163,7 @@ void PlayScene::_ParseSection_MAP(string line)
 
 	mapManager->GetMap(mapID)->AddTileManager(tileManager);
 	mapManager->ReadMap(mapID);
+	Camera::GetInstance()->SetCamXEndScene(mapManager->GetMap(this->mapID)->GetColumn() * 48.0f);
 	mapManager->RenderMap(mapID);
 }
 
@@ -182,12 +183,18 @@ void PlayScene::_ParseSection_TYPE_CAMERA(string line)
 	if (tokens.size() < 1) return;
 	int typeCamera = 1;
 	typeCamera= atoi(tokens[0].c_str());
-	if (typeCamera == 1)
+	if (typeCamera == 1) {
 		this->isAutoMovingCamera = false;
-	else if (typeCamera == 2)
+		Camera::GetInstance()->SetIsAutoMovingCamera(false);
+	}
+	else if (typeCamera == 2) {
 		this->isAutoMovingCamera = true;
-	else
+		Camera::GetInstance()->SetIsAutoMovingCamera(true);
+	}
+	else {
 		this->isAutoMovingCamera = false;
+		Camera::GetInstance()->SetIsAutoMovingCamera(false);
+	}
 }
 
 void PlayScene::Load()
@@ -314,9 +321,6 @@ void PlayScene::Render()
 	MapManager* mapManager = MapManager::GetInstance();
 	mapManager->RenderMap(mapID);
 
-	for (int i = 0; i < enemies.size(); i++) {
-		enemies[i]->Render();
-	}
 	for (size_t i = 0; i < collisionMapObjects.size(); i++)
 	{
 		collisionMapObjects[i]->Render();
@@ -325,6 +329,9 @@ void PlayScene::Render()
 	player->Render();
 	for (int i = 0; i < objects.size(); i++) {
 		objects[i]->Render();
+	}
+	for (int i = 0; i < enemies.size(); i++) {
+		enemies[i]->Render();
 	}
 	BoardGame* board = BoardGame::GetInstance();
 	if (isTimeUp && !isEndScene)

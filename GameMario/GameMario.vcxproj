@@ -25,6 +25,8 @@
     <ClCompile Include="AnimationManager.cpp" />
     <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="BoardGame.cpp" />
+    <ClCompile Include="BoomerangBrother.cpp" />
+    <ClCompile Include="BoomerangWeapon.cpp" />
     <ClCompile Include="ButtonP.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Coin.cpp" />
@@ -100,6 +102,8 @@
     <ClInclude Include="Arrow.h" />
     <ClInclude Include="BoardGame.h" />
     <ClInclude Include="BoardGameAndEndTitleDefine.h" />
+    <ClInclude Include="BoomerangBrother.h" />
+    <ClInclude Include="BoomerangWeapon.h" />
     <ClInclude Include="ButtonP.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Coin.h" />
