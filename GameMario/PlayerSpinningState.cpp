@@ -77,14 +77,11 @@ void PlayerSpinningState::KeyState(BYTE* states)
 		tailFront->stillAlive = false;
 		tailBack->stillAlive = false;
 		mario->SetIsSpinning(false);
-		if (game->IsKeyDown(DIK_A))
+		if (game->IsKeyDown(DIK_A) && mario->GetIsOnGround() ) {
 			mario->ChangeState(PlayerRunningState::GetInstance());
-		else if (mario->vy > 0) {
-			if (mario->GetLevel() == MARIO_LEVEL_RACCOON) {
-				mario->ChangeState(PlayerFallingSlowlyState::GetInstance());
-				return;
-			}
-			mario->ChangeState(PlayerFallingState::GetInstance());
+		}
+		else if (mario->vy > 0 || !mario->GetIsOnGround()) {
+			mario->ChangeState(PlayerFallingSlowlyState::GetInstance());
 		}
 		else
 			mario->ChangeState(PlayerStandingState::GetInstance());
