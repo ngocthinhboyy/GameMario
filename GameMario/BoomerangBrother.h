@@ -4,6 +4,8 @@ class BoomerangBrother : public Enemy
 {
 	DWORD timeMove = 0;
 	DWORD timeAttack = 0;
+	DWORD timeDie = 0;
+
 public:
 
 	BoomerangBrother();

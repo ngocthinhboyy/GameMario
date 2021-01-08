@@ -79,7 +79,7 @@ void QuestionBrick::Render()
 	if (animation != NULL) {
 		animation->Render(x, y, alpha, scale);
 	}
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void QuestionBrick::Update(DWORD dt, int scaleTime)

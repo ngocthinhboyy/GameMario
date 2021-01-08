@@ -35,6 +35,8 @@
 #include "MovingBrick.h"
 #include "PlayerGoingAutoState.h"
 #include "PlayerGoingByCameraState.h"
+#include "BoomerangWeapon.h"
+#include "BoomerangBrother.h"
 
 Mario* Mario::Mario::__instance = NULL;
 Mario* Mario::GetInstance() {
@@ -207,7 +209,7 @@ void Mario::Update(DWORD dt, int scaleTime)
 					/*PlayerRunningState::lastStateIsSkidding = true;
 					vx += (dt * MARIO_SPEED_ACCELERATION * 3.5 * -this->nx);*/
 					if (e->nx < 0) {
-						this->vx = movingBrick->vx;
+						vx = movingBrick->vx;
 					}
 				}
 				else
@@ -290,6 +292,9 @@ void Mario::Update(DWORD dt, int scaleTime)
 	if (x < camx && !isGoingByCamera) {
 		isGoingByCamera = true;
 		ChangeState(PlayerGoingByCameraState::GetInstance());
+	}
+	if (x + 100 > camx + Game::GetInstance()->GetScreenWidth()) {
+		x = camx + Game::GetInstance()->GetScreenWidth() - 100;
 	}
 	if (y > camy + 580) {
 		level = MARIO_LEVEL_BIG;
@@ -443,6 +448,27 @@ void Mario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 			}
 		}
 		else {
+			left = x;
+			top = y;
+			right = left + MARIO_SMALL_BBOX_WIDTH;
+			bottom = top + MARIO_SMALL_BBOX_HEIGHT;
+		}
+	}
+
+	if (isTransforming) {
+		if (PlayerLevelDownTransformState::stateWhenGrowingUp == STATE_MARIO_BIG) {
+			left = x;
+			top = y;
+			right = left + MARIO_BIG_BBOX_WIDTH;
+			bottom = top + MARIO_BIG_BBOX_HEIGHT;
+		}
+		else if (PlayerLevelDownTransformState::stateWhenGrowingUp == STATE_MARIO_MIDDLE) {
+			left = x;
+			top = y;
+			right = left + 42;
+			bottom = top + 57;
+		}
+		else if (PlayerLevelDownTransformState::stateWhenGrowingUp == STATE_MARIO_SMALL) {
 			left = x;
 			top = y;
 			right = left + MARIO_SMALL_BBOX_WIDTH;

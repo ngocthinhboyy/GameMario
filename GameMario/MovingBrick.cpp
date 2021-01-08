@@ -32,6 +32,9 @@ void MovingBrick::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 		}
 		Mario::GetInstance()->vy = 0;
 	}
+	if (collisionEvent->nx != 0) {
+		Mario::GetInstance()->vx = vx;
+	}
 }
 
 void MovingBrick::Render()

@@ -5,11 +5,14 @@
 #include "debug.h"
 #include "BoomerangWeapon.h"
 #include "Grid.h"
+#include "PlayerLevelDownTransformState.h"
+#include "PlayerDieState.h"
+#include "Point.h"
+#include "Camera.h"
 
 BoomerangBrother::BoomerangBrother()
 {
 }
-
 BoomerangBrother::BoomerangBrother(float x, float y, float w, float h)
 {
 	this->x = x;
@@ -43,11 +46,14 @@ void BoomerangBrother::Render()
 	int alpha = 255;
 	D3DXVECTOR2 scale;
 	SetAnimation();
-	scale = D3DXVECTOR2(RATIO_X_FLIP_SCALE, RATIO_Y_SCALE);
+	if (!isUpsideDown)
+		scale = D3DXVECTOR2(RATIO_X_FLIP_SCALE, RATIO_Y_SCALE);
+	else
+		scale = D3DXVECTOR2(RATIO_X_FLIP_SCALE, RATIO_Y_FLIP_SCALE);
 	if (animation != NULL) {
 		animation->Render(x, y, alpha, scale);
 	}
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void BoomerangBrother::ChangeState()
@@ -67,9 +73,9 @@ void BoomerangBrother::ChangeState()
 	else if (state == BOOMERANG_BROTHER_ATTACK_STATE && now - timeAttack >= 200) {
 		state = BOOMERANG_BROTHER_MOVING_STATE;
 	}
-	if (now - timeAttack >= 2000) {
+	if (now - timeAttack >= 2500) {
 		state = BOOMERANG_BROTHER_ATTACK_STATE;
-		BoomerangWeapon* boomerang = new BoomerangWeapon(x + w, y + 5, 45,45);
+		BoomerangWeapon* boomerang = new BoomerangWeapon(x + w, y + 5, 45, 45);
 		Grid::GetInstance()->DeterminedGridToObtainObject(boomerang);
 		timeAttack = now;
 	}
@@ -88,11 +94,19 @@ void BoomerangBrother::Update(DWORD dt, int scaleTime)
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
 	coEvents.clear();
-	CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
+	if (!noCollisionConsideration) {
+		CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
+	}
 	if (coEvents.size() == 0)
 	{
 		x += dx;
 		y += dy;
+		float cam_x, cam_y;
+		Camera* camera = Camera::GetInstance();
+		camera->GetCamPos(cam_x, cam_y);
+		if (y > (cam_y + SCREEN_HEIGHT) && (state == ENEMY_STATE_DIE || isUpsideDown)) {
+			stillAlive = false;
+		}
 	}
 	else
 	{
@@ -156,4 +170,42 @@ void BoomerangBrother::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisio
 
 void BoomerangBrother::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 {
+	Mario* mario = Mario::GetInstance();
+	if (!mario->GetUntouchable()) {
+		if (collisionEvent->nx != 0) {
+			mario->vx = 0;
+			PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+			if (mario->GetLevel() >= MARIO_LEVEL_BIG) {
+				mario->StartUntouchable();
+				mario->y -= 5;
+				mario->ChangeState(PlayerLevelDownTransformState::GetInstance());
+				scene->StopGame(1000);
+			}
+			else if (mario->GetLevel() == MARIO_LEVEL_SMALL) {
+				mario->ChangeState(PlayerDieState::GetInstance());
+				mario->noCollisionConsideration = true;
+				scene->StopGame(5000);
+			}
+		}
+	}
+	else {
+		mario->x += mario->dx;
+	}
+	if (collisionEvent->ny != 0) {
+		if (collisionEvent->ny > 0) {
+			Mario::GetInstance()->y -= Mario::GetInstance()->dy;
+		}
+		if (collisionEvent->ny < 0) {
+			state = ENEMY_STATE_DIE;
+			mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
+			Point* point = new Point(x, y, 39, 30, 100);
+			Grid* grid = Grid::GetInstance();
+			grid->DeterminedGridToObtainObject(point);
+			mario->SetPoint(mario->GetPoint() + 100);
+			//vy = -ENEMY_DIE_SPEED_Y;
+			vx = 0;
+			SetIsUpsideDown(true);
+			noCollisionConsideration = true;
+		}
+	}
 }

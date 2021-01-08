@@ -37,6 +37,7 @@ class Mario : public GameObject
 	bool isMovingIntoGate = false;
 	bool isHolding = false;
 	bool isGoingByCamera = false;
+	bool isTransforming = false;
 
 	bool isAlreadyStandingOnGateInWorldMap = false;
 public:
@@ -50,7 +51,8 @@ public:
 	void SetCanGoDownIntoGate(bool canGoDownIntoGate) { this->canGoDownIntoGate = canGoDownIntoGate; };
 	bool GetCanGoUpIntoGate() { return this->canGoUpIntoGate; };
 	void SetCanGoUpIntoGate(bool canGoUpIntoGate) { this->canGoUpIntoGate = canGoUpIntoGate; };
-
+	bool GetIsTransforming() { return this->isTransforming; };
+	void SetIsTransforming(bool isTransforming) { this->isTransforming = isTransforming; };
 	bool GetIsGoingByCamera() { return this->isGoingByCamera; };
 	void SetIsGoingByCamera(bool isGoingByCamera) { this->isGoingByCamera = isGoingByCamera; };
 
