@@ -3,6 +3,7 @@
 #include "game.h"
 #include "PlayScene.h"
 #include "debug.h"
+#include "Camera.h"
 
 PlayerDieState::PlayerDieState()
 {
@@ -78,6 +79,7 @@ void PlayerDieState::Update(int dt)
 			Game::GetInstance()->SwitchScene(1);
 		}
 	}
+	Camera::GetInstance()->SetCamXSpeed(0);
 	mario->dy = mario->vy * dt;
 	mario->y += mario->dy;
 	mario->noCollisionConsideration = true;

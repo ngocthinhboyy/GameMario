@@ -17,6 +17,7 @@
 #include "FragmentOfEspecialBrick.h"
 #include "ButtonP.h"
 #include "Flower.h"
+#include "BoomerangBrother.h"
 
 Tail::Tail()
 {
@@ -100,6 +101,16 @@ void Tail::CheckOverlapBoundingBox(vector<LPGAMEOBJECT> objects)
 								goomba->SetState(ENEMY_STATE_WALKING);
 							goomba->noCollisionConsideration = true;
 						}
+						else if (BoomerangBrother * boomBrother = dynamic_cast<BoomerangBrother*> (enemy)) {
+							state = ENEMY_STATE_DIE;
+							Point* point = new Point(boomBrother->x, boomBrother->y, 39, 30, 100);
+							Grid* grid = Grid::GetInstance();
+							grid->DeterminedGridToObtainObject(point);
+							mario->SetPoint(mario->GetPoint() + 100);
+							boomBrother->vx = 0;
+							boomBrother->noCollisionConsideration = true;
+						}
+						enemy->SetIsUpsideDown(true);
 						enemy->vx = ENEMY_DIE_SPEED_X;
 						if (enemy->x < mario->x) {
 							enemy->vx = -ENEMY_DIE_SPEED_X;
@@ -107,7 +118,6 @@ void Tail::CheckOverlapBoundingBox(vector<LPGAMEOBJECT> objects)
 						else
 							enemy->vx = ENEMY_DIE_SPEED_X;
 						enemy->vy = -ENEMY_DIE_SPEED_Y;
-						enemy->SetIsUpsideDown(true);
 						Point* point = new Point(enemy->x, enemy->y, 39, 30, 100);
 						Grid* grid = Grid::GetInstance();
 						grid->DeterminedGridToObtainObject(point);

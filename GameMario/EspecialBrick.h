@@ -5,6 +5,8 @@ class EspecialBrick : public GameObject
 	LPANIMATION animation;
 	int type;
 	bool isEmptyBrick = false;
+	int countCoinRemaining = 5;
+	bool alreadyMoving = false;
 public:
 	EspecialBrick(float x, float y, float w, float h, int type);
 	void CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent);

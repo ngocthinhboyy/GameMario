@@ -77,7 +77,10 @@ void Gate::Update(DWORD dt, int scaleTime)
 				if (mario->vy >= 0) {
 					Camera::GetInstance()->SetCamPos(cam_x, cam_y);
 					Camera::GetInstance()->SetLockCamY(false);
-					mario->x = newPostitionXMario;
+					if(mario->nx > 0)
+						mario->x = newPostitionXMario;
+					else
+						mario->x = newPostitionXMario - 15;
 					mario->y = newPostitionYMario;
 					isUsingThisGate = false;
 					mario->SetCanGoDownIntoGate(false);

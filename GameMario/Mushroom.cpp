@@ -42,7 +42,7 @@ void Mushroom::Render()
 	if (animation != NULL) {
 		animation->Render(x, y, alpha, scale);
 	}
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void Mushroom::Update(DWORD dt, int scaleTime)
@@ -51,6 +51,9 @@ void Mushroom::Update(DWORD dt, int scaleTime)
 	if (y + MUSHROOM_BBOX_HEIGHT <= startPositionY && !alreadyAppear) {
 		vy += ITEM_GRAVITY * dt;
 		vx = MUSHROOM_SPEED * Mario::GetInstance()->nx;
+		if (typeMushroom == MUSHROOM_TYPE_GREEN) {
+			vx = MUSHROOM_SPEED;
+		}
 		alreadyAppear = true;
 	}
 	if (alreadyAppear) {
@@ -156,9 +159,9 @@ void Mushroom::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 	Mario* mario = Mario::GetInstance();
 	Point* point = NULL;
 	mario->vx = 0;
-	mario->vy = 0;
 	mario->y -= 2;
 	if (typeMushroom == MUSHROOM_TYPE_RED) {
+		mario->vy = 0;
 		mario->ChangeState(PlayerBonusTransformState::GetInstance());
 		point = new Point(x, y, 45, 24, 1000);
 		mario->SetPoint(mario->GetPoint() + MARIO_BONUS_POINT_LEAF);

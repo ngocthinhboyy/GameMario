@@ -11,12 +11,15 @@ class PlayerHoldingState : PlayerState
 	bool prevKeyIsLeft = false;
 	bool isTurnBack = false;
 	static bool isStanding;
+	static bool stopIncreasingSpeed;
+	static bool alreadyMaxJumping;
 public:
 	PlayerHoldingState();
 	static void SetAnimation();
 	void Update(int dt);
 	void KeyState(BYTE* states);
 	void OnKeyDown(int KeyCode);
+	void OnKeyUp(int KeyCode);
 	static PlayerState* GetInstance();
 	~PlayerHoldingState();
 };

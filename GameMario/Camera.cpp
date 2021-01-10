@@ -30,7 +30,7 @@ void Camera::UpdateCamPos(DWORD dt)
 				this->cam_x = 6160 - game->GetScreenWidth();
 			}
 			else {
-				this->cam_x = this->cam_x + 0.09f * dt;
+				this->cam_x = this->cam_x +cam_x_speed* dt;
 			}
 		}
 		else {

@@ -85,7 +85,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		}
 	}
 	player = Mario::GetInstance();
-	player->SetPosition(10, 0);
+	player->SetPosition(100, 500);
 	player->ChangeState(PlayerStandingState::GetInstance());
 	f.close();
 	

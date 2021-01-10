@@ -275,11 +275,18 @@ void Mario::Update(DWORD dt, int scaleTime)
 	
 	if (x <= 0)
 		x = 0;
+	float camx, camy;
+	Camera::GetInstance()->GetCamPos(camx, camy);
 	if (!isGoingAuto) {
 		float maxX = Camera::GetInstance()->GetCamXEndScene() - 98;
 		if (x >= maxX) {
 			x = maxX;
 			vx = 0;
+		}
+		if (scene->GetIsAutoMovingCamera()) {
+			if (x + 70 > camx + Game::GetInstance()->GetScreenWidth()) {
+				x = camx + Game::GetInstance()->GetScreenWidth() - 70;
+			}
 		}
 	}
 	else {
@@ -287,14 +294,11 @@ void Mario::Update(DWORD dt, int scaleTime)
 		if (x > maxXAutoGo)
 			vx = 0;
 	}
-	float camx, camy;
-	Camera::GetInstance()->GetCamPos(camx, camy);
-	if (x < camx && !isGoingByCamera) {
-		isGoingByCamera = true;
-		ChangeState(PlayerGoingByCameraState::GetInstance());
-	}
-	if (x + 100 > camx + Game::GetInstance()->GetScreenWidth()) {
-		x = camx + Game::GetInstance()->GetScreenWidth() - 100;
+	if (scene->GetIsAutoMovingCamera()) {
+		if (x < camx && !isGoingByCamera) {
+			isGoingByCamera = true;
+			ChangeState(PlayerGoingByCameraState::GetInstance());
+		}
 	}
 	if (y > camy + 580) {
 		level = MARIO_LEVEL_BIG;

@@ -9,6 +9,8 @@
 
 PlayerState* PlayerHoldingState::__instance = NULL;
 bool PlayerHoldingState::isStanding = false;
+bool PlayerHoldingState::stopIncreasingSpeed = true;
+bool PlayerHoldingState::alreadyMaxJumping = false;
 
 PlayerHoldingState::PlayerHoldingState()
 {
@@ -65,8 +67,11 @@ void PlayerHoldingState::SetAnimation()
 
 void PlayerHoldingState::Update(int dt)
 {
+	Mario* mario = Mario::GetInstance();
+	if (!stopIncreasingSpeed && !alreadyMaxJumping) {
+		mario->vy += (dt * -MARIO_ACCELERATION_JUMP_Y);
+	}
 	if (!isStanding) {
-		Mario* mario = Mario::GetInstance();
 		if ((abs(mario->vx) < MARIO_RUNNING_MAX_SPEED) && !isMaxSpeed && increaseSpeed) {
 			mario->vx += (dt * MARIO_SPEED_ACCELERATION * (mario->nx));
 		}
@@ -115,6 +120,13 @@ void PlayerHoldingState::KeyState(BYTE* states)
 		else {
 			isMaxSpeed = false;
 		}
+		if (game->IsKeyDown(DIK_S)) {
+			if(mario->vy == 0)
+				stopIncreasingSpeed = false;
+			if (abs(mario->vy) >= MARIO_JUMP_MAX_SPEED_Y_HOLDING) {
+				alreadyMaxJumping = true;
+			}
+		}
 		if (game->IsKeyDown(DIK_RIGHT) && game->IsKeyDown(DIK_LEFT)) {
 			if (mario->vx != 0) {
 				increaseSpeed = false;
@@ -152,6 +164,8 @@ void PlayerHoldingState::KeyState(BYTE* states)
 			koopa->noCollisionConsideration = false;
 			isMaxSpeed = false;
 			increaseSpeed = true;
+			stopIncreasingSpeed = true;
+			alreadyMaxJumping = false;
 			mario->ChangeState(PlayerKickingState::GetInstance());
 			mario->SetIsHolding(false);
 			if (mario->nx > 0) {
@@ -170,12 +184,30 @@ void PlayerHoldingState::OnKeyDown(int KeyCode)
 {
 }
 
+void PlayerHoldingState::OnKeyUp(int KeyCode)
+{
+	Mario* mario = Mario::GetInstance();
+	switch (KeyCode)
+	{
+
+	case DIK_S: {
+		stopIncreasingSpeed = true;
+		alreadyMaxJumping = false;
+		break;
+	}
+	default:
+		break;
+	}
+}
+
 PlayerState* PlayerHoldingState::GetInstance()
 {
 	if (__instance == NULL) __instance = new PlayerHoldingState();
 	Mario* mario = Mario::GetInstance();
 	mario->SetIsRunning(false);
 	mario->SetIsHolding(true);
+	stopIncreasingSpeed = true;
+	alreadyMaxJumping = false;
 	SetAnimation();
 	return __instance;
 }
