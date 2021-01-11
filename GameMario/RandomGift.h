@@ -6,7 +6,6 @@ class RandomGift : public GameObject
 	int itemCurrent = 0;
 	DWORD timeStartRandom = 0;
 public:
-	RandomGift() {};
 	RandomGift(float x, float y, float w, float h);
 	void SetAnimation();
 	void Render();

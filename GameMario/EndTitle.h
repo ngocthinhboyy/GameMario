@@ -13,7 +13,7 @@ class EndTitle
 {
 	static EndTitle* __instance;
 	vector<ComponentInEndTitle*>  endTitleFontComponents;
-	ComponentInEndTitle* endTitleCardComponent;
+	ComponentInEndTitle* endTitleCardComponent = NULL;
 	vector<LPSPRITE> endTitleItem;
 	DWORD renderFinishedOneLine = 0;
 	int currentLine = 0;

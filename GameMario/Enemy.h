@@ -8,7 +8,6 @@ protected:
 	LPANIMATION animation;
 	bool isUpsideDown = false;
 public:
-	Enemy();
 	virtual void SetAnimation() = 0;
 	virtual void CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent) = 0;
 	virtual void CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPCOLLISIONMAPOBJECT collisionMapObject) = 0;

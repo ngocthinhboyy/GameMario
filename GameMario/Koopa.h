@@ -10,8 +10,6 @@ class Koopa : public Enemy
 	DWORD timeDie = 0;
 	DWORD timeFly = 0;
 public:
-
-	Koopa();
 	Koopa(float x, float y, float w, float h, int typeKoopa, int typeMove);
 	void Render();
 	void SetAnimation();

@@ -81,10 +81,11 @@ void PlayerInWorldMapState::OnKeyDown(int KeyCode)
 			DWORD timeStart = GetTickCount64();
 			Game::GetInstance()->SwitchScene(4);
 			Mario::GetInstance()->nx = 1;
-			Mario::GetInstance()->SetLevel(MARIO_LEVEL_RACCOON);
 			Mario::GetInstance()->noCollisionConsideration = false;
 			Camera::GetInstance()->SetCamXSpeed(0.09f);
 			PlayScene* playScene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
+			Mario::GetInstance()->SetLevel(MARIO_LEVEL_RACCOON);
+			Mario::GetInstance()->ChangeState(PlayerStandingState::GetInstance());
 			playScene->SetTimeOfPreviousSecond(timeStart);
 			break;
 		}

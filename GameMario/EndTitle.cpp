@@ -2,6 +2,7 @@
 #include "debug.h"
 #include "Textures.h"
 #include "BoardGameAndEndTitleDefine.h"
+#include "Camera.h"
 
 void EndTitle::LoadEndTitleItem(LPCWSTR filePath)
 {
@@ -47,6 +48,8 @@ void EndTitle::ParseEndTitleItem(string line)
 
 void EndTitle::RenderEndTitle()
 {
+	float cam_x, cam_y;
+	Camera::GetInstance()->GetCamPos(cam_x, cam_y);
 	if (GetTickCount64() - renderFinishedOneLine > 1000) {
 		renderFinishedOneLine = GetTickCount64();
 		currentLine++;
@@ -54,13 +57,13 @@ void EndTitle::RenderEndTitle()
 	for (auto component : endTitleFontComponents) {
 		for (auto item : endTitleItem) {
 			if (item->GetId() == component->idFont && component->line <= currentLine) {
-				item->Draw(component->x, component->y, 255);
+				item->Draw(component->x + cam_x, component->y, 255);
 			}
 		}
 	}
 	for (auto item : endTitleItem) {
 		if (item->GetId() == endTitleCardComponent->idFont && endTitleCardComponent ->line <= currentLine) {
-			item->Draw(endTitleCardComponent->x, endTitleCardComponent->y, 255);
+			item->Draw(endTitleCardComponent->x + cam_x, endTitleCardComponent->y, 255);
 		}
 	}
 }

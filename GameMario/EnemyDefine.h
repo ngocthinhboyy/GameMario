@@ -81,6 +81,7 @@
 
 #define KOOPA_TYPE_RED									1
 #define KOOPA_TYPE_GREEN								2
+#define KOOPA_TYPE_FLYING								3
 
 #define TIME_LIMIT_KOOPA_REVIVAL						9000
 

@@ -11,6 +11,7 @@ PlayerState* PlayerHoldingState::__instance = NULL;
 bool PlayerHoldingState::isStanding = false;
 bool PlayerHoldingState::stopIncreasingSpeed = true;
 bool PlayerHoldingState::alreadyMaxJumping = false;
+bool PlayerHoldingState::isJumping = false;
 
 PlayerHoldingState::PlayerHoldingState()
 {
@@ -28,6 +29,8 @@ void PlayerHoldingState::SetAnimation()
 		else {
 			animationID = MARIO_ANI_BIG_HOLD;
 		}
+		if (isJumping)
+			animationID = 219;
 		break;
 	}
 	case MARIO_LEVEL_SMALL:
@@ -38,6 +41,8 @@ void PlayerHoldingState::SetAnimation()
 		else {
 			animationID = MARIO_ANI_SMALL_HOLD;
 		}
+		if (isJumping)
+			animationID = 119;
 		break;
 	}
 	case MARIO_LEVEL_RACCOON:
@@ -48,6 +53,8 @@ void PlayerHoldingState::SetAnimation()
 		else {
 			animationID = MARIO_ANI_RACCOON_HOLD;
 		}
+		if (isJumping)
+			animationID = 323;
 		break;
 	}
 	case MARIO_LEVEL_FIRE:
@@ -58,6 +65,8 @@ void PlayerHoldingState::SetAnimation()
 		else {
 			animationID = MARIO_ANI_FIRE_HOLD;
 		}
+		if (isJumping)
+			animationID = 420;
 		break;
 	}
 	default:
@@ -70,6 +79,11 @@ void PlayerHoldingState::Update(int dt)
 	Mario* mario = Mario::GetInstance();
 	if (!stopIncreasingSpeed && !alreadyMaxJumping) {
 		mario->vy += (dt * -MARIO_ACCELERATION_JUMP_Y);
+	}
+	if (mario->vy == 0)
+	{
+		isJumping = false;
+		SetAnimation();
 	}
 	if (!isStanding) {
 		if ((abs(mario->vx) < MARIO_RUNNING_MAX_SPEED) && !isMaxSpeed && increaseSpeed) {
@@ -121,8 +135,11 @@ void PlayerHoldingState::KeyState(BYTE* states)
 			isMaxSpeed = false;
 		}
 		if (game->IsKeyDown(DIK_S)) {
-			if(mario->vy == 0)
+			if (mario->vy == 0) {
 				stopIncreasingSpeed = false;
+				isJumping = true;
+				SetAnimation();
+			}
 			if (abs(mario->vy) >= MARIO_JUMP_MAX_SPEED_Y_HOLDING) {
 				alreadyMaxJumping = true;
 			}

@@ -13,6 +13,7 @@ class PlayerHoldingState : PlayerState
 	static bool isStanding;
 	static bool stopIncreasingSpeed;
 	static bool alreadyMaxJumping;
+	static bool isJumping;
 public:
 	PlayerHoldingState();
 	static void SetAnimation();

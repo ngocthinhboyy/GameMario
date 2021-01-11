@@ -24,10 +24,6 @@
 #include "Fireball.h"
 #include "Mushroom.h"
 
-Koopa::Koopa()
-{
-}
-
 Koopa::Koopa(float x, float y, float w, float h, int typeKoopa, int typeMove)
 {
 	this->x = x;
@@ -42,12 +38,15 @@ Koopa::Koopa(float x, float y, float w, float h, int typeKoopa, int typeMove)
 	this->startPositionY = y;
 	this->startTypeMove = typeMove;
 	this->vx = -KOOPA_WALKING_SPEED_X;
+	if (type == KOOPA_TYPE_FLYING) {
+		this->vx = -0.038f;
+	}
 	if(typeMove == KOOPA_TYPE_RED)
 		SetState(ENEMY_STATE_WALKING);
 	else if (typeMove == KOOPA_TYPE_GREEN) {
 		SetState(ENEMY_STATE_WALKING_WITH_SWINGS);
 	}
-	else if (typeMove == 3) {
+	else if (typeMove == KOOPA_TYPE_FLYING) {
 		this->vx = 0;
 		this->vy = 0.09f;
 		SetState(ENEMY_STATE_FLYING);
@@ -79,7 +78,7 @@ void Koopa::Render()
 void Koopa::SetAnimation()
 {
 	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
-	if (type == KOOPA_TYPE_RED) {
+	if (type == KOOPA_TYPE_RED || type == 3) {
 		switch (state)
 		{
 		case ENEMY_STATE_WALKING:
@@ -175,14 +174,6 @@ void Koopa::Update(DWORD dt, int scaleTime)
 			else
 				y = mario->y - KOOPA_HOLDING_DISTANCE_TURN_BACK_Y;
 		}
-		/*if (!mario->GetIsCollisionWithWall()) {
-			vx = mario->vx;
-			vy = mario->vy;
-		}
-		else {
-			vx = 0;
-			vy = 0;
-		}*/
 	}
 	else if (state == ENEMY_STATE_FLYING) {
 		DWORD now = GetTickCount64();
@@ -413,11 +404,11 @@ void Koopa::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPC
 	int collisionMapObjectDirectionY = collisionMapObject->GetCollisionDirectionY();
 	if (collisionEvent->nx != 0) {
 		if (collisionMapObjectDirectionX == 0)
-				x += dx;
+			x += dx;
 		else if (collisionEvent->nx < 0 && collisionMapObjectDirectionX == 1)
-				x += dx;
+			x += dx;
 		else if (collisionEvent->nx > 0 && collisionMapObjectDirectionX == -1)
-				x += dx;
+			x += dx;
 		else
 			vx = -vx;
 	}
@@ -475,14 +466,16 @@ void Koopa::CollisionWithEspecialBrick(LPCOLLISIONEVENT collisionEvent, Especial
 	if (collisionEvent->ny != 0) {
 		vy = 0;
 		if (collisionEvent->ny < 0) {
-			if (state == ENEMY_STATE_WALKING) {
-				if (x + dx <= especialBrick->x - 20 || x + dx + KOOPA_BBOX_WIDTH >= especialBrick->x + especialBrick->w + 20) {
-					vx = -vx;
+			if (type != KOOPA_TYPE_FLYING) {
+				if (state == ENEMY_STATE_WALKING) {
+					if (x + dx <= especialBrick->x - 20 || x + dx + KOOPA_BBOX_WIDTH >= especialBrick->x + especialBrick->w + 20) {
+						vx = -vx;
+					}
+					if (x < especialBrick->x - 20)
+						x = especialBrick->x;
+					else if (x + KOOPA_BBOX_WIDTH > especialBrick->x + especialBrick->w + 20)
+						x = especialBrick->x + especialBrick->w - KOOPA_BBOX_WIDTH;
 				}
-				if (x < especialBrick->x - 20)
-					x = especialBrick->x;
-				else if (x + KOOPA_BBOX_WIDTH > especialBrick->x + especialBrick->w + 20)
-					x = especialBrick->x + especialBrick->w - KOOPA_BBOX_WIDTH;
 			}
 		}
 	}
