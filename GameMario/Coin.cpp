@@ -41,13 +41,12 @@ void Coin::Render()
 	if (animation != NULL) {
 		animation->Render(x, y, alpha, scale);
 	}
-	//RenderBoundingBox();
 }
 
 void Coin::Update(DWORD dt, int scaleTime)
 {
 	Mario* mario = Mario::GetInstance();
-	if (type == 1) {
+	if (type == COIN_TYPE_FROM_QUESTION_BRICK) {
 		if (!isBonused) {
 			vy += ITEM_GRAVITY * dt;
 			GameObject::Update(dt, scaleTime);
@@ -64,7 +63,7 @@ void Coin::Update(DWORD dt, int scaleTime)
 			}
 		}
 	}
-	else if (type == 3) {
+	else if (type == COIN_TYPE_FROM_ESPECIAL_BRICK) {
 		if (GetTickCount64() - timeStartTransform >= TIME_COIN_DIE) {
 			Grid::GetInstance()->DeterminedGridToObtainObject(new EspecialBrick(x, y, 48, 48, 1));
 			stillAlive = false;

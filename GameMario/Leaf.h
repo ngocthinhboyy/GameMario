@@ -3,9 +3,9 @@
 class Leaf : public Item
 {
 	int startTime;
-	bool isCapVDau = true;
+	bool isSupplyFirstSpeed = true;
 	bool isGoUp = false;
-	bool vuamoirakhoi = false;
+	bool firstTimeAppear = false;
 public:
 	Leaf(float x, float y, float w, float h);
 	void SetAnimation();

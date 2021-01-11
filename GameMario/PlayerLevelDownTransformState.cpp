@@ -4,6 +4,7 @@
 #include "AnimationDatabase.h"
 #include "PlayerStandingState.h"
 #include "debug.h"
+#include "Camera.h"
 
 
 PlayerState* PlayerLevelDownTransformState::__instance = NULL;
@@ -58,6 +59,7 @@ void PlayerLevelDownTransformState::KeyState(BYTE* states)
 			mario->y -= MARIO_DEVIATION_CROUCHING_Y;
 		}
 		changeCrouching = false;
+		Camera::GetInstance()->SetCamXSpeed(0.09f);
 		mario->ChangeState(PlayerStandingState::GetInstance());
 
 	} else if (mario->GetLevel() == MARIO_LEVEL_BIG) {
@@ -128,6 +130,7 @@ PlayerState* PlayerLevelDownTransformState::GetInstance()
 		Mario::GetInstance()->SetIsTransforming(true);
 		Mario::GetInstance()->SetIsGrowingUp(true);
 	}
+	Camera::GetInstance()->SetCamXSpeed(0);
 	Mario::GetInstance()->SetIsRunning(false);
 	Mario::GetInstance()->SetIsFlying(false);
 	AnimationDatabase::GetInstance()->Get(animationID)->ResetAnimation();

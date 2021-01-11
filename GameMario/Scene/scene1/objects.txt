@@ -1,6 +1,6 @@
 [OBJECTS STATIC IN GRID]
 # type	x	y	w	h	ani_set_id	extra_settings per object type
-# type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas
+# type:  1 = Brick, 2 = Goomba, 3 = Koopas
 #object_type_id	x	y	w	h	animation_sets	collisionX	collisionY
 # COLLISION MAP
 2	1056	1104	96	144	3	2	2

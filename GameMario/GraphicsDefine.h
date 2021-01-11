@@ -9,9 +9,12 @@
 #define CAM_Y_DRAW_MAP					720.0f
 #define CAM_Y_MAX						720.0f
 #define CAM_Y_MIN						145.0f
+#define CAM_X_MAX_SCENE_AUTOCAM			6160.0f
+#define CAM_X_MIN_SCENE_AUTOCAM			6192.0f
 
 #define CAM_X_MAX						8448.0f
 #define CAM_X_MIN						0.0f
+
 
 
 #define TILE_WIDTH						48

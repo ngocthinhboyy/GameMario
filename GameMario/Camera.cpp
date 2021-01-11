@@ -26,8 +26,8 @@ void Camera::UpdateCamPos(DWORD dt)
 	if (scene->GetIsAutoMovingCamera()) {
 		this->cam_y = CAM_Y_DRAW_MAP;
 		if (isAutoMovingCamera) {
-			if (this->cam_x + game->GetScreenWidth() >= 6160) {
-				this->cam_x = 6160 - game->GetScreenWidth();
+			if (this->cam_x + game->GetScreenWidth() >= CAM_X_MAX_SCENE_AUTOCAM) {
+				this->cam_x = CAM_X_MAX_SCENE_AUTOCAM - game->GetScreenWidth();
 			}
 			else {
 				this->cam_x = this->cam_x +cam_x_speed* dt;
@@ -37,8 +37,8 @@ void Camera::UpdateCamPos(DWORD dt)
 			float cx, cy;
 			Mario* player = Mario::GetInstance();
 			player->GetPosition(cx, cy);
-			if (cx - (game->GetScreenWidth() / 2) <= 6192.0f) {
-				cx = 6192.0f;
+			if (cx - (game->GetScreenWidth() / 2) <= CAM_X_MIN_SCENE_AUTOCAM) {
+				cx = CAM_X_MIN_SCENE_AUTOCAM;
 			}
 			else
 			{

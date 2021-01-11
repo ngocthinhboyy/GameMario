@@ -78,12 +78,7 @@ void PlayerHoldingState::Update(int dt)
 {
 	Mario* mario = Mario::GetInstance();
 	if (!stopIncreasingSpeed && !alreadyMaxJumping) {
-		mario->vy += (dt * -MARIO_ACCELERATION_JUMP_Y);
-	}
-	if (mario->vy == 0)
-	{
-		isJumping = false;
-		SetAnimation();
+		mario->vy += (dt * -MARIO_ACCELERATION_JUMP_Y * 1.5f);
 	}
 	if (!isStanding) {
 		if ((abs(mario->vx) < MARIO_RUNNING_MAX_SPEED) && !isMaxSpeed && increaseSpeed) {
@@ -123,6 +118,11 @@ void PlayerHoldingState::KeyState(BYTE* states)
 				break;
 		}
 	}
+	if (mario->vy == 0)
+	{
+		isJumping = false;
+		SetAnimation();
+	}
 	if (game->IsKeyDown(DIK_A)) {
 		if (mario->vx == 0) {
 			isStanding = true;
@@ -140,7 +140,7 @@ void PlayerHoldingState::KeyState(BYTE* states)
 				isJumping = true;
 				SetAnimation();
 			}
-			if (abs(mario->vy) >= MARIO_JUMP_MAX_SPEED_Y_HOLDING) {
+			if (abs(mario->vy) >= MARIO_JUMP_MAX_SPEED_Y_HOLDING * 1.25f) {
 				alreadyMaxJumping = true;
 			}
 		}

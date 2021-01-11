@@ -47,7 +47,7 @@ void Leaf::Update(DWORD dt, int scaleTime)
 {
 	vy += ITEM_GRAVITY * dt;
 	if (vy >= 0) {
-		vuamoirakhoi = false;
+		firstTimeAppear = false;
 		if (y < startPositionY) {
 			vy = ITEM_GRAVITY * dt * 2.5;
 		}
@@ -55,9 +55,9 @@ void Leaf::Update(DWORD dt, int scaleTime)
 			vy = 0;
 			vy = ITEM_GRAVITY * dt * 2.5;
 		}
-		if (isCapVDau) {
+		if (isSupplyFirstSpeed) {
 			vx = LEAF_SPEED_X;
-			isCapVDau = false;
+			isSupplyFirstSpeed = false;
 		}
 		if (x >= startPositionX + 50) {
 			vx = -LEAF_SPEED_X;
