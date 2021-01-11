@@ -55,8 +55,8 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 		ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		//AddObjectInFileToGrid(top, bottom, left, right, obj);
-		DeterminedGridToObtainObject(obj);
+		AddObjectInFileToGrid(top, bottom, left, right, obj);
+		//DeterminedGridToObtainObject(obj);
 		break;
 	}
 	case OBJECT_TYPE_QUESTION_BRICK: {
@@ -66,8 +66,8 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 		ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		//AddObjectInFileToGrid(top, bottom, left, right, obj);
-		DeterminedGridToObtainObject(obj);
+		AddObjectInFileToGrid(top, bottom, left, right, obj);
+		//DeterminedGridToObtainObject(obj);
 		break;
 	}
 	case OBJECT_TYPE_KOOPA: {
@@ -79,8 +79,8 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 		ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		//AddObjectInFileToGrid(top, bottom, left, right, obj);
-		DeterminedGridToObtainObject(obj);
+		AddObjectInFileToGrid(top, bottom, left, right, obj);
+		//DeterminedGridToObtainObject(obj);
 		break;
 	}
 	case OBJECT_TYPE_FLOWER: {
@@ -90,8 +90,8 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 		ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		//AddObjectInFileToGrid(top, bottom, left, right, obj);
-		DeterminedGridToObtainObject(obj);
+		AddObjectInFileToGrid(top, bottom, left, right, obj);
+		//DeterminedGridToObtainObject(obj);
 		break;
 	}
 	case OBJECT_TYPE_COIN: {
@@ -102,8 +102,8 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 		ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		//AddObjectInFileToGrid(top, bottom, left, right, obj);
-		DeterminedGridToObtainObject(obj);
+		AddObjectInFileToGrid(top, bottom, left, right, obj);
+		//DeterminedGridToObtainObject(obj);
 		break;
 	}
 	case OBJECT_TYPE_GATE: {
@@ -117,8 +117,7 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 		obj->SetPosition(x, y);
 
 		obj->SetAnimationSet(ani_set);
-		//AddObjectInFileToGrid(top, bottom, left, right, obj);
-		DeterminedGridToObtainObject(obj);
+		AddObjectInFileToGrid(top, bottom, left, right, obj);
 		break;
 	}
 	case OBJECT_TYPE_ESPECIAL_BRICK: {
@@ -128,8 +127,7 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 		ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		//AddObjectInFileToGrid(top, bottom, left, right, obj);
-		DeterminedGridToObtainObject(obj);
+		AddObjectInFileToGrid(top, bottom, left, right, obj);
 		break;
 	}
 	case OBJECT_TYPE_RANDOM_GIFT: {
@@ -138,8 +136,7 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 		ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		//AddObjectInFileToGrid(top, bottom, left, right, obj);
-		DeterminedGridToObtainObject(obj);
+		AddObjectInFileToGrid(top, bottom, left, right, obj);
 		break;
 	}
 	case OBJECT_TYPE_MOVING_BRICK: {
@@ -148,8 +145,7 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 		ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		//AddObjectInFileToGrid(top, bottom, left, right, obj);
-		DeterminedGridToObtainObject(obj);
+		AddObjectInFileToGrid(top, bottom, left, right, obj);
 		break;
 	}
 	case OBJECT_TYPE_BOOMERANG_BROTHERS: {
@@ -158,8 +154,7 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 		ani_set = animation_sets->Get(ani_set_id);
 
 		obj->SetAnimationSet(ani_set);
-		//AddObjectInFileToGrid(top, bottom, left, right, obj);
-		DeterminedGridToObtainObject(obj);
+		AddObjectInFileToGrid(top, bottom, left, right, obj);
 		break;
 	}
 	default:

@@ -3,14 +3,13 @@
 #include <unordered_map>
 class Map
 {
-	int column;
-	int row;
-	int height_board;
+	int column = 0;
+	int row = 0;
+	int height_board = 0;
 	int mapArr[500][500];
-	LPTILEMANAGER tileManager;
-	LPCWSTR filePath;
+	LPTILEMANAGER tileManager = NULL;
+	LPCWSTR filePath = NULL;
 public:
-	Map();
 	Map(LPCWSTR filePath);
 	void AddTileManager(LPTILEMANAGER tileManager);
 	LPTILEMANAGER GetTileManager();

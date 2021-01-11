@@ -9,15 +9,15 @@
 
 class Mario : public GameObject
 {
-	int level;
-	bool untouchable;
-	DWORD untouchable_start;
+	int level = 1;
+	bool untouchable = false;
+	DWORD untouchable_start = 0;
 
 	float start_x;			// initial position of Mario at scene
 	float start_y;
 
 	static Mario* __instance;
-	PlayerState* playerState;
+	PlayerState* playerState = NULL;
 	int heart = 4;
 	int point = 0;
 	int coin = 0;
@@ -41,7 +41,7 @@ class Mario : public GameObject
 
 	bool isAlreadyStandingOnGateInWorldMap = false;
 public:
-	float speedLast;
+	float speedLast = .0f;
 	Mario(float x = 0.0f, float y = 0.0f);
 	void Update(DWORD dt, int scaleTime);
 	void UpdateInWorldMap(DWORD dt);

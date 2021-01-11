@@ -46,15 +46,11 @@ void PlayerMovingDownAndUpState::Update(int dt)
 	}
 	else if (mario->GetCanGoUpIntoGate()) {
 		mario->vy = -0.09f;
-		/*if (mario->y + MARIO_BIG_BBOX_HEIGHT > 1152 && !stopMoving) {
-			mario->ChangeState(PlayerStandingState::GetInstance());
-		}*/
 	}
 }
 
 void PlayerMovingDownAndUpState::KeyState(BYTE* states)
 {
-	//Game* game = Game::GetInstance();
 }
 
 PlayerState* PlayerMovingDownAndUpState::GetInstance()

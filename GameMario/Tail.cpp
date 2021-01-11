@@ -19,10 +19,6 @@
 #include "Flower.h"
 #include "BoomerangBrother.h"
 
-Tail::Tail()
-{
-}
-
 Tail::Tail(float x, float y, float w, float h)
 {
 	this->x = x;

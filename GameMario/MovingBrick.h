@@ -2,10 +2,9 @@
 #include "GameObject.h"
 class MovingBrick : public GameObject
 {
-	LPANIMATION animation;
+	LPANIMATION animation = NULL;
 	bool isStanded = false;
 public:
-	MovingBrick();
 	MovingBrick(float x, float y, float w, float h);
 	void CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent);
 	void Render();

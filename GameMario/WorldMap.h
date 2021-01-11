@@ -19,8 +19,8 @@
 class WorldMap : public Scene
 {
 protected:
-	Mario* player;
-	int mapID;
+	Mario* player = NULL;
+	int mapID = 0;
 	int timeOfPreviousSecond = 0;
 
 	void _ParseSection_OBJECTS(string line);

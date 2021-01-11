@@ -7,9 +7,9 @@ using namespace std;
 
 class TileManager
 {
-	int tile_height;
-	int tile_width;
-	LPDIRECT3DTEXTURE9 tileset;
+	int tile_height = 0;
+	int tile_width = 0;
+	LPDIRECT3DTEXTURE9 tileset = NULL;
 	vector<LPTILE> tiles;
 public:
 

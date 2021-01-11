@@ -1,4 +1,4 @@
-[OBJECTS NOT IN GRID]
+[OBJECTS STATIC IN GRID]
 # type	x	y	w	h	ani_set_id	extra_settings per object type
 # type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas
 #object_type_id	x	y	w	h	animation_sets	collisionX	collisionY
@@ -54,7 +54,7 @@
 2	3936	432	192	48	3	0	-1
 2	4224	576	192	48	3	0	-1
 2	4464	528	624	48	3	0	-1
-[OBJECTS IN GRID]
+[OBJECTS DYNAMIC IN GRID]
 # ENEMY
 # goomba
 #object_type_id	x	y	w	t	b	l	r	h	animation_sets	type_goomba

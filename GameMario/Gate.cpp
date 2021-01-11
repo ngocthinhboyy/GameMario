@@ -55,13 +55,17 @@ void Gate::Update(DWORD dt, int scaleTime)
 				if (mario->y > y) {
 					Camera::GetInstance()->SetCamPos(cam_x, cam_y);
 					Camera::GetInstance()->SetLockCamY(false);
-					/*Game* game = Game::GetInstance();
-					PlayScene* playScene = dynamic_cast<PlayScene*> (game->GetCurrentScene());
-					playScene->SetIsAutoMovingCamera(false);*/
 					Camera::GetInstance()->SetIsAutoMovingCamera(false);
 					mario->x = newPostitionXMario;
 					mario->y = newPostitionYMario;
 					isUsingThisGate = false;
+				}
+				else {
+					if (mario->GetLevel() == MARIO_LEVEL_RACCOON && mario->nx > 0) {
+						mario->x = x + 42;
+					}
+					else
+						mario->x = x + 24;
 				}
 			}
 			else if (wayDirectionY > 0) {

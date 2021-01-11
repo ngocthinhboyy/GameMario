@@ -83,8 +83,9 @@ void Mario::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LPC
 		else {
 			if (isRunning) {
 				//isCollisionWithWall = true;
+				float speedAcceleration = MARIO_SPEED_ACCELERATION * 3.5;
 				PlayerRunningState::lastStateIsSkidding = true;
-				vx += (dt * MARIO_SPEED_ACCELERATION * 3.5 * -nx);
+				vx += (dt * speedAcceleration * -nx);
 			}
 			else {
 				vx = 0;
@@ -190,16 +191,18 @@ void Mario::Update(DWORD dt, int scaleTime)
 			}
 			else if (QuestionBrick* questionBrick = dynamic_cast<QuestionBrick*> (e->obj)) {
 				if (e->nx != 0) {
+					float speedAcceleration = MARIO_SPEED_ACCELERATION * 3.5;
 					PlayerRunningState::lastStateIsSkidding = true;
-					vx += (dt * MARIO_SPEED_ACCELERATION * 3.5 * -this->nx);
+					vx += (dt * speedAcceleration * -this->nx);
 				}
 				else
 					questionBrick->CollisionWithPlayer(e);
 			}
 			else if (EspecialBrick* especialBrick = dynamic_cast<EspecialBrick*> (e->obj)) {
 				if (e->nx != 0) {
+					float speedAcceleration = MARIO_SPEED_ACCELERATION * 3.5;
 					PlayerRunningState::lastStateIsSkidding = true;
-					vx += (dt * MARIO_SPEED_ACCELERATION * 3.5 * -this->nx);
+					vx += (dt * speedAcceleration * -this->nx);
 				}
 				else
 					especialBrick->CollisionWithPlayer(e);

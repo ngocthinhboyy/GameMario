@@ -12,8 +12,8 @@
 class PlayScene : public Scene
 {
 protected:
-	Mario* player;					// A play scene has to have player, right? 
-	int mapID;
+	Mario* player = NULL;					// A play scene has to have player, right? 
+	int mapID = 0;
 	int timeOfPreviousSecond = 0;
 
 	void _ParseSection_OBJECTS(string line);

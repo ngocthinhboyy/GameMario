@@ -4,7 +4,7 @@
 class Scene
 {
 protected:
-	LPKEYEVENTHANDLER key_handler;
+	LPKEYEVENTHANDLER key_handler = NULL;
 	int id;
 	LPCWSTR sceneFilePath;
 	int remainingTime = 0;

@@ -122,8 +122,9 @@ void PlayerStandingState::OnKeyDown(int KeyCode) {
 		break;
 	}
 	case DIK_8: {
-		mario->x = 5600;
-		mario->y = 1100;
+		mario->x = 5831.4;
+		mario->y = 924;
+		mario->nx = -1;
 		Game* game = Game::GetInstance();
 		PlayScene* playScene = dynamic_cast<PlayScene*> (game->GetCurrentScene());
 		Camera::GetInstance()->SetLockCamY(true);

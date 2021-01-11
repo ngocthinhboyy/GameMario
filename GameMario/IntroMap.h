@@ -6,7 +6,7 @@
 class IntroMap : public Scene
 {
 protected:
-	int mapID;
+	int mapID = 0;
 	int timeOfPreviousSecond = 0;
 
 	void _ParseSection_OBJECTS(string line);

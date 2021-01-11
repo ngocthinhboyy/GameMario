@@ -3,10 +3,6 @@
 #include "StaticObjectDefine.h"
 #include "Mario.h"
 
-MovingBrick::MovingBrick()
-{
-}
-
 MovingBrick::MovingBrick(float x, float y, float w, float h)
 {
 	this->x = x;

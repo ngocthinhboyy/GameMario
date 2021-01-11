@@ -70,10 +70,10 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 
 		if (line[0] == '#') continue;
 
-		if (line == "[OBJECTS NOT IN GRID]") {
+		if (line == "[OBJECTS STATIC IN GRID]") {
 			section = SCENE_SECTION_OBJECTS_NOT_IN_GRID; continue;
 		}
-		if (line == "[OBJECTS IN GRID]") {
+		if (line == "[OBJECTS DYNAMIC IN GRID]") {
 			section = SCENE_SECTION_OBJECTS_IN_GRID; continue;
 		}
 		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }
@@ -85,7 +85,7 @@ void PlayScene::_ParseSection_OBJECTS(string line)
 		}
 	}
 	player = Mario::GetInstance();
-	player->SetPosition(100, 500);
+	player->SetPosition(130, 560);
 	player->ChangeState(PlayerStandingState::GetInstance());
 	f.close();
 	

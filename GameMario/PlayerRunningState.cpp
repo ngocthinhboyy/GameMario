@@ -68,11 +68,12 @@ void PlayerRunningState::SetAnimation()
 void PlayerRunningState::Update(int dt)
 {
 	Mario* mario = Mario::GetInstance();
+	float speedAcceleration = MARIO_SPEED_ACCELERATION * 1.5;
 	if ((abs(mario->vx) < MARIO_RUNNING_MAX_SPEED) && !isMaxSpeed && increaseSpeed && !isSkidding && !isCrouching) {
-		mario->vx += (dt * MARIO_SPEED_ACCELERATION  * 1.5 *  (mario->nx));
+		mario->vx += (dt * speedAcceleration *  (mario->nx));
 	}
 	if (isCrouching) {
-		mario->vx += (dt * MARIO_SPEED_ACCELERATION * 1.5 * -(mario->nx));
+		mario->vx += (dt * speedAcceleration * -(mario->nx));
 		if (mario->vx * mario->nx <= 0) {
 			isCrouching = false;
 			isMaxSpeed = false;

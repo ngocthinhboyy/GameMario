@@ -4,7 +4,7 @@
 #include "Enemy.h"
 class Fireball : public GameObject
 {
-	LPANIMATION animation;
+	LPANIMATION animation = NULL;
 	int type = 0;
 	bool isDie = false;
 	DWORD timeDie = 0;
