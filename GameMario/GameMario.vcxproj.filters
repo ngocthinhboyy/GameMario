@@ -97,6 +97,9 @@
     <Filter Include="Framework\Game_Scene\IntroScene">
       <UniqueIdentifier>{494e1aab-8c1f-4458-a491-2542f3bdfea6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="game\Object\IntroObject\AutoObject">
+      <UniqueIdentifier>{2fc8bbf4-92ea-4fe8-83dd-f4b24e208ba4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sprite.cpp">
@@ -320,6 +323,15 @@
     </ClCompile>
     <ClCompile Include="BoomerangWeapon.cpp">
       <Filter>game\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform.cpp">
+      <Filter>game\Object\IntroObject\AutoObject</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioInIntro.cpp">
+      <Filter>game\Object\IntroObject\AutoObject</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyInIntro.cpp">
+      <Filter>game\Object\IntroObject\AutoObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -577,6 +589,15 @@
     </ClInclude>
     <ClInclude Include="BoomerangWeapon.h">
       <Filter>game\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform.h">
+      <Filter>game\Object\IntroObject\AutoObject</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioInIntro.h">
+      <Filter>game\Object\IntroObject\AutoObject</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyInIntro.h">
+      <Filter>game\Object\IntroObject\AutoObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

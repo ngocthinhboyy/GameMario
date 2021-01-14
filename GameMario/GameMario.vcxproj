@@ -34,6 +34,7 @@
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="EndTitle.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyInIntro.cpp" />
     <ClCompile Include="EspecialBrick.cpp" />
     <ClCompile Include="Fireball.cpp" />
     <ClCompile Include="Flower.cpp" />
@@ -53,8 +54,10 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapManager.cpp" />
     <ClCompile Include="Mario.cpp" />
+    <ClCompile Include="MarioInIntro.cpp" />
     <ClCompile Include="MovingBrick.cpp" />
     <ClCompile Include="Mushroom.cpp" />
+    <ClCompile Include="Platform.cpp" />
     <ClCompile Include="PlayerCrouchingState.cpp" />
     <ClCompile Include="PlayerDieState.cpp" />
     <ClCompile Include="PlayerFallingSlowlyState.cpp" />
@@ -113,6 +116,7 @@
     <ClInclude Include="EndTitle.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyDefine.h" />
+    <ClInclude Include="EnemyInIntro.h" />
     <ClInclude Include="EspecialBrick.h" />
     <ClInclude Include="Fireball.h" />
     <ClInclude Include="Flower.h" />
@@ -137,8 +141,10 @@
     <ClInclude Include="MapManager.h" />
     <ClInclude Include="Mario.h" />
     <ClInclude Include="MarioDefine.h" />
+    <ClInclude Include="MarioInIntro.h" />
     <ClInclude Include="MovingBrick.h" />
     <ClInclude Include="Mushroom.h" />
+    <ClInclude Include="Platform.h" />
     <ClInclude Include="PlayerCrouchingState.h" />
     <ClInclude Include="PlayerDieState.h" />
     <ClInclude Include="PlayerFallingSlowlyState.h" />

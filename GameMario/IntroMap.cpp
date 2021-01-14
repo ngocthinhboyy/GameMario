@@ -8,6 +8,7 @@
 #include "ThreeObject.h"
 #include "Arrow.h"
 #include "IntroMapDefine.h"
+#include "Platform.h"
 
 void IntroMap::_ParseSection_OBJECTS(string line)
 {
@@ -77,6 +78,37 @@ void IntroMap::ReadLineObject(string line)
 		objects.push_back(obj);
 		break;
 	}
+	case INTROMAP_OBJECT_TYPE_RED_CURTAIN: {
+		obj = new Platform(x, y, w, h, TYPE_RED_CURTAIN);
+		obj->SetAnimationSet(ani_set);
+		objects.push_back(obj);
+		break;
+	}
+	case INTROMAP_OBJECT_TYPE_STAGE: {
+		obj = new Platform(x, y, w, h, TYPE_STAGE);
+		obj->SetAnimationSet(ani_set);
+		objects.push_back(obj);
+		break;
+	}
+	case OBJECT_TYPE_COLLISION_MAP: {
+		int collisionDirectionX = atoi(tokens[6].c_str());
+		int collisionDirectionY = atoi(tokens[7].c_str());
+		obj = new CollisionMapObject(w, h, collisionDirectionX, collisionDirectionY);
+		obj->SetPosition(x, y);
+
+		ani_set = animation_sets->Get(ani_set_id);
+
+		obj->SetAnimationSet(ani_set);
+		objects.push_back(obj);
+		break;
+	}
+	case INTROMAP_OBJECT_TYPE_PANEL: {
+		obj = new Platform(x, y, w, h, TYPE_PANEL);
+		obj->SetAnimationSet(ani_set);
+		objects.push_back(obj);
+		break;
+	}
+	
 	default:
 		break;
 	}
@@ -144,6 +176,8 @@ void IntroMap::Load()
 		}
 	}
 
+	Textures::GetInstance()->AddTexture(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
+
 	f.close();
 
 	DebugOut(L"[INFO] Done loading intro map resources %s\n", sceneFilePath);
@@ -151,15 +185,33 @@ void IntroMap::Load()
 
 void IntroMap::Update(DWORD dt)
 {
+	for (auto object : objects) {
+		if (object->stillAlive == true) {
+			object->Update(dt, 1);
+		}
+	}
+	if (marioGreen != NULL)
+		marioGreen->Update(dt, 1);
+	if (marioRed != NULL)
+		marioRed->Update(dt, 1);
 }
 
 void IntroMap::Render()
 {
 	Camera::GetInstance()->SetCamPos(0, 0);
 	MapManager* mapManager = MapManager::GetInstance();
-	mapManager->RenderMap(mapID);
-	for (auto object : objects)
-		object->Render();
+	if (panelDisappeared) {
+		mapManager->RenderMap(mapID);
+	}
+	for (auto object : objects) {
+		if (object->stillAlive == true) {
+			object->Render();
+		}
+	}
+	if (marioGreen != NULL)
+		marioGreen->Render();
+	if (marioRed != NULL)
+		marioRed->Render();
 }
 
 void IntroMap::Unload()

@@ -15,6 +15,9 @@
 14	textures\worldmap_texture.png	255	255	255
 15	textures\intro_texture.png	255	255	255
 16	textures\arrow.png	156	252	240
+17	textures\red_curtain.png	1	1	1
+18	textures\stage.png	1	1	1
+19	textures\panel_intro.png	163	73	164
 # id	left	top	width	height	texture_id
 [SPRITES]
 # SMALL MARIO
@@ -415,6 +418,29 @@
 44007	124	188	15	16	5
 44008	145	186	16	15	5
 
+#intromap
+#red_curtain
+45001	38	7	255	213	17
+#stage
+45002	102	36	256	250	18
+#mario_green
+#standing
+45003	197	78	14	27	1
+#walking
+45004	197	78	14	27	1
+45005	214	78	16	27	1
+45006	233	79	16	26	1
+#jump
+45007	271	79	16	26	1
+#falling
+45008	233	79	16	26	1
+#title
+45009	233	170	179	113	19
+45010	19	35	179	113	19
+45011	23	158	179	113	19
+45012	23	301	179	113	19
+45013	223	37	179	113	19
+
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
 # ==== MARIO =========
@@ -709,6 +735,23 @@
 # Boomerang Brother weapon
 4602	44005	80	44006	80	44007	80	44008	80
 
+#intromap
+#redcurtain
+4701	45001	50
+#stage
+4702	45002	50
+#mario_green
+#standing
+4703	45003	100
+#walking
+4704	45004	100	45005	100	45006	100
+#flying
+4705	45007	100
+#falling
+4706	45008	100
+#title
+4707	45009	100	45010	100	45011	100	45012	100	45013	100
+
 # id	ani1	ani2	ani3
 [ANIMATION_SETS]
 # MARIO
@@ -750,3 +793,5 @@
 19	4501
 #BOOMERANG BROTHERS
 20	4601	4602
+#INTROMAP
+21	4701	4702	4703	4704	4705	4706	4707

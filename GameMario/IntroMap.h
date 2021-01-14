@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include <iostream>
 #include <fstream>
+#include "MarioInIntro.h"
 class IntroMap : public Scene
 {
 protected:
@@ -14,7 +15,10 @@ protected:
 	void _ParseSection_MAP(string line);
 
 public:
+	bool panelDisappeared = false;
 	vector<LPGAMEOBJECT> objects;
+	MarioInIntro* marioGreen = NULL;
+	MarioInIntro* marioRed = NULL;
 	IntroMap(int id, LPCWSTR filePath);
 
 
