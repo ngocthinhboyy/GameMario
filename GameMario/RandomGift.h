@@ -2,7 +2,7 @@
 #include "GameObject.h"
 class RandomGift : public GameObject
 {
-	LPANIMATION animation;
+	LPANIMATION animation = NULL;
 	int itemCurrent = 0;
 	DWORD timeStartRandom = 0;
 public:

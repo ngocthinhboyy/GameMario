@@ -108,7 +108,6 @@ void MarioInIntro::Render()
 	if (animation != NULL) {
 		animation->Render(x, y, alpha, scale);
 	}
-	//RenderBoundingBox();
 }
 
 void MarioInIntro::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -204,7 +203,7 @@ void MarioInIntro::SetState(int state)
 				vy = -0.65f;
 			}
 			else if (type == TYPE_RED_MARIO) {
-				vy = -1.2f;
+				vy = -1.5f;
 			}
 			break;
 		}
@@ -221,9 +220,6 @@ void MarioInIntro::SetState(int state)
 		case MARIO_IN_INTRO_STATE_RACCOON_WALKING: {
 			nx = 1;
 			vx = 0.2f;
-			break;
-		}
-		case MARIO_IN_INTRO_STATE_FALLING: {
 			break;
 		}
 										   
@@ -246,7 +242,7 @@ void MarioInIntro::ActionInIntro()
 		else if (state == MARIO_IN_INTRO_STATE_FALLING_JUMP && vy == 0) {
 			SetState(MARIO_IN_INTRO_STATE_HIGH_JUMPING);
 		}
-		else if (now - timeStartMoving >= 610 && state != MARIO_IN_INTRO_STATE_FALLING) {
+		else if (now - timeStartMoving >= 610 && state != MARIO_IN_INTRO_STATE_FALLING ) {
 			SetState(MARIO_IN_INTRO_STATE_FALLING_JUMP);
 		}
 		else if (now - timeStartMoving >= 600 && state != MARIO_IN_INTRO_STATE_FALLING) {

@@ -36,8 +36,8 @@ void ButtonP::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 				PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 				for (auto x : scene->objects) {
 					if (EspecialBrick* especialBrick = dynamic_cast<EspecialBrick*> (x)) {
-						if (especialBrick->GetType() == 1) {
-							Grid::GetInstance()->DeterminedGridToObtainObject(new Coin(especialBrick->x, especialBrick->y, 48, 48, COIN_TYPE_FROM_ESPECIAL_BRICK));
+						if (especialBrick->GetType() == ESPECIAL_BRICK_TYPE_HAS_EMPTY) {
+							Grid::GetInstance()->DeterminedGridToObtainObject(new Coin(especialBrick->x, especialBrick->y, ESPECIAL_BRICK_WIDTH, ESPECIAL_BRICK_HEIGHT, COIN_TYPE_FROM_ESPECIAL_BRICK));
 							x->stillAlive = false;
 						}
 					}
@@ -66,7 +66,7 @@ void ButtonP::Update(DWORD dt, int scaleTime)
 {
 	GameObject::Update(dt, scaleTime);
 	x += dx;
-	if (y + dy <= startPositionY - 48) {
+	if (y + dy <= startPositionY - ESPECIAL_BRICK_HEIGHT) {
 		vy = 0;
 	}
 	else

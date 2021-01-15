@@ -170,15 +170,10 @@ void PlayerStandingState::KeyState(BYTE* states) {
 		mario->ChangeState(PlayerJumpingState::GetInstance());
 	}
 	else if ((game->IsKeyDown(DIK_RIGHT) && game->IsKeyDown(DIK_LEFT))) {
-		/*if (game->IsKeyDown(DIK_DOWN))
-			mario->ChangeState(PlayerCrouchingState::GetInstance());*/
 		return;
 	}
 	else if (game->IsKeyDown(DIK_A) && (game->IsKeyDown(DIK_RIGHT) || game->IsKeyDown(DIK_LEFT))) {
-		/*if (mario->GetLevel() == MARIO_LEVEL_RACCOON) {
-			mario->ChangeState(PlayerSpinningState::GetInstance());
-			return;
-		}*/
+
 		mario->ChangeState(PlayerRunningState::GetInstance());
 		return;
 	}

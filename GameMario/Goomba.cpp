@@ -13,6 +13,7 @@
 #include "PlayerDieState.h"
 #include "Fireball.h"
 #include "Mushroom.h"
+#include "StaticObjectDefine.h"
 
 Goomba::Goomba()
 {
@@ -109,7 +110,6 @@ void Goomba::Render()
 	if (animation != NULL) {
 		animation->Render(x, y, alpha, scale);
 	}
-	//RenderBoundingBox();
 }
 
 void Goomba::Update(DWORD dt, int scaleTime)
@@ -139,7 +139,6 @@ void Goomba::Update(DWORD dt, int scaleTime)
 		CalcPotentialCollisions(&coCollisionMapObjects, coEvents);
 		CalcPotentialCollisions(&coObjects, coEvents);
 		CalcPotentialCollisions(&coEnemies, coEvents);
-		//CalcPotentialCollisions(Mario::GetInstance(), coEvents);
 	}
 	if (coEvents.size() == 0 || isUpsideDown)
 	{
@@ -184,7 +183,7 @@ void Goomba::Update(DWORD dt, int scaleTime)
 					vx = ENEMY_DIE_SPEED_X;
 				vy = -ENEMY_DIE_SPEED_Y;
 				noCollisionConsideration = true;
-				Point* point = new Point(x, y, 39, 30, 100);
+				Point* point = new Point(x, y, POINT_WIDTH, POINT_HEIGHT, POINT_TYPE_100);
 				Grid* grid = Grid::GetInstance();
 				grid->DeterminedGridToObtainObject(point);
 				Mario::GetInstance()->SetPoint(Mario::GetInstance()->GetPoint() + 100);
@@ -267,7 +266,7 @@ void Goomba::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LP
 		else if (collisionEvent->ny > 0 && collisionMapObjectDirectionY == -1)
 			y += dy;
 		else {
-			if (type == 2) {
+			if (type == GOOMBA_TYPE_RED) {
 				if (state == RED_GOOMBA_STATE_JUMP) {
 					if (countTimeJump < 2) {
 						timeJumpType2 = GetTickCount64();
@@ -289,7 +288,7 @@ void Goomba::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEvent, LP
 				else
 					vy = 0;
 			}
-			else if (type == 1)
+			else if (type == GOOMBA_TYPE_BROWN)
 				vy = 0;
 		}
 	}
@@ -340,7 +339,7 @@ void Goomba::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 			if (type == GOOMBA_TYPE_BROWN) {
 				state = ENEMY_STATE_DIE;
 				mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
-				Point* point = new Point(x, y, 39, 30, 100);
+				Point* point = new Point(x, y, POINT_WIDTH, POINT_HEIGHT, POINT_TYPE_100);
 				Grid* grid = Grid::GetInstance();
 				grid->DeterminedGridToObtainObject(point);
 				mario->SetPoint(mario->GetPoint() + 100);
@@ -353,7 +352,7 @@ void Goomba::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 				if (state != ENEMY_STATE_WALKING) {
 					state = ENEMY_STATE_WALKING;
 					mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
-					Point* point = new Point(x, y, 39, 30, 100);
+					Point* point = new Point(x, y, POINT_WIDTH, POINT_HEIGHT, POINT_TYPE_100);
 					Grid* grid = Grid::GetInstance();
 					grid->DeterminedGridToObtainObject(point);
 					mario->SetPoint(mario->GetPoint() + 100);
@@ -364,7 +363,7 @@ void Goomba::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 				else if (state == ENEMY_STATE_WALKING) {
 					state = ENEMY_STATE_DIE;
 					mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
-					Point* point = new Point(x, y, 39, 30, 100);
+					Point* point = new Point(x, y, POINT_WIDTH, POINT_HEIGHT, POINT_TYPE_100);
 					Grid* grid = Grid::GetInstance();
 					grid->DeterminedGridToObtainObject(point);
 					mario->SetPoint(mario->GetPoint() + 100);

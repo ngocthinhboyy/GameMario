@@ -7,6 +7,7 @@
 #include "PlayScene.h"
 #include "Point.h"
 #include "Grid.h"
+#include "StaticObjectDefine.h"
 
 Coin::Coin(float x, float y, float w, float h, int type)
 {
@@ -54,7 +55,7 @@ void Coin::Update(DWORD dt, int scaleTime)
 				mario->SetPoint(mario->GetPoint() + MARIO_BONUS_POINT_COIN);
 				this->isBonused = true;
 				this->stillAlive = false;
-			    Point* point = new Point(x, y, 39, 30, 100);
+			    Point* point = new Point(x, y, POINT_WIDTH, POINT_HEIGHT, POINT_TYPE_100);
 				Grid* grid = Grid::GetInstance(); 
 				grid->DeterminedGridToObtainObject(point);
 			}
@@ -65,7 +66,7 @@ void Coin::Update(DWORD dt, int scaleTime)
 	}
 	else if (type == COIN_TYPE_FROM_ESPECIAL_BRICK) {
 		if (GetTickCount64() - timeStartTransform >= TIME_COIN_DIE) {
-			Grid::GetInstance()->DeterminedGridToObtainObject(new EspecialBrick(x, y, 48, 48, 1));
+			Grid::GetInstance()->DeterminedGridToObtainObject(new EspecialBrick(x, y, ESPECIAL_BRICK_WIDTH, ESPECIAL_BRICK_WIDTH, ESPECIAL_BRICK_TYPE_HAS_EMPTY));
 			stillAlive = false;
 		}
 	}

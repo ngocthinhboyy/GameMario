@@ -9,6 +9,7 @@
 #include "PlayerDieState.h"
 #include "Point.h"
 #include "Camera.h"
+#include "StaticObjectDefine.h"
 
 BoomerangBrother::BoomerangBrother()
 {
@@ -29,11 +30,11 @@ void BoomerangBrother::SetAnimation()
 	switch (state)
 	{
 		case BOOMERANG_BROTHER_MOVING_STATE: {
-				animation = animationDatabase->Get(4601);
-				break;
-			}
+			animation = animationDatabase->Get(ANI_BOOMERANG_BROTHER_MOVING);
+			break;
+		}
 		case BOOMERANG_BROTHER_ATTACK_STATE: {
-			animation = animationDatabase->Get(4603);
+			animation = animationDatabase->Get(ANI_BOOMERANG_BROTHER_ATTACK);
 			break;
 		}
 		default:
@@ -53,7 +54,6 @@ void BoomerangBrother::Render()
 	if (animation != NULL) {
 		animation->Render(x, y, alpha, scale);
 	}
-	//RenderBoundingBox();
 }
 
 void BoomerangBrother::ChangeState()
@@ -62,7 +62,7 @@ void BoomerangBrother::ChangeState()
 	if (timeMove == 0) {
 		timeMove = now;
 		timeAttack = now;
-		vx = 0.09f;
+		vx = BOOMERANG_BROTHER_SPEED;
 		state = BOOMERANG_BROTHER_MOVING_STATE;
 	}
 	else if (now - timeMove >= 1000) {
@@ -73,9 +73,9 @@ void BoomerangBrother::ChangeState()
 	else if (state == BOOMERANG_BROTHER_ATTACK_STATE && now - timeAttack >= 200) {
 		state = BOOMERANG_BROTHER_MOVING_STATE;
 	}
-	if (now - timeAttack >= 2500) {
+	if (now - timeAttack >= BOOMERANG_TIME_ATTACK) {
 		state = BOOMERANG_BROTHER_ATTACK_STATE;
-		BoomerangWeapon* boomerang = new BoomerangWeapon(x + w, y + 5, 45, 45);
+		BoomerangWeapon* boomerang = new BoomerangWeapon(x + w, y + 5, BOOMERANG_WEAPON_WIDTH, BOOMERANG_WEAPON_HEIGHT);
 		Grid::GetInstance()->DeterminedGridToObtainObject(boomerang);
 		timeAttack = now;
 	}
@@ -198,11 +198,10 @@ void BoomerangBrother::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 		if (collisionEvent->ny < 0) {
 			state = ENEMY_STATE_DIE;
 			mario->vy = -MARIO_JUMP_COLLISION_Y_WITH_ENEMY;
-			Point* point = new Point(x, y, 39, 30, 100);
+			Point* point = new Point(x, y, POINT_WIDTH, POINT_HEIGHT, POINT_TYPE_100);
 			Grid* grid = Grid::GetInstance();
 			grid->DeterminedGridToObtainObject(point);
 			mario->SetPoint(mario->GetPoint() + 100);
-			//vy = -ENEMY_DIE_SPEED_Y;
 			vx = 0;
 			SetIsUpsideDown(true);
 			noCollisionConsideration = true;

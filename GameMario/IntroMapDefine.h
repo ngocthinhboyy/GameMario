@@ -11,12 +11,18 @@
 
 #define ARROW_ANI									4302
 #define THREEOBJECT_ANI								4301
+#define KOOPA_TORTOISE_ANI							906
+#define GOOMBA_ANI									801
 
 #define TYPE_RED_MARIO								1
 #define TYPE_GREEN_MARIO							2
 #define TYPE_STAGE									3
 #define TYPE_RED_CURTAIN							4
 #define TYPE_PANEL									5
+
+#define STAGE_ANI									4702
+#define RED_CURTAIN_ANI								4701
+#define PANEL_ANI									4707
 
 #define MARIO_IN_INTRO_STATE_STANDING				1
 #define MARIO_IN_INTRO_STATE_WALKING				2
@@ -30,5 +36,8 @@
 #define MARIO_IN_INTRO_STATE_RACCOON_WALKING		10
 
 #define TYPE_ENEMY_KOOPA_TORTOISE					1
-#define TYPE_LEAF								2
+#define TYPE_LEAF									2
 #define TYPE_ENEMY_GOOMBA							3
+
+#define DYNAMIC_INTRO_WIDTH							48
+#define DYNAMIC_INTRO_HEIGHT						48

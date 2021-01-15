@@ -54,3 +54,7 @@
 #define OBJECT_TYPE_COIN										7
 
 #define WORLDMAP_SECTION_OBJECT									1
+
+#define MINIMUM_LEFT_GRID										3
+#define MAXIMUM_RIGHT_GRID										19
+#define MINIMUM_BOTTOM_GRID										4

@@ -107,7 +107,6 @@ void PlayerRunningState::Update(int dt)
 
 void PlayerRunningState::KeyState(BYTE* states)
 {
-	// de A de phai roi tha A de trai no chua co quay dau
 	Game* game = Game::GetInstance();
 	Mario* mario = Mario::GetInstance();
 	DWORD now = GetTickCount64();

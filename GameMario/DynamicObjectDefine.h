@@ -21,3 +21,5 @@
 
 #define FIREBALL_TYPE_WEAPON				1
 #define FIREBALL_TYPE_OF_FLOWER				2
+
+#define MOVING_BRICK_SPEED					0.1f

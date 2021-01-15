@@ -52,13 +52,11 @@ void RandomGift::Render()
 	int alpha = 255;
 	D3DXVECTOR2 scale;
 	scale = D3DXVECTOR2(RATIO_X_SCALE,RATIO_Y_SCALE);
-	//this->animation->Render(7971, 915, alpha, scale);
 	SetAnimation();
 	if (animation != NULL) {
 		AnimationDatabase::GetInstance()->Get(RANDOM_GIFT_ANI)->Render(startPositionX - 15, startPositionY - 15, alpha, scale);
 		animation->Render(x, y, alpha, scale);
 	}
-	//RenderBoundingBox();
 }
 
 void RandomGift::Update(DWORD dt, int scaleTime)

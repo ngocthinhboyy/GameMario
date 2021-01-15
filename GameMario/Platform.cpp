@@ -63,9 +63,9 @@ void Platform::Update(DWORD dt, int scaleTime)
 			}
 			scene->panelDisappeared = true;
 			stopMoving = true;
-			GameObject* object = new DynamicObjectInIntro(Game::GetInstance()->GetScreenWidth() / 2, 0, 48, 48, TYPE_ENEMY_KOOPA_TORTOISE);
+			GameObject* object = new DynamicObjectInIntro(Game::GetInstance()->GetScreenWidth() / 2, 0, DYNAMIC_INTRO_WIDTH, DYNAMIC_INTRO_HEIGHT, TYPE_ENEMY_KOOPA_TORTOISE);
 			scene->objects.push_back(object);
-			GameObject* leaf = new DynamicObjectInIntro(Game::GetInstance()->GetScreenWidth() / 2, 0, 48, 48, TYPE_LEAF);
+			GameObject* leaf = new DynamicObjectInIntro(Game::GetInstance()->GetScreenWidth() / 2, 0, DYNAMIC_INTRO_WIDTH, DYNAMIC_INTRO_HEIGHT, TYPE_LEAF);
 			scene->objects.push_back(leaf);
 		}
 		if (!stopMoving) {
@@ -82,11 +82,11 @@ void Platform::Render()
 	D3DXVECTOR2 scale;
 	scale = D3DXVECTOR2(RATIO_X_SCALE, RATIO_Y_SCALE);
 	if (type == TYPE_STAGE)
-		animation = AnimationDatabase::GetInstance()->Get(4702);
+		animation = AnimationDatabase::GetInstance()->Get(STAGE_ANI);
 	else if (type == TYPE_RED_CURTAIN)
-		animation = AnimationDatabase::GetInstance()->Get(4701);
+		animation = AnimationDatabase::GetInstance()->Get(RED_CURTAIN_ANI);
 	else if(type == TYPE_PANEL)
-		animation = AnimationDatabase::GetInstance()->Get(4707);
+		animation = AnimationDatabase::GetInstance()->Get(PANEL_ANI);
 	if (animation != NULL) {
 		animation->Render(x, y, alpha, scale);
 	}

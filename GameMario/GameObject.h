@@ -47,31 +47,31 @@ class GameObject
 protected:
 	static int idGenerate;
 public:
-	int gameObjectID;
-	float x;
-	float y;
-	float w;
-	float h;
+	int gameObjectID = 0;
+	float x = .0f;
+	float y = .0f;
+	float w = .0f;
+	float h = .0f;
 
-	float dx;	// dx = vx*dt
-	float dy;	// dy = vy*dt
+	float dx = .0f;	// dx = vx*dt
+	float dy = .0f;	// dy = vy*dt
 
-	float vx;
-	float vy;
+	float vx = .0f;
+	float vy = .0f;
 
-	int nx;
+	int nx = 0;
 
-	DWORD dt;
+	DWORD dt = 0;
 
 	bool stillAlive = true;
 	bool inGrid = false;
 
-	LPANIMATION_SET animation_set;
+	LPANIMATION_SET animation_set = NULL;
 
-	float startPositionX;
-	float startPositionY;
-	int startNx;
-	int state;
+	float startPositionX = .0f;
+	float startPositionY = .0f;
+	int startNx = 0;
+	int state = 0;
 	bool isAlreadyAppeared = false;
 	bool noCollisionConsideration = false;
 public:

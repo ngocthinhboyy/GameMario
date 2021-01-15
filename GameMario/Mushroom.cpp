@@ -42,12 +42,10 @@ void Mushroom::Render()
 	if (animation != NULL) {
 		animation->Render(x, y, alpha, scale);
 	}
-	//RenderBoundingBox();
 }
 
 void Mushroom::Update(DWORD dt, int scaleTime)
 {
-	//vy += ITEM_GRAVITY * dt;
 	if (y + MUSHROOM_BBOX_HEIGHT <= startPositionY && !alreadyAppear) {
 		vy += ITEM_GRAVITY * dt;
 		vx = MUSHROOM_SPEED * Mario::GetInstance()->nx;

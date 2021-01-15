@@ -2,6 +2,8 @@
 #include "AnimationDatabase.h"
 #include "StaticObjectDefine.h"
 #include "Mario.h"
+#include "EnemyDefine.h"
+#include "DynamicObjectDefine.h"
 
 MovingBrick::MovingBrick(float x, float y, float w, float h)
 {
@@ -9,7 +11,7 @@ MovingBrick::MovingBrick(float x, float y, float w, float h)
 	this->y = y;
 	this->w = w;
 	this->h = h;
-	this->vx = -0.1f;
+	this->vx = -MOVING_BRICK_SPEED;
 }
 
 void MovingBrick::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
@@ -42,13 +44,12 @@ void MovingBrick::Render()
 	if (animation != NULL) {
 		animation->Render(x, y, alpha, scale);
 	}
-	//RenderBoundingBox();
 }
 
 void MovingBrick::Update(DWORD dt, int scaleTime)
 {
 	if(isStanded)
-		vy += 0.002f * dt;
+		vy += ENEMY_GRAVITY * dt;
 	GameObject::Update(dt, scaleTime);
 	x += dx;
 	y += dy;

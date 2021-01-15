@@ -19,13 +19,13 @@
 #define POINT_TYPE_100							100
 #define POINT_TYPE_1000							1000
 #define POINT_TYPE_1UP							1
+#define POINT_WIDTH								39
+#define POINT_HEIGHT							30
 
 #define POINT_100_ANI							2501
 #define POINT_1000_ANI							4401
 #define POINT_1UP_ANI							4402
 
-#define WIDTH_POINT								39
-#define HEIGHT_POINT							30
 
 #define TIME_LIMIT_FRAGMENT_DISAPEAR			5000
 
@@ -34,3 +34,6 @@
 #define ESPECIAL_BRICK_TYPE_HAS_1UP				3
 #define ESPECIAL_BRICK_TYPE_HAS_MANY_COINS		4
 #define ESPECIAL_BRICK_TYPE_HAS_ITEM			5
+
+#define ESPECIAL_BRICK_WIDTH					48
+#define ESPECIAL_BRICK_HEIGHT					48

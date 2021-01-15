@@ -103,7 +103,6 @@ void DynamicObjectInIntro::Render()
 	if (animation != NULL) {
 		animation->Render(x, y, alpha, scale);
 	}
-	//RenderBoundingBox();
 }
 
 void DynamicObjectInIntro::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -117,13 +116,13 @@ void DynamicObjectInIntro::GetBoundingBox(float& left, float& top, float& right,
 void DynamicObjectInIntro::SetAnimation()
 {
 	if (type == TYPE_ENEMY_KOOPA_TORTOISE) {
-		animation = AnimationDatabase::GetInstance()->Get(906);
+		animation = AnimationDatabase::GetInstance()->Get(KOOPA_TORTOISE_ANI);
 	}
 	else if (type == TYPE_LEAF) {
-		animation = AnimationDatabase::GetInstance()->Get(1101);
+		animation = AnimationDatabase::GetInstance()->Get(LEAF_ANI);
 	}
 	else if (type == TYPE_ENEMY_GOOMBA) {
-		animation = AnimationDatabase::GetInstance()->Get(801);
+		animation = AnimationDatabase::GetInstance()->Get(GOOMBA_ANI);
 	}
 }
 

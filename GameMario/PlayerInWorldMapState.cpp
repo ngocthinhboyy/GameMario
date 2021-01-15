@@ -68,7 +68,7 @@ void PlayerInWorldMapState::OnKeyDown(int KeyCode)
 				Mario::GetInstance()->vy = 0.3f;
 			break;
 		}
-		case DIK_S: {
+		case DIK_T: {
 			DWORD timeStart = GetTickCount64();
 			Game::GetInstance()->SwitchScene(2);
 			Mario::GetInstance()->nx = 1;
@@ -77,7 +77,7 @@ void PlayerInWorldMapState::OnKeyDown(int KeyCode)
 			playScene->SetTimeOfPreviousSecond(timeStart);
 			break;
 		}
-		case DIK_T: {
+		case DIK_S: {
 			DWORD timeStart = GetTickCount64();
 			Game::GetInstance()->SwitchScene(4);
 			Mario::GetInstance()->nx = 1;

@@ -5,6 +5,7 @@
 #include "PlayerLevelDownTransformState.h"
 #include "PlayScene.h"
 #include "PlayerDieState.h"
+#include "EnemyDefine.h"
 
 BoomerangWeapon::BoomerangWeapon()
 {
@@ -19,7 +20,7 @@ BoomerangWeapon::BoomerangWeapon(float x, float y, float w, float h)
 	this->startPositionY = y + 10;
 	this->startPositionX = x - 10;
 	this->gameObjectID = idGenerate++;
-	this->vx = 0.4f;
+	this->vx = BOOMERANG_WEAPON_SPEED;
 	this->vy = -0.2f;
 	this->timeTurnBack = GetTickCount64();
 }
@@ -27,7 +28,7 @@ BoomerangWeapon::BoomerangWeapon(float x, float y, float w, float h)
 void BoomerangWeapon::SetAnimation()
 {
 	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
-	animation = animationDatabase->Get(4602);
+	animation = animationDatabase->Get(ANI_BOOMERANG_WEAPON);
 }
 
 void BoomerangWeapon::Render()
@@ -56,7 +57,7 @@ void BoomerangWeapon::Update(DWORD dt, int scaleTime)
 			isTurningBack = true;
 	}
 	if (isTurningBack && !isAlreadyTurnedBack) {
-		vx = -0.4f;
+		vx = -BOOMERANG_WEAPON_SPEED;
 		vy = 0;
 		isAlreadyTurnedBack = true;
 	}

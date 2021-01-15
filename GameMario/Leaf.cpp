@@ -40,7 +40,6 @@ void Leaf::Render()
 	if (animation != NULL) {
 		animation->Render(x, y, alpha, scale);
 	}
-	//RenderBoundingBox();
 }
 
 void Leaf::Update(DWORD dt, int scaleTime)
@@ -133,7 +132,6 @@ void Leaf::GetBoundingBox(float& l, float& t, float& r, float& b)
 void Leaf::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 {
 	Mario* mario = Mario::GetInstance();
-	//mario->SetLevel(mario->GetLevel() + 1);
 	if (mario->GetLevel() < MARIO_LEVEL_RACCOON)
 	{
 		mario->ChangeState(PlayerBonusTransformState::GetInstance());

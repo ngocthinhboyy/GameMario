@@ -127,6 +127,7 @@ void PlayerFallingState::OnKeyDown(int KeyCode)
 PlayerState* PlayerFallingState::GetInstance()
 {
 	if (__instance == NULL) __instance = new PlayerFallingState();
+	Mario::GetInstance()->SetCanGoDownIntoGate(false);
 	SetAnimation();
 	return __instance;
 }

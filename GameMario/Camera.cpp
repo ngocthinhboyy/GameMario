@@ -53,7 +53,6 @@ void Camera::UpdateCamPos(DWORD dt)
 		}
 	}
 	else {
-		//DebugOut(L"CAMMM X %f\n", CAM_X_END_SCENE);
 		float cx, cy;
 		Mario* player = Mario::GetInstance();
 		player->GetPosition(cx, cy);

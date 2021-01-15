@@ -33,7 +33,7 @@ void Flower::SetAnimation()
 {
 	AnimationDatabase* animationDatabase = AnimationDatabase::GetInstance();
 	if (explosiveDied) {
-		this->animation = animationDatabase->Get(2301);
+		this->animation = animationDatabase->Get(ANI_FLOWER_DIE);
 	}
 	else {
 		switch (this->type)
@@ -84,7 +84,6 @@ void Flower::Render()
 		animation = animationDatabase->Get(2601);
 		animation->Render(5376, 1152, 255, scalePipe);
 	}
-	//RenderBoundingBox();
 }
 
 void Flower::Update(DWORD dt, int scaleTime)

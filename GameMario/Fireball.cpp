@@ -139,7 +139,7 @@ void Fireball::Update(DWORD dt, int scaleTime)
 					koopa->SetIsDiedByFireball();
 				}
 				else if (Goomba * goomba = dynamic_cast<Goomba*> (enemy)) {
-					if (goomba->GetType() == 2)
+					if (goomba->GetType() == GOOMBA_TYPE_RED)
 						goomba->SetState(ENEMY_STATE_WALKING);
 				}
 				else if (Flower * flower = dynamic_cast<Flower*> (enemy)) {
@@ -228,7 +228,7 @@ bool Fireball::IsOverlapWithEnemy(vector<LPGAMEOBJECT> enemies)
 						koopa->SetIsDiedByFireball();
 					}
 					else if (Goomba * goomba = dynamic_cast<Goomba*> (enemy)) {
-						if (goomba->GetType() == 2)
+						if (goomba->GetType() == GOOMBA_TYPE_RED)
 							goomba->SetState(ENEMY_STATE_DIE);
 					}
 					else

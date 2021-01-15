@@ -26,7 +26,6 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 	vector<string> tokens = split(line);
 
 	if (tokens.size() < 5) return;
-	//int id = atoi(tokens[0].c_str());
 	int object_type = atoi(tokens[0].c_str());
 	float x = atof(tokens[1].c_str());
 	float y = atof(tokens[2].c_str());
@@ -56,7 +55,6 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 
 		obj->SetAnimationSet(ani_set);
 		AddObjectInFileToGrid(top, bottom, left, right, obj);
-		//DeterminedGridToObtainObject(obj);
 		break;
 	}
 	case OBJECT_TYPE_QUESTION_BRICK: {
@@ -67,7 +65,6 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 
 		obj->SetAnimationSet(ani_set);
 		AddObjectInFileToGrid(top, bottom, left, right, obj);
-		//DeterminedGridToObtainObject(obj);
 		break;
 	}
 	case OBJECT_TYPE_KOOPA: {
@@ -80,7 +77,6 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 
 		obj->SetAnimationSet(ani_set);
 		AddObjectInFileToGrid(top, bottom, left, right, obj);
-		//DeterminedGridToObtainObject(obj);
 		break;
 	}
 	case OBJECT_TYPE_FLOWER: {
@@ -91,7 +87,6 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 
 		obj->SetAnimationSet(ani_set);
 		AddObjectInFileToGrid(top, bottom, left, right, obj);
-		//DeterminedGridToObtainObject(obj);
 		break;
 	}
 	case OBJECT_TYPE_COIN: {
@@ -103,7 +98,6 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 
 		obj->SetAnimationSet(ani_set);
 		AddObjectInFileToGrid(top, bottom, left, right, obj);
-		//DeterminedGridToObtainObject(obj);
 		break;
 	}
 	case OBJECT_TYPE_GATE: {
@@ -163,6 +157,13 @@ void Grid::LoadObjectInSceneAddToGrid(string line)
 	}
 
 }
+void Grid::AddObjectInFileToGrid(int top, int bottom, int left, int right, LPGAMEOBJECT object)
+{
+	for (int i = top; i <= bottom; i++)
+		for (int j = left; j <= right; j++) {
+			cells[i][j].push_back(object);
+		}
+}
 void Grid::GetListObjectInCamera()
 {
 	for (auto obj : enemies) {
@@ -189,14 +190,14 @@ void Grid::GetListObjectInCamera()
 	int left = (int)((cam_x) / CELL_WIDTH);
 	int right = (int)((cam_x + screenWidth) / CELL_WIDTH);
 
-	if (left < 3) {
-		left = 3;
+	if (left < MINIMUM_LEFT_GRID) {
+		left = MINIMUM_LEFT_GRID;
 	}
-	if (right >= 19) {
-		right = 19;
+	if (right >= MAXIMUM_RIGHT_GRID) {
+		right = MAXIMUM_RIGHT_GRID;
 	}
-	if (bottom > 4)
-		bottom = 4;
+	if (bottom > MINIMUM_BOTTOM_GRID)
+		bottom = MINIMUM_BOTTOM_GRID;
 	vector<LPGAMEOBJECT> itemsInGame;
 	LPGAMEOBJECT mushroom =  NULL;
 	for (int i = top; i <= bottom + 1; i++)
@@ -250,13 +251,6 @@ void Grid::DeterminedGridToObtainObject(LPGAMEOBJECT object)
 	int bottom = (int)((object->y + object->h) / CELL_HEIGHT);
 	int left = (int)(object->x / CELL_WIDTH);
 	int right = (int)((object->x + object->w) / CELL_WIDTH);
-	for (int i = top; i <= bottom; i++)
-		for (int j = left; j <= right; j++) {
-			cells[i][j].push_back(object);
-		}
-}
-void Grid::AddObjectInFileToGrid(int top, int bottom, int left, int right, LPGAMEOBJECT object)
-{
 	for (int i = top; i <= bottom; i++)
 		for (int j = left; j <= right; j++) {
 			cells[i][j].push_back(object);

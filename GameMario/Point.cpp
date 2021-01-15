@@ -50,6 +50,6 @@ void Point::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	left = x;
 	top = y;
-	right = left + WIDTH_POINT;
-	bottom = top + HEIGHT_POINT;
+	right = left + POINT_WIDTH;
+	bottom = top + POINT_HEIGHT;
 }
