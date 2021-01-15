@@ -97,7 +97,7 @@ void EspecialBrick::Render()
 	if (animation != NULL) {
 		animation->Render(x, y, alpha, scale);
 	}
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void EspecialBrick::Update(DWORD dt, int scaleTime)

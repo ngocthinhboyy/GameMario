@@ -42,7 +42,7 @@ void MovingBrick::Render()
 	if (animation != NULL) {
 		animation->Render(x, y, alpha, scale);
 	}
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void MovingBrick::Update(DWORD dt, int scaleTime)

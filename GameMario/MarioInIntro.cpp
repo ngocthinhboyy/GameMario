@@ -6,6 +6,7 @@
 #include "game.h"
 #include "debug.h"
 #include "Platform.h"
+#include "DynamicObjectInIntro.h"
 
 MarioInIntro::MarioInIntro(float x, float y, float w, float h, int type)
 {
@@ -29,7 +30,8 @@ MarioInIntro::MarioInIntro(float x, float y, float w, float h, int type)
 void MarioInIntro::Update(DWORD dt, int scaleTime)
 {
 	ActionInIntro();
-	vy += MARIO_GRAVITY * dt;
+	if(type != TYPE_RED_MARIO || state != MARIO_IN_INTRO_STATE_RACCOON_FALLING)
+		vy += MARIO_GRAVITY * dt;
 	GameObject::Update(dt, scaleTime);
 
 	IntroMap* scene = dynamic_cast<IntroMap*> (Game::GetInstance()->GetCurrentScene());
@@ -69,6 +71,9 @@ void MarioInIntro::Update(DWORD dt, int scaleTime)
 					platform->vy = 0.2f;
 				}
 			}
+			else if (DynamicObjectInIntro * object = dynamic_cast<DynamicObjectInIntro*> (e->obj)) {
+				object->CollisionWithMario(e, object);
+			}
 
 		}
 
@@ -76,9 +81,15 @@ void MarioInIntro::Update(DWORD dt, int scaleTime)
 	}
 
 	if (type == TYPE_RED_MARIO) {
-		if (x <= Game::GetInstance()->GetScreenWidth() / 2) {
+		if (x <= Game::GetInstance()->GetScreenWidth() / 2 && !isWalking) {
 			isWalking = true;
 			SetState(MARIO_IN_INTRO_STATE_STANDING);
+		}
+		if (timeJumping != 0) {
+			if (GetTickCount64() - timeJumping >= 2500) {
+				SetState(MARIO_IN_INTRO_STATE_JUMPING);
+				timeJumping = 0;
+			}
 		}
 	}
 
@@ -125,8 +136,20 @@ void MarioInIntro::SetAnimation()
 				animation = AnimationDatabase::GetInstance()->Get(205);
 				break;
 			}
-			case MARIO_IN_INTRO_STATE_FALLING: {
-				animation = AnimationDatabase::GetInstance()->Get(209);
+			case MARIO_IN_INTRO_STATE_CRACKING_NECK: {
+				animation = AnimationDatabase::GetInstance()->Get(4708);
+				break;
+			}
+			case MARIO_IN_INTRO_STATE_RACCOON_FALLING: {
+				animation = AnimationDatabase::GetInstance()->Get(MARIO_ANI_RACCOON_FALLING_SLOWLY);
+				break;
+			}
+			case MARIO_IN_INTRO_STATE_RACCOON_STANDING: {
+				animation = AnimationDatabase::GetInstance()->Get(MARIO_ANI_RACCOON_IDLE_RIGHT);
+				break;
+			}
+			case MARIO_IN_INTRO_STATE_RACCOON_WALKING: {
+				animation = AnimationDatabase::GetInstance()->Get(MARIO_ANI_RACCOON_WALKING_RIGHT);
 				break;
 			}
 			default:
@@ -176,8 +199,13 @@ void MarioInIntro::SetState(int state)
 			break;
 		}
 		case MARIO_IN_INTRO_STATE_JUMPING: {
-			vx = 0.2f * nx;
-			vy = -0.65f;
+			if (type == TYPE_GREEN_MARIO) {
+				vx = 0.2f * nx;
+				vy = -0.65f;
+			}
+			else if (type == TYPE_RED_MARIO) {
+				vy = -1.2f;
+			}
 			break;
 		}
 		case MARIO_IN_INTRO_STATE_HIGH_JUMPING: {
@@ -185,9 +213,20 @@ void MarioInIntro::SetState(int state)
 			vy = -1.5f;
 			break;
 		}
+		case MARIO_IN_INTRO_STATE_RACCOON_FALLING: {
+			vy = 0.1f;
+			vx = -0.2f;
+			break;
+		}
+		case MARIO_IN_INTRO_STATE_RACCOON_WALKING: {
+			nx = 1;
+			vx = 0.2f;
+			break;
+		}
 		case MARIO_IN_INTRO_STATE_FALLING: {
 			break;
 		}
+										   
 		default:
 			break;
 	}
@@ -247,6 +286,9 @@ void MarioInIntro::CollisionWithCollisionMapObject(LPCOLLISIONEVENT collisionEve
 		else if (collisionEvent->ny > 0 && collisionMapObjectDirectionY == -1)
 			y += dy;
 		else {
+			if (state == MARIO_IN_INTRO_STATE_RACCOON_FALLING) {
+				SetState(MARIO_IN_INTRO_STATE_RACCOON_WALKING);
+			}
 			vy = 0;
 		}
 	}

@@ -220,6 +220,8 @@ void IntroMap::Unload()
 	for (auto object : objects)
 		delete object;
 	objects.clear();
+	delete marioGreen;
+	delete marioRed;
 	MapManager* mapManager = MapManager::GetInstance();
 	if (mapManager->GetMap(this->mapID) != NULL) {
 		mapManager->ClearMapById(this->mapID);

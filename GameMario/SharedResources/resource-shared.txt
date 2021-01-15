@@ -18,6 +18,7 @@
 17	textures\red_curtain.png	1	1	1
 18	textures\stage.png	1	1	1
 19	textures\panel_intro.png	163	73	164
+20	textures\mario_cracking_neck.png	34	177	76
 # id	left	top	width	height	texture_id
 [SPRITES]
 # SMALL MARIO
@@ -440,6 +441,9 @@
 45011	23	158	179	113	19
 45012	23	301	179	113	19
 45013	223	37	179	113	19
+#mario cracking neck
+45014	5	11	16	27	20
+45015	23	6	24	27	20
 
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
@@ -751,6 +755,8 @@
 4706	45008	100
 #title
 4707	45009	100	45010	100	45011	100	45012	100	45013	100
+#mario cracking neck
+4708	45015	800	45014	800
 
 # id	ani1	ani2	ani3
 [ANIMATION_SETS]
@@ -794,4 +800,4 @@
 #BOOMERANG BROTHERS
 20	4601	4602
 #INTROMAP
-21	4701	4702	4703	4704	4705	4706	4707
+21	4701	4702	4703	4704	4705	4706	4707	4708

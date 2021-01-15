@@ -32,9 +32,9 @@
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="CollisionMapObject.cpp" />
     <ClCompile Include="debug.cpp" />
+    <ClCompile Include="DynamicObjectInIntro.cpp" />
     <ClCompile Include="EndTitle.cpp" />
     <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="EnemyInIntro.cpp" />
     <ClCompile Include="EspecialBrick.cpp" />
     <ClCompile Include="Fireball.cpp" />
     <ClCompile Include="Flower.cpp" />
@@ -113,10 +113,10 @@
     <ClInclude Include="CollisionMapObject.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="DynamicObjectDefine.h" />
+    <ClInclude Include="DynamicObjectInIntro.h" />
     <ClInclude Include="EndTitle.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyDefine.h" />
-    <ClInclude Include="EnemyInIntro.h" />
     <ClInclude Include="EspecialBrick.h" />
     <ClInclude Include="Fireball.h" />
     <ClInclude Include="Flower.h" />

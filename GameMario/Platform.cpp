@@ -6,6 +6,7 @@
 #include "game.h"
 #include "AnimationManager.h"
 #include "debug.h"
+#include "DynamicObjectInIntro.h"
 
 Platform::Platform(float x, float y, float w, float h, int type)
 {
@@ -50,7 +51,7 @@ void Platform::Update(DWORD dt, int scaleTime)
 		}
 	}
 	else if (type == TYPE_PANEL) {
-		if (y >= 103) {
+		if (y >= 103 && !stopMoving) {
 			vy = 0;
 			IntroMap* scene = dynamic_cast<IntroMap*> (Game::GetInstance()->GetCurrentScene());
 			for (auto object : scene->objects) {
@@ -62,6 +63,10 @@ void Platform::Update(DWORD dt, int scaleTime)
 			}
 			scene->panelDisappeared = true;
 			stopMoving = true;
+			GameObject* object = new DynamicObjectInIntro(Game::GetInstance()->GetScreenWidth() / 2, 0, 48, 48, TYPE_ENEMY_KOOPA_TORTOISE);
+			scene->objects.push_back(object);
+			GameObject* leaf = new DynamicObjectInIntro(Game::GetInstance()->GetScreenWidth() / 2, 0, 48, 48, TYPE_LEAF);
+			scene->objects.push_back(leaf);
 		}
 		if (!stopMoving) {
 			GameObject::Update(dt, scaleTime);

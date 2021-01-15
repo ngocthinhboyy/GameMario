@@ -330,7 +330,7 @@
     <ClCompile Include="MarioInIntro.cpp">
       <Filter>game\Object\IntroObject\AutoObject</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyInIntro.cpp">
+    <ClCompile Include="DynamicObjectInIntro.cpp">
       <Filter>game\Object\IntroObject\AutoObject</Filter>
     </ClCompile>
   </ItemGroup>
@@ -596,7 +596,7 @@
     <ClInclude Include="MarioInIntro.h">
       <Filter>game\Object\IntroObject\AutoObject</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyInIntro.h">
+    <ClInclude Include="DynamicObjectInIntro.h">
       <Filter>game\Object\IntroObject\AutoObject</Filter>
     </ClInclude>
   </ItemGroup>
