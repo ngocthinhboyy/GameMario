@@ -38,6 +38,7 @@ class Mario : public GameObject
 	bool isHolding = false;
 	bool isGoingByCamera = false;
 	bool isTransforming = false;
+	bool canJump = false;
 
 	bool isAlreadyStandingOnGateInWorldMap = false;
 public:
@@ -55,6 +56,8 @@ public:
 	void SetIsTransforming(bool isTransforming) { this->isTransforming = isTransforming; };
 	bool GetIsGoingByCamera() { return this->isGoingByCamera; };
 	void SetIsGoingByCamera(bool isGoingByCamera) { this->isGoingByCamera = isGoingByCamera; };
+	void SetCanJump(bool canJump) { this->canJump = canJump; };
+	bool GetCanJump() { return this->canJump; };
 
 	bool GetIsMovingIntoGate() { return this->isMovingIntoGate; };
 	void SetIsMovingIntoGate(bool isMovingIntoGate) { this->isMovingIntoGate = isMovingIntoGate; };

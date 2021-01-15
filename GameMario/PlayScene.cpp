@@ -190,6 +190,7 @@ void PlayScene::_ParseSection_TYPE_CAMERA(string line)
 	else if (typeCamera == 2) {
 		this->isAutoMovingCamera = true;
 		Camera::GetInstance()->SetIsAutoMovingCamera(true);
+		Camera::GetInstance()->SetTimStartMoving();
 	}
 	else {
 		this->isAutoMovingCamera = false;

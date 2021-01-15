@@ -500,6 +500,7 @@ void Mario::Reset()
 	canGoDownIntoGate = false;
 	canGoUpIntoGate = false;
 	isMovingIntoGate = false;
+	canJump = false;
 	ChangeState(PlayerStandingState::GetInstance());
 }
 

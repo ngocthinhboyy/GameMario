@@ -25,6 +25,8 @@ void Camera::UpdateCamPos(DWORD dt)
 	PlayScene* scene = dynamic_cast<PlayScene*> (Game::GetInstance()->GetCurrentScene());
 	if (scene->GetIsAutoMovingCamera()) {
 		this->cam_y = CAM_Y_DRAW_MAP;
+		if (GetTickCount64() - timeStartMoving < 2000)
+			return;
 		if (isAutoMovingCamera) {
 			if (this->cam_x + game->GetScreenWidth() >= CAM_X_MAX_SCENE_AUTOCAM) {
 				this->cam_x = CAM_X_MAX_SCENE_AUTOCAM - game->GetScreenWidth();

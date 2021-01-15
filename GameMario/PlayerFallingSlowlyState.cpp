@@ -7,6 +7,7 @@
 #include "PlayerRunningState.h"
 #include "Camera.h"
 #include "PlayerHighJumpingState.h"
+#include "PlayerJumpingState.h"
 
 PlayerState* PlayerFallingSlowlyState::__instance = NULL;
 PlayerFallingSlowlyState::PlayerFallingSlowlyState()
@@ -34,12 +35,6 @@ void PlayerFallingSlowlyState::SetAnimation()
 void PlayerFallingSlowlyState::Update(int dt)
 {
 	Mario* mario = Mario::GetInstance();
-	//float cam_x, cam_y;
-	//Camera::GetInstance()->GetCamPos(cam_x, cam_y);
-	//if (mario->x <= cam_x) {
-	//	mario->vx = 0;
-	//	mario->ChangeState(PlayerStandingState::GetInstance());
-	//}
 	if (mario->vy == 0 && mario->GetIsOnGround()) {
 		timePress = 0;
 		if (mario->GetIsCrouChing()) {
@@ -60,22 +55,22 @@ void PlayerFallingSlowlyState::KeyState(BYTE* states)
 	Mario* mario = Mario::GetInstance();
 	Game* game = Game::GetInstance();
 	if (game->IsKeyDown(DIK_S)) {
-		DWORD now = GetTickCount64();
-		if(mario->vy > 0 && now-timePress < 250)
-			mario->vy += -mario->vy * 0.4f;
+		if (!mario->GetCanJump()) {
+			DWORD now = GetTickCount64();
+			if (mario->vy > 0 && now - timePress < 250)
+				mario->vy += -mario->vy * 0.4f;
+		}
+		else {
+			mario->vy = -MARIO_JUMP_SPEED_Y;
+			mario->SetCanJump(false);
+			mario->ChangeState(PlayerHighJumpingState::GetInstance());
+		}
 	}
-	else if(game->IsKeyDown(DIK_X)) {
+	else if (game->IsKeyDown(DIK_X)) {
 		DWORD now = GetTickCount64();
 		if (mario->vy > 0 && now - timePress < 250)
 			mario->vy += -mario->vy * 0.4f;
 	}
-	/*if (game->IsKeyDown(DIK_DOWN)) {
-		if (mario->vy == 0) {
-			mario->vx = 0;
-			mario->ChangeState(PlayerCrouchingState::GetInstance());
-			return;
-		}
-	}*/
 	if (game->IsKeyDown(DIK_RIGHT)) {
 		if (mario->vx <= 0)
 			mario->vx = MARIO_WALKING_SPEED;

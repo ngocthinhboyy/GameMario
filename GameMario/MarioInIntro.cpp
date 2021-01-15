@@ -86,7 +86,7 @@ void MarioInIntro::Update(DWORD dt, int scaleTime)
 			SetState(MARIO_IN_INTRO_STATE_STANDING);
 		}
 		if (timeJumping != 0) {
-			if (GetTickCount64() - timeJumping >= 2500) {
+			if (GetTickCount64() - timeJumping >= 2700) {
 				SetState(MARIO_IN_INTRO_STATE_JUMPING);
 				timeJumping = 0;
 			}
@@ -124,19 +124,19 @@ void MarioInIntro::SetAnimation()
 		switch (state)
 		{
 			case MARIO_IN_INTRO_STATE_STANDING:{
-					animation = AnimationDatabase::GetInstance()->Get(201);
+					animation = AnimationDatabase::GetInstance()->Get(MARIO_RED_IN_INTRO_STANDING_ANI);
 					break;
 				}
 			case MARIO_IN_INTRO_STATE_WALKING: {
-				animation = AnimationDatabase::GetInstance()->Get(203);
+				animation = AnimationDatabase::GetInstance()->Get(MARIO_RED_IN_INTRO_WALKING_ANI);
 				break;
 			}
 			case MARIO_IN_INTRO_STATE_JUMPING: {
-				animation = AnimationDatabase::GetInstance()->Get(205);
+				animation = AnimationDatabase::GetInstance()->Get(MARIO_RED_IN_INTRO_JUMPING_ANI);
 				break;
 			}
 			case MARIO_IN_INTRO_STATE_CRACKING_NECK: {
-				animation = AnimationDatabase::GetInstance()->Get(4708);
+				animation = AnimationDatabase::GetInstance()->Get(MARIO_RED_IN_INTRO_CRACKING_NECK_ANI);
 				break;
 			}
 			case MARIO_IN_INTRO_STATE_RACCOON_FALLING: {
@@ -159,23 +159,23 @@ void MarioInIntro::SetAnimation()
 		switch (state)
 		{
 		case MARIO_IN_INTRO_STATE_STANDING: {
-			animation = AnimationDatabase::GetInstance()->Get(4703);
+			animation = AnimationDatabase::GetInstance()->Get(MARIO_GREEN_IN_INTRO_STANDING_ANI);
 			break;
 		}
 		case MARIO_IN_INTRO_STATE_WALKING: {
-			animation = AnimationDatabase::GetInstance()->Get(4704);
+			animation = AnimationDatabase::GetInstance()->Get(MARIO_GREEN_IN_INTRO_WALKING_ANI);
 			break;
 		}
 		case MARIO_IN_INTRO_STATE_JUMPING: {
-			animation = AnimationDatabase::GetInstance()->Get(4705);
+			animation = AnimationDatabase::GetInstance()->Get(MARIO_GREEN_IN_INTRO_JUMPING_ANI);
 			break;
 		}
 		case MARIO_IN_INTRO_STATE_FALLING: {
-			animation = AnimationDatabase::GetInstance()->Get(4706);
+			animation = AnimationDatabase::GetInstance()->Get(MARIO_GREEN_IN_INTRO_FALLING_ANI);
 			break;
 		}
 		case MARIO_IN_INTRO_STATE_FALLING_JUMP: {
-			animation = AnimationDatabase::GetInstance()->Get(4706);
+			animation = AnimationDatabase::GetInstance()->Get(MARIO_GREEN_IN_INTRO_FALLING_ANI);
 			break;
 		}
 		default:
@@ -242,7 +242,7 @@ void MarioInIntro::ActionInIntro()
 		else if (state == MARIO_IN_INTRO_STATE_FALLING_JUMP && vy == 0) {
 			SetState(MARIO_IN_INTRO_STATE_HIGH_JUMPING);
 		}
-		else if (now - timeStartMoving >= 610 && state != MARIO_IN_INTRO_STATE_FALLING ) {
+		else if (now - timeStartMoving >= 620 && state != MARIO_IN_INTRO_STATE_FALLING ) {
 			SetState(MARIO_IN_INTRO_STATE_FALLING_JUMP);
 		}
 		else if (now - timeStartMoving >= 600 && state != MARIO_IN_INTRO_STATE_FALLING) {

@@ -14,11 +14,13 @@ class Camera
 	static Camera* __instance;
 	bool canChangeCamY = false;
 	bool isAutoMovingCamera = false;
+	DWORD timeStartMoving = 0;
 public:
 	Camera();
 	void SetLockCamY(bool canChange) { this->canChangeCamY = canChange; };
 	void SetCamPos(float x, float y);
 	void GetCamPos(float& x, float& y);
+	void SetTimStartMoving() { this->timeStartMoving = GetTickCount64(); };
 	void UpdateCamPos(DWORD dt);
 	void SetCamXSpeed(float cam_x_speed) { this->cam_x_speed = cam_x_speed; };
 	void SetCamXEndScene(float CAM_X_END_SCENE) { this->CAM_X_END_SCENE = CAM_X_END_SCENE; };

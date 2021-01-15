@@ -82,7 +82,6 @@ void PlayerHighJumpingState::KeyState(BYTE* states)
 {
 	Mario* mario = Mario::GetInstance();
 	Game* game = Game::GetInstance();
-	//DebugOut(L"mario VX %f\n", mario->vx);
 	if (mario->vy >= 0) {
 		stopIncreasingSpeed = false;
 		if (mario->GetLevel() == MARIO_LEVEL_RACCOON)

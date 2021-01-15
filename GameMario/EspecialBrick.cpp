@@ -111,7 +111,7 @@ void EspecialBrick::Update(DWORD dt, int scaleTime)
 					vy = 0;
 					alreadyMoving = true;
 					y = startPositionY;
-					if (Mario::GetInstance()->GetLevel() == MARIO_LEVEL_SMALL && type == QUESTION_BRICK_TYPE_HAS_ESPECIAL_ITEM)
+					if (Mario::GetInstance()->GetLevel() == MARIO_LEVEL_SMALL && type == ESPECIAL_BRICK_TYPE_HAS_ITEM)
 					{
 						Mushroom* mushroom = new Mushroom(x, y, MUSHROOM_BBOX_WIDTH, MUSHROOM_BBOX_HEIGHT, MUSHROOM_TYPE_RED);
 						mushroom->vy = -MUSHROOM_SPEED_Y_APPEAR;

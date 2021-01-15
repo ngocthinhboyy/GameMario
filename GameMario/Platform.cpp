@@ -26,9 +26,9 @@ Platform::Platform(float x, float y, float w, float h, int type)
 void Platform::Update(DWORD dt, int scaleTime)
 {
 	if (type == TYPE_RED_CURTAIN) {
-		if (GetTickCount64() - timeStart >= 2000 && !stopMoving) {
+		if (GetTickCount64() - timeStart >= 4000 && !stopMoving) {
 			vy = -0.3f;
-			if (GetTickCount64() - timeStart >= 5000) {
+			if (GetTickCount64() - timeStart >= 7000) {
 				stopMoving = true;
 				stillAlive = false;
 				AnimationManager* animation_sets = AnimationManager::GetInstance();

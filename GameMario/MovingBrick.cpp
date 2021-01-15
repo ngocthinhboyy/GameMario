@@ -4,6 +4,7 @@
 #include "Mario.h"
 #include "EnemyDefine.h"
 #include "DynamicObjectDefine.h"
+#include "debug.h"
 
 MovingBrick::MovingBrick(float x, float y, float w, float h)
 {
@@ -28,6 +29,7 @@ void MovingBrick::CollisionWithPlayer(LPCOLLISIONEVENT collisionEvent)
 			vx = 0;
 			Mario::GetInstance()->SetIsOnGround(true);
 		}
+		Mario::GetInstance()->SetCanJump(true);
 		Mario::GetInstance()->vy = 0;
 	}
 	if (collisionEvent->nx != 0) {

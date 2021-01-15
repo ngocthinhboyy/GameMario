@@ -117,10 +117,6 @@ void PlayerWalkingState::OnKeyDown(int KeyCode) {
 				mario->SetIsCrouching(false);
 				mario->ChangeState(PlayerHighJumpingState::GetInstance());
 			break;
-		/*case DIK_A:
-			if(mario->GetLevel() == MARIO_LEVEL_RACCOON)
-				mario->ChangeState(PlayerSpinningState::GetInstance());
-			break;*/
 		default:
 			break;
 	}
@@ -157,15 +153,6 @@ void PlayerWalkingState::KeyState(BYTE* states) {
 	}
 	if (game->IsKeyDown(DIK_RIGHT) && game->IsKeyDown(DIK_LEFT)) {
 		isSlow = true;
-		//DebugOut(L"EEEEEE %f\n", mario->vx);
-		//if (game->IsKeyDown(DIK_DOWN) && mario->vx == 0) {
-		//	if (mario->GetLevel() >= MARIO_LEVEL_BIG) {
-		//		mario->SetIsCrouching(true);
-		//		SetAnimation();
-		//	}
-		//	//mario->ChangeState(PlayerStandingState::GetInstance());
-		//	return;
-		//}
 	}
 	else if (game->IsKeyDown(DIK_RIGHT)) {
 		prevKeyIsRight = true;
@@ -222,7 +209,6 @@ void PlayerWalkingState::KeyState(BYTE* states) {
 	}
 	else {
 		isSlow = true;
-		//mario->ChangeState(PlayerStandingState::GetInstance());
 	}
 }
 PlayerWalkingState::~PlayerWalkingState() {
